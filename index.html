@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Last Cachebender</title>
+<meta name="description" content="A course on caching in fourteen lessons. Follow one product page through the browser, the edge, the application and the database, then defend it against five attacks.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#091310">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Last Cachebender">
+<meta property="og:description" content="Four places to keep a copy, and the cost of every one. A guided path through caching in fourteen lessons.">
+<meta property="og:url" content="https://shahbaaz12.github.io/the-last-cachebender/">
+<meta property="og:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
+<meta property="og:image:width" content="1731">
+<meta property="og:image:height" content="909">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Last Cachebender">
+<meta name="twitter:description" content="Master the four cache realms and restore balance to a system under pressure.">
+<meta name="twitter:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
+<link rel="canonical" href="https://shahbaaz12.github.io/the-last-cachebender/">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/home.css">
+
+<script>
+/* Apply the stored theme before first paint so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="home-page">
+
+<a class="skip" href="#start">Skip to content</a>
+
+<header class="top">
+  <div class="top-in">
+    <div class="mark" aria-hidden="true">LC</div>
+    <div class="wordmark">
+      <b>The Last Cachebender</b>
+      <span>Four realms, one page</span>
+    </div>
+    <div class="top-end">
+      <span class="top-count">14 lessons</span>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch theme" data-theme-toggle>
+        <span class="icon moon" aria-hidden="true">☾</span><span class="icon sun" aria-hidden="true">☀</span>
+        <span data-theme-label>Light</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="start">
+
+<section class="home hero">
+  <div class="hero-copy">
+    <div class="eyebrow">A guided path · fourteen lessons</div>
+    <h1>Four places to keep a copy, and the cost of every one.</h1>
+    <p class="deck">Follow one product page through the browser, the edge, the application and the database. Then defend it.</p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="course.html#l1">Start Lesson 1 <span aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="#lessons">See all lessons</a>
+    </div>
+  </div>
+
+  <div class="realm-compass" role="img" aria-label="A map of the four cache realms: Air for the browser, Water for the CDN edge, Earth for the application, and Fire for the database.">
+    <div class="compass-head" aria-hidden="true">
+      <span>Where copies wait</span>
+      <strong>Balance unstable</strong>
+    </div>
+
+    <div class="element-wheel" aria-hidden="true">
+      <div class="wheel-ring ring-outer"></div>
+      <div class="wheel-ring ring-inner"></div>
+
+      <div class="realm-seal seal-air">
+        <i>◌</i><span><b>Air</b><small>Browser</small></span>
+      </div>
+      <div class="realm-seal seal-water">
+        <i>≈</i><span><b>Water</b><small>CDN edge</small></span>
+      </div>
+      <div class="realm-seal seal-earth">
+        <i>◇</i><span><b>Earth</b><small>Application</small></span>
+      </div>
+      <div class="realm-seal seal-fire">
+        <i>△</i><span><b>Fire</b><small>Database</small></span>
+      </div>
+
+      <div class="wheel-core"><span>One request</span><strong>900 ms</strong></div>
+    </div>
+
+    <div class="compass-foot" aria-hidden="true">
+      <span>Latency pressure</span>
+      <strong>The Surge approaches</strong>
+    </div>
+  </div>
+</section>
+
+<section class="home countbar">
+  <div class="counts">
+    <div class="count"><b>14</b><span>Lessons</span></div>
+    <div class="count"><b>4</b><span>Cache realms</span></div>
+    <div class="count"><b>5</b><span>Attacks to survive</span></div>
+    <div class="count"><b>7</b><span>Parts of one page</span></div>
+  </div>
+</section>
+
+<section class="home">
+  <div class="descent">
+    <div class="descent-head">One request, falling through four realms</div>
+
+    <div class="layer realm-air">
+      <span class="layer-el">Air</span>
+      <span class="layer-name">Browser cache</span>
+      <span class="layer-where">On the reader's own disk</span>
+      <span class="layer-ms">0 ms</span>
+    </div>
+    <div class="miss">Not stored here</div>
+
+    <div class="layer realm-water">
+      <span class="layer-el">Water</span>
+      <span class="layer-name">CDN edge</span>
+      <span class="layer-where">A few miles from the reader</span>
+      <span class="layer-ms">5 ms</span>
+    </div>
+    <div class="miss">Not stored here</div>
+
+    <div class="layer realm-earth">
+      <span class="layer-el">Earth</span>
+      <span class="layer-name">Application and Redis</span>
+      <span class="layer-where">Your own servers</span>
+      <span class="layer-ms">0.5 ms</span>
+    </div>
+    <div class="miss">Not stored here</div>
+
+    <div class="layer origin realm-fire">
+      <span class="layer-el">Fire</span>
+      <span class="layer-name">The database</span>
+      <span class="layer-where">The source of truth</span>
+      <span class="layer-ms">200 ms</span>
+    </div>
+
+    <p class="descent-foot">Every realm that answers is a trip the request never takes. <b>The course is about deciding which ones are allowed to.</b></p>
+  </div>
+</section>
+
+<section class="home parts-wrap">
+  <h2>One page. Seven parts. Seven different answers.</h2>
+  <p class="lede">Every lesson works on the same product page, because the interesting decisions only appear when the same page holds things that disagree about how stale they may be.</p>
+
+  <div class="parts">
+    <div class="part">
+      <b>Asset bundle</b>
+      <span>CSS, JavaScript and the logo. Changes only when you deploy.</span>
+      <em>Cache for a year</em>
+    </div>
+    <div class="part">
+      <b>Product images</b>
+      <span>Replaced occasionally, and nobody minds seeing yesterday's.</span>
+      <em>Cache for a day</em>
+    </div>
+    <div class="part">
+      <b>Product details</b>
+      <span>Name and description. Edits should appear reasonably soon.</span>
+      <em>Cache for minutes</em>
+    </div>
+    <div class="part">
+      <b>Price</b>
+      <span>Must be close to correct. A stale one is a legal problem.</span>
+      <em>Cache for seconds</em>
+    </div>
+    <div class="part">
+      <b>Stock count</b>
+      <span>Being wrong here sells something you do not have.</span>
+      <em>Barely, if at all</em>
+    </div>
+    <div class="part">
+      <b>Reviews</b>
+      <span>Read constantly, written rarely. The easiest win on the page.</span>
+      <em>Cache for minutes</em>
+    </div>
+    <div class="part never">
+      <b>Cart badge</b>
+      <span>Yours is different from mine. Sharing it is not staleness, it is the wrong answer entirely.</span>
+      <em>Never cached</em>
+    </div>
+  </div>
+</section>
+
+<section class="home">
+  <div class="voice">
+    <h2>The Latency Lord forges his weapons in front of you.</h2>
+
+    <blockquote>"He does not need to take the cache away. He only needs to choose the moment it empties."</blockquote>
+    <cite>The Forge, Lesson 8</cite>
+
+    <p>Five times across the course, the villain stops to study something you have just learned, and builds a weapon out of it. By the time the attacks arrive in Lesson 12, you have watched every one of them being made.</p>
+    <p>So Lesson 12 grants no new technique. It is the only lesson that does not, and that is the point: every defense is something you were handed earlier, in a lesson that never mentioned an attack.</p>
+  </div>
+</section>
+
+<section class="home grid-wrap" id="lessons">
+  <div class="eyebrow">The path</div>
+  <h2>Each lesson adds one layer, or one decision about it.</h2>
+  <p class="lede">Read them in order. The four realms come first, then the techniques that work in all of them, then the war.</p>
+
+  <div class="book-band realm-prologue"><b>Prologue</b><span>The Forgotten Art</span></div>
+  <div class="cards">
+    <a class="card" href="course.html#l1">
+      <div class="card-top"><span class="card-no">01</span><span class="card-kind">Foundations</span></div>
+      <h3>The Forgotten Art of Caching</h3>
+      <p>What a cache is, why distance costs so much, and why this is a design decision rather than a late fix.</p>
+      <div class="chips"><span class="chip">Latency</span><span class="chip">Trade-offs</span></div>
+    </a>
+    <a class="card" href="course.html#l2">
+      <div class="card-top"><span class="card-no">02</span><span class="card-kind">The heaviest lesson</span></div>
+      <h3>The Trial of Hits and Misses</h3>
+      <p>Keys, values, lifetimes and warming. Three of the five defenses in Lesson 12 trace back to here.</p>
+      <div class="chips"><span class="chip">Keys</span><span class="chip">TTL</span><span class="chip">Hit ratio</span></div>
+    </a>
+  </div>
+
+  <div class="book-band realm-air"><b>Book One: Air</b><span>The Browser Realm</span></div>
+  <div class="cards">
+    <a class="card" href="course.html#l3">
+      <div class="card-top"><span class="card-no">03</span><span class="card-kind">Closest to the reader</span></div>
+      <h3>The Browser Realm</h3>
+      <p>Headers, validation and fingerprinted filenames. The one realm whose storage is free and whose copies you cannot recall.</p>
+      <div class="chips"><span class="chip">Cache-Control</span><span class="chip">ETag</span><span class="chip">Fingerprints</span></div>
+    </a>
+  </div>
+
+  <div class="book-band realm-water"><b>Book Two: Water</b><span>The Edge Kingdom</span></div>
+  <div class="cards">
+    <a class="card" href="course.html#l4">
+      <div class="card-top"><span class="card-no">04</span><span class="card-kind">Copies worldwide</span></div>
+      <h3>The Edge Kingdom</h3>
+      <p>A CDN does not make anything faster. It makes things closer. Learn what its cache key is really made of.</p>
+      <div class="chips"><span class="chip">Edge keys</span><span class="chip">Vary</span><span class="chip">Purge</span></div>
+    </a>
+  </div>
+
+  <div class="book-band realm-earth"><b>Book Three: Earth</b><span>The Application Sanctum</span></div>
+  <div class="cards">
+    <a class="card" href="course.html#l5">
+      <div class="card-top"><span class="card-no">05</span><span class="card-kind">Your own memory</span></div>
+      <h3>The Application Sanctum</h3>
+      <p>The fastest cache there is, and the reason two servers can disagree about the same price.</p>
+      <div class="chips"><span class="chip">In-process</span><span class="chip">Memoization</span></div>
+    </a>
+    <a class="card" href="course.html#l6">
+      <div class="card-top"><span class="card-no">06</span><span class="card-kind">One cache, many nodes</span></div>
+      <h3>The Distributed Cache Tribes</h3>
+      <p>What Redis actually gives you beyond being shared, where it genuinely shines, and what it costs.</p>
+      <div class="chips"><span class="chip">Redis</span><span class="chip">Replicas</span><span class="chip">Failover</span></div>
+    </a>
+  </div>
+
+  <div class="book-band realm-fire"><b>Book Four: Fire</b><span>The Database Depths</span></div>
+  <div class="cards">
+    <a class="card" href="course.html#l7">
+      <div class="card-top"><span class="card-no">07</span><span class="card-kind">Already burning</span></div>
+      <h3>The Database Depths</h3>
+      <p>The database is already a caching system. Here you tune rather than build, and an index usually beats a cache.</p>
+      <div class="chips"><span class="chip">Buffer pool</span><span class="chip">Indexes</span></div>
+    </a>
+  </div>
+
+  <div class="book-band realm-spirit"><b>Interlude</b><span>The Spirit Library</span></div>
+  <div class="cards">
+    <a class="card" href="course.html#l8">
+      <div class="card-top"><span class="card-no">08</span><span class="card-kind">Reading</span></div>
+      <h3>The Three Reading Techniques</h3>
+      <p>Cache-aside, read-through and refresh-ahead. Then the race that hits your database a thousand times for one value.</p>
+      <div class="chips"><span class="chip">Cache-aside</span><span class="chip">Single-flight</span></div>
+    </a>
+    <a class="card" href="course.html#l9">
+      <div class="card-top"><span class="card-no">09</span><span class="card-kind">Writing</span></div>
+      <h3>The Three Writing Techniques</h3>
+      <p>Write-through, write-behind and write-around, and the honest question of what you can afford to lose.</p>
+      <div class="chips"><span class="chip">Durability</span><span class="chip">Batching</span></div>
+    </a>
+    <a class="card" href="course.html#l10">
+      <div class="card-top"><span class="card-no">10</span><span class="card-kind">Letting go</span></div>
+      <h3>The Temple of Eviction</h3>
+      <p>Expiration is time. Eviction is memory. They are confused constantly, and they need different fixes.</p>
+      <div class="chips"><span class="chip">LRU</span><span class="chip">LFU</span><span class="chip">Jitter</span></div>
+    </a>
+    <a class="card" href="course.html#l11">
+      <div class="card-top"><span class="card-no">11</span><span class="card-kind">The hardest problem</span></div>
+      <h3>The Invalidation Paradox</h3>
+      <p>Delete, never update. Version the key instead. And accept that one of the four realms cannot be reached at all.</p>
+      <div class="chips"><span class="chip">Invalidation</span><span class="chip">Versioned keys</span></div>
+    </a>
+  </div>
+
+  <div class="book-band realm-war"><b>Book Five</b><span>The Great War</span></div>
+  <div class="cards">
+    <a class="card trial" href="course.html#l12">
+      <div class="card-top"><span class="card-no">12</span><span class="card-kind">No new technique</span></div>
+      <h3>The Latency Lord's Attacks</h3>
+      <p>Stampede, penetration, avalanche, hot keys and poisoning. Four of the five are caused by your own settings.</p>
+      <div class="chips"><span class="chip">The trial</span><span class="chip">Five defenses</span></div>
+    </a>
+    <a class="card" href="course.html#l13">
+      <div class="card-top"><span class="card-no">13</span><span class="card-kind">Seeing clearly</span></div>
+      <h3>Restoring Balance</h3>
+      <p>Per-key hit ratios, the p99 tail, and the discipline of deleting a cache that no longer earns its place.</p>
+      <div class="chips"><span class="chip">p99</span><span class="chip">What not to cache</span></div>
+    </a>
+    <a class="card" href="course.html#l14">
+      <div class="card-top"><span class="card-no">14</span><span class="card-kind">Everything at once</span></div>
+      <h3>The Final Battle</h3>
+      <p>Design the whole thing across four realms, and defend every lifetime you chose. Assembly, not invention.</p>
+      <div class="chips"><span class="chip">Rubric</span><span class="chip">Worked example</span></div>
+    </a>
+  </div>
+</section>
+
+<section class="home closing">
+  <blockquote>"He was never defeated by a new technique. He was defeated by someone who had measured first."</blockquote>
+  <div class="who">The end of Lesson 14</div>
+  <a class="btn btn-primary" href="course.html#l1">Start Lesson 1 <span aria-hidden="true">→</span></a>
+</section>
+
+<div class="home">
+  <footer class="foot">
+    <span>The Last Cachebender</span>
+    <span class="spacer"></span>
+    <a href="course.html">Read the course</a>
+    <a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+    <a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+  </footer>
+</div>
+
+</main>
+
+<script src="js/main.js"></script>
+</body>
+</html>
