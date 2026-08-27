@@ -1,66 +1,66 @@
 :root{
-  --ground:#F3EFE3;
-  --surface:#FBF8EF;
-  --surface-2:#E7EBE2;
-  --ink:#1D2B28;
-  --ink-soft:#586A63;
-  --ink-faint:#7E8D85;
-  --rule:#D7D5C7;
-  --rule-firm:#BABDAE;
-  --accent:#987028;
-  --accent-lift:#B18432;
-  --accent-wash:#EEE4CE;
-  --ember:#B84C2A;
-  --ember-wash:#F3DED1;
-  --air:#5599A9;
-  --water:#177D98;
-  --earth:#668148;
-  --fire:#C5542E;
-  --spirit:#765997;
-  --shadow:rgba(29,43,40,.1);
+  --ground:#F2EDDD;
+  --surface:#FCF8EC;
+  --surface-2:#E5EAE1;
+  --ink:#17312B;
+  --ink-soft:#536961;
+  --ink-faint:#75877F;
+  --rule:#D4D2C2;
+  --rule-firm:#AEB7A7;
+  --accent:#8A641F;
+  --accent-lift:#6E4D12;
+  --accent-wash:#ECE0C4;
+  --ember:#A84228;
+  --ember-wash:#F1D9CC;
+  --air:#3E8FA6;
+  --water:#116C91;
+  --earth:#5D783E;
+  --fire:#C34F2D;
+  --spirit:#76508E;
+  --shadow:rgba(20,48,41,.12);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --ground:#091310;
-    --surface:#111D19;
-    --surface-2:#192823;
-    --ink:#EFE9D8;
-    --ink-soft:#AAB8AE;
-    --ink-faint:#73877D;
-    --rule:#273B34;
-    --rule-firm:#385248;
-    --accent:#DEB660;
-    --accent-lift:#F0CA74;
-    --accent-wash:#2A2518;
-    --ember:#EF7745;
-    --ember-wash:#302019;
-    --air:#8BCBDD;
-    --water:#46A9C2;
-    --earth:#8EAE69;
-    --fire:#F07843;
-    --spirit:#AB8BD4;
+    --ground:#061713;
+    --surface:#0D211B;
+    --surface-2:#163127;
+    --ink:#F1EAD8;
+    --ink-soft:#B1C1B7;
+    --ink-faint:#789088;
+    --rule:#264238;
+    --rule-firm:#3C5B50;
+    --accent:#E0B454;
+    --accent-lift:#F1C76A;
+    --accent-wash:#2C2717;
+    --ember:#F17742;
+    --ember-wash:#331F18;
+    --air:#8DCEDD;
+    --water:#3EACC7;
+    --earth:#99B86D;
+    --fire:#F27A45;
+    --spirit:#B897D5;
     --shadow:rgba(0,0,0,.4);
   }
 }
 :root[data-theme="dark"]{
-  --ground:#091310;
-  --surface:#111D19;
-  --surface-2:#192823;
-  --ink:#EFE9D8;
-  --ink-soft:#AAB8AE;
-  --ink-faint:#73877D;
-  --rule:#273B34;
-  --rule-firm:#385248;
-  --accent:#DEB660;
-  --accent-lift:#F0CA74;
-  --accent-wash:#2A2518;
-  --ember:#EF7745;
-  --ember-wash:#302019;
-  --air:#8BCBDD;
-  --water:#46A9C2;
-  --earth:#8EAE69;
-  --fire:#F07843;
-  --spirit:#AB8BD4;
+  --ground:#061713;
+  --surface:#0D211B;
+  --surface-2:#163127;
+  --ink:#F1EAD8;
+  --ink-soft:#B1C1B7;
+  --ink-faint:#789088;
+  --rule:#264238;
+  --rule-firm:#3C5B50;
+  --accent:#E0B454;
+  --accent-lift:#F1C76A;
+  --accent-wash:#2C2717;
+  --ember:#F17742;
+  --ember-wash:#331F18;
+  --air:#8DCEDD;
+  --water:#3EACC7;
+  --earth:#99B86D;
+  --fire:#F27A45;
+  --spirit:#B897D5;
   --shadow:rgba(0,0,0,.4);
 }
 
@@ -77,8 +77,10 @@
 body{
   margin:0;
   background:
-    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--air) 10%, transparent), transparent 32rem),
-    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--fire) 8%, transparent), transparent 30rem),
+    radial-gradient(circle at 5% 4%,color-mix(in srgb,var(--air) 11%,transparent),transparent 30rem),
+    radial-gradient(circle at 96% 12%,color-mix(in srgb,var(--fire) 10%,transparent),transparent 28rem),
+    radial-gradient(circle at 12% 68%,color-mix(in srgb,var(--water) 7%,transparent),transparent 34rem),
+    radial-gradient(circle at 88% 82%,color-mix(in srgb,var(--earth) 7%,transparent),transparent 36rem),
     var(--ground);
   color:var(--ink);
   font-family:Spectral,Georgia,"Times New Roman",serif;
@@ -88,9 +90,15 @@ body{
 }
 
 .progress{
-  position:fixed;top:0;left:0;height:2px;width:0;
+  position:fixed;top:0;left:0;height:3px;width:100%;
   background:linear-gradient(90deg,var(--air),var(--water),var(--earth),var(--fire));
-  z-index:60;transition:width .1s linear;
+  z-index:60;transform:scaleX(0);transform-origin:left center;
+  animation:reading-progress linear both;
+  animation-timeline:scroll(root);
+}
+@keyframes reading-progress{to{transform:scaleX(1)}}
+@supports not (animation-timeline:scroll()){
+  .progress{display:none}
 }
 
 /* ---------- shell ---------- */
@@ -105,6 +113,8 @@ body{
 /* ---------- rail ---------- */
 .rail{
   border-right:1px solid var(--rule);
+  border-top:3px solid transparent;
+  border-image:linear-gradient(90deg,var(--air),var(--water),var(--earth),var(--fire)) 1;
   padding:38px 26px 60px 24px;
   position:sticky;top:0;height:100vh;overflow-y:auto;
   background:color-mix(in srgb,var(--surface) 58%,transparent);
@@ -182,17 +192,23 @@ main{padding:0 0 140px;min-width:0}
 .wrap{max-width:min(720px,100%);padding:0 40px}
 
 .masthead{
-  padding:80px 40px 52px;border-bottom:1px solid var(--rule);position:relative;overflow:hidden;
-  background:
-    radial-gradient(circle at 88% 25%,color-mix(in srgb,var(--fire) 9%,transparent),transparent 17rem),
-    radial-gradient(circle at 72% 0%,color-mix(in srgb,var(--air) 10%,transparent),transparent 22rem);
+  min-height:430px;padding:80px 40px 52px;border-bottom:1px solid var(--rule);
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:#DCE5D9;
+}
+.masthead::before{
+  content:"";position:absolute;inset:-3%;z-index:-2;
+  background:url("../public/elemental-realms.webp") center/cover no-repeat;
+  transform:scale(1.03);
 }
 .masthead::after{
-  content:"";position:absolute;right:54px;top:50%;width:132px;height:132px;
-  border:1px solid var(--rule-firm);border-radius:50%;transform:translateY(-50%);
-  box-shadow:0 0 0 24px color-mix(in srgb,var(--accent) 5%,transparent),0 0 0 25px var(--rule);
-  opacity:.52;pointer-events:none;
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(242,237,221,.97) 0%,rgba(242,237,221,.9) 42%,rgba(6,23,19,.22) 72%,rgba(6,23,19,.52) 100%),
+    linear-gradient(0deg,rgba(242,237,221,.82),transparent 56%);
 }
+.masthead > *{position:relative;z-index:1}
 .masthead .eyebrow{
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
@@ -213,12 +229,37 @@ main{padding:0 0 140px;min-width:0}
 }
 .status .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
 
+:root[data-theme="dark"] .masthead{background:#061713}
+:root[data-theme="dark"] .masthead::after{
+  background:
+    linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.62) 100%),
+    linear-gradient(0deg,rgba(6,23,19,.88),transparent 58%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .masthead{background:#061713}
+  :root:not([data-theme="light"]) .masthead::after{
+    background:
+      linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.62) 100%),
+      linear-gradient(0deg,rgba(6,23,19,.88),transparent 58%);
+  }
+}
+
+@media (prefers-reduced-motion:no-preference){
+  .masthead::before{animation:realm-scene-drift 18s cubic-bezier(.45,0,.55,1) infinite alternate}
+}
+@keyframes realm-scene-drift{
+  from{transform:scale(1.03) translate3d(0,0,0)}
+  to{transform:scale(1.075) translate3d(-.65%,0,0)}
+}
+
 /* book divider */
 .book{
   padding:74px 40px 34px;margin-top:28px;position:relative;overflow:hidden;
   border-top:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 38%,var(--rule));
   border-bottom:1px solid var(--rule);
-  background:linear-gradient(115deg,color-mix(in srgb,var(--realm-color,var(--accent)) 10%,transparent),transparent 55%);
+  background:
+    radial-gradient(circle at 88% 50%,color-mix(in srgb,var(--realm-color,var(--accent)) 17%,transparent),transparent 13rem),
+    linear-gradient(115deg,color-mix(in srgb,var(--realm-color,var(--accent)) 13%,transparent),transparent 58%);
 }
 .book::after{
   content:"◈";position:absolute;right:46px;top:50%;transform:translateY(-50%);
@@ -243,7 +284,7 @@ main{padding:0 0 140px;min-width:0}
 .lesson-head{padding:56px 40px 10px;position:relative}
 .lesson-head::before{
   content:"";position:absolute;left:40px;top:36px;width:42px;height:2px;
-  background:var(--realm-color,var(--accent));
+  background:linear-gradient(90deg,var(--realm-color,var(--accent)),transparent);
 }
 .lesson-head .num{
   font-family:"JetBrains Mono",ui-monospace,monospace;
@@ -325,7 +366,8 @@ td code{font-size:.8em}
   display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
   margin:22px 0 34px;padding:14px 18px;
   background:var(--accent-wash);border-left:3px solid var(--accent);
-  border-radius:0 3px 3px 0;
+  border-radius:0 4px 4px 0;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 5%,transparent);
 }
 .technique .tag{
   font-family:"JetBrains Mono",ui-monospace,monospace;
@@ -349,7 +391,8 @@ td code{font-size:.8em}
 .forge{
   margin:34px 0;padding:20px 22px;
   background:var(--ember-wash);border-left:3px solid var(--ember);
-  border-radius:0 3px 3px 0;
+  border-radius:0 4px 4px 0;
+  box-shadow:inset 0 1px 0 color-mix(in srgb,var(--fire) 12%,transparent);
 }
 .forge .label{
   font-family:"JetBrains Mono",ui-monospace,monospace;
@@ -543,8 +586,9 @@ td code{font-size:.8em}
   .mobile-nav > summary::before{content:"☰";color:var(--accent)}
   .mobile-nav .inner{padding:4px 24px 24px;max-height:66vh;overflow-y:auto}
   .mobile-nav .mobile-theme-toggle{margin-top:18px}
-  .masthead{padding:48px 24px 36px}
-  .masthead::after{right:32px;opacity:.24}
+  .masthead{min-height:390px;padding:48px 24px 36px}
+  .masthead::before{background-position:58% center}
+  .masthead::after{right:0;opacity:1}
   .wrap,.book,.lesson-head{padding-left:24px;padding-right:24px}
   .lesson-end,.tail{margin-left:24px;margin-right:24px}
   .book{padding-top:56px}
@@ -552,7 +596,11 @@ td code{font-size:.8em}
 }
 
 @media (max-width:620px){
-  .masthead::after{display:none}
+  .masthead{min-height:400px}
+  .masthead::after{
+    display:block;
+    background:linear-gradient(0deg,color-mix(in srgb,var(--ground) 96%,transparent),color-mix(in srgb,var(--ground) 78%,transparent));
+  }
   .masthead h1{font-size:clamp(2rem,10vw,2.75rem);overflow-wrap:anywhere}
   .book::after{right:22px;font-size:4.5rem}
   .lesson-head::before{left:24px}
@@ -576,6 +624,7 @@ td code{font-size:.8em}
   cursor:pointer;transition:border-color .15s ease,color .15s ease;
 }
 .theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.theme-toggle:active{transform:translateY(1px)}
 .theme-toggle .icon{font-size:.85rem;line-height:1}
 .theme-toggle .sun{display:none}
 .theme-toggle .moon{display:inline}

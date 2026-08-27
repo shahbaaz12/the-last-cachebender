@@ -1,4 +1,4 @@
-/* The Last Cachebender — site behaviour
+/* The Last Cachebender site behaviour
    Reading progress, sidebar scroll-spy, theme toggle, back-to-top. */
 
 (function () {
@@ -15,7 +15,7 @@
     try {
       return localStorage.getItem(STORAGE_KEY);
     } catch (e) {
-      return null; // private mode, blocked storage — fall back to OS
+      return null; // private mode, blocked storage: fall back to OS
     }
   }
 
@@ -27,7 +27,7 @@
         localStorage.removeItem(STORAGE_KEY);
       }
     } catch (e) {
-      /* nothing to do — the toggle still works for this page view */
+      /* nothing to do: the toggle still works for this page view */
     }
   }
 
@@ -61,7 +61,7 @@
       var label = toggle.querySelector('[data-theme-label]');
       if (label) label.textContent = nextLabel;
     });
-    if (themeColor) themeColor.setAttribute('content', dark ? '#091310' : '#F3EFE3');
+    if (themeColor) themeColor.setAttribute('content', dark ? '#061713' : '#F2EDDD');
   }
 
   toggles.forEach(function (toggle) {
@@ -74,38 +74,17 @@
   });
   updateThemeControl();
 
-  /* ---------- reading progress ---------- */
-
-  var bar = document.getElementById('progress');
+  /* Reading progress is handled by a CSS scroll timeline. */
   var totop = document.getElementById('totop');
-  var ticking = false;
-
-  function onScroll() {
-    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    var y = window.scrollY;
-
-    if (bar) {
-      bar.style.width = (scrollable > 0 ? (y / scrollable) * 100 : 0) + '%';
-    }
-    if (totop) {
-      totop.classList.toggle('show', y > 900);
-    }
-    ticking = false;
-  }
-
-  /* Only listen when there is something on the page to update.
-     The home page has neither, so it attaches no scroll work at all. */
-  if (bar || totop) {
-    window.addEventListener('scroll', function () {
-      if (!ticking) {
-        window.requestAnimationFrame(onScroll);
-        ticking = true;
-      }
-    }, { passive: true });
-    onScroll();
-  }
 
   if (totop) {
+    var masthead = document.querySelector('.masthead');
+    if (masthead && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        totop.classList.toggle('show', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(masthead);
+    }
+
     totop.addEventListener('click', function () {
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
@@ -121,29 +100,31 @@
     return document.getElementById(a.getAttribute('href').slice(1));
   });
 
-  var spying = false;
-
-  function spy() {
-    var best = 0;
-    for (var i = 0; i < targets.length; i++) {
-      if (targets[i] && targets[i].getBoundingClientRect().top <= 120) {
-        best = i;
-      }
-    }
+  function setCurrent(target) {
+    var best = targets.indexOf(target);
+    if (best < 0) best = 0;
     links.forEach(function (a, i) {
       a.classList.toggle('here', i === best);
     });
-    spying = false;
   }
 
   if (links.length) {
-    window.addEventListener('scroll', function () {
-      if (!spying) {
-        window.requestAnimationFrame(spy);
-        spying = true;
-      }
-    }, { passive: true });
-    spy();
+    var initial = location.hash ? document.getElementById(location.hash.slice(1)) : targets[0];
+    setCurrent(initial || targets[0]);
+
+    if ('IntersectionObserver' in window) {
+      var spyObserver = new IntersectionObserver(function (entries) {
+        var visible = entries.filter(function (entry) { return entry.isIntersecting; });
+        visible.sort(function (a, b) {
+          return Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top);
+        });
+        if (visible.length) setCurrent(visible[0].target);
+      }, { rootMargin: '-8% 0px -78% 0px', threshold: 0 });
+
+      targets.forEach(function (target) {
+        if (target) spyObserver.observe(target);
+      });
+    }
   }
 
   /* ---------- mobile nav closes on selection ---------- */
