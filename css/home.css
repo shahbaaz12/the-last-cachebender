@@ -65,16 +65,17 @@
 }
 .hero::before{
   content:"";position:absolute;inset:-3%;z-index:-2;
-  background:url("../public/elemental-realms.webp") center/cover no-repeat;
+  background:url("../public/realm-restored.webp") center 38%/cover no-repeat;
   transform:scale(1.03);
 }
 .hero::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(242,237,221,.97) 0%,rgba(242,237,221,.9) 42%,rgba(6,23,19,.2) 72%,rgba(6,23,19,.56) 100%),
-    linear-gradient(0deg,rgba(242,237,221,.72),transparent 55%);
+    linear-gradient(90deg,rgba(241,245,231,.96) 0%,rgba(241,245,231,.84) 38%,rgba(241,245,231,.34) 62%,rgba(241,245,231,.08) 100%),
+    linear-gradient(0deg,rgba(241,245,231,.5),transparent 46%);
 }
 :root[data-theme="dark"] .hero{background:#061713}
+:root[data-theme="dark"] .hero::before{background-image:url("../public/realm-besieged.webp");background-position:center}
 :root[data-theme="dark"] .hero::after{
   background:
     linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.66) 100%),
@@ -120,23 +121,28 @@
 
 /* ---------- four-realm compass ---------- */
 
+/* Glass over the painting. It inherits the page tokens rather than
+   forcing a dark panel, so it never flips theme mid-page. */
 .realm-compass{
   position:relative;isolation:isolate;
   min-height:510px;padding:21px 22px 19px;
-  --ground:#071A16;--surface:rgba(11,34,28,.88);--surface-2:#17342B;
-  --ink:#F2EBD9;--ink-soft:#B8C9BF;--ink-faint:#86A097;
-  --rule:rgba(190,221,208,.16);--rule-firm:rgba(190,221,208,.3);--shadow:rgba(0,0,0,.44);
-  border:1px solid rgba(222,182,96,.38);border-radius:22px;
-  background:linear-gradient(145deg,rgba(7,26,22,.84),rgba(9,29,25,.68));
+  border:1px solid color-mix(in srgb,var(--accent) 34%,transparent);
+  border-radius:22px;
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--surface) 88%,transparent),
+    color-mix(in srgb,var(--surface) 72%,transparent));
   backdrop-filter:blur(16px) saturate(126%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 28px 70px rgba(0,0,0,.34);
+  box-shadow:0 28px 70px var(--shadow);
   overflow:hidden;
 }
+@supports not (backdrop-filter:blur(4px)){
+  .realm-compass{background:var(--surface)}
+}
 .realm-compass::before{
-  content:"";position:absolute;inset:0;z-index:-1;opacity:.45;
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.6;
   background-image:
-    linear-gradient(var(--rule) 1px,transparent 1px),
-    linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+    linear-gradient(var(--rule-firm) 1px,transparent 1px),
+    linear-gradient(90deg,var(--rule-firm) 1px,transparent 1px);
   background-size:32px 32px;
   mask-image:linear-gradient(to bottom,#000,transparent 84%);
 }
@@ -180,8 +186,8 @@
 .realm-seal{
   position:absolute;width:142px;min-height:66px;padding:10px 12px;
   display:flex;align-items:center;gap:10px;
-  background:color-mix(in srgb,var(--surface) 92%,transparent);
-  border:1px solid var(--rule);border-radius:10px;
+  background:color-mix(in srgb,var(--surface) 95%,transparent);
+  border:1px solid color-mix(in srgb,currentColor 38%,var(--rule));border-radius:10px;
   box-shadow:0 10px 26px var(--shadow);
 }
 .realm-seal i{
@@ -360,13 +366,31 @@
 
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:14px}
 .card{
+  position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;
   padding:21px 22px 18px;border-radius:6px;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--realm-color,var(--accent)) 7%,var(--surface)),var(--surface) 42%);
+  background:var(--surface);
   border:1px solid var(--rule);border-top:2px solid var(--realm-color,var(--accent));
   text-decoration:none;color:inherit;
   transition:border-color .15s ease,transform .15s ease;
 }
+/* realm texture, held under a near-solid wash so type stays on flat colour */
+.card::before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:var(--realm-tex,none) right 32%/128% auto no-repeat;
+  opacity:1;transition:transform .35s ease;
+}
+.card::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(112deg,
+    var(--surface) 0%,
+    var(--surface) 34%,
+    color-mix(in srgb,var(--surface) 82%,transparent) 58%,
+    color-mix(in srgb,var(--surface) 44%,transparent) 82%,
+    color-mix(in srgb,var(--surface) 22%,transparent) 100%);
+}
+.card:hover::before{transform:scale(1.06)}
+@media (prefers-reduced-motion:reduce){.card:hover::before{transform:none}}
 .card:hover{border-color:var(--realm-color,var(--accent));transform:translateY(-3px);box-shadow:0 18px 36px var(--shadow)}
 .card-top{display:flex;align-items:baseline;gap:11px;margin-bottom:13px}
 .card-no{
@@ -390,13 +414,38 @@
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.57rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
 }
-.book-band + .cards{--realm-color:var(--accent)}
-.book-band.realm-air + .cards{--realm-color:var(--air)}
-.book-band.realm-water + .cards{--realm-color:var(--water)}
-.book-band.realm-earth + .cards{--realm-color:var(--earth)}
-.book-band.realm-fire + .cards{--realm-color:var(--fire)}
-.book-band.realm-spirit + .cards{--realm-color:var(--spirit)}
-.book-band.realm-war + .cards{--realm-color:var(--ember)}
+
+/* Each book band carries its own slice of the painting. Scrolling the
+   grid reassembles the artwork, one realm at a time. */
+.book-band{position:relative;isolation:isolate;overflow:hidden;padding-left:16px}
+.book-band::before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:var(--band-tex,none) center 34%/cover no-repeat;
+  opacity:.85;
+}
+.book-band::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(90deg,
+    var(--ground) 0%,
+    color-mix(in srgb,var(--ground) 80%,transparent) 26%,
+    color-mix(in srgb,var(--ground) 34%,transparent) 62%,
+    color-mix(in srgb,var(--ground) 72%,transparent) 100%);
+}
+.book-band.realm-air{--band-tex:url("../public/tex-air.webp")}
+.book-band.realm-water{--band-tex:url("../public/tex-water.webp")}
+.book-band.realm-earth{--band-tex:url("../public/tex-earth.webp")}
+.book-band.realm-fire{--band-tex:url("../public/tex-fire.webp")}
+.book-band.realm-spirit{--band-tex:url("../public/tex-water.webp")}
+.book-band.realm-war{--band-tex:url("../public/tex-fire.webp")}
+:root[data-theme="dark"] .book-band::before{opacity:.9}
+
+.book-band + .cards{--realm-color:var(--accent);--realm-tex:url("../public/tex-earth.webp")}
+.book-band.realm-air + .cards{--realm-color:var(--air);--realm-tex:url("../public/tex-air.webp")}
+.book-band.realm-water + .cards{--realm-color:var(--water);--realm-tex:url("../public/tex-water.webp")}
+.book-band.realm-earth + .cards{--realm-color:var(--earth);--realm-tex:url("../public/tex-earth.webp")}
+.book-band.realm-fire + .cards{--realm-color:var(--fire);--realm-tex:url("../public/tex-fire.webp")}
+.book-band.realm-spirit + .cards{--realm-color:var(--spirit);--realm-tex:url("../public/tex-water.webp")}
+.book-band.realm-war + .cards{--realm-color:var(--ember);--realm-tex:url("../public/tex-fire.webp")}
 .book-band + .cards .chip{
   background:color-mix(in srgb,var(--realm-color) 8%,var(--surface-2));
   border-color:color-mix(in srgb,var(--realm-color) 24%,var(--rule));

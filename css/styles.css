@@ -1,26 +1,32 @@
 :root{
-  --ground:#F2EDDD;
-  --surface:#FCF8EC;
-  --surface-2:#E5EAE1;
-  --ink:#17312B;
-  --ink-soft:#536961;
-  --ink-faint:#75877F;
-  --rule:#D4D2C2;
-  --rule-firm:#AEB7A7;
-  --accent:#8A641F;
-  --accent-lift:#6E4D12;
-  --accent-wash:#ECE0C4;
-  --ember:#A84228;
-  --ember-wash:#F1D9CC;
-  --air:#3E8FA6;
-  --water:#116C91;
-  --earth:#5D783E;
-  --fire:#C34F2D;
+  /* The realm restored. Ground and accents sampled from the empire
+     quadrant of the source painting: pale green-gold light, teal
+     water, moss earth. Fire is held back as a warning colour. */
+  --ground:#F1F5E7;
+  --surface:#FAFCF3;
+  --surface-2:#E6EDDA;
+  --ink:#0C2226;
+  --ink-soft:#4A6560;
+  --ink-faint:#728A83;
+  --rule:#D2DEC8;
+  --rule-firm:#A9BC9F;
+  --accent:#0E6B78;
+  --accent-lift:#0A5763;
+  --accent-wash:#DCEDE9;
+  --ember:#B4552A;
+  --ember-wash:#F6E2D5;
+  --air:#4B9FA6;
+  --water:#0A7A93;
+  --earth:#4D7F49;
+  --fire:#C2622C;
+  --gold:#9A7A24;
   --spirit:#76508E;
-  --shadow:rgba(20,48,41,.12);
+  --shadow:rgba(12,34,38,.11);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
+    /* The realm under the Latency Lord. Same hues, lifted for a
+       dark ground, with gold carrying the light the painting has. */
     --ground:#061713;
     --surface:#0D211B;
     --surface-2:#163127;
@@ -34,15 +40,18 @@
     --accent-wash:#2C2717;
     --ember:#F17742;
     --ember-wash:#331F18;
-    --air:#8DCEDD;
-    --water:#3EACC7;
-    --earth:#99B86D;
-    --fire:#F27A45;
+    --air:#7FCFCB;
+    --water:#3EB6D2;
+    --earth:#8FBE6A;
+    --fire:#F5924F;
+    --gold:#E7C878;
     --spirit:#B897D5;
     --shadow:rgba(0,0,0,.4);
   }
 }
 :root[data-theme="dark"]{
+  /* The realm under the Latency Lord. Same hues, lifted for a
+     dark ground, with gold carrying the light the painting has. */
   --ground:#061713;
   --surface:#0D211B;
   --surface-2:#163127;
@@ -56,10 +65,11 @@
   --accent-wash:#2C2717;
   --ember:#F17742;
   --ember-wash:#331F18;
-  --air:#8DCEDD;
-  --water:#3EACC7;
-  --earth:#99B86D;
-  --fire:#F27A45;
+  --air:#7FCFCB;
+  --water:#3EB6D2;
+  --earth:#8FBE6A;
+  --fire:#F5924F;
+  --gold:#E7C878;
   --spirit:#B897D5;
   --shadow:rgba(0,0,0,.4);
 }
