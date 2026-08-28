@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css?v=14">
+<link rel="stylesheet" href="css/styles.css?v=19">
 
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
@@ -110,15 +110,17 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <h3>The realm</h3>
 
-  <p>You have been treating the database as &ldquo;the slow place behind the cache.&rdquo;</p>
+  <p>Air, Water and Earth all hold <strong>copies</strong>. That is what made them fast, and what made them dangerous — any of them can quietly disagree with the truth.</p>
 
-  <p>That is not really what it is. <strong>Your database is already a sophisticated caching system</strong>, built by people who spent decades on this exact problem.</p>
+  <p>This realm <em>is</em> the truth. The database is your <strong>source of truth</strong>: the original every copy was made from. When a cached value and the database disagree, the database is right by definition. The other three realms exist to keep work away from this one; this one exists to be correct.</p>
+
+  <p>It also caches internally, and that is the part people underestimate. <strong>A database has several layers of caching built in already</strong>, running whether you think about them or not.</p>
 
   <p>The <strong>buffer pool</strong> is memory the database sets aside to hold recently used data. Databases do not read individual rows from disk — they read <strong>pages</strong>, fixed-size blocks containing many rows, and those pages stay in memory afterwards. On a well-configured database the buffer pool holds the entire <strong>working set</strong> — the part of your data actually being used — and its hit ratio is above 99%. Underneath it, the operating system keeps its own cache of recently read disk blocks.</p>
 
   <p>The <strong>query plan cache</strong> stores the <em>strategy</em> for running a query — which index to use, what order to join tables — so the same query shape is not re-planned every time. Note carefully: it caches the plan, <strong>not the results</strong>. The query still runs.</p>
 
-  <p>Put those together and most of what you think of as &ldquo;reading from the database&rdquo; never touches a disk at all.</p>
+  <p>Between them, most database reads never reach a disk at all. The data is already in memory by the time a query asks for it.</p>
 
   <h3 id="l7-tune">You tune here, you do not build</h3>
 
@@ -153,9 +155,38 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <div class="keystone">Is this query slow because it is genuinely expensive, or because it is missing an index?</div>
 
-  <p>If the answer is a missing index, adding the index is not merely an alternative — it is strictly better. It is faster, it is always correct, and it introduces no staleness. Caching a query that needed an index means taking on every difficulty in Lesson 11 to avoid a problem you could have deleted.</p>
+  <p>If the answer is a missing index, add the index. A cache makes the query <em>look</em> fast while the work behind it stays exactly as expensive; an index makes the work itself cheaper, and the database keeps it current for you as part of every write.</p>
 
-  <p>The same applies to the <strong>N+1 problem</strong> — loading fifty products with one query and then their reviews with fifty more: caching those fifty lookups hides the waste, while loading the reviews alongside the products in a single query removes it.</p>
+  <p>An index is not free. It takes disk space, and it makes writes slightly slower, because every insert and update has to maintain it too. But those costs are paid in one place and you can measure them. Caching a query that needed an index means accepting everything in Lesson 11 — lifetimes, invalidation, staleness — in order to <strong>hide</strong> a problem you could have <strong>removed</strong>.</p>
+
+  <details class="opt">
+    <summary>The N+1 problem<span class="flag">optional read</span></summary>
+    <div class="body">
+      <p>This is the version of that mistake you are most likely to meet in real code.</p>
+
+      <p>You load fifty products, then loop over them to show each one's reviews:</p>
+
+      <pre class="figure">products = load_all_products()      1 query
+for p in products:
+    show(p.reviews)                 1 query each — 50 more</pre>
+
+      <p>Fifty-one queries where two would do. It is called <strong>N+1</strong> because that is the shape: one query for the list, then N more for the things hanging off it.</p>
+
+      <p>It is easy to miss because nothing looks wrong. Each individual query is fast. The page is slow because there are fifty of them, and each one costs a round trip to the database.</p>
+
+      <p>The tempting fix is to cache the fifty lookups. That works — it turns fifty-one database queries into one query and fifty cache hits, and the page does get faster.</p>
+
+      <p>But you have not removed the fifty round trips. You have moved them to a faster machine, and taken on a staleness problem for the privilege.</p>
+
+      <p>The real fix is to ask for the reviews alongside the products, in one query:</p>
+
+      <pre class="figure">products = load_all_products_with_reviews()      1 query, joined</pre>
+
+      <p>Two queries become one. Nothing to invalidate, nothing to expire, nothing to go stale — the work is simply gone. Most ORMs have a single option for this; it is usually called <em>eager loading</em> or <em>include</em>.</p>
+
+      <div class="keystone">Caching an N+1 hides it. Fixing the query deletes it.</div>
+    </div>
+  </details>
 
   <p>An index is not free — it makes writes slightly slower and it uses disk. But it is paid for in a currency you understand, once, rather than in correctness, forever.</p>
 
@@ -179,9 +210,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <div class="keystone">This was a cache built by database engineers, living inside the database, with perfect knowledge of every write at the instant it happened. They concluded that keeping it correct was not worth what it cost.</div>
 
-  <p>They had every advantage you are never going to have. In Lesson 11 you will build an invalidation scheme from <em>outside</em> the database, with no such knowledge, inferring when things change from the code paths you remembered to instrument.</p>
-
-  <p>That is not an argument against caching. It is an argument for knowing exactly what you are taking on — and for reaching first for the index, which has no invalidation problem at all.</p>
+  <p>They had every advantage you will not. In Lesson 11 you invalidate from <em>outside</em> the database, guessing when things changed from the code paths you remembered to cover. That is not an argument against caching — it is an argument for knowing what you are taking on, and for reaching first for the index, which has no invalidation problem at all.</p>
 
   <h3>At the Storefront</h3>
 

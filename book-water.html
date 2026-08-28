@@ -1,136 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Edge Kingdom · The Last Cachebender</title>
-<meta name="description" content="CDNs, edge caching, geographic distribution, cache keys, and purging.">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#0F1418">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Edge Kingdom · The Last Cachebender</title>
+    <meta
+      name="description"
+      content="CDNs, edge caching, geographic distribution, cache keys, and purging."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0F1418" />
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="The Edge Kingdom · The Last Cachebender">
-<meta property="og:description" content="CDNs, edge caching, geographic distribution, cache keys, and purging.">
-<meta property="og:url" content="https://shahbaaz12.github.io/the-last-cachebender/book-water.html">
-<meta property="og:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
-<meta property="og:image:width" content="1731">
-<meta property="og:image:height" content="909">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="The Last Cachebender">
-<meta name="twitter:description" content="Master the four cache realms and restore balance to a system under pressure.">
-<meta name="twitter:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
-<link rel="canonical" href="https://shahbaaz12.github.io/the-last-cachebender/book-water.html">
-<link rel="preload" as="image" href="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png" type="image/png" fetchpriority="high">
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="The Edge Kingdom · The Last Cachebender"
+    />
+    <meta
+      property="og:description"
+      content="CDNs, edge caching, geographic distribution, cache keys, and purging."
+    />
+    <meta
+      property="og:url"
+      content="https://shahbaaz12.github.io/the-last-cachebender/book-water.html"
+    />
+    <meta
+      property="og:image"
+      content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png"
+    />
+    <meta property="og:image:width" content="1731" />
+    <meta property="og:image:height" content="909" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Last Cachebender" />
+    <meta
+      name="twitter:description"
+      content="Master the four cache realms and restore balance to a system under pressure."
+    />
+    <meta
+      name="twitter:image"
+      content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png"
+    />
+    <link
+      rel="canonical"
+      href="https://shahbaaz12.github.io/the-last-cachebender/book-water.html"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png"
+      type="image/png"
+      fetchpriority="high"
+    />
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E"
+    />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap"
+    />
 
-<link rel="stylesheet" href="css/styles.css?v=14">
+    <link rel="stylesheet" href="css/styles.css?v=19" />
 
-<script>
-/* Apply the stored theme before first paint, so the page never flashes
+    <script>
+      /* Apply the stored theme before first paint, so the page never flashes
    the wrong palette. Deliberately inline and deliberately tiny. */
-(function(){try{var t=localStorage.getItem('cachebender-theme');
-if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
-</script>
-</head>
-<body class="course-page realm-water">
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="course-page realm-water">
+    <a class="skip" href="#top">Skip to content</a>
+    <div class="progress" id="progress"></div>
 
-<a class="skip" href="#top">Skip to content</a>
-<div class="progress" id="progress"></div>
+    <header class="course-top">
+      <div class="course-top-in">
+        <a
+          class="course-brand"
+          href="index.html"
+          aria-label="The Last Cachebender home"
+        >
+          <span class="course-crest"
+            ><svg viewBox="0 0 48 48" focusable="false" aria-hidden="true">
+              <circle class="crest-track" cx="24" cy="24" r="19"></circle>
+              <path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+              <path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+              <path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+              <path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+              <path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+              <circle class="crest-core" cx="24" cy="24" r="3"></circle></svg
+          ></span>
+          <span
+            ><b>The Last Cachebender</b><small>Book Two · Water</small></span
+          >
+        </a>
+        <nav class="course-books" aria-label="Course books">
+          <a href="course.html">Prologue</a><a href="book-air.html">Air</a
+          ><a href="book-water.html" aria-current="page">Water</a
+          ><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a
+          ><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+        </nav>
+        <button
+          class="theme-toggle course-theme-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Switch theme"
+          data-theme-toggle
+        >
+          <span class="icon moon" aria-hidden="true">☾</span
+          ><span class="icon sun" aria-hidden="true">☀</span>
+          <span data-theme-label>Light</span>
+        </button>
+      </div>
+    </header>
 
-<header class="course-top">
-  <div class="course-top-in">
-    <a class="course-brand" href="index.html" aria-label="The Last Cachebender home">
-      <span class="course-crest"><svg viewBox="0 0 48 48" focusable="false" aria-hidden="true">
-          <circle class="crest-track" cx="24" cy="24" r="19"></circle>
-          <path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
-          <path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
-          <path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
-          <path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
-          <path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
-          <circle class="crest-core" cx="24" cy="24" r="3"></circle>
-        </svg></span>
-      <span><b>The Last Cachebender</b><small>Book Two · Water</small></span>
-    </a>
-    <nav class="course-books" aria-label="Course books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html" aria-current="page">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a></nav>
-    <button class="theme-toggle course-theme-toggle" type="button" aria-pressed="false" aria-label="Switch theme" data-theme-toggle>
-      <span class="icon moon" aria-hidden="true">☾</span><span class="icon sun" aria-hidden="true">☀</span>
-      <span data-theme-label>Light</span>
-    </button>
-  </div>
-</header>
+    <div class="shell">
+      <main id="top">
+        <details class="mobile-nav">
+          <summary>Book Two · Water</summary>
+          <div class="inner">
+            <ul class="toc">
+              <li><a href="course.html">Prologue · The Forgotten Art</a></li>
+              <li>
+                <a href="book-air.html">Book One · Air · The Browser Realm</a>
+              </li>
+              <li>
+                <a href="book-water.html" aria-current="page" class="here"
+                  >Book Two · Water · The Edge Kingdom</a
+                >
+              </li>
+              <li>
+                <a href="book-earth.html"
+                  >Book Three · Earth · The Application Sanctum</a
+                >
+              </li>
+              <li>
+                <a href="book-fire.html"
+                  >Book Four · Fire · The Database Depths</a
+                >
+              </li>
+              <li>
+                <a href="book-spirit.html"
+                  >Interlude · Spirit · The Spirit Library</a
+                >
+              </li>
+              <li>
+                <a href="book-war.html">Book Five · War · The Great War</a>
+              </li>
+            </ul>
+          </div>
+        </details>
 
-<div class="shell">
-<main id="top">
+        <!-- ============ BOOK TWO ============ -->
+        <header class="book realm-water">
+          <div class="marker">Book Two · Water</div>
+          <h2>The Edge Kingdom</h2>
+          <div class="saga">
+            <p>
+              Water does not stay where it is put. It flows outward until it
+              surrounds everything.
+            </p>
+            <p>
+              In Book One you kept a copy in one person's hands. Here you learn
+              to push copies outward across the whole world, until every user in
+              every land has one nearby — and to accept that you no longer hold
+              them.
+            </p>
+          </div>
+        </header>
 
-<details class="mobile-nav">
-  <summary>Book Two · Water</summary>
-  <div class="inner">
-    <ul class="toc">
-      <li><a href="course.html">Prologue · The Forgotten Art</a></li>
-        <li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
-        <li><a href="book-water.html" aria-current="page" class="here">Book Two · Water · The Edge Kingdom</a></li>
-        <li><a href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
-        <li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
-        <li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
-        <li><a href="book-war.html">Book Five · War · The Great War</a></li>
-    </ul>
-  </div>
-</details>
+        <!-- ============ LESSON 4 ============ -->
+        <section class="lesson-head realm-water" id="l4">
+          <img
+            class="lesson-art"
+            src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_water_tribe_s/screen.png"
+            loading="lazy"
+            decoding="async"
+            alt=""
+          />
+          <div class="num">Lesson Four</div>
+          <h2>The Edge Kingdom</h2>
+        </section>
 
+        <section class="wrap">
+          <div class="technique">
+            <span class="tag">Technique unlocked</span>
+            <span class="name">Tidecall</span>
+            <span class="gloss">pushing copies outward to the edge</span>
+          </div>
 
+          <h3>The realm</h3>
 
-<!-- ============ BOOK TWO ============ -->
-<header class="book realm-water">
-  <div class="marker">Book Two · Water</div>
-  <h2>The Edge Kingdom</h2>
-  <div class="saga">
-    <p>Water does not stay where it is put. It flows outward until it surrounds everything.</p>
-    <p>In Book One you kept a copy in one person's hands. Here you learn to push copies outward across the whole world, until every user in every land has one nearby — and to accept that you no longer hold them.</p>
-  </div>
-</header>
+          <p>
+            A <strong>CDN</strong> — <strong>Content Delivery Network</strong> —
+            is a large group of servers spread across the world, which keep
+            copies of your content and serve it to whoever is nearest.
+          </p>
 
-<!-- ============ LESSON 4 ============ -->
-<section class="lesson-head realm-water" id="l4">
-  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_water_tribe_s/screen.png" loading="lazy" decoding="async" alt="">
-  <div class="num">Lesson Four</div>
-  <h2>The Edge Kingdom</h2>
-</section>
+          <p>
+            Each of those locations is called a <strong>PoP</strong> (point of
+            presence) or, more commonly, an <strong>edge server</strong> —
+            &ldquo;edge&rdquo; because it is at the outer edge of the network,
+            close to users, rather than at the centre where your own servers
+            are.
+          </p>
 
-<section class="wrap">
-  <div class="technique">
-    <span class="tag">Technique unlocked</span>
-    <span class="name">Tidecall</span>
-    <span class="gloss">pushing copies outward to the edge</span>
-  </div>
+          <p>
+            Your own server is called the <strong>origin</strong> — the place
+            the content originally comes from, and the single source of truth
+            behind all the copies.
+          </p>
 
-  <h3>The realm</h3>
+          <h3 id="l4-geo">Why geography is latency</h3>
 
-  <p>A <strong>CDN</strong> — <strong>Content Delivery Network</strong> — is a large group of servers spread across the world, which keep copies of your content and serve it to whoever is nearest.</p>
+          <p>
+            From Lesson 1: a request across a continent takes around 150ms, and
+            that is a physical limit. Light does not go faster because you
+            optimised your code. Physics does not accept pull requests. 🙂
+          </p>
 
-  <p>Each of those locations is called a <strong>PoP</strong> (point of presence) or, more commonly, an <strong>edge server</strong> — &ldquo;edge&rdquo; because it is at the outer edge of the network, close to users, rather than at the centre where your own servers are.</p>
+          <p>
+            If your origin is in Virginia and your user is in Singapore, every
+            single request pays that crossing. You cannot make the distance
+            shorter — but you <em>can</em> stop making the trip. Put a copy in
+            Singapore and the user's request travels a few miles instead of
+            eight thousand.
+          </p>
 
-  <p>Your own server is called the <strong>origin</strong> — the place the content originally comes from, and the single source of truth behind all the copies.</p>
+          <div class="aside">
+            <p>
+              And distance is only half of it. A request crossing the planet
+              passes through dozens of routers, any of which can be congested —
+              rather like a long-haul flight, where the hours in the air are the
+              part you can predict, and the connections, the customs queue and
+              the delay on the tarmac are the part you cannot.
+            </p>
+          </div>
 
-  <h3 id="l4-geo">Why geography is latency</h3>
+          <p>
+            That is all a CDN is. It does not make anything faster. It makes
+            things closer.
+          </p>
 
-  <p>From Lesson 1: a request across a continent takes around 150ms, and that is a physical limit. Light does not go faster because you optimised your code. Physics does not accept pull requests. 🙂</p>
+          <h3>How a request flows</h3>
 
-  <p>If your origin is in Virginia and your user is in Singapore, every single request pays that crossing. You cannot make the distance shorter — but you <em>can</em> stop making the trip. Put a copy in Singapore and the user's request travels a few miles instead of eight thousand.</p>
-
-  <div class="aside">
-    <p>And distance is only half of it. A request crossing the planet passes through dozens of routers, any of which can be congested — rather like a long-haul flight, where the hours in the air are the part you can predict, and the connections, the customs queue and the delay on the tarmac are the part you cannot.</p>
-  </div>
-
-  <p>That is all a CDN is. It does not make anything faster. It makes things closer.</p>
-
-  <h3>How a request flows</h3>
-
-  <pre class="figure">User in Singapore
+          <pre class="figure">
+User in Singapore
       ↓
 Nearest edge server (Singapore)
       ├─ HIT  → serve the stored copy                        ~5ms
@@ -138,174 +262,451 @@ Nearest edge server (Singapore)
                 store the copy at the Singapore edge
                 serve it
                 ↓
-                next Singapore user gets a HIT               ~5ms</pre>
+                next Singapore user gets a HIT               ~5ms</pre
+          >
 
-  <p>The first Singapore visitor pays full price. Everyone after them gets the local copy.</p>
+          <p>
+            The first Singapore visitor pays full price. Everyone after them
+            gets the local copy.
+          </p>
 
-  <div class="aside">
-    <p>The edge is loading missing data for you, on its own, without your application being involved. That behaviour has a name — <strong>read-through caching</strong> — and you will meet it formally in Lesson 8. A CDN is a read-through cache you did not have to write.</p>
-  </div>
+          <div class="aside">
+            <p>
+              The edge is loading missing data for you, on its own, without your
+              application being involved. That behaviour has a name —
+              <strong>read-through caching</strong> — and you will meet it
+              formally in Lesson 8. A CDN is a read-through cache you did not
+              have to write.
+            </p>
+          </div>
 
-  <h3 id="l4-keys">Cache keys at the edge</h3>
+          <h3 id="l4-keys">Cache keys at the edge</h3>
 
-  <p>Lesson 2's rule applies here with full force: <em>the key must contain every input that changes the answer.</em> But at the edge, <strong>you are not the one building the key</strong> — the CDN is. Your job is to configure what goes into it.</p>
+          <p>
+            Lesson 2's rule applies here with full force:
+            <em>the key must contain every input that changes the answer.</em>
+            But at the edge,
+            <strong>you are not the one building the key</strong> — the CDN is.
+            Your job is to configure what goes into it.
+          </p>
 
-  <p>By default the key is roughly the URL. You can add parts to it or take parts away — and both of Lesson 2's mistakes are waiting for you here.</p>
+          <p>
+            By default the key is roughly the URL. You can add parts to it or
+            take parts away — and both of Lesson 2's mistakes are waiting for
+            you here.
+          </p>
 
-  <p><strong>Put too much in the key</strong> and identical pages get stored separately, so nothing is ever reused.</p>
+          <p>
+            <strong>Put too much in the key</strong> and identical pages get
+            stored separately, so nothing is ever reused.
+          </p>
 
-  <p><strong>Put too little in</strong> and different answers collide under one key, so people get somebody else's page.</p>
+          <p>
+            <strong>Put too little in</strong> and different answers collide
+            under one key, so people get somebody else's page.
+          </p>
 
-  <p>The edge has a characteristic version of each.</p>
+          <p>The edge has a characteristic version of each.</p>
 
-  <h4>Query parameters: too much in the key</h4>
+          <h4>Query parameters: too much in the key</h4>
 
-  <p>A <strong>query parameter</strong> is the part of a URL after <code>?</code>, like <code>?page=2</code> or <code>?utm_source=newsletter</code>.</p>
+          <p>
+            A <strong>query parameter</strong> is the part of a URL after
+            <code>?</code>, like <code>?page=2</code> or
+            <code>?utm_source=newsletter</code>.
+          </p>
 
-  <p>Some of them genuinely change the response. <code>/search?q=headphones</code> and <code>/search?q=laptop</code> are different pages, and the CDN must treat them as different keys — otherwise everyone searching for anything gets the first person's results.</p>
+          <p>
+            Some of them genuinely change the response.
+            <code>/search?q=headphones</code> and
+            <code>/search?q=laptop</code> are different pages, and the CDN must
+            treat them as different keys — otherwise everyone searching for
+            anything gets the first person's results.
+          </p>
 
-  <p>So most CDNs include the whole query string in the key by default. That is the safe choice. It is also the one that quietly destroys your hit ratio.</p>
+          <p>
+            So most CDNs include the whole query string in the key by default.
+            That is the safe choice. It is also the one that quietly destroys
+            your hit ratio.
+          </p>
 
-  <p>Because if the CDN includes <em>all</em> of them, then these are four different keys:</p>
+          <p>
+            Because if the CDN includes <em>all</em> of them, then these are
+            four different keys:
+          </p>
 
-  <pre class="figure plain">/product/42
+          <pre class="figure plain">
+/product/42
 /product/42?utm_source=newsletter
 /product/42?utm_source=twitter
-/product/42?fbclid=IwAR2x9...</pre>
+/product/42?fbclid=IwAR2x9...</pre
+          >
 
-  <p>Four identical pages, stored four times, each starting cold. Marketing links and social-media click identifiers generate near-infinite unique URLs, so your hit ratio collapses toward zero for exactly the traffic you spent money to attract.</p>
+          <p>
+            Four identical pages, stored four times, each starting cold.
+            Marketing links and social-media click identifiers generate
+            near-infinite unique URLs, so your hit ratio collapses toward zero
+            for exactly the traffic you spent money to attract.
+          </p>
 
-  <p><strong>Key normalisation</strong> is the fix: tell the CDN which query parameters actually affect the response, and to ignore everything else. <code>page</code> matters. <code>utm_source</code> does not.</p>
+          <p>
+            <strong>Key normalisation</strong> is the fix. You tell the CDN
+            which query parameters actually change the response, and it strips
+            the rest before building the key.
+          </p>
 
-  <h4>The <code>Vary</code> header: when the URL is not enough</h4>
+          <p>
+            On the storefront, <code>page</code> and <code>q</code> change what
+            comes back. <code>utm_source</code> and <code>fbclid</code> change
+            nothing at all — they exist for your analytics, not for your server.
+            Strip them, and the four keys collapse back into one:
+          </p>
 
-  <p>Query parameters are at least visible in the URL. But some responses differ based on things that are not in the URL at all: the language the browser asked for, whether it accepts compressed content, whether the user is signed in.</p>
+          <pre class="figure">
+/product/42?utm_source=newsletter  ┐
+/product/42?utm_source=twitter     ├─→  /product/42
+/product/42?fbclid=IwAR2x9...      ┘</pre
+          >
 
-  <p>The URL is identical. The right answer is not. The cache has no way to know that by itself.</p>
+          <p>
+            Most CDNs let you write this either way round: name the parameters
+            that matter and ignore everything else, or name the ones to strip.
+            <strong>Prefer the first.</strong> A list of what matters still
+            works when marketing invents a new tracking parameter next week. A
+            list of what to strip does not — and it fails silently, by splitting
+            your cache again.
+          </p>
 
-  <p><strong><code>Vary</code></strong> is how you tell it. The header declares that a response depends on something in the <em>request</em>, not just the address.</p>
+          <h4>The <code>Vary</code> header: when the URL is not enough</h4>
 
-  <pre class="figure plain">Vary: Accept-Language</pre>
+          <p>
+            Query parameters are at least visible in the URL. But some responses
+            differ based on things that are not in the URL at all: the language
+            the browser asked for, whether it accepts compressed content,
+            whether the user is signed in.
+          </p>
 
-  <p>This says: <em>the answer differs depending on the language the browser asked for — so store a separate copy per language.</em> Without it, the first visitor's language would be served to everyone. That is the too-little-in-the-key failure, and it is a real bug that ships regularly.</p>
+          <p>
+            The URL is identical. The right answer is not. The cache has no way
+            to know that by itself.
+          </p>
 
-  <p>But <code>Vary</code> is dangerous in the other direction too:</p>
+          <p>
+            <strong><code>Vary</code></strong> is how you tell it. The header
+            declares that a response depends on something in the
+            <em>request</em>, not just the address.
+          </p>
 
-  <pre class="figure plain">Vary: Cookie</pre>
+          <pre class="figure plain">Vary: Accept-Language</pre>
 
-  <p>This says <em>store a separate copy for every distinct cookie value</em>. Since almost every visitor has a unique session cookie, almost every visitor gets their own private copy that is never reused. You have turned a global cache into a very expensive way of caching nothing.</p>
+          <p>
+            This says:
+            <em
+              >the answer differs depending on the language the browser asked
+              for — so store a separate copy per language.</em
+            >
+            Without it, the first visitor's language would be served to
+            everyone. That is the too-little-in-the-key failure, and it is a
+            real bug that ships regularly.
+          </p>
 
-  <p><code>Vary: Cookie</code> is a well-known way to accidentally disable a CDN entirely.</p>
+          <p>But <code>Vary</code> is dangerous in the other direction too:</p>
 
-  <h3 id="l4-change">Changing what the edge holds</h3>
+          <pre class="figure plain">Vary: Cookie</pre>
 
-  <p>You have pushed copies out across the world. Now the price changes. How do you fix thousands of copies you do not control?</p>
+          <p>
+            This says
+            <em>store a separate copy for every distinct cookie value</em>.
+            Since almost every visitor has a unique session cookie, almost every
+            visitor gets their own private copy that is never reused. You have
+            turned a global cache into a very expensive way of caching nothing.
+          </p>
 
-  <p>Three options, and the differences matter.</p>
+          <p>
+            <code>Vary: Cookie</code> is a well-known way to accidentally
+            disable a CDN entirely.
+          </p>
 
-  <div class="tablewrap"><table>
-    <thead><tr><th>Method</th><th>How it works</th><th>Speed</th><th>Cost</th></tr></thead>
-    <tbody>
-      <tr><td><strong>TTL expiry</strong></td><td>Wait for the copy to expire on its own</td><td>Slow — up to the full TTL</td><td>Free, automatic</td></tr>
-      <tr><td><strong>Purge</strong></td><td>Tell every edge to delete a specific key now</td><td>Seconds to minutes</td><td>Rate-limited by most CDNs</td></tr>
-      <tr><td><strong>Versioned URL</strong></td><td>Publish at a new URL; nothing to delete</td><td>Instant</td><td>Requires changing every reference</td></tr>
-    </tbody>
-  </table></div>
+          <h3 id="l4-change">Changing what the edge holds</h3>
 
-  <p><strong>TTL</strong> is the default and covers most cases. Pick a TTL you can live with being wrong for.</p>
+          <p>
+            You have pushed copies out across the world. Now you need to change
+            one of them.
+          </p>
 
-  <p><strong>Purge</strong> is the emergency tool — a wrong price, a legal takedown. It is not instant and not unlimited; CDNs restrict how often you can purge, so a design that purges on every write will hit a wall.</p>
+          <p>
+            Take the product photograph. It is cached at the edge for a day, in
+            hundreds of locations, and you have just been handed a corrected
+            image. How do you replace thousands of copies you do not control?
+          </p>
 
-  <p><strong>Versioning</strong> is the strongest option, and the same trick as Book One's fingerprinted filenames. Never edit; publish a new name. Nothing to invalidate, because nothing was ever changed.</p>
+          <p>Three options, and the differences matter.</p>
 
-  <div class="aside">
-    <p>That last idea is important enough that it returns as a general technique in Lesson 11, under the name <strong>versioned keys</strong>.</p>
-  </div>
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>How it works</th>
+                  <th>Speed</th>
+                  <th>Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>TTL expiry</strong></td>
+                  <td>Wait for the copy to expire on its own</td>
+                  <td>Slow — up to the full TTL</td>
+                  <td>Free, automatic</td>
+                </tr>
+                <tr>
+                  <td><strong>Purge</strong></td>
+                  <td>Tell every edge to delete a specific key now</td>
+                  <td>Seconds to minutes</td>
+                  <td>Rate-limited by most CDNs</td>
+                </tr>
+                <tr>
+                  <td><strong>Versioned URL</strong></td>
+                  <td>Publish at a new URL; nothing to delete</td>
+                  <td>Instant</td>
+                  <td>Requires changing every reference</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-  <h3 id="l4-shield">Origin shield</h3>
+          <p>
+            <strong>TTL</strong> is the default and covers most cases. Pick a
+            lifetime you can live with being wrong for.
+          </p>
 
-  <p>Here is a problem that only appears once you are big.</p>
+          <p>
+            <strong>Purge</strong> is the emergency tool — a wrong image, a
+            legal takedown. It is not instant and not unlimited; CDNs restrict
+            how often you can purge, so a design that purges on every write will
+            hit a wall.
+          </p>
 
-  <p>You have 200 edge locations. A popular item's TTL expires. All 200 edges now have a miss at roughly the same moment, and all 200 go to your origin for the same file.</p>
+          <p>
+            <strong>Versioning</strong> is the strongest option, and the same
+            trick as Book One's fingerprinted filenames. Publish
+            <code>headphones-v2.jpg</code> and update the reference. Nothing to
+            invalidate, because nothing was ever changed.
+          </p>
 
-  <p>Your origin, which was comfortably serving a trickle of traffic, gets 200 simultaneous requests for one thing.</p>
+          <h4>When versioning is not available</h4>
 
-  <p>An <strong>origin shield</strong> is one designated edge server that sits between all the others and your origin. Edges do not go to origin — they go to the shield. The shield gets one miss, makes one origin request, and answers the other 199 from its copy.</p>
+          <p>
+            Versioning works for the image because only your own HTML points at
+            it. You change the file and the reference to it together, in one
+            deploy.
+          </p>
 
-  <p>Your origin sees one request instead of 200.</p>
+          <p>
+            It does not work for <code>/product/42</code>. That address is
+            bookmarked by users and indexed by search engines, so you cannot
+            rename it — purge and TTL are your only tools there.
+          </p>
 
-  <div class="aside">
-    <p>Hold on to this shape: <em>many simultaneous misses on one key, all hitting the thing behind the cache.</em> It is the exact structure of the <strong>cache stampede</strong>, the first attack in Lesson 12, and the origin shield is one form of the defense.</p>
-  </div>
+          <div class="keystone">
+            Versioning is available exactly when you control every reference.
+          </div>
 
-  <h3 id="l4-proxy">Reverse-proxy caching</h3>
+          <h3 id="l4-shield">Origin shield</h3>
 
-  <p>A <strong>reverse proxy</strong> is a server that sits in front of your application and answers requests on its behalf. <strong>nginx</strong> and <strong>Varnish</strong> are the common ones.</p>
+          <p>Here is a problem that only appears once you are big.</p>
 
-  <p>It is the same idea as a CDN, with one difference: it runs on your own hardware, usually in your own datacentre, rather than being distributed worldwide.</p>
+          <p>
+            You have 200 edge locations. A popular item's TTL expires. All 200
+            edges now have a miss at roughly the same moment, and all 200 go to
+            your origin for the same file.
+          </p>
 
-  <ul>
-    <li>A <strong>CDN</strong> reduces latency by being geographically close to users.</li>
-    <li>A <strong>reverse proxy</strong> reduces load by absorbing repeat requests before they reach your application.</li>
-  </ul>
+          <p>
+            Your origin, which was comfortably serving a trickle of traffic,
+            gets 200 simultaneous requests for one thing.
+          </p>
 
-  <p>Same mechanics — cache keys, TTLs, purging, <code>Vary</code>. Different reason for existing. Many systems run both: a CDN worldwide, and a reverse proxy in front of the origin behind it.</p>
+          <p>
+            An <strong>origin shield</strong> is one designated edge server that
+            sits between all the others and your origin. Edges do not go to
+            origin — they go to the shield. The shield gets one miss, makes one
+            origin request, and answers the other 199 from its copy.
+          </p>
 
-  <h3>At the Storefront</h3>
+          <p>Your origin sees one request instead of 200.</p>
 
-  <div class="tablewrap"><table>
-    <thead><tr><th>Part</th><th>Edge-cacheable?</th><th>Cache key must include</th></tr></thead>
-    <tbody>
-      <tr><td>Asset bundle</td><td>Yes, aggressively</td><td>URL only (already fingerprinted)</td></tr>
-      <tr><td>Product images</td><td>Yes</td><td>URL, image size variant</td></tr>
-      <tr><td>Product details</td><td>Yes</td><td>URL, language</td></tr>
-      <tr><td>Price</td><td>Yes, short TTL</td><td>URL, currency, customer tier</td></tr>
-      <tr><td>Stock count</td><td>No — changes too fast</td><td>—</td></tr>
-      <tr><td>Reviews</td><td>Yes</td><td>URL, language, page number</td></tr>
-      <tr><td><strong>Cart badge</strong></td><td><strong>Never</strong></td><td>Personal — must not exist in a shared cache</td></tr>
-    </tbody>
-  </table></div>
+          <div class="aside">
+            <p>
+              Hold on to this shape:
+              <em
+                >many simultaneous misses on one key, all hitting the thing
+                behind the cache.</em
+              >
+              It is the exact structure of the <strong>cache stampede</strong>,
+              the first attack in Lesson 12, and the origin shield is one form
+              of the defense.
+            </p>
+          </div>
 
-  <p>Note what happened to price: the currency and customer tier that had to be in the key in Lesson 2 have to be in the <em>edge</em> key too. <strong>The same rule, at every layer.</strong></p>
+          <h3 id="l4-proxy">Reverse-proxy caching</h3>
 
-  <div class="myth">
-    <div class="label">The misconception to kill</div>
-    <p class="claim">&ldquo;The CDN caches my site.&rdquo;</p>
-    <p>It does not cache your site. It caches individual responses — the same point as Lesson 3, one layer further out — and only the ones your headers permit, under keys you configured.</p>
-    <p>Nobody <em>chooses</em> to put a session cookie in the cache key, or to let a tracking parameter split one popular page into fifty thousand cold ones. It happens because a default was never examined. The CDN did exactly what it was told. The instruction was simply never read.</p>
-  </div>
+          <p>
+            A <strong>reverse proxy</strong> is a server that sits in front of
+            your application and answers requests on its behalf.
+            <strong>nginx</strong> and <strong>Varnish</strong> are the common
+            ones.
+          </p>
 
-  <div class="forge">
-    <div class="label">The Forge</div>
-    <p>The Latency Lord does not look at the content the edge is holding. He looks at how the edge decides that two requests are the same request.</p>
-    <p>He notices a header being included in the key that should not be. He notices another that should be included and is not.</p>
-    <p>He does not need to break into the Edge Kingdom. He only needs to be mistaken for someone else.</p>
-  </div>
-</section>
+          <p>
+            It is the same idea as a CDN, with one difference: it runs on your
+            own hardware, usually in your own datacentre, rather than being
+            distributed worldwide.
+          </p>
 
-<div class="lesson-end">
-  <span class="muted">End of Book Two</span>
-  <a href="book-earth.html#l5">Next · Book Three: Earth →</a>
-</div>
+          <ul>
+            <li>
+              A <strong>CDN</strong> reduces latency by being geographically
+              close to users.
+            </li>
+            <li>
+              A <strong>reverse proxy</strong> reduces load by absorbing repeat
+              requests before they reach your application.
+            </li>
+          </ul>
 
-<footer class="course-footer">
-  <nav class="course-footer-nav" aria-label="Book navigation">
-    <a class="course-step previous" href="book-air.html"><small>Previous</small><b>← Book One · Air</b></a>
-    <a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
-    <a class="course-step next" href="book-earth.html"><small>Next</small><b>Book Three · Earth →</b></a>
-  </nav>
-  <div class="course-footer-meta">
-    <span>The Last Cachebender</span>
-    <a href="index.html">Home</a>
-    <a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
-    <a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
-  </div>
-</footer>
+          <p>
+            Same mechanics — cache keys, TTLs, purging, <code>Vary</code>.
+            Different reason for existing. Many systems run both: a CDN
+            worldwide, and a reverse proxy in front of the origin behind it.
+          </p>
 
-</main>
-</div>
+          <h3>At the Storefront</h3>
 
-<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
-<script src="js/main.js"></script>
-</body>
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Part</th>
+                  <th>Edge-cacheable?</th>
+                  <th>Cache key must include</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Asset bundle</td>
+                  <td>Yes, aggressively</td>
+                  <td>URL only (already fingerprinted)</td>
+                </tr>
+                <tr>
+                  <td>Product images</td>
+                  <td>Yes</td>
+                  <td>URL, image size variant</td>
+                </tr>
+                <tr>
+                  <td>Product details</td>
+                  <td>Yes</td>
+                  <td>URL, language</td>
+                </tr>
+                <tr>
+                  <td>Price</td>
+                  <td>Yes, short TTL</td>
+                  <td>URL, currency, customer tier</td>
+                </tr>
+                <tr>
+                  <td>Stock count</td>
+                  <td>No — changes too fast</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <td>Reviews</td>
+                  <td>Yes</td>
+                  <td>URL, language, page number</td>
+                </tr>
+                <tr>
+                  <td><strong>Cart badge</strong></td>
+                  <td><strong>Never</strong></td>
+                  <td>Personal — must not exist in a shared cache</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Note what happened to price: the currency and customer tier that had
+            to be in the key in Lesson 2 have to be in the <em>edge</em> key
+            too. <strong>The same rule, at every layer.</strong>
+          </p>
+
+          <div class="myth">
+            <div class="label">The misconception to kill</div>
+            <p class="claim">&ldquo;The CDN caches my site.&rdquo;</p>
+            <p>
+              It does not cache your site. It caches individual responses — the
+              same point as Lesson 3, one layer further out — and only the ones
+              your headers permit, under keys you configured.
+            </p>
+            <p>
+              Nobody <em>chooses</em> to put a session cookie in the cache key,
+              or to let a tracking parameter split one popular page into fifty
+              thousand cold ones. It happens because a default was never
+              examined. The CDN did exactly what it was told. The instruction
+              was simply never read.
+            </p>
+          </div>
+
+          <div class="forge">
+            <div class="label">The Forge</div>
+            <p>
+              The Latency Lord does not look at the content the edge is holding.
+              He looks at how the edge decides that two requests are the same
+              request.
+            </p>
+            <p>
+              He notices a header being included in the key that should not be.
+              He notices another that should be included and is not.
+            </p>
+            <p>
+              He does not need to break into the Edge Kingdom. He only needs to
+              be mistaken for someone else.
+            </p>
+          </div>
+        </section>
+
+        <div class="lesson-end">
+          <span class="muted">End of Book Two</span>
+          <a href="book-earth.html#l5">Next · Book Three: Earth →</a>
+        </div>
+
+        <footer class="course-footer">
+          <nav class="course-footer-nav" aria-label="Book navigation">
+            <a class="course-step previous" href="book-air.html"
+              ><small>Previous</small><b>← Book One · Air</b></a
+            >
+            <a class="course-map-link" href="index.html#lessons"
+              ><small>Course map</small><b>All fourteen lessons</b></a
+            >
+            <a class="course-step next" href="book-earth.html"
+              ><small>Next</small><b>Book Three · Earth →</b></a
+            >
+          </nav>
+          <div class="course-footer-meta">
+            <span>The Last Cachebender</span>
+            <a href="index.html">Home</a>
+            <a href="https://shahbaaz12.github.io/silicon-lanes/"
+              >Silicon Lanes</a
+            >
+            <a href="https://shahbaaz12.github.io/dungeons-and-databases/"
+              >Dungeons &amp; Databases</a
+            >
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <button class="totop" id="totop" type="button" aria-label="Back to top">
+      ↑
+    </button>
+    <script src="js/main.js"></script>
+  </body>
 </html>

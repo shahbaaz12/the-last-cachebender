@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css?v=14">
+<link rel="stylesheet" href="css/styles.css?v=19">
 
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
@@ -178,17 +178,19 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <h3>What belongs in a local cache</h3>
 
-  <p>Good candidates are <strong>small, hot, read-mostly, and tolerant of being slightly stale</strong>:</p>
+  <p>Things that are <strong>the same for every user</strong>, cheap to rebuild, and harmless if two servers are a few seconds out of step with each other.</p>
 
   <ul>
-    <li>Configuration and feature flags</li>
-    <li>The category tree</li>
-    <li>Currency conversion rates</li>
-    <li>Results of expensive pure calculations</li>
-    <li>Very hot lookups you would otherwise send to Redis thousands of times a second</li>
+    <li><strong>Feature flags</strong> — is the new checkout switched on?</li>
+    <li><strong>The country list</strong> behind a dropdown</li>
+    <li><strong>The navigation menu and category tree</strong></li>
+    <li><strong>Currency conversion rates</strong></li>
+    <li><strong>An expensive calculation</strong> you keep repeating with the same inputs</li>
   </ul>
 
-  <p>Bad candidates are large data, anything that must be exactly current, and <strong>anything personal to one user</strong> — because your process serves many users, and a key that forgets to identify the user will hand one person's data to another.</p>
+  <p>If your server restarts and loses all of it, nothing breaks. It rebuilds on the next request and the user never knows.</p>
+
+  <p><strong>What does not belong here:</strong> anything about one particular person. Your process serves thousands of users at once, and a key that forgets to say <em>which</em> of them will hand one customer's data to the next.</p>
 
   <h3>At the Storefront</h3>
 
@@ -202,20 +204,6 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <p>Local is inside your process — no network, no serialization, gone on restart, invisible to your other servers. Redis is across a network and shared. The gap between them is three orders of magnitude, and the <em>shared</em> part is the entire reason the next lesson exists.</p>
   </div>
 
-  <h3 id="l5-hook">The closing hook</h3>
-
-  <p>You now run two application servers behind a load balancer, because one was not enough.</p>
-
-  <p>An administrator changes a product's price from £25 to £20.</p>
-
-  <p>Server A handles the write and updates its local cache. Server B knows nothing about it and still holds £25.</p>
-
-  <p>Refresh the page a few times. £20. £25. £20. £25. The price changes depending on which server happens to answer.</p>
-
-  <div class="keystone">Two caches. One key. Two different values. Which one is telling the truth?</div>
-
-  <p>Neither. That is the problem, and it is what Stonesplit exists to solve.</p>
-</section>
 
 <!-- ============ LESSON 6 ============ -->
 <section class="lesson-head realm-earth" id="l6">
@@ -234,6 +222,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <h3 id="l6-problem">The problem, stated properly</h3>
 
   <p>You have 10 application servers. Each has its own local cache. This gives you three distinct problems.</p>
+
+  <div class="callout problem">
 
   <h4>1. They disagree</h4>
 
@@ -263,6 +253,12 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <p>Change something, and you would need to reach into all ten processes to remove the stale copy. There is no mechanism to do that. As you add servers, it gets worse.</p>
 
+  </div>
+
+  <div class="callout solution">
+
+  <span class="callout-label">SOLUTION</span>
+
   <p>A <strong>distributed cache</strong> solves all three: one shared cache that every server reads from and writes to.</p>
 
   <pre class="figure">Server A ─┐
@@ -270,6 +266,8 @@ Server B ─┼─→  Shared cache  ─→  Database
 Server C ─┘</pre>
 
   <p>One value. One place to update. One warm-up. All ten servers benefit from the first one's miss.</p>
+
+  </div>
 
   <p>In practice, for most teams, that shared cache is Redis. So the rest of this lesson is about what Redis actually gives you, where it genuinely shines, and what it costs.</p>
 
@@ -301,48 +299,88 @@ Server C ─┘</pre>
     </tbody>
   </table></div>
 
-  <p>A few of these in practice:</p>
+  <p>Those are the scenarios. Here is what they actually look like to write.</p>
 
-  <pre class="figure">Session — store it with a 30-minute expiry
-    SET session:a91f3c "{...}" EX 1800
+  <h4>Reading a Redis command</h4>
 
-Rate limiting — count this minute's requests, expire the counter after it
-    INCR   ratelimit:user:42:0930
-    EXPIRE ratelimit:user:42:0930 60
+  <p>Every command is a <strong>verb</strong>, a <strong>key</strong>, and usually a <strong>value</strong>:</p>
 
-Leaderboard — record a score, then read the top ten instantly
-    ZADD      leaderboard 4820 "player:17"
-    ZREVRANGE leaderboard 0 9
+  <pre class="figure">SET  product:42  "{name: Headphones, price: 25}"  EX 300
+│    │           │                                │
+verb key         value                            how long to keep it</pre>
 
-Caching — store a product for five minutes
-    SETEX product:42 300 "{...}"
-    GET   product:42</pre>
+  <p>Keys are just text. The colons in <code>product:42</code> mean nothing to Redis — they are a naming habit, the way folders organise files.</p>
+
+  <p>The last part is the one that matters most here. <strong>Expiry is built into the write.</strong> You say how long the value should live at the moment you store it, and Redis deletes it for you when the time is up. There is no cleanup job to write and no cleanup job to forget.</p>
+
+  <h4>Four of them in practice</h4>
+
+  <p><strong>A session — signed in for 30 minutes.</strong></p>
+
+  <pre class="figure">SET session:a91f3c "{user_id: 88}" EX 1800
+
+    EX 1800  →  delete this in 1800 seconds, which is 30 minutes</pre>
+
+  <p>Half an hour later the key is gone and the user is signed out. Nothing had to notice or tidy up.</p>
+
+  <p><strong>A rate limit — five attempts a minute.</strong></p>
+
+  <pre class="figure">INCR   ratelimit:user:42:0930        →  1     their first try this minute
+EXPIRE ratelimit:user:42:0930 60              throw the counter away after a minute
+
+INCR   ratelimit:user:42:0930        →  2
+INCR   ratelimit:user:42:0930        →  3     ... refuse them at 6</pre>
+
+  <p><code>INCR</code> adds one and hands back the new total, so you get the count and the increment in a single step. The <code>0930</code> on the end is the current minute — 09:30. Each minute quietly gets its own counter, and yesterday's counters have long since deleted themselves.</p>
+
+  <p><strong>A leaderboard — the top ten, instantly.</strong></p>
+
+  <pre class="figure">ZADD      leaderboard 4820 "player:17"    record a score of 4820
+
+ZREVRANGE leaderboard 0 9            →  the ten highest scores, in order</pre>
+
+  <p>A <strong>sorted set</strong> keeps its members in score order at all times. So "the top ten" is a read, not a sort — Redis already knows the answer. The same thing in a relational database means ordering the table on every request.</p>
+
+  <p><strong>A cache — hold a product for five minutes.</strong></p>
+
+  <pre class="figure">SETEX product:42 300 "{name: Headphones, price: 25}"
+
+GET   product:42    →  the value, if it is still there
+                    →  nil, if it is not</pre>
+
+  <p><code>SETEX</code> is just <code>SET</code> with the expiry built into the name. And that <code>nil</code> is worth pausing on: <strong>it is your cache miss.</strong> It is the moment your code stops asking Redis and goes to the database instead — the exact fork you met in Lesson 2.</p>
 
   <p>Look at the rate-limiting example. Two servers can run <code>INCR</code> on the same key at the same moment and the count is still correct, because Redis performs the increment itself. Doing that with a plain read-modify-write in your own code — read 10, add 1, write 11, twice, concurrently — loses one of the increments.</p>
 
   <div class="keystone">This is the read-modify-write race, and Redis solves it by doing the work for you.</div>
 
-  <h3 id="l6-scale">How Redis scales</h3>
+  <h3 id="l6-belongs">What belongs in Redis</h3>
 
-  <p>Three mechanisms, and you mainly need to know that they exist and what they cost.</p>
+  <p>Things that must be <strong>the same on every server</strong>, or must <strong>survive a restart</strong>, or are <strong>about one particular person</strong>.</p>
 
-  <p><strong>Replicas.</strong> Copies of the data on other nodes. They serve reads and they mean a dead node does not take its data with it. The cost is <strong>replica lag</strong> — the gap between a write landing on the primary and appearing on the replica. Usually milliseconds, never zero, and during that window a read from a replica returns the old value.</p>
+  <ul>
+    <li><strong>Login sessions</strong> — the request that signs you in might land on server 3 and the next one on server 7. Both have to know who you are.</li>
+    <li><strong>Shopping carts</strong> — the same reason, and people expect them to still be there tomorrow.</li>
+    <li><strong>One-time codes and password-reset links</strong> — store them with an expiry and Redis deletes them for you when the time is up.</li>
+    <li><strong>Rate limits</strong> — &ldquo;five login attempts a minute&rdquo; only works if every server counts into the same place.</li>
+    <li><strong>Results fetched from the database</strong> — one server's slow query becomes every server's fast answer.</li>
+    <li><strong>Live counters</strong> — view counts, or &ldquo;3 people are looking at this right now.&rdquo;</li>
+  </ul>
 
-  <p><strong>Redis Cluster.</strong> When one machine's memory is not enough, Cluster splits your keys across several nodes. Every key is assigned to one of 16,384 <strong>hash slots</strong>, and each node owns a range of slots. Add a node and it takes over some slots from the others.</p>
+  <p>Set that against the local-cache list from Lesson 5 and the split becomes clear: <strong>local for facts about your application, Redis for facts about your users.</strong></p>
 
-  <p>The sentence to take away:</p>
+  <h3 id="l6-choose">Local cache or Redis?</h3>
 
-  <div class="keystone">Your key lives on exactly one node.</div>
+  <p>One question settles most cases.</p>
 
-  <p><strong>Failover.</strong> When a primary dies, one of its replicas is promoted. Two things this costs you: any writes that had not yet reached the replica are lost, and there is a gap of seconds while the failure is detected and the promotion happens, during which requests to that node fail.</p>
+  <div class="keystone">If two of your servers gave different answers for this, would anything actually break?</div>
 
-  <p>Which leads to a rule you should design around now:</p>
+  <p><strong>No</strong> — put it in a local cache. It is faster, simpler, and costs nothing to run.</p>
 
-  <div class="aside">
-    <p><strong>Your application must keep working when the cache is unavailable.</strong> Slower, but working. Treat a cache error as a miss, not as an exception.</p>
-  </div>
+  <p><strong>Yes</strong> — put it in Redis, and pay the network trip for the privilege.</p>
 
-  <p>If it cannot do that, what you have built is not a cache. It is a database with no durability guarantees. Lesson 13 will make you test this.</p>
+  <p>The category tree can be five seconds out of date on one server and nobody will ever notice. A shopping cart cannot.</p>
+
 
   <h3 id="l6-down">The downsides</h3>
 
