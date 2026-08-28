@@ -24,3 +24,6 @@ Thumbs.db
 .claude/
 docs/
 artifact.html
+
+# Source art archives (images are extracted into public/)
+*.zip
