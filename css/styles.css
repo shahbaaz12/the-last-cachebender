@@ -193,10 +193,10 @@ body{
 
 /* ---------- main ---------- */
 main{padding:0 0 140px;min-width:0}
-.wrap{width:100%;max-width:800px;margin:0 auto;padding:0 40px}
+.wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 48px}
 
 .masthead{
-  min-height:500px;margin:20px 0 0;padding:86px 56px 58px;
+  min-height:500px;margin:20px 40px 0;padding:86px 48px 58px;
   border:1px solid color-mix(in srgb,var(--accent) 32%,var(--rule));border-radius:20px;
   position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -265,7 +265,7 @@ main{padding:0 0 140px;min-width:0}
 
 /* book divider */
 .book{
-  padding:74px 40px 34px;margin-top:28px;position:relative;overflow:hidden;
+  padding:74px 48px 34px;margin:28px 40px 0;position:relative;overflow:hidden;
   border-top:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 38%,var(--rule));
   border-bottom:1px solid var(--rule);
   background:
@@ -293,7 +293,7 @@ main{padding:0 0 140px;min-width:0}
 
 /* lesson head */
 .lesson-head{
-  min-height:210px;margin-top:26px;padding:58px 48px 32px;position:relative;isolation:isolate;overflow:hidden;
+  min-height:210px;margin:26px 40px 0;padding:58px 48px 32px;position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;justify-content:flex-end;
   border-top:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 44%,var(--rule));
   border-bottom:1px solid var(--rule);background:var(--surface-2);
@@ -378,8 +378,8 @@ tbody tr:last-child td{border-bottom:none}
 td code{font-size:.8em}
 
 /* ---------- shared storefront component ---------- */
-.storefront-overview{max-width:1040px;padding-top:62px}
-.storefront-intro{max-width:720px;margin-bottom:25px}
+.storefront-overview{max-width:1040px;padding:62px 48px 0}
+.storefront-intro{max-width:none;margin:0 0 25px}
 .storefront-intro h3{margin:7px 0 10px}
 .section-kicker{
   font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
@@ -477,7 +477,7 @@ td code{font-size:.8em}
 
 .storefront-study{
   position:relative;left:50%;transform:translateX(-50%);
-  width:min(1080px,calc(100vw - 48px));margin:24px 0 26px;
+  width:min(1040px,calc(100vw - 48px));margin:24px 0 26px;
   display:grid;grid-template-columns:minmax(0,1.08fr) minmax(430px,.92fr);gap:18px;align-items:stretch;
 }
 .course-storefront.compact .product-gallery{min-height:400px}
@@ -693,7 +693,7 @@ td code{font-size:.8em}
 .exercise > p:last-child{margin-bottom:0}
 
 .lesson-end{
-  margin:64px 40px 0;padding-top:26px;border-top:1px solid var(--rule);
+  margin:64px 40px 0;padding:26px 48px 0;border-top:1px solid var(--rule);
   display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
@@ -703,7 +703,7 @@ td code{font-size:.8em}
 .lesson-end .muted{color:var(--ink-faint)}
 
 .tail{
-  margin:90px 40px 0;padding:34px 0 0;border-top:1px solid var(--rule);
+  margin:90px 40px 0;padding:34px 48px 0;border-top:1px solid var(--rule);
   color:var(--ink-faint);font-size:.92rem;
 }
 .tail strong{color:var(--ink-soft)}
@@ -729,10 +729,12 @@ td code{font-size:.8em}
   .mobile-nav > summary::before{content:"☰";color:var(--accent)}
   .mobile-nav .inner{padding:4px 24px 24px;max-height:66vh;overflow-y:auto}
   .mobile-nav .mobile-theme-toggle{margin-top:18px}
-  .masthead{min-height:390px;margin-top:0;padding:48px 24px 36px;border-left:0;border-right:0;border-radius:0}
+  .masthead{min-height:390px;margin:0;padding:48px 24px 36px;border-left:0;border-right:0;border-radius:0}
   .masthead-art{object-position:58% center}
   .wrap,.book,.lesson-head{padding-left:24px;padding-right:24px}
-  .lesson-end,.tail{margin-left:24px;margin-right:24px}
+  .storefront-intro{margin-left:0;margin-right:0}
+  .book,.lesson-head{margin-left:0;margin-right:0}
+  .lesson-end,.tail{margin-left:0;margin-right:0;padding-left:24px;padding-right:24px}
   .book{padding-top:56px}
   .storefront-study{grid-template-columns:1fr;width:min(720px,calc(100vw - 48px))}
   .stale-panel{order:2}
