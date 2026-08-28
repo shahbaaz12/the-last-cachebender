@@ -78,7 +78,7 @@
   var totop = document.getElementById('totop');
 
   if (totop) {
-    var masthead = document.querySelector('.masthead');
+    var masthead = document.querySelector('.masthead, .book');
     if (masthead && 'IntersectionObserver' in window) {
       new IntersectionObserver(function (entries) {
         totop.classList.toggle('show', !entries[0].isIntersecting);

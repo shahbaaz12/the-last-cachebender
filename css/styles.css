@@ -193,10 +193,11 @@ body{
 
 /* ---------- main ---------- */
 main{padding:0 0 140px;min-width:0}
-.wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 48px}
+:root{--measure:944px;--content-gutter:44px}
+.wrap{width:100%;max-width:var(--measure);margin:0 auto;padding:0}
 
 .masthead{
-  min-height:500px;margin:20px 40px 0;padding:86px 48px 58px;
+  min-height:500px;max-width:var(--measure);margin:20px auto 0;padding:86px var(--content-gutter) 58px;
   border:1px solid color-mix(in srgb,var(--accent) 32%,var(--rule));border-radius:20px;
   position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;justify-content:flex-end;
@@ -265,7 +266,7 @@ main{padding:0 0 140px;min-width:0}
 
 /* book divider */
 .book{
-  padding:74px 48px 34px;margin:28px 40px 0;position:relative;overflow:hidden;
+  padding:74px var(--content-gutter) 34px;max-width:var(--measure);margin:28px auto 0;position:relative;overflow:hidden;
   border-top:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 38%,var(--rule));
   border-bottom:1px solid var(--rule);
   background:
@@ -293,13 +294,13 @@ main{padding:0 0 140px;min-width:0}
 
 /* lesson head */
 .lesson-head{
-  min-height:210px;margin:26px 40px 0;padding:58px 48px 32px;position:relative;isolation:isolate;overflow:hidden;
+  min-height:210px;max-width:var(--measure);margin:26px auto 0;padding:58px var(--content-gutter) 32px;position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;justify-content:flex-end;
   border-top:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 44%,var(--rule));
   border-bottom:1px solid var(--rule);background:var(--surface-2);
 }
 .lesson-head::before{
-  content:"";position:absolute;z-index:1;left:48px;top:38px;width:42px;height:2px;
+  content:"";position:absolute;z-index:1;left:var(--content-gutter);top:38px;width:42px;height:2px;
   background:linear-gradient(90deg,var(--realm-color,var(--accent)),transparent);
 }
 .lesson-head::after{
@@ -378,7 +379,7 @@ tbody tr:last-child td{border-bottom:none}
 td code{font-size:.8em}
 
 /* ---------- shared storefront component ---------- */
-.storefront-overview{max-width:1040px;padding:62px 48px 0}
+.storefront-overview{max-width:var(--measure);padding:62px 0 0}
 .storefront-intro{max-width:none;margin:0 0 25px}
 .storefront-intro h3{margin:7px 0 10px}
 .section-kicker{
@@ -475,10 +476,13 @@ td code{font-size:.8em}
 .cart-button b{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;color:#17211D;background:#E8B64F;font-size:.7rem}
 .product-cart .cache-policy{margin:7px 3px 0;color:var(--ember)}
 
+/* Sits on the same measure as the prose around it. It used to break out
+   of the wrap padding, which made it the only element on the page that
+   did not line up with the text. */
 .storefront-study{
-  position:relative;left:50%;transform:translateX(-50%);
-  width:min(1040px,calc(100vw - 48px));margin:24px 0 26px;
-  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(430px,.92fr);gap:18px;align-items:stretch;
+  margin:24px 0 26px;
+  display:grid;grid-template-columns:minmax(0,1.06fr) minmax(380px,.94fr);
+  gap:18px;align-items:stretch;
 }
 .course-storefront.compact .product-gallery{min-height:400px}
 .course-storefront.compact .product-shell{padding:14px;gap:14px}
@@ -499,10 +503,11 @@ td code{font-size:.8em}
 .saga{
   margin:0 0 26px;padding:0 0 0 22px;border-left:2px solid var(--rule-firm);
   font-style:italic;color:var(--ink-soft);font-size:1.05rem;line-height:1.72;
+  max-width:640px;
 }
 .saga p{margin:0 0 14px}
 .saga p:last-child{margin:0}
-.book .saga{max-width:640px;margin-top:22px}
+.book .saga{margin-top:22px}
 
 /* technique plate */
 .technique{
@@ -572,7 +577,7 @@ td code{font-size:.8em}
 }
 
 /* forge callback in L12 */
-.forge.recall{margin:26px 0;padding:15px 20px}
+.forge.recall{margin:26px 0;padding:16px 22px}
 .forge.recall p{font-size:.97rem}
 
 /* the closing narrative */
@@ -580,6 +585,7 @@ td code{font-size:.8em}
   border-left:2px solid var(--accent);padding-left:24px;
   font-size:1.08rem;
 }
+.saga.finale{max-width:640px}
 .saga.finale p:last-child{color:var(--ink);font-style:normal}
 
 /* misconception */
@@ -693,7 +699,7 @@ td code{font-size:.8em}
 .exercise > p:last-child{margin-bottom:0}
 
 .lesson-end{
-  margin:64px 40px 0;padding:26px 48px 0;border-top:1px solid var(--rule);
+  max-width:var(--measure);margin:64px auto 0;padding:26px 0 0;border-top:1px solid var(--rule);
   display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;
@@ -703,7 +709,7 @@ td code{font-size:.8em}
 .lesson-end .muted{color:var(--ink-faint)}
 
 .tail{
-  margin:90px 40px 0;padding:34px 48px 0;border-top:1px solid var(--rule);
+  max-width:var(--measure);margin:90px auto 0;padding:34px 0 0;border-top:1px solid var(--rule);
   color:var(--ink-faint);font-size:.92rem;
 }
 .tail strong{color:var(--ink-soft)}
@@ -736,7 +742,7 @@ td code{font-size:.8em}
   .book,.lesson-head{margin-left:0;margin-right:0}
   .lesson-end,.tail{margin-left:0;margin-right:0;padding-left:24px;padding-right:24px}
   .book{padding-top:56px}
-  .storefront-study{grid-template-columns:1fr;width:min(720px,calc(100vw - 48px))}
+  .storefront-study{grid-template-columns:1fr}
   .stale-panel{order:2}
   body{font-size:16.5px}
 }
@@ -768,6 +774,97 @@ td code{font-size:.8em}
 /* ============================================================
    Standalone site additions — not present in the artifact build
    ============================================================ */
+
+/* ---------- shared course header ---------- */
+.course-top{
+  position:relative;z-index:50;
+  border-top:3px solid transparent;border-bottom:1px solid var(--rule);
+  border-image:linear-gradient(90deg,var(--air),var(--water),var(--earth),var(--fire)) 1;
+  background:color-mix(in srgb,var(--ground) 90%,transparent);backdrop-filter:blur(18px);
+}
+.course-top-in{
+  width:100%;max-width:var(--measure);height:72px;margin:0 auto;
+  display:flex;align-items:center;gap:22px;
+}
+.course-brand{
+  display:flex;align-items:center;gap:11px;min-width:max-content;
+  color:var(--ink);text-decoration:none;
+}
+.course-brand > span:last-child{display:flex;flex-direction:column;gap:2px}
+.course-brand b{font:700 .95rem/1.15 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.012em}
+.course-brand small{
+  font:500 .55rem/1.3 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
+}
+.course-crest{
+  width:36px;height:36px;display:grid;place-items:center;flex:none;padding:4px;
+  border:1px solid color-mix(in srgb,var(--gold) 56%,var(--rule));border-radius:50%;
+  background:var(--surface);box-shadow:inset 0 0 0 2px var(--ground);
+}
+.course-crest svg{width:100%;height:100%;display:block;overflow:visible}
+.course-crest .crest-track{fill:none;stroke:var(--rule-firm);stroke-width:1}
+.course-crest [class^="crest-"]:not(.crest-track):not(.crest-diamond):not(.crest-core){fill:none;stroke-width:4;stroke-linecap:round}
+.course-crest .crest-air{stroke:var(--air)}
+.course-crest .crest-water{stroke:var(--water)}
+.course-crest .crest-earth{stroke:var(--earth)}
+.course-crest .crest-fire{stroke:var(--fire)}
+.course-crest .crest-diamond{fill:color-mix(in srgb,var(--gold) 12%,transparent);stroke:var(--gold);stroke-width:1.5}
+.course-crest .crest-core{fill:var(--gold)}
+.course-books{
+  margin-left:auto;display:flex;align-items:center;gap:2px;
+  font:500 .57rem/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.course-books a{padding:9px 7px;border-radius:3px;color:var(--ink-faint);text-decoration:none}
+.course-books a:hover{color:var(--accent);background:var(--surface-2)}
+.course-books a[aria-current="page"]{color:var(--accent);background:var(--accent-wash)}
+.course-theme-toggle{margin:0;flex:none}
+
+/* ---------- shared course footer ---------- */
+.course-footer{
+  width:100%;max-width:var(--measure);margin:90px auto 0;
+  border-top:1px solid var(--rule);padding:28px 0 0;
+}
+.course-footer-nav{display:grid;grid-template-columns:1fr minmax(180px,.7fr) 1fr;gap:12px;align-items:stretch}
+.course-step,.course-map-link{
+  min-height:76px;padding:15px 17px;display:flex;flex-direction:column;justify-content:center;
+  border:1px solid var(--rule);border-radius:5px;background:var(--surface);
+  color:var(--ink);text-decoration:none;
+}
+.course-step:hover,.course-map-link:hover{border-color:var(--accent);color:var(--accent)}
+.course-step small,.course-map-link small{
+  margin-bottom:6px;font:500 .56rem/1.2 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
+}
+.course-step b,.course-map-link b{font:600 .86rem/1.25 "Bricolage Grotesque",system-ui,sans-serif}
+.course-step.next{text-align:right;align-items:flex-end}
+.course-map-link{text-align:center;align-items:center}
+.course-step.is-empty{visibility:hidden}
+.course-footer-meta{
+  margin-top:26px;padding:22px 0 0;border-top:1px solid var(--rule);
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  font:500 .59rem/1.4 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);
+}
+.course-footer-meta span{margin-right:auto}
+.course-footer-meta a{color:var(--ink-soft);text-decoration:none}
+.course-footer-meta a:hover{color:var(--accent)}
+
+@media (max-width:940px){
+  .course-top-in{height:64px;padding:0 24px}
+  .course-books{display:none}
+  .course-footer{padding-left:24px;padding-right:24px}
+}
+@media (max-width:620px){
+  .course-brand small{max-width:20ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .course-theme-toggle [data-theme-label]{display:none}
+  .course-theme-toggle{padding:7px 9px}
+  .course-footer-nav{grid-template-columns:1fr 1fr}
+  .course-map-link{grid-column:1/-1;grid-row:2}
+  .course-step.is-empty{display:none}
+  .course-footer-meta{align-items:flex-start;flex-direction:column;gap:10px}
+  .course-footer-meta span{margin-right:0}
+}
 
 /* theme toggle */
 .theme-toggle{

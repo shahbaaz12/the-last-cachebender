@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Great War · The Last Cachebender</title>
+<meta name="description" content="Cache attacks, measurement, restoration, and the final multi-layer caching design.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#0F1418">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Great War · The Last Cachebender">
+<meta property="og:description" content="Cache attacks, measurement, restoration, and the final multi-layer caching design.">
+<meta property="og:url" content="https://shahbaaz12.github.io/the-last-cachebender/book-war.html">
+<meta property="og:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
+<meta property="og:image:width" content="1731">
+<meta property="og:image:height" content="909">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Last Cachebender">
+<meta name="twitter:description" content="Master the four cache realms and restore balance to a system under pressure.">
+<meta name="twitter:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
+<link rel="canonical" href="https://shahbaaz12.github.io/the-last-cachebender/book-war.html">
+<link rel="preload" as="image" href="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png" type="image/png" fetchpriority="high">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
+
+<link rel="stylesheet" href="css/styles.css?v=10">
+
+<script>
+/* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="course-page realm-war">
+
+<a class="skip" href="#top">Skip to content</a>
+<div class="progress" id="progress"></div>
+
+<header class="course-top">
+  <div class="course-top-in">
+    <a class="course-brand" href="index.html" aria-label="The Last Cachebender home">
+      <span class="course-crest"><svg viewBox="0 0 48 48" focusable="false" aria-hidden="true">
+          <circle class="crest-track" cx="24" cy="24" r="19"></circle>
+          <path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+          <path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+          <path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+          <path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+          <path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+          <circle class="crest-core" cx="24" cy="24" r="3"></circle>
+        </svg></span>
+      <span><b>The Last Cachebender</b><small>Book Five · War</small></span>
+    </a>
+    <nav class="course-books" aria-label="Course books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html" aria-current="page">War</a></nav>
+    <button class="theme-toggle course-theme-toggle" type="button" aria-pressed="false" aria-label="Switch theme" data-theme-toggle>
+      <span class="icon moon" aria-hidden="true">☾</span><span class="icon sun" aria-hidden="true">☀</span>
+      <span data-theme-label>Light</span>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+<main id="top">
+
+<details class="mobile-nav">
+  <summary>Book Five · War</summary>
+  <div class="inner">
+    <ul class="toc">
+      <li><a href="course.html">Prologue · The Forgotten Art</a></li>
+        <li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
+        <li><a href="book-water.html">Book Two · Water · The Edge Kingdom</a></li>
+        <li><a href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
+        <li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
+        <li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
+        <li><a href="book-war.html" aria-current="page" class="here">Book Five · War · The Great War</a></li>
+    </ul>
+  </div>
+</details>
+
+
+
+<!-- ============ BOOK FIVE ============ -->
+<header class="book realm-war">
+  <div class="marker">Book Five</div>
+  <h2>The Great War</h2>
+  <div class="saga">
+    <p>The Surge arrives at midnight.</p>
+    <p>The Latency Lord comes with five weapons, and you have watched him forge every one. He built them out in the open, in front of you, while you were learning.</p>
+    <p>You are not given anything new here. You do not need anything new.</p>
+  </div>
+</header>
+
+<!-- ============ LESSON 12 ============ -->
+<section class="lesson-head realm-war" id="l12">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_siege_of_ba_sing/screen.png" loading="lazy" decoding="async" alt="">
+  <div class="num">Lesson Twelve</div>
+  <h2>The Latency Lord's Attacks</h2>
+</section>
+
+<section class="wrap">
+  <div class="trial">
+    <span class="trial-tag">The trial</span>
+    <span class="trial-line">You fight with what you already have.</span>
+  </div>
+
+  <h3>How this lesson works</h3>
+
+  <p>Every other lesson gave you a technique. This one does not, and that is the entire design.</p>
+
+  <p>For each attack:</p>
+
+  <ol>
+    <li><strong>The attack</strong> — watch it break the storefront.</li>
+    <li><strong>Your attempt</strong> — before reading on, work out the defense from what you already know. Everything you need has been taught.</li>
+    <li><strong>The confirmation</strong> — the defense named properly, with the lesson it came from.</li>
+  </ol>
+
+  <p><strong>The rule this lesson obeys:</strong> every defense below is an application of something in Lessons 1–11. Nothing new is introduced. If you find yourself needing something you have not seen, look again — you have seen it.</p>
+
+  <h3 id="l12-stampede">Attack 1 — The Stampede</h3>
+
+  <p>Midnight. The front-page product's cached value expires. In the next 50 milliseconds, 1,000 requests arrive. Every one misses. Every one queries the database.</p>
+
+  <p>The database, which was comfortable, receives 1,000 identical queries at once. It slows down. Because it slows down, the reload takes longer. Because the reload takes longer, more requests pile into the gap. Because more requests pile in, the database slows further.</p>
+
+  <p>Your database falls over. Not because of a flaw in your cache — <strong>because your cache worked exactly as designed.</strong> Cache-aside has a gap between &ldquo;expired&rdquo; and &ldquo;reloaded,&rdquo; and every request arriving in that gap goes to the database.</p>
+
+  <p>Also called a <strong>dogpile</strong> or <strong>thundering herd</strong>.</p>
+
+  <div class="forge recall">
+    <div class="label">You saw this being forged · Lesson 8</div>
+    <p>He does not need to take the cache away. He only needs to choose the moment it empties.</p>
+  </div>
+
+  <div class="attempt">Stop here and work out the defense before reading on.</div>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Technique</th><th>From</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Single-flight</strong></td><td><strong>L8</strong></td><td>One request loads; the other 999 wait for its answer. 1,000 queries become 1.</td></tr>
+      <tr><td><strong>Refresh-ahead</strong></td><td><strong>L8</strong></td><td>Refresh hot keys before expiry — the gap never opens.</td></tr>
+      <tr><td><strong>TTL jitter</strong></td><td><strong>L10</strong></td><td>Different keys expire at different moments, so stampedes never coincide.</td></tr>
+      <tr><td><strong>Serve stale while refreshing</strong></td><td><strong>L3</strong></td><td>Hand out the old value instantly, refresh behind it. Nobody waits, nobody misses.</td></tr>
+      <tr><td><strong>Origin shield</strong></td><td><strong>L4</strong></td><td>The CDN version: one edge absorbs the miss on behalf of all the others.</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>Single-flight is the direct answer. Refresh-ahead is the preventive one. Use both on your hottest keys.</p>
+
+  <h3 id="l12-penetration">Attack 2 — The Penetration</h3>
+
+  <p>Requests arrive for <code>product:999999999</code>. It does not exist and never has.</p>
+
+  <p>Follow it through your realms. The browser has no copy — nothing was ever stored. The CDN has no copy. Redis has no copy. So the request reaches the database, which searches its index and confirms the product does not exist.</p>
+
+  <p>Then the same request arrives again. Every step repeats. <strong>A miss is cached; a &ldquo;does not exist&rdquo; is not.</strong></p>
+
+  <p>Your entire caching architecture is transparent to these requests. Every one goes straight to the database, and an attacker can send thousands per second using randomly generated IDs. Your cache defends nothing, because there is nothing to cache.</p>
+
+  <div class="forge recall">
+    <div class="label">You saw this being forged · Lesson 2</div>
+    <p>He begins writing down names of things that were never real.</p>
+  </div>
+
+  <div class="attempt">Stop here and work out the defense before reading on.</div>
+
+  <p><strong>Negative caching</strong> — cache the fact that something does not exist.</p>
+
+  <pre class="figure">value = cache.get("product:999999999")
+
+if value is NOT_FOUND_MARKER:
+    return 404                          # HIT — never touches the database
+
+if value is None:                       # genuinely not in cache
+    row = database.query(...)
+    if row is None:
+        cache.set(key, NOT_FOUND_MARKER, ttl=60)   # ← cache the absence
+        return 404
+    cache.set(key, row, ttl=300)
+    return row</pre>
+
+  <p>Where this comes from: <strong>L2</strong> taught that a key maps to a value, and <strong>L8</strong> taught cache-aside. The insight is that <em>&ldquo;there is no such product&rdquo;</em> is a perfectly valid answer, and valid answers can be cached. Nothing new — just noticing that a negative result is still a result.</p>
+
+  <p>Two details:</p>
+
+  <ul>
+    <li><strong>Use a short TTL.</strong> If someone creates product 999999999 tomorrow, you do not want to serve a stale 404 for an hour. Sixty seconds is typical.</li>
+    <li><strong>Use a distinct marker.</strong> You must be able to tell &ldquo;cached as non-existent&rdquo; apart from &ldquo;not in the cache.&rdquo; Storing plain <code>null</code> usually makes those indistinguishable, and you get a permanent miss instead of a hit.</li>
+  </ul>
+
+  <p>Also worth applying: <strong>input validation.</strong> If product IDs are always under 8 digits, reject <code>999999999</code> before it reaches any cache or database at all. The cheapest defense is not answering the question.</p>
+
+  <div class="placeholder">
+    <div class="label">Placeholder — Bloom filters</div>
+    <p>The second defense for this attack, deferred by decision.</p>
+  </div>
+
+  <h3 id="l12-avalanche">Attack 3 — The Avalanche</h3>
+
+  <p>You deployed at 14:00 and warmed the cache — 50,000 keys, all written within a few seconds, all with <code>TTL = 3600</code>.</p>
+
+  <p>At 15:00, all 50,000 expire in the same second.</p>
+
+  <p>Every request now misses. Not one hot key — <strong>everything, simultaneously.</strong> Your database receives your entire read traffic with no cache in front of it, for as long as it takes to reload 50,000 entries. It cannot cope, because it was never sized to; the cache was absorbing 95% of the load.</p>
+
+  <p>The same thing happens when a cache node restarts, or when a cluster fails over and comes back empty.</p>
+
+  <p>The distinction from a stampede: a stampede is <strong>many requests, one key</strong>. An avalanche is <strong>many keys, all at once</strong>.</p>
+
+  <div class="forge recall">
+    <div class="label">You saw this being forged · Lesson 10</div>
+    <p>He simply finds every expiry timer in the kingdom and sets them all to the same hour.</p>
+  </div>
+
+  <div class="attempt">Stop here and work out the defense before reading on.</div>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Technique</th><th>From</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><strong>TTL jitter</strong></td><td><strong>L10</strong></td><td><code>ttl = 3600 + random(0, 600)</code> spreads 50,000 expiries across 10 minutes</td></tr>
+      <tr><td><strong>Tiered TTLs</strong></td><td><strong>L10</strong></td><td>Different data types get different lifetimes, so they never align</td></tr>
+      <tr><td><strong>Cache warming</strong></td><td><strong>L2</strong></td><td>After a restart, reload deliberately rather than under live traffic</td></tr>
+      <tr><td><strong>Single-flight</strong></td><td><strong>L8</strong></td><td>Limits the damage — one query per key, not one per request</td></tr>
+      <tr><td><strong>Serve stale on failure</strong></td><td><strong>L3, L11</strong></td><td>If the database is struggling, keep serving expired values rather than adding load</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>Jitter is the fix, and it is one line of code. This is the cheapest defense in the entire course, and forgetting it is the most common cause of a self-inflicted outage on this list.</p>
+
+  <h3 id="l12-hotkey">Attack 4 — The Hot Key</h3>
+
+  <p>You partitioned your cache across 10 nodes. Load is evenly spread — except that one key is not like the others.</p>
+
+  <p>The front-page item receives 40% of all cache traffic. So one node receives 40% of your traffic while the other nine share the remaining 60%.</p>
+
+  <p>That node saturates. Its latency rises. Every request for the popular item — the item most of your revenue depends on — is now slow. The other nine nodes are nearly idle.</p>
+
+  <p><strong>Adding more nodes does not help.</strong> The key still lives on exactly one node. Sharding distributes <em>keys</em>; it cannot distribute <em>one key</em>.</p>
+
+  <div class="forge recall">
+    <div class="label">You saw this being forged · Lesson 6</div>
+    <p>He does not need to attack every node in the cluster. He needs the one node that holds that key.</p>
+  </div>
+
+  <div class="attempt">Stop here and work out the defense before reading on.</div>
+
+  <p><strong>1. A local shield cache (L5).</strong> Keep the hot key in each application server's own memory, in front of the shared cache. Ten app servers each holding a copy means the shared cache receives ten requests instead of a million. A 5-second local TTL is usually plenty. This is the single most effective fix, and it is exactly the point of Lesson 5.</p>
+
+  <p><strong>2. Key splitting (L2).</strong> Store the same value under several keys and pick one at random per request:</p>
+
+  <pre class="figure plain">product:42:copy0
+product:42:copy1
+   ...
+product:42:copy9      ← 10 keys, one value, spread across 10 nodes</pre>
+
+  <p>Reading picks a random copy, so traffic distributes. Writing must update all ten, so this is for read-heavy data only.</p>
+
+  <p><strong>3. Replication (L6).</strong> Put the hot partition on replicas and spread reads across them.</p>
+
+  <p><strong>4. Detection first (L13).</strong> You cannot defend a hot key you have not found. Per-key metrics are how you find them — which is next lesson.</p>
+
+  <p>Notice that this attack is defeated by using <strong>two realms together</strong>: a local cache in front of a distributed cache. That is what Book Three was building toward.</p>
+
+  <h3 id="l12-poisoning">Attack 5 — The Poisoning</h3>
+
+  <p>The worst one, because it is a correctness failure rather than a performance failure — and it can be a security incident.</p>
+
+  <p>A logged-in user requests the product page. The response includes their cart badge: <em>&ldquo;2 items.&rdquo;</em> Something in your stack caches that response under the key <code>/product/42</code>, without the user in the key.</p>
+
+  <p>The next visitor requests <code>/product/42</code>. They get a hit. They see <strong>someone else's cart.</strong></p>
+
+  <p>That is <strong>cache poisoning</strong>: incorrect or unauthorised content stored in a cache and served to everyone.</p>
+
+  <p>How it happens in practice:</p>
+
+  <ul>
+    <li><strong>A key missing a distinguishing input</strong> — the Lesson 2 failure, at scale</li>
+    <li><strong><code>Vary</code> not set</strong> on a response that varies by language, currency, or authentication</li>
+    <li><strong><code>private</code> not set</strong> on a personalised response, so a shared cache stores it</li>
+    <li><strong>An error page cached</strong> — a 500 error gets a 1-hour TTL and now everyone sees an error page for an hour</li>
+    <li><strong>Unnormalised request headers</strong> — an attacker sends a header your app reflects into the response, and the poisoned version is cached and served to others</li>
+  </ul>
+
+  <div class="forge recall">
+    <div class="label">You saw this being forged · Lesson 4</div>
+    <p>He does not need to break into the Edge Kingdom. He only needs to be mistaken for someone else.</p>
+  </div>
+
+  <div class="attempt">Stop here and work out the defense before reading on.</div>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Technique</th><th>From</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Key discipline</strong></td><td><strong>L2</strong></td><td>Every input that changes the answer is in the key. Including the user.</td></tr>
+      <tr><td><strong><code>private</code> on anything personal</strong></td><td><strong>L3</strong></td><td>Shared caches are forbidden from storing it</td></tr>
+      <tr><td><strong><code>no-store</code> on anything sensitive</strong></td><td><strong>L3</strong></td><td>Never written to disk anywhere</td></tr>
+      <tr><td><strong><code>Vary</code> set correctly</strong></td><td><strong>L4</strong></td><td>Language, currency, encoding declared — and never <code>Vary: Cookie</code></td></tr>
+      <tr><td><strong>Key normalisation</strong></td><td><strong>L4</strong></td><td>Strip headers and parameters that must not affect the response</td></tr>
+      <tr><td><strong>Never cache authenticated responses in a shared cache</strong></td><td><strong>L3, L4</strong></td><td>The absolute rule</td></tr>
+      <tr><td><strong>Do not cache errors</strong> — or cache them for seconds</td><td><strong>L10</strong></td><td>A cached 500 turns a blip into an outage</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>The blanket rule worth memorising:</p>
+
+  <div class="keystone">If a response differs per user, it must never be stored in a shared cache. Ever.</div>
+
+  <p>That is why the cart badge has been marked &ldquo;never cached&rdquo; since the very first table in this course. It was not an arbitrary choice. It was this attack, waiting eleven lessons to arrive.</p>
+
+  <h3 id="l12-pattern">The pattern worth seeing</h3>
+
+  <p>Look at the five attacks together:</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Attack</th><th>Root cause</th></tr></thead>
+    <tbody>
+      <tr><td>Stampede</td><td>Your TTL and the gap after it</td></tr>
+      <tr><td>Penetration</td><td>Your keys — you only cached successes</td></tr>
+      <tr><td>Avalanche</td><td>Your TTLs, all set to the same value</td></tr>
+      <tr><td>Hot key</td><td>Your key design and partitioning</td></tr>
+      <tr><td>Poisoning</td><td>Your keys — missing an input</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><strong>Four of the five are caused by your own key and TTL decisions.</strong> Only penetration comes from outside, and even that is a decision about what you chose to cache.</p>
+
+  <div class="keystone">The Latency Lord did not break your cache. He used it exactly as you configured it.</div>
+
+  <p>Then the question worth carrying out of this lesson: <strong>which of the five would your current design already survive, and which would take you down tonight?</strong></p>
+
+  <div class="myth">
+    <div class="label">The misconception to kill</div>
+    <p class="claim">&ldquo;These are exotic problems for systems much bigger than mine.&rdquo;</p>
+    <p>Every one of these happens at ordinary scale on an ordinary weekday. Avalanche in particular is usually self-inflicted, by a deploy, on a Tuesday afternoon, with no attacker involved at all.</p>
+  </div>
+</section>
+
+<div class="lesson-end">
+  <span class="muted">Lesson 12 complete</span>
+  <a href="book-war.html#l13">Next · Restoring Balance →</a>
+</div>
+
+<!-- ============ LESSON 13 ============ -->
+<section class="lesson-head realm-war" id="l13">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_for_the_water/screen.png" loading="lazy" decoding="async" alt="">
+  <div class="num">Lesson Thirteen</div>
+  <h2>Restoring Balance</h2>
+</section>
+
+<section class="wrap">
+  <div class="technique">
+    <span class="tag">Technique unlocked</span>
+    <span class="name">The Measure</span>
+    <span class="gloss">instrumentation, honesty, and restraint</span>
+  </div>
+
+  <h3>You survived. Now find out what actually happened.</h3>
+
+  <p>You have four realms of caching, five defenses, and an application that stayed up. You cannot see any of it.</p>
+
+  <p>This lesson is about seeing — and about the harder discipline of removing caching that has not earned its place.</p>
+
+  <h3 id="l13-ratio">Measure hit ratio per key, never globally</h3>
+
+  <p>A single global hit ratio is close to useless, because it averages away exactly what you need to see.</p>
+
+  <pre class="figure">Global hit ratio: 85%    ← looks healthy
+
+Broken down:
+    asset bundles      99.8%     cheap on a miss anyway
+    product images     99.1%     cheap on a miss
+    product details    94%       moderate
+    reviews            78%       moderate
+    price               6%       ← expensive, and effectively uncached</pre>
+
+  <p>That 85% is real, and it is hiding the fact that your most expensive query has essentially no cache at all. The cheap, high-volume things inflated the average until the problem disappeared inside it.</p>
+
+  <div class="keystone">Measure hit ratio per key prefix. A global number can only tell you that everything is fine — which is the one thing you did not need to know.</div>
+
+  <p>Also, from Lesson 2: the last few percent are worth the most. Going 90% → 99% removes 90% of your remaining misses. Going 50% → 59% removes 18%. Effort spent on an already-good ratio pays more than effort spent on a bad one — provided the traffic is expensive.</p>
+
+  <h3 id="l13-percentile">Latency percentiles</h3>
+
+  <p>A <strong>percentile</strong> tells you what a given fraction of requests experienced.</p>
+
+  <ul>
+    <li><strong>p50</strong> (the median) — half of requests were faster than this</li>
+    <li><strong>p95</strong> — 95% were faster; the slowest 1 in 20 were worse</li>
+    <li><strong>p99</strong> — 99% were faster; the slowest 1 in 100 were worse</li>
+  </ul>
+
+  <p>Averages hide caching problems, because caches make most requests fast and a few requests slow — which is precisely the shape an average erases.</p>
+
+  <pre class="figure plain">Average:  12ms      ← "we're fine"
+p50:       2ms      ← the hits
+p95:      15ms
+p99:     450ms      ← the misses, and every user who hit one</pre>
+
+  <p><strong>Your p50 is your hit path. Your p99 is your miss path.</strong> If p50 is excellent and p99 is terrible, your cache is working and your misses are expensive — that is exactly the case for single-flight and refresh-ahead from Lesson 8.</p>
+
+  <p>At scale, p99 is not rare. At 1,000 requests per second, it is 10 users every second, and a user loading a page with 20 requests will very likely hit it at least once.</p>
+
+  <h3 id="l13-memory">Memory and eviction rate</h3>
+
+  <p>From Lesson 10 — the combination is diagnostic:</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Hit ratio</th><th>Eviction rate</th><th>Diagnosis</th></tr></thead>
+    <tbody>
+      <tr><td>Low</td><td>High</td><td><strong>Cache is too small.</strong> Items evicted before reuse.</td></tr>
+      <tr><td>Low</td><td>Low</td><td><strong>TTLs too short</strong>, or the data genuinely isn't reused.</td></tr>
+      <tr><td>High</td><td>High</td><td>Working, but under pressure. More memory would help.</td></tr>
+      <tr><td>High</td><td>Low</td><td>Healthy.</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>A low hit ratio means very different things depending on the eviction rate, and you cannot tell them apart without both numbers.</p>
+
+  <h3 id="l13-raise">Raising a hit ratio deliberately</h3>
+
+  <p>Four techniques, with honest costs:</p>
+
+  <p><strong>1. Adjust key granularity.</strong> Caching a whole rendered page gives one entry that must be discarded when anything on it changes. Caching pieces gives more entries, each surviving independently. Finer keys usually mean a higher hit ratio and more lookups.</p>
+
+  <p><strong>2. Tune TTLs.</strong> Longer TTL, higher hit ratio, more staleness. Pure trade, and the answer comes from the business, not from you. Ask: how wrong can this be?</p>
+
+  <p><strong>3. Warm the cache (L2).</strong> Attacks the cold-start portion of your misses. Effective after deploys and restarts; does nothing for steady-state misses.</p>
+
+  <p><strong>4. Separate hot from cold.</strong> If 5% of products get 95% of traffic, cache the hot 5% aggressively — locally, long TTL, refresh-ahead — and barely cache the rest. This usually beats treating everything uniformly, and it is how the hot-key defense in Lesson 12 is built.</p>
+
+  <p>And the option people forget: <strong>accept the ratio.</strong> 60% on data that must be fresh may be the correct answer. Not every number needs improving.</p>
+
+  <h3 id="l13-debug">Debugging across four realms</h3>
+
+  <p>A user reports a stale price. You have four caches. <strong>Which one served it?</strong></p>
+
+  <p>Without instrumentation this is guesswork. With it, it is a header.</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Header</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>Age: 240</code></td><td>This copy has been in a cache for 240 seconds</td></tr>
+      <tr><td><code>X-Cache: HIT</code> / <code>MISS</code></td><td>Common CDN convention (non-standard)</td></tr>
+      <tr><td><code>Cache-Status: cdn; hit, origin; miss</code></td><td>The standard version — reports each cache in the chain</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><code>Age</code> is the most useful for stale-data reports. If a user sees a wrong price and <code>Age: 3400</code>, you know it came from a cache with a long TTL and can identify which. If <code>Age: 2</code>, the problem is not staleness — it is your database or your invalidation.</p>
+
+  <p>For your own layers, add your own:</p>
+
+  <pre class="figure plain">X-Cache-Local:  HIT
+X-Cache-Redis:  MISS
+X-DB-Queries:   3</pre>
+
+  <p>Not for production users — for you, behind a debug flag, so that &ldquo;which realm served this?&rdquo; is a question with an answer.</p>
+
+  <p>Also log <strong>cache errors separately from misses.</strong> They look identical to your application (both mean &ldquo;go to the database&rdquo;), and they mean completely different things. A rising cache error rate is a failing cache node. A rising miss rate is a tuning problem. Conflating them hides outages.</p>
+
+  <h3 id="l13-kill">Test what happens when the cache dies</h3>
+
+  <p>The question from Lesson 6, and you should now answer it experimentally.</p>
+
+  <p><strong>Turn the cache off in a staging environment under realistic load.</strong></p>
+
+  <p>Two possible outcomes:</p>
+
+  <p><strong>It gets slower but survives.</strong> Good. Your cache is a genuine optimisation.</p>
+
+  <p><strong>It falls over.</strong> Then what you have is not a cache — it is an undeclared load-bearing dependency with no durability guarantees, and a cache node failure is a full outage.</p>
+
+  <p>If the second happens, your options are: size the database for cache-free operation (expensive), add graceful degradation (serve stale, shed non-essential load, queue writes), make the cache highly available, or accept the risk knowingly. All four are legitimate. <strong>Not knowing which one you have chosen is not.</strong></p>
+
+  <h3 id="l13-notcache">What not to cache</h3>
+
+  <p>The most valuable discipline in the course. Caching is not free — it costs memory, complexity, and correctness. Some things should not be cached at all.</p>
+
+  <p><strong>Anything personal, in a shared cache.</strong> The cart badge. Lesson 12 attack 5.</p>
+
+  <p><strong>Anything genuinely secret.</strong> Credentials, tokens, payment details. Not in a shared cache, not on disk, <code>no-store</code>.</p>
+
+  <p><strong>Cheap queries.</strong> An indexed primary-key lookup served from the buffer pool takes 0.3ms. A Redis lookup takes 0.5ms. <strong>You made it slower and added a staleness bug.</strong> This is Lesson 7's warning, and it is extremely common.</p>
+
+  <p><strong>Data that is written far more than read.</strong> Every write invalidates; almost no read benefits. Write-around (L9) and move on.</p>
+
+  <p><strong>Data that must be exact.</strong> Account balances, remaining stock at the moment of purchase, anything with a legal or financial consequence for being wrong. Read the truth.</p>
+
+  <p><strong>Data with no reuse.</strong> Caching depends on the same key being asked for again. A per-request unique key is never reused, and caching it is pure cost.</p>
+
+  <h3 id="l13-honest">The honest question</h3>
+
+  <p>For every cache in your system:</p>
+
+  <div class="keystone">What does this layer buy me, and is it worth what it costs?</div>
+
+  <p>Cost is memory, code, an invalidation path, a new failure mode, a new way to be wrong, and a permanent increase in how hard your system is to reason about.</p>
+
+  <p>Sometimes the answer is a clear yes. Sometimes it is a layer added years ago in front of a query that got an index six months later, and nobody has checked since.</p>
+
+  <p><strong>Deleting a cache that no longer earns its place is as much a use of this technique as adding one.</strong></p>
+
+  <h3>At the Storefront</h3>
+
+  <p>Instrument all four realms. Then answer, for the last request:</p>
+
+  <ol>
+    <li>Which realm served it?</li>
+    <li>How old was the copy?</li>
+    <li>If it missed, where did the time go?</li>
+  </ol>
+
+  <p>Then turn off Redis under load and watch what happens.</p>
+
+  <div class="myth">
+    <div class="label">The misconception to kill</div>
+    <p class="claim">&ldquo;A higher hit ratio is always better.&rdquo;</p>
+    <p>A 99% hit ratio on data that must be fresh is not a success — it is a bug with excellent metrics. The right target comes from what the data is allowed to be wrong about, not from the number being large.</p>
+  </div>
+</section>
+
+<div class="lesson-end">
+  <span class="muted">Lesson 13 complete</span>
+  <a href="book-war.html#l14">Next · The Final Battle →</a>
+</div>
+
+<!-- ============ LESSON 14 ============ -->
+<section class="lesson-head realm-war" id="l14">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png" loading="lazy" decoding="async" alt="">
+  <div class="num">Lesson Fourteen</div>
+  <h2>The Final Battle</h2>
+</section>
+
+<section class="wrap">
+  <div class="technique">
+    <span class="tag">Technique unlocked</span>
+    <span class="name">The Convergence</span>
+    <span class="gloss">all four realms in one design</span>
+  </div>
+
+  <h3>The task</h3>
+
+  <p>Design the complete caching strategy for the storefront, across every realm.</p>
+
+  <p>You are not learning anything new here. Every piece of this was built in an earlier lesson. <strong>This is assembly, not invention</strong> — and if it feels like assembly, the course worked.</p>
+
+  <h3 id="l14-rubric">The rubric</h3>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>#</th><th>Requirement</th><th>From</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Every one of the seven parts assigned to a realm — or marked <em>never cached</em>, with a reason</td><td>L1–L7</td></tr>
+      <tr><td>2</td><td>A cache key and a TTL for each cached part</td><td>L2, L10</td></tr>
+      <tr><td>3</td><td>A read strategy and a write strategy for the application layer</td><td>L8, L9</td></tr>
+      <tr><td>4</td><td>An invalidation path for every mutable part, across every realm that holds it</td><td>L11</td></tr>
+      <tr><td>5</td><td>A named defense for each of the five attacks</td><td>L12</td></tr>
+      <tr><td>6</td><td>An instrumentation plan — what you measure, what alerts you</td><td>L13</td></tr>
+      <tr><td>7</td><td>A stated failure mode: what happens when the cache dies</td><td>L6, L13</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3 id="l14-worked">A worked example</h3>
+
+  <p>Here is requirement-complete coverage of <strong>one</strong> element — the price — as a model for the shape expected. Do the other six yourself.</p>
+
+  <h4>Element: Price</h4>
+
+  <p><strong>1. Realms</strong> — Browser, CDN, Redis. Not local cache: it changes too often to risk per-server divergence.</p>
+
+  <p><strong>2. Keys and TTLs</strong></p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Realm</th><th>Key</th><th>TTL</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Browser</td><td>URL</td><td>60s + <code>stale-while-revalidate=300</code></td><td>60s is the hard ceiling on how fast a correction reaches users (L11)</td></tr>
+      <tr><td>CDN</td><td>URL + currency + customer tier</td><td>300s</td><td>Purgeable, so a longer TTL is safe</td></tr>
+      <tr><td>Redis</td><td><code>price:{id}:{currency}:{tier}</code></td><td>300s + jitter</td><td>Jitter prevents avalanche (L10)</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>Currency and tier appear in every key that has a key at all. They change the answer, so they are in the key (L2).</p>
+
+  <p><strong>3. Read and write</strong></p>
+
+  <ul>
+    <li><strong>Read:</strong> cache-aside with single-flight — it is a hot key and it <em>will</em> stampede (L8)</li>
+    <li><strong>Write:</strong> write-around — update the database, delete the cached copy (L9)</li>
+    <li><strong>Delete, never update</strong> — concurrent writes can land out of order (L11)</li>
+  </ul>
+
+  <p><strong>4. Invalidation path</strong></p>
+
+  <pre class="figure">Admin changes price
+    ↓
+Database updated                                    immediate
+    ↓
+Redis DELETE price:42:*                             immediate
+    ↓
+Event published → app servers drop local copies     ~milliseconds
+    ↓
+CDN purge /product/42                               ~seconds
+    ↓
+Browser: no mechanism — bounded by the 60s TTL      up to 60s</pre>
+
+  <p><strong>Worst-case staleness: 60 seconds</strong>, entirely in the browser realm, entirely because that realm cannot be reached (L11). Everything reachable is corrected in under a second.</p>
+
+  <p><strong>5. Attack defenses</strong></p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Attack</th><th>Defense</th></tr></thead>
+    <tbody>
+      <tr><td>Stampede</td><td>Single-flight + refresh-ahead on top-100 products (L8)</td></tr>
+      <tr><td>Penetration</td><td>Negative caching, 60s TTL, plus ID validation (L12)</td></tr>
+      <tr><td>Avalanche</td><td>TTL jitter on every price key (L10)</td></tr>
+      <tr><td>Hot key</td><td>5-second local cache in front of Redis for top products (L5)</td></tr>
+      <tr><td>Poisoning</td><td>Currency and tier in the key; <code>public</code> is safe only because price is not per-user (L2, L12)</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><strong>6. Instrumentation</strong></p>
+
+  <ul>
+    <li>Hit ratio for the <code>price:</code> prefix specifically — not the global number (L13)</li>
+    <li>p99 latency on price lookups; alert if it exceeds 100ms</li>
+    <li>Alert on stale-price reports with <code>Age</code> attached, to identify the realm</li>
+    <li>Track invalidation event failures — a silent failure here is a wrong price for 60 seconds</li>
+  </ul>
+
+  <p><strong>7. Failure mode</strong></p>
+
+  <p>Redis unavailable → every price read goes to the database. The local 5-second cache absorbs the hot products. Database load rises roughly 4×, which is within capacity. <strong>Degraded but alive.</strong> Tested under load in staging.</p>
+
+  <h3 id="l14-rest">Do the other six</h3>
+
+  <p>Product details. Product images. The asset bundle. Stock count. Reviews.</p>
+
+  <p>And the cart badge — for which the complete answer is: <strong>never cached, in any realm, at any layer</strong>, because it differs per user and Lesson 12 attack 5 shows exactly what happens if you get that wrong.</p>
+
+  <p>It has been in every table since Lesson 1, always marked &ldquo;never.&rdquo; Requirement 1 is satisfied not by caching it, but by being able to say precisely why you did not.</p>
+
+  <h3>The final assessment</h3>
+
+  <p>When you can produce that document for a real system — and defend every TTL in it — you have finished this course.</p>
+
+  <div class="keystone">The test is not whether you can list caching techniques. It is whether you can look at a piece of data and say: this belongs here, for this long, invalidated this way, and here is what happens when it goes wrong.</div>
+
+  <h3 id="l14-end">The end</h3>
+
+  <div class="saga finale">
+    <p>The Surge arrives.</p>
+    <p>It arrives at the browser cache, and most of it stops there — never reaching the network at all.</p>
+    <p>What continues arrives at the edge, spread across the world, and is answered locally by copies already waiting.</p>
+    <p>What continues past that arrives at the application, and finds its answers in memory. The keys that are hot are already held close. The values approaching expiry have already been refreshed. The thousand requests that arrive for one missing key send one query and share its answer.</p>
+    <p>What reaches the database is a trickle. The database, which has been quietly caching all along, does not even notice.</p>
+    <p>And the Latency Lord, who built five weapons out of your own timers and your own keys, watches every one of them break against decisions you made eleven lessons ago.</p>
+    <p>He was never defeated by a new technique.</p>
+    <p><strong>He was defeated by someone who had measured first.</strong></p>
+  </div>
+</section>
+
+<!-- ============ APPENDICES ============ -->
+<section class="wrap">
+  <h3 id="appendix">Appendix — Technique Index</h3>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Technique</th><th>Lesson</th><th>One line</th></tr></thead>
+    <tbody>
+      <tr><td>The Sight</td><td>L1</td><td>Measure before caching anything</td></tr>
+      <tr><td>The Naming</td><td>L2</td><td>Every input that changes the answer goes in the key</td></tr>
+      <tr><td>Windkeeping</td><td>L3</td><td><code>Cache-Control</code>, ETags, fingerprinted URLs</td></tr>
+      <tr><td>Tidecall</td><td>L4</td><td>Edge caching, edge keys, purge vs version</td></tr>
+      <tr><td>Stonehold</td><td>L5</td><td>Local memory: fastest, unshared, dies on restart</td></tr>
+      <tr><td>Stonesplit</td><td>L6</td><td>Shared cache, Redis, replication and failover</td></tr>
+      <tr><td>Emberdraw</td><td>L7</td><td>The database already caches — tune it before adding another</td></tr>
+      <tr><td>The Three Draws</td><td>L8</td><td>Cache-aside, read-through, refresh-ahead, single-flight</td></tr>
+      <tr><td>The Three Seals</td><td>L9</td><td>Write-through, write-behind, write-around</td></tr>
+      <tr><td>The Letting Go</td><td>L10</td><td>Expiration is time; eviction is memory</td></tr>
+      <tr><td>The Truthbinding</td><td>L11</td><td>Delete, don't update. Version keys. TTL is the safety net.</td></tr>
+      <tr><td><em>(the trial)</em></td><td>L12</td><td>Five attacks, no new techniques</td></tr>
+      <tr><td>The Measure</td><td>L13</td><td>Per-key metrics, p99, and deleting caches that don't earn their place</td></tr>
+      <tr><td>The Convergence</td><td>L14</td><td>All four realms, one design, every TTL defended</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Appendix — Open Placeholders</h3>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Item</th><th>Where</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Bloom filters</td><td>L2 (hook), L12 (penetration defense)</td><td>Deferred</td></tr>
+      <tr><td>Service-worker caching</td><td>Cut from L3</td><td>Unplaced</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer class="course-footer">
+  <nav class="course-footer-nav" aria-label="Book navigation">
+    <a class="course-step previous" href="book-spirit.html"><small>Previous</small><b>← Interlude · Spirit</b></a>
+    <a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+    <span class="course-step next is-empty"></span>
+  </nav>
+  <div class="course-footer-meta">
+    <span>The Last Cachebender</span>
+    <a href="index.html">Home</a>
+    <a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+    <a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+  </div>
+</footer>
+
+</main>
+</div>
+
+<button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

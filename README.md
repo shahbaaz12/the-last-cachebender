@@ -20,8 +20,14 @@ Then visit `http://localhost:8000`.
 
 ## Project files
 
-- `index.html` — standalone course website
-- `course.html` — complete fourteen-lesson reading experience
+- `index.html` — course map and landing page
+- `course.html` — Prologue and Lessons 1–2
+- `book-air.html` — Book One and Lesson 3
+- `book-water.html` — Book Two and Lesson 4
+- `book-earth.html` — Book Three and Lessons 5–6
+- `book-fire.html` — Book Four and Lesson 7
+- `book-spirit.html` — the Spirit Library and Lessons 8–11
+- `book-war.html` — Book Five, Lessons 12–14, and the appendices
 - `css/` — shared course and landing-page styles
 - `js/` — theme, progress, navigation, and reading behaviour
 - `public/og.png` — social-sharing preview
