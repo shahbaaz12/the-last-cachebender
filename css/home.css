@@ -50,13 +50,13 @@
 }
 .wordmark span{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-faint);
 }
 .top-end{margin-left:auto;display:flex;align-items:center;gap:14px}
 .top-count{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;
+  font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink-faint);
 }
 .top .theme-toggle{margin-top:0}
@@ -66,7 +66,7 @@
 .hero{
   min-height:620px;margin:30px auto 22px;padding:60px var(--content-gutter) 56px;
   position:relative;isolation:isolate;overflow:hidden;
-  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(380px,.92fr);
+  display:grid;grid-template-columns:minmax(0,1.18fr) minmax(352px,.82fr);
   align-items:center;gap:54px;
   border:1px solid color-mix(in srgb,var(--accent) 34%,var(--rule));
   border-radius:24px;background:var(--surface-2);
@@ -80,21 +80,21 @@
 .hero::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(239,241,242,.95) 0%,rgba(239,241,242,.80) 34%,rgba(239,241,242,.22) 58%,rgba(239,241,242,.04) 100%),
+    linear-gradient(90deg,rgba(239,241,242,.96) 0%,rgba(239,241,242,.94) 40%,rgba(239,241,242,.86) 53%,rgba(239,241,242,.26) 72%,rgba(239,241,242,.04) 100%),
     linear-gradient(0deg,rgba(239,241,242,.5),transparent 46%);
 }
 :root[data-theme="dark"] .hero{background:var(--ground)}
 :root[data-theme="dark"] .hero::before{background-image:url("../public/realm-besieged.webp");background-position:center}
 :root[data-theme="dark"] .hero::after{
   background:
-    linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.66) 100%),
+    linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.92) 42%,rgba(15,20,24,.84) 54%,rgba(15,20,24,.34) 74%,rgba(15,20,24,.62) 100%),
     linear-gradient(0deg,rgba(15,20,24,.86),transparent 58%);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .hero{background:var(--ground)}
   :root:not([data-theme="light"]) .hero::after{
     background:
-      linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.66) 100%),
+      linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.92) 42%,rgba(15,20,24,.84) 54%,rgba(15,20,24,.34) 74%,rgba(15,20,24,.62) 100%),
       linear-gradient(0deg,rgba(15,20,24,.86),transparent 58%);
   }
 }
@@ -106,9 +106,9 @@
 }
 .hero h1{
   font-family:"Bricolage Grotesque",system-ui,sans-serif;
-  font-weight:700;font-size:clamp(2.3rem,5.6vw,3.9rem);
+  font-weight:700;font-size:clamp(2.1rem,4.6vw,3.15rem);
   line-height:1.03;letter-spacing:-.03em;
-  margin:0 0 24px;max-width:18ch;text-wrap:balance;color:var(--ink);
+  margin:0 0 24px;max-width:26ch;text-wrap:balance;color:var(--ink);
 }
 .hero .deck{
   font-size:1.14rem;line-height:1.62;color:var(--ink-soft);
@@ -163,11 +163,11 @@
 .compass-head,.compass-foot{
   display:flex;align-items:center;justify-content:space-between;gap:20px;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.59rem;letter-spacing:.14em;text-transform:uppercase;
+  font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
 }
-.compass-head{padding-bottom:17px;border-bottom:1px solid var(--rule);color:var(--ink-faint)}
+.compass-head{padding-bottom:17px;border-bottom:1px solid var(--rule);color:var(--ink-soft)}
 .compass-head strong{color:var(--fire);font-weight:500}
-.compass-foot{padding-top:16px;border-top:1px solid var(--rule);color:var(--ink-faint)}
+.compass-foot{padding-top:16px;border-top:1px solid var(--rule);color:var(--ink-soft)}
 .compass-foot strong{color:var(--ink);font-weight:500}
 .element-wheel{position:relative;height:405px;margin:0 auto;max-width:430px}
 .wheel-ring{position:absolute;left:50%;top:50%;border-radius:50%;transform:translate(-50%,-50%)}
@@ -179,33 +179,33 @@
 .ring-inner{width:218px;height:218px;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);transform:translate(-50%,-50%) rotate(45deg);border-radius:24px}
 .wheel-core{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:118px;height:118px;border-radius:50%;
+  width:84px;height:84px;border-radius:50%;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   background:var(--ground);border:1px solid var(--accent);
   box-shadow:0 0 0 8px color-mix(in srgb,var(--accent) 8%,transparent),0 14px 34px var(--shadow);
 }
 .wheel-core span{
-  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.54rem;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.68rem;
   letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)
 }
 .wheel-core strong{
-  font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.2rem;
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:.98rem;
   line-height:1.1;color:var(--ink);margin-top:4px
 }
 .realm-seal{
-  position:absolute;width:142px;min-height:66px;padding:10px 12px;
-  display:flex;align-items:center;gap:10px;
+  position:absolute;width:94px;padding:10px 6px 9px;
+  display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;
   background:color-mix(in srgb,var(--surface) 95%,transparent);
-  border:1px solid color-mix(in srgb,currentColor 38%,var(--rule));border-radius:10px;
+  border:1px solid color-mix(in srgb,currentColor 42%,var(--rule));border-radius:12px;
   box-shadow:0 10px 26px var(--shadow);
 }
 .realm-seal i{
-  width:36px;height:36px;display:grid;place-items:center;flex:none;
-  border:1px solid currentColor;border-radius:50%;font-style:normal;font-size:1.15rem
+  width:26px;height:26px;display:grid;place-items:center;flex:none;
+  border:1px solid currentColor;border-radius:50%;font-style:normal;font-size:.9rem
 }
-.realm-seal span{display:flex;flex-direction:column}
-.realm-seal b{font:600 .83rem/1.1 "Bricolage Grotesque",system-ui,sans-serif;color:var(--ink)}
-.realm-seal small{font:500 .52rem/1.4 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:4px}
+.realm-seal span{display:flex;flex-direction:column;align-items:center;min-width:0}
+.realm-seal b{font:600 .76rem/1.1 "Bricolage Grotesque",system-ui,sans-serif;color:var(--ink)}
+.realm-seal small{font:500 .66rem/1.3 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
 .seal-air{left:50%;top:18px;transform:translateX(-50%);color:var(--air)}
 .seal-water{right:5px;top:50%;transform:translateY(-50%);color:var(--water)}
 .seal-earth{left:5px;top:50%;transform:translateY(-50%);color:var(--earth)}
@@ -230,7 +230,7 @@
 .count:nth-child(4) b{color:var(--fire)}
 .count span{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
 }
 
 /* ---------- the descent diagram ---------- */
@@ -264,7 +264,7 @@
 }
 .descent-head{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-faint);margin-bottom:22px;text-align:left;
 }
 .layer{
@@ -277,7 +277,7 @@
 }
 .layer-el{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--realm-color,var(--accent));
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--realm-color,var(--accent));
 }
 .layer-name{
   font-family:"Bricolage Grotesque",system-ui,sans-serif;
@@ -291,7 +291,7 @@
   display:flex;align-items:center;gap:10px;
   padding:8px 0 8px 62px;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.67rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
 }
 .miss::before{content:"↓";font-size:.85rem;letter-spacing:0;color:var(--rule-firm)}
 
@@ -324,7 +324,7 @@
   content:none;
 }
 .optimization-cue span{
-  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.5rem;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.64rem;
   letter-spacing:.1em;text-transform:uppercase;color:var(--ember);
 }
 .optimization-cue b{
@@ -358,11 +358,11 @@
 .store-nav{margin-left:auto;font-size:.66rem;color:#B8C9C2;white-space:nowrap}
 .store-nav b{
   display:inline-grid;place-items:center;width:18px;height:18px;margin-left:3px;
-  color:#0B2722;background:#E8B64F;border-radius:50%;font-size:.62rem;
+  color:#0B2722;background:#E8B64F;border-radius:50%;font-size:.68rem;
 }
 .cache-policy{
   display:block;font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.5rem;line-height:1.3;letter-spacing:.1em;text-transform:uppercase;
+  font-size:.68rem;line-height:1.3;letter-spacing:.08em;text-transform:uppercase;
   color:var(--ink-faint);font-style:normal;
 }
 .store-bar .cache-policy{position:absolute;left:48px;bottom:7px;color:#86A79D}
@@ -390,7 +390,7 @@
 .product-buy{display:flex;flex-direction:column;gap:9px;min-width:0}
 .product-overline{
   margin:1px 0 -2px;font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.5rem;letter-spacing:.13em;text-transform:uppercase;color:var(--earth);
+  font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--earth);
 }
 .product-details,.product-review,.product-price,.product-stock,.product-cart{
   border:1px solid var(--rule);border-radius:6px;background:var(--surface);padding:11px 12px;
@@ -451,7 +451,7 @@
 .voice cite{
   display:block;font-style:normal;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#F0526F;
+  font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#F0526F;
   margin-bottom:26px;
 }
 .voice p{color:#AEBAB1;max-width:52ch;margin:0 0 17px}
@@ -492,19 +492,9 @@
 .book-group::before{
   content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;
   background:var(--group-tex,none) center 32%/cover no-repeat;
+  filter:contrast(.72) brightness(1.16) saturate(1.2);
 }
-.book-group::after{
-  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:
-    linear-gradient(180deg,
-      color-mix(in srgb,var(--ground) 12%,transparent) 0%,
-      color-mix(in srgb,var(--ground) 24%,transparent) 46%,
-      color-mix(in srgb,var(--ground) 38%,transparent) 100%),
-    linear-gradient(90deg,
-      color-mix(in srgb,var(--ground) 24%,transparent) 0%,
-      color-mix(in srgb,var(--ground) 8%,transparent) 55%,
-      color-mix(in srgb,var(--ground) 20%,transparent) 100%);
-}
+.book-group::after{content:none;background:none}
 .book-group.realm-prologue{--group-tex:url("../public/card-earth.webp")}
 .book-group.realm-air{--group-tex:url("../public/card-air.webp")}
 .book-group.realm-water{--group-tex:url("../public/card-water.webp")}
@@ -541,7 +531,7 @@
 }
 .book-band span{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
 }
 
 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
@@ -562,15 +552,15 @@
 /* Cards are glass now. The artwork behind them belongs to the book. */
 .card::before,.card::after{content:none}
 .card{
-  background:color-mix(in srgb,var(--surface) 38%,transparent);
-  backdrop-filter:blur(2px) saturate(108%);
+  background:color-mix(in srgb,var(--surface) 80%,transparent);
+  backdrop-filter:blur(10px) saturate(115%);
   border-color:color-mix(in srgb,var(--realm-color,var(--accent)) 38%,var(--rule));
 }
 @supports not (backdrop-filter:blur(4px)){
-  .card{background:color-mix(in srgb,var(--surface) 68%,transparent)}
+  .card{background:color-mix(in srgb,var(--surface) 94%,transparent)}
 }
 .card:hover{
-  background:color-mix(in srgb,var(--surface) 52%,transparent);
+  background:color-mix(in srgb,var(--realm-color,var(--accent)) 9%,transparent);
   border-color:var(--realm-color,var(--accent));
 }
 
@@ -581,7 +571,7 @@
 }
 .card-kind{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
 }
 .card h3{
   font-family:"Bricolage Grotesque",system-ui,sans-serif;
@@ -595,7 +585,7 @@
   background:color-mix(in srgb,var(--surface-2) 80%,transparent);
   border:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 24%,var(--rule));
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.57rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
+  font-size:.65rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);
 }
 .card.trial{border-color:color-mix(in srgb,var(--ember) 50%,var(--rule))}
 .card.trial .card-no,.card.trial .card-kind{color:var(--ember)}
@@ -634,7 +624,7 @@
 .closing .who{
   display:flex;align-items:center;justify-content:center;gap:12px;width:max-content;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
   margin:0 auto 34px;
 }
 .closing .who::before,.closing .who::after{
@@ -646,7 +636,7 @@
   padding:26px var(--content-gutter) 48px;
   display:flex;gap:20px;flex-wrap:wrap;align-items:center;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);
 }
 .foot a{color:var(--ink-soft);text-decoration:none}
 .foot a:hover{color:var(--accent)}
@@ -730,9 +720,9 @@
   .realm-seal{width:122px;min-height:58px;padding:8px 9px;gap:7px}
   .realm-seal i{width:31px;height:31px;font-size:1rem}
   .seal-water{right:0}.seal-earth{left:0}
-  .wheel-core{width:96px;height:96px}
+  .wheel-core{width:84px;height:84px}
   .wheel-core strong{font-size:1.02rem}
-  .compass-head,.compass-foot{font-size:.52rem;letter-spacing:.1em}
+  .compass-head,.compass-foot{font-size:.64rem;letter-spacing:.1em}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -746,3 +736,141 @@
 
 /* anchor targets clear the sticky masthead */
 #lessons,#start{scroll-margin-top:84px}
+
+/* ============================================================
+   Thematic layer. Devices borrowed from the course page so the
+   two halves of the site speak the same visual language.
+   ============================================================ */
+
+/* The four-element rule. It already closes the course masthead, so it
+   closes the hero here too, and signs off the page at the very bottom. */
+.hero::before{border-radius:inherit}
+.hero{position:relative}
+.hero > .element-rule,
+.closing > .element-rule{display:none}
+.hero-copy::after{
+  content:"";display:block;height:3px;width:132px;margin:32px 0 0;border-radius:2px;
+  background:linear-gradient(90deg,var(--air),var(--water),var(--earth),var(--fire));
+}
+
+/* Realm sigil behind each book, the same glyph set the course uses. */
+.book-band{position:relative}
+.book-band::after{
+  content:"◈";position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  font:400 3.4rem/1 Spectral,Georgia,serif;
+  color:var(--realm-color,var(--accent));opacity:.22;pointer-events:none;
+}
+.book-group.realm-air .book-band::after{content:"◌"}
+.book-group.realm-water .book-band::after{content:"≈"}
+.book-group.realm-earth .book-band::after{content:"◇"}
+.book-group.realm-fire .book-band::after{content:"△"}
+.book-group.realm-spirit .book-band::after{content:"✦"}
+.book-group.realm-war .book-band::after{content:"×"}
+:root[data-theme="dark"] .book-band::after{opacity:.3}
+
+/* An opening quote for the two places the page actually speaks aloud. */
+.voice blockquote,.closing blockquote{position:relative}
+.voice blockquote::before,.closing blockquote::before{
+  content:"\201C";position:absolute;line-height:1;
+  font:700 4.6rem/1 Spectral,Georgia,serif;
+  pointer-events:none;user-select:none;
+}
+.voice blockquote::before{left:-34px;top:-16px;color:var(--ember);opacity:.34}
+.closing blockquote::before{left:50%;top:-46px;transform:translateX(-50%);color:var(--gold);opacity:.32}
+.closing blockquote{padding-top:14px}
+
+/* The counts read as a set rather than four loose numbers. */
+.count{position:relative;padding-left:15px}
+.count::before{
+  content:"";position:absolute;left:0;top:3px;bottom:16px;width:2px;border-radius:2px;
+}
+.count:nth-child(1)::before{background:var(--air)}
+.count:nth-child(2)::before{background:var(--water)}
+.count:nth-child(3)::before{background:var(--earth)}
+.count:nth-child(4)::before{background:var(--fire)}
+
+/* Lesson numbers carry their realm rather than sitting in plain mono. */
+.card-no{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:24px;height:20px;padding:0 5px;border-radius:4px;
+  background:color-mix(in srgb,var(--realm-color,var(--accent)) 15%,transparent);
+  border:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 34%,transparent);
+}
+
+@media (max-width:820px){
+  .book-band::after{font-size:2.4rem;right:10px;opacity:.16}
+  .voice blockquote::before{left:-8px;top:-22px;font-size:3.4rem}
+  .hero-copy::after{margin-top:26px;width:104px}
+}
+@media (prefers-reduced-motion:reduce){
+  .card,.btn{transition:none}
+}
+
+/* ============================================================
+   Book band title sits on its own plate, so it stays readable
+   against whatever part of the realm art falls behind it.
+   ============================================================ */
+.book-band{
+  display:flex;align-items:center;gap:0;
+  padding:14px 18px 13px;background:none;border-bottom:0;
+}
+.book-band > b,
+.book-band > span{
+  backdrop-filter:none;
+  padding:7px 13px;
+}
+.book-band > b{
+  background:var(--realm-color,var(--accent));
+  border-radius:8px 0 0 8px;
+  border:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 44%,var(--rule));
+  border-right:0;
+  color:#fff;
+}
+.book-band > span{
+  background:color-mix(in srgb,var(--realm-color,var(--accent)) 20%,var(--surface));
+  border-radius:0 8px 8px 0;
+  border:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 26%,var(--rule));
+  border-left:0;
+  color:var(--ink);
+}
+@supports not (backdrop-filter:blur(4px)){
+  .book-band > b{background:var(--realm-color,var(--accent))}
+  .book-band > span{background:color-mix(in srgb,var(--realm-color,var(--accent)) 20%,var(--surface))}
+}
+.book-band::after{right:22px;opacity:.5}
+:root[data-theme="dark"] .book-band::after{opacity:.55}
+
+/* Dark: the art is toned down rather than lifted, and the glass sits lower. */
+:root[data-theme="dark"] .book-group::before{
+  filter:brightness(.55) saturate(1.18);
+}
+:root[data-theme="dark"] .card{
+  background:color-mix(in srgb,var(--surface) 68%,transparent);
+}
+:root[data-theme="dark"] .card:hover{
+  background:color-mix(in srgb,var(--surface) 84%,transparent);
+}
+:root[data-theme="dark"] .book-band > b{color:#10171C}
+:root[data-theme="dark"] .book-band > span{
+  background:color-mix(in srgb,var(--realm-color,var(--accent)) 28%,var(--surface));
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .book-group::before{
+    filter:brightness(.55) saturate(1.18);
+  }
+  :root:not([data-theme="light"]) .card{
+    background:color-mix(in srgb,var(--surface) 68%,transparent);
+  }
+  :root:not([data-theme="light"]) .card:hover{
+    background:color-mix(in srgb,var(--surface) 84%,transparent);
+  }
+  :root:not([data-theme="light"]) .book-band > b{color:#10171C}
+  :root:not([data-theme="light"]) .book-band > span{
+    background:color-mix(in srgb,var(--realm-color,var(--accent)) 28%,var(--surface));
+  }
+}
+@media (max-width:820px){
+  .book-band{flex-wrap:wrap;gap:6px}
+  .book-band > b{border-radius:8px;border-right:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 44%,var(--rule))}
+  .book-band > span{border-radius:8px;border-left:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 26%,var(--rule))}
+}

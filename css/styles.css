@@ -7,7 +7,7 @@
   --surface-2:#E3E7E9;
   --ink:#141A1D;
   --ink-soft:#4E5B61;
-  --ink-faint:#75858C;
+  --ink-faint:#5A6C75;
   --rule:#D6DCDF;
   --rule-firm:#AEBAC0;
   --accent:#175E8C;
@@ -132,7 +132,7 @@ body{
 .rail-brand a{color:var(--ink);text-decoration:none}
 .rail-sub{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-faint);margin-bottom:30px;
 }
 
@@ -145,7 +145,7 @@ body{
   color:var(--ink-faint);
 }
 .realm .glyph{font-size:.9rem;line-height:1;color:var(--rule-firm)}
-.realm .state{font-size:.58rem;letter-spacing:.1em}
+.realm .state{font-size:.66rem;letter-spacing:.1em}
 .realm.live{
   background:color-mix(in srgb,var(--realm-color,var(--accent)) 10%,transparent);
   color:var(--realm-color,var(--accent));
@@ -156,7 +156,7 @@ body{
 
 .rail h3{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
   color:var(--ink-faint);font-weight:500;
   margin:0 0 12px;padding-bottom:9px;border-bottom:1px solid var(--rule);
 }
@@ -188,7 +188,7 @@ body{
 .rail-foot{
   margin-top:26px;padding-top:16px;border-top:1px solid var(--rule);
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.06em;color:var(--ink-faint);line-height:1.7;
+  font-size:.68rem;letter-spacing:.06em;color:var(--ink-faint);line-height:1.7;
 }
 
 /* ---------- main ---------- */
@@ -275,7 +275,7 @@ main{padding:0 0 140px;min-width:0}
 }
 .book::after{
   content:"◈";position:absolute;right:46px;top:50%;transform:translateY(-50%);
-  font:400 7rem/1 "Spectral",Georgia,serif;color:var(--realm-color,var(--accent));opacity:.1;
+  font:400 7rem/1 "Spectral",Georgia,serif;color:var(--realm-color,var(--accent));opacity:.17;
 }
 .book.realm-air::after{content:"◌"}.book.realm-water::after{content:"≈"}
 .book.realm-earth::after{content:"◇"}.book.realm-fire::after{content:"△"}
@@ -407,7 +407,7 @@ td code{font-size:.8em}
 .storefront-intro{max-width:none;margin:0 0 25px}
 .storefront-intro h3{margin:7px 0 10px}
 .section-kicker{
-  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.68rem;
   letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
 }
 .storefront-warning{
@@ -439,7 +439,7 @@ td code{font-size:.8em}
 }
 .cache-policy{
   display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-style:normal;
-  font-size:.53rem;line-height:1.35;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);
+  font-size:.66rem;line-height:1.35;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);
 }
 .part-number{
   position:absolute;z-index:3;right:9px;top:9px;display:grid;place-items:center;
@@ -454,7 +454,7 @@ td code{font-size:.8em}
   background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 12%,var(--surface)),color-mix(in srgb,var(--gold) 7%,var(--surface)));
 }
 .asset-bundle-label{
-  grid-area:label;font:600 .57rem/1.35 "JetBrains Mono",ui-monospace,monospace;
+  grid-area:label;font:600 .66rem/1.35 "JetBrains Mono",ui-monospace,monospace;
   letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
 }
 .asset-bundle strong{
@@ -485,7 +485,7 @@ td code{font-size:.8em}
 .product-buy{display:flex;flex-direction:column;gap:10px;min-width:0}
 .product-overline{
   margin:1px 0 -2px;font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.54rem;letter-spacing:.13em;text-transform:uppercase;color:var(--earth);
+  font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:var(--earth);
 }
 .product-details,.product-review,.product-price,.product-stock,.product-cart{
   position:relative;border:1px solid var(--rule);border-radius:7px;background:var(--surface);padding:12px 42px 12px 13px;
@@ -538,7 +538,7 @@ td code{font-size:.8em}
 .stale-panel .tablewrap{margin:0}
 .stale-panel table{font-size:.72rem}
 .stale-panel th,.stale-panel td{padding:7px 8px;line-height:1.35}
-.stale-panel th{font-size:.52rem;white-space:normal}
+.stale-panel th{font-size:.64rem;white-space:normal}
 
 /* narrative */
 .saga{
@@ -577,7 +577,7 @@ td code{font-size:.8em}
 .technique .tag{
   grid-area:tag;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.15em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;
   color:var(--technique-color);white-space:nowrap;
 }
 .technique .name{
@@ -733,7 +733,7 @@ td code{font-size:.8em}
 }
 .forge .label{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.16em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ember);margin-bottom:11px;
 }
 .forge p{font-style:italic;color:var(--ink-soft);margin:0 0 13px;font-size:1.01rem}
@@ -748,7 +748,7 @@ td code{font-size:.8em}
 }
 .trial-tag{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.16em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ember);white-space:nowrap;
 }
 .trial-line{
@@ -784,7 +784,7 @@ td code{font-size:.8em}
 }
 .myth .label{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.16em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ember);margin-bottom:11px;
 }
 .myth .claim{
@@ -802,13 +802,50 @@ td code{font-size:.8em}
 .aside p:last-child{margin:0}
 .aside strong{color:var(--ink)}
 
-/* keystone pull quote */
+/* Keystone teaching scroll */
 .keystone{
-  margin:32px 0;padding:24px 26px;text-align:center;
-  background:var(--surface);border:1px solid var(--rule-firm);border-radius:4px;
-  font-family:"Bricolage Grotesque",system-ui,sans-serif;
-  font-weight:600;font-size:1.24rem;line-height:1.35;letter-spacing:-.014em;
-  color:var(--ink);text-wrap:balance;
+  position:relative;isolation:isolate;
+  margin:42px 16px;padding:34px 46px;text-align:center;
+  background:
+    radial-gradient(circle at 14% 28%,rgba(122,81,31,.11) 0 1px,transparent 2px),
+    radial-gradient(circle at 82% 68%,rgba(122,81,31,.09) 0 1px,transparent 2px),
+    repeating-linear-gradient(0deg,rgba(104,68,25,.025) 0 1px,transparent 1px 5px),
+    linear-gradient(135deg,#F8EDCD 0%,#EED9A8 52%,#E3C58C 100%);
+  background-size:90px 80px,110px 94px,auto,auto;
+  border:1px solid #B58B4A;border-left:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 64%,#8A5B27);
+  border-right:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 64%,#8A5B27);
+  border-radius:3px;
+  box-shadow:0 18px 38px rgba(54,36,17,.2),inset 0 1px rgba(255,255,255,.72),inset 0 -1px rgba(103,67,25,.18);
+  font-family:"Spectral",Georgia,serif;font-style:italic;
+  font-weight:600;font-size:1.34rem;line-height:1.46;letter-spacing:-.008em;
+  color:#3D2B18;text-shadow:0 1px rgba(255,255,255,.55);text-wrap:balance;
+}
+.keystone::before,.keystone::after{
+  content:"";position:absolute;z-index:-1;left:-13px;right:-13px;height:15px;
+  border:1px solid #A77A3C;border-left:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 68%,#80501F);
+  border-right:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 68%,#80501F);
+  border-radius:50%;
+  background:linear-gradient(180deg,#FFF3D1 0%,#E5C58A 52%,#BE914F 100%);
+}
+.keystone::before{top:-8px;box-shadow:0 3px 7px rgba(67,43,18,.2)}
+.keystone::after{bottom:-8px;box-shadow:0 5px 9px rgba(67,43,18,.24)}
+:root[data-theme="dark"] .keystone{
+  background:
+    radial-gradient(circle at 14% 28%,rgba(84,49,15,.13) 0 1px,transparent 2px),
+    radial-gradient(circle at 82% 68%,rgba(84,49,15,.11) 0 1px,transparent 2px),
+    repeating-linear-gradient(0deg,rgba(77,47,16,.035) 0 1px,transparent 1px 5px),
+    linear-gradient(135deg,#EBD9AD 0%,#DDBE82 54%,#C99D5B 100%);
+  box-shadow:0 20px 44px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.48),inset 0 -1px rgba(73,43,13,.25);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .keystone{
+    background:
+      radial-gradient(circle at 14% 28%,rgba(84,49,15,.13) 0 1px,transparent 2px),
+      radial-gradient(circle at 82% 68%,rgba(84,49,15,.11) 0 1px,transparent 2px),
+      repeating-linear-gradient(0deg,rgba(77,47,16,.035) 0 1px,transparent 1px 5px),
+      linear-gradient(135deg,#EBD9AD 0%,#DDBE82 54%,#C99D5B 100%);
+    box-shadow:0 20px 44px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.48),inset 0 -1px rgba(73,43,13,.25);
+  }
 }
 
 /* placeholder */
@@ -818,7 +855,7 @@ td code{font-size:.8em}
 }
 .placeholder .label{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.14em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-faint);margin-bottom:8px;
 }
 .placeholder p{margin:0;font-size:.94rem;color:var(--ink-soft);font-style:italic}
@@ -839,7 +876,7 @@ td code{font-size:.8em}
   min-width:0;padding:15px 16px;border:1px solid var(--rule);border-radius:6px;background:var(--surface);
 }
 .bloom-verdict span{
-  display:block;margin-bottom:7px;font:600 .58rem/1.35 "JetBrains Mono",ui-monospace,monospace;
+  display:block;margin-bottom:7px;font:600 .67rem/1.35 "JetBrains Mono",ui-monospace,monospace;
   letter-spacing:.12em;text-transform:uppercase;
 }
 .bloom-verdict strong{display:block;font-size:.91rem;line-height:1.45;color:var(--ink)}
@@ -876,7 +913,7 @@ td code{font-size:.8em}
 .opt > summary .flag{
   margin-left:auto;flex:none;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;
+  font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink-faint);font-weight:400;
 }
 .opt .body{padding:2px 17px 6px;border-top:1px solid var(--rule)}
@@ -893,7 +930,7 @@ td code{font-size:.8em}
 .wild-tag{
   display:block;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;
+  font-size:.66rem;letter-spacing:.15em;text-transform:uppercase;
   color:var(--accent);margin-bottom:6px;
 }
 .opt.legacy .wild{background:var(--ember-wash)}
@@ -901,7 +938,7 @@ td code{font-size:.8em}
 .wild strong{color:var(--ink)}
 .opt-intro{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;
+  font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;
   color:var(--ink-faint);margin:26px 0 12px;
 }
 
@@ -912,7 +949,7 @@ td code{font-size:.8em}
 }
 .exercise .label{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.16em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--accent);margin-bottom:13px;
 }
 .exercise ol{margin:0;padding-left:1.2em}
@@ -980,6 +1017,8 @@ td code{font-size:.8em}
   .lesson-head::after{background:linear-gradient(90deg,color-mix(in srgb,var(--ground) 94%,transparent),color-mix(in srgb,var(--ground) 12%,transparent))}
   .technique{padding:18px 16px 18px 64px}
   .technique::before{left:16px;width:32px;height:32px}
+  .keystone{margin:38px 8px;padding:30px 24px;font-size:1.2rem}
+  .keystone::before,.keystone::after{left:-8px;right:-8px}
   .bloom-panel{padding:20px 17px}
   .bloom-verdicts{grid-template-columns:1fr}
   .storefront-overview{padding-top:42px}
@@ -1019,7 +1058,7 @@ td code{font-size:.8em}
 .course-brand > span:last-child{display:flex;flex-direction:column;gap:2px}
 .course-brand b{font:700 .95rem/1.15 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.012em}
 .course-brand small{
-  font:500 .55rem/1.3 "JetBrains Mono",ui-monospace,monospace;
+  font:500 .66rem/1.3 "JetBrains Mono",ui-monospace,monospace;
   letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
 }
 .course-crest{
@@ -1038,7 +1077,7 @@ td code{font-size:.8em}
 .course-crest .crest-core{fill:var(--gold)}
 .course-books{
   margin-left:auto;display:flex;align-items:center;gap:2px;
-  font:500 .57rem/1 "JetBrains Mono",ui-monospace,monospace;
+  font:500 .66rem/1 "JetBrains Mono",ui-monospace,monospace;
   letter-spacing:.08em;text-transform:uppercase;
 }
 .course-books a{padding:9px 7px;border-radius:3px;color:var(--ink-faint);text-decoration:none}
@@ -1059,7 +1098,7 @@ td code{font-size:.8em}
 }
 .course-step:hover,.course-map-link:hover{border-color:var(--accent);color:var(--accent)}
 .course-step small,.course-map-link small{
-  margin-bottom:6px;font:500 .56rem/1.2 "JetBrains Mono",ui-monospace,monospace;
+  margin-bottom:6px;font:500 .66rem/1.2 "JetBrains Mono",ui-monospace,monospace;
   letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
 }
 .course-step b,.course-map-link b{font:600 .86rem/1.25 "Bricolage Grotesque",system-ui,sans-serif}
@@ -1069,7 +1108,7 @@ td code{font-size:.8em}
 .course-footer-meta{
   margin-top:26px;padding:22px 0 0;border-top:1px solid var(--rule);
   display:flex;align-items:center;gap:18px;flex-wrap:wrap;
-  font:500 .59rem/1.4 "JetBrains Mono",ui-monospace,monospace;
+  font:500 .67rem/1.4 "JetBrains Mono",ui-monospace,monospace;
   letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);
 }
 .course-footer-meta span{margin-right:auto}
@@ -1099,7 +1138,7 @@ td code{font-size:.8em}
   background:transparent;color:var(--ink-soft);
   border:1px solid var(--rule-firm);border-radius:3px;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.61rem;letter-spacing:.13em;text-transform:uppercase;
+  font-size:.67rem;letter-spacing:.13em;text-transform:uppercase;
   cursor:pointer;transition:border-color .15s ease,color .15s ease;
 }
 .theme-toggle:hover{border-color:var(--accent);color:var(--accent)}
@@ -1149,4 +1188,149 @@ td code{font-size:.8em}
   a{text-decoration:none;color:#000}
   .figure,.tablewrap{break-inside:avoid}
   h3,h4{break-after:avoid}
+}
+
+/* ============================================================
+   Lesson card + sticky rail
+   Generated by js/lesson-card.js. The card sits under the
+   technique badge; once it scrolls away the same contents list
+   returns as a rail in the right margin.
+   ============================================================ */
+
+.lesson-card{
+  --card-color:var(--realm-color,var(--accent));
+  margin:0 0 40px;padding:22px 26px 24px;
+  border:1px solid color-mix(in srgb,var(--card-color) 26%,var(--rule));
+  border-radius:8px;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--card-color) 7%,var(--surface)),var(--surface) 62%);
+  box-shadow:0 10px 26px color-mix(in srgb,var(--shadow) 24%,transparent);
+}
+
+.lc-top{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  flex-wrap:wrap;margin-bottom:12px;
+}
+
+.lc-eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.67rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--card-color,var(--accent));
+}
+
+.lc-meta{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.66rem;letter-spacing:.06em;color:var(--ink-faint);
+}
+
+.lc-contents{
+  margin:0;padding:0;list-style:none;
+  counter-reset:lc;
+  columns:2;column-gap:34px;
+}
+.lc-contents li{
+  counter-increment:lc;margin:0 0 7px;
+  break-inside:avoid;
+  display:flex;gap:9px;align-items:baseline;
+  font-size:.94rem;line-height:1.4;
+}
+.lc-contents li::before{
+  content:counter(lc,decimal-leading-zero);
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.66rem;color:var(--ink-faint);flex:none;
+}
+.lc-contents a{color:var(--ink-soft);text-decoration:none}
+.lc-contents a:hover{color:var(--card-color);text-decoration:underline}
+
+.lc-objectives{
+  margin-top:20px;padding-top:17px;
+  border-top:1px solid color-mix(in srgb,var(--card-color) 18%,var(--rule));
+}
+.lc-objectives ul{margin:9px 0 0;padding:0;list-style:none}
+.lc-objectives li{
+  position:relative;padding-left:19px;margin-bottom:5px;
+  font-size:.94rem;line-height:1.5;color:var(--ink-soft);
+}
+.lc-objectives li::before{
+  content:"";position:absolute;left:3px;top:.62em;
+  width:6px;height:6px;border-radius:50%;
+  background:color-mix(in srgb,var(--card-color) 55%,transparent);
+}
+
+.lc-deps{
+  display:flex;flex-wrap:wrap;gap:10px 22px;
+  margin-top:18px;padding-top:15px;
+  border-top:1px solid color-mix(in srgb,var(--card-color) 18%,var(--rule));
+}
+.lc-dep{display:inline-flex;align-items:baseline;gap:8px;font-size:.9rem}
+.lc-dep-tag{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.67rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);
+}
+.lc-dep a{color:var(--ink-soft);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--card-color) 40%,transparent)}
+.lc-dep a:hover{color:var(--card-color)}
+.lc-dep-feeds .lc-count{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.66rem;padding:1px 6px;border-radius:20px;
+  color:var(--ember);background:var(--ember-wash);
+}
+
+/* ---------- the rail ---------- */
+
+.lesson-rail{
+  position:fixed;z-index:40;
+  top:104px;width:214px;
+  right:max(16px,calc((100vw - 944px) / 2 - 254px));
+  max-height:calc(100vh - 168px);overflow-y:auto;
+  padding:16px 16px 18px;
+  border:1px solid var(--rule);
+  border-left:3px solid var(--realm-color,var(--accent));
+  border-radius:7px;
+  background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(6px);
+  box-shadow:0 14px 34px color-mix(in srgb,var(--shadow) 30%,transparent);
+  opacity:0;transform:translateX(10px);
+  transition:opacity .26s ease,transform .26s ease;
+  scrollbar-width:thin;
+}
+.lesson-rail.show{opacity:1;transform:none}
+
+.lr-title{
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;
+  font-size:.83rem;font-weight:600;line-height:1.3;color:var(--ink);
+  margin:7px 0 11px;padding-bottom:10px;
+  border-bottom:1px solid var(--rule);
+}
+
+.lr-contents{margin:0;padding:0;list-style:none;counter-reset:lr}
+.lr-contents li{counter-increment:lr;margin:0 0 3px}
+.lr-contents a{
+  display:flex;gap:8px;align-items:baseline;
+  padding:4px 7px;border-radius:4px;
+  font-size:.79rem;line-height:1.35;color:var(--ink-faint);text-decoration:none;
+  border-left:2px solid transparent;
+}
+.lr-contents a::before{
+  content:counter(lr,decimal-leading-zero);
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.67rem;opacity:.72;flex:none;
+}
+.lr-contents a:hover{color:var(--ink-soft);background:color-mix(in srgb,var(--realm-color,var(--accent)) 7%,transparent)}
+.lr-contents a.here{
+  color:var(--ink);font-weight:600;
+  border-left-color:var(--realm-color,var(--accent));
+  background:color-mix(in srgb,var(--realm-color,var(--accent)) 11%,transparent);
+}
+
+/* Not enough room beside the text — the inline card already did this job. */
+@media (max-width:1439px){
+  .lesson-rail{display:none}
+}
+
+@media (max-width:640px){
+  .lesson-card{padding:18px 18px 20px}
+  .lc-contents{columns:1}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .lesson-rail{transition:none}
 }
