@@ -115,15 +115,20 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   </div>
 </section>
 
-<section class="home">
-  <div class="descent">
+<section class="home system-map">
+  <header class="system-map-intro">
+    <h2>One page. Seven parts. Seven different answers.</h2>
+    <p class="lede">Every lesson works on the same product page, because the interesting decisions only appear when the same page holds things that disagree about how stale they may be.</p>
+  </header>
+
+  <div class="system-map-grid">
+    <div class="descent">
     <div class="descent-head">One request, falling through four realms</div>
 
     <div class="layer realm-air">
       <span class="layer-el">Air</span>
       <span class="layer-name">Browser cache</span>
       <span class="layer-where">On the reader's own disk</span>
-      <span class="layer-ms">0 ms</span>
     </div>
     <div class="miss">Not stored here</div>
 
@@ -131,7 +136,6 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span class="layer-el">Water</span>
       <span class="layer-name">CDN edge</span>
       <span class="layer-where">A few miles from the reader</span>
-      <span class="layer-ms">5 ms</span>
     </div>
     <div class="miss">Not stored here</div>
 
@@ -139,7 +143,6 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span class="layer-el">Earth</span>
       <span class="layer-name">Application and Redis</span>
       <span class="layer-where">Your own servers</span>
-      <span class="layer-ms">0.5 ms</span>
     </div>
     <div class="miss">Not stored here</div>
 
@@ -147,65 +150,82 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span class="layer-el">Fire</span>
       <span class="layer-name">The database</span>
       <span class="layer-where">The source of truth</span>
-      <span class="layer-ms">200 ms</span>
     </div>
 
-    <p class="descent-foot">Every realm that answers is a trip the request never takes. <b>The course is about deciding which ones are allowed to.</b></p>
-  </div>
-</section>
+      <p class="descent-foot">Every realm that answers is a trip the request never takes. <b>The course is about deciding which ones are allowed to.</b></p>
+    </div>
 
-<section class="home parts-wrap">
-  <h2>One page. Seven parts. Seven different answers.</h2>
-  <p class="lede">Every lesson works on the same product page, because the interesting decisions only appear when the same page holds things that disagree about how stale they may be.</p>
+    <div class="parts-wrap">
+      <article class="product-page" aria-label="Example product page with seven different cache decisions">
+        <div class="store-bar cache-piece">
+          <span class="store-mark">Wayfinder Supply</span>
+          <span class="store-nav">Atlas&nbsp;&nbsp; Field notes&nbsp;&nbsp; Bag <b>1</b></span>
+          <small class="cache-policy">Asset bundle · 1 year</small>
+        </div>
 
-  <div class="parts">
-    <div class="part">
-      <b>Asset bundle</b>
-      <span>CSS, JavaScript and the logo. Changes only when you deploy.</span>
-      <em>Cache for a year</em>
-    </div>
-    <div class="part">
-      <b>Product images</b>
-      <span>Replaced occasionally, and nobody minds seeing yesterday's.</span>
-      <em>Cache for a day</em>
-    </div>
-    <div class="part">
-      <b>Product details</b>
-      <span>Name and description. Edits should appear reasonably soon.</span>
-      <em>Cache for minutes</em>
-    </div>
-    <div class="part">
-      <b>Price</b>
-      <span>Must be close to correct. A stale one is a legal problem.</span>
-      <em>Cache for seconds</em>
-    </div>
-    <div class="part">
-      <b>Stock count</b>
-      <span>Being wrong here sells something you do not have.</span>
-      <em>Barely, if at all</em>
-    </div>
-    <div class="part">
-      <b>Reviews</b>
-      <span>Read constantly, written rarely. The easiest win on the page.</span>
-      <em>Cache for minutes</em>
-    </div>
-    <div class="part never">
-      <b>Cart badge</b>
-      <span>Yours is different from mine. Sharing it is not staleness, it is the wrong answer entirely.</span>
-      <em>Never cached</em>
+        <div class="product-shell">
+          <figure class="product-gallery cache-piece">
+            <img src="public/atlas.png" width="1264" height="848" loading="lazy" decoding="async" alt="An open illustrated atlas whose pages rise into four elemental realms.">
+            <figcaption>
+              <b>Product images</b>
+              <small class="cache-policy">Cache for a day</small>
+            </figcaption>
+          </figure>
+
+          <div class="product-buy">
+            <p class="product-overline">Field edition · Volume I</p>
+
+            <div class="product-details cache-piece">
+              <small class="cache-policy">Product details · minutes</small>
+              <h3>Four Realms Atlas</h3>
+              <p>A hand-bound guide to the roads, rivers and hidden passages connecting every realm.</p>
+            </div>
+
+            <div class="product-review cache-piece">
+              <span class="stars" aria-label="Rated 4.9 out of 5">★★★★★</span>
+              <b>4.9</b>
+              <span>248 reviews</span>
+              <small class="cache-policy">Reviews · minutes</small>
+            </div>
+
+            <div class="product-facts">
+              <div class="product-price cache-piece">
+                <small class="cache-policy">Price · seconds</small>
+                <strong>$84</strong>
+              </div>
+              <div class="product-stock cache-piece">
+                <small class="cache-policy">Stock · barely, if at all</small>
+                <span><i></i> In stock</span>
+                <b>12 left</b>
+              </div>
+            </div>
+
+            <div class="product-cart cache-piece">
+              <div class="cart-button"><span>Add to cart</span><b aria-label="1 item in cart">1</b></div>
+              <small class="cache-policy">Cart badge · never cached</small>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="home">
   <div class="voice">
-    <h2>The Latency Lord forges his weapons in front of you.</h2>
+    <div class="voice-copy">
+      <h2>The Latency Lord forges his weapons in front of you.</h2>
 
-    <blockquote>"He does not need to take the cache away. He only needs to choose the moment it empties."</blockquote>
-    <cite>The Forge, Lesson 8</cite>
+      <blockquote>"He does not need to take the cache away. He only needs to choose the moment it empties."</blockquote>
+      <cite>The Forge, Lesson 8</cite>
 
-    <p>Five times across the course, the villain stops to study something you have just learned, and builds a weapon out of it. By the time the attacks arrive in Lesson 12, you have watched every one of them being made.</p>
-    <p>So Lesson 12 grants no new technique. It is the only lesson that does not, and that is the point: every defense is something you were handed earlier, in a lesson that never mentioned an attack.</p>
+      <p>Five times across the course, the villain stops to study something you have just learned, and builds a weapon out of it. By the time the attacks arrive in Lesson 12, you have watched every one of them being made.</p>
+      <p>So Lesson 12 grants no new technique. It is the only lesson that does not, and that is the point: every defense is something you were handed earlier, in a lesson that never mentioned an attack.</p>
+    </div>
+
+    <figure class="villain-portrait">
+      <img src="public/latency-lord.webp" width="1122" height="1402" loading="lazy" decoding="async" alt="An original illustration of the Latency Lord in obsidian armor beside a fractured hourglass.">
+    </figure>
   </div>
 </section>
 
@@ -214,8 +234,9 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <h2>Each lesson adds one layer, or one decision about it.</h2>
   <p class="lede">Read them in order. The four realms come first, then the techniques that work in all of them, then the war.</p>
 
-  <div class="book-band realm-prologue"><b>Prologue</b><span>The Forgotten Art</span></div>
-  <div class="cards">
+  <div class="book-group realm-prologue">
+    <div class="book-band realm-prologue"><b>Prologue</b><span>The Forgotten Art</span></div>
+    <div class="cards">
     <a class="card" href="course.html#l1">
       <div class="card-top"><span class="card-no">01</span><span class="card-kind">Foundations</span></div>
       <h3>The Forgotten Art of Caching</h3>
@@ -228,30 +249,36 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <p>Keys, values, lifetimes and warming. Three of the five defenses in Lesson 12 trace back to here.</p>
       <div class="chips"><span class="chip">Keys</span><span class="chip">TTL</span><span class="chip">Hit ratio</span></div>
     </a>
+    </div>
   </div>
 
-  <div class="book-band realm-air"><b>Book One: Air</b><span>The Browser Realm</span></div>
-  <div class="cards">
+  <div class="book-group realm-air">
+    <div class="book-band realm-air"><b>Book One: Air</b><span>The Browser Realm</span></div>
+    <div class="cards cards-single">
     <a class="card" href="course.html#l3">
       <div class="card-top"><span class="card-no">03</span><span class="card-kind">Closest to the reader</span></div>
       <h3>The Browser Realm</h3>
       <p>Headers, validation and fingerprinted filenames. The one realm whose storage is free and whose copies you cannot recall.</p>
       <div class="chips"><span class="chip">Cache-Control</span><span class="chip">ETag</span><span class="chip">Fingerprints</span></div>
     </a>
+    </div>
   </div>
 
-  <div class="book-band realm-water"><b>Book Two: Water</b><span>The Edge Kingdom</span></div>
-  <div class="cards">
+  <div class="book-group realm-water">
+    <div class="book-band realm-water"><b>Book Two: Water</b><span>The Edge Kingdom</span></div>
+    <div class="cards cards-single">
     <a class="card" href="course.html#l4">
       <div class="card-top"><span class="card-no">04</span><span class="card-kind">Copies worldwide</span></div>
       <h3>The Edge Kingdom</h3>
       <p>A CDN does not make anything faster. It makes things closer. Learn what its cache key is really made of.</p>
       <div class="chips"><span class="chip">Edge keys</span><span class="chip">Vary</span><span class="chip">Purge</span></div>
     </a>
+    </div>
   </div>
 
-  <div class="book-band realm-earth"><b>Book Three: Earth</b><span>The Application Sanctum</span></div>
-  <div class="cards">
+  <div class="book-group realm-earth">
+    <div class="book-band realm-earth"><b>Book Three: Earth</b><span>The Application Sanctum</span></div>
+    <div class="cards">
     <a class="card" href="course.html#l5">
       <div class="card-top"><span class="card-no">05</span><span class="card-kind">Your own memory</span></div>
       <h3>The Application Sanctum</h3>
@@ -264,20 +291,24 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <p>What Redis actually gives you beyond being shared, where it genuinely shines, and what it costs.</p>
       <div class="chips"><span class="chip">Redis</span><span class="chip">Replicas</span><span class="chip">Failover</span></div>
     </a>
+    </div>
   </div>
 
-  <div class="book-band realm-fire"><b>Book Four: Fire</b><span>The Database Depths</span></div>
-  <div class="cards">
+  <div class="book-group realm-fire">
+    <div class="book-band realm-fire"><b>Book Four: Fire</b><span>The Database Depths</span></div>
+    <div class="cards cards-single">
     <a class="card" href="course.html#l7">
       <div class="card-top"><span class="card-no">07</span><span class="card-kind">Already burning</span></div>
       <h3>The Database Depths</h3>
       <p>The database is already a caching system. Here you tune rather than build, and an index usually beats a cache.</p>
       <div class="chips"><span class="chip">Buffer pool</span><span class="chip">Indexes</span></div>
     </a>
+    </div>
   </div>
 
-  <div class="book-band realm-spirit"><b>Interlude</b><span>The Spirit Library</span></div>
-  <div class="cards">
+  <div class="book-group realm-spirit">
+    <div class="book-band realm-spirit"><b>Interlude</b><span>The Spirit Library</span></div>
+    <div class="cards">
     <a class="card" href="course.html#l8">
       <div class="card-top"><span class="card-no">08</span><span class="card-kind">Reading</span></div>
       <h3>The Three Reading Techniques</h3>
@@ -302,10 +333,12 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <p>Delete, never update. Version the key instead. And accept that one of the four realms cannot be reached at all.</p>
       <div class="chips"><span class="chip">Invalidation</span><span class="chip">Versioned keys</span></div>
     </a>
+    </div>
   </div>
 
-  <div class="book-band realm-war"><b>Book Five</b><span>The Great War</span></div>
-  <div class="cards">
+  <div class="book-group realm-war">
+    <div class="book-band realm-war"><b>Book Five</b><span>The Great War</span></div>
+    <div class="cards cards-war">
     <a class="card trial" href="course.html#l12">
       <div class="card-top"><span class="card-no">12</span><span class="card-kind">No new technique</span></div>
       <h3>The Latency Lord's Attacks</h3>
@@ -324,6 +357,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <p>Design the whole thing across four realms, and defend every lifetime you chose. Assembly, not invention.</p>
       <div class="chips"><span class="chip">Rubric</span><span class="chip">Worked example</span></div>
     </a>
+    </div>
   </div>
 </section>
 
