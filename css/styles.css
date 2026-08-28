@@ -1,77 +1,73 @@
 :root{
-  /* The realm restored. Ground and accents sampled from the empire
-     quadrant of the source painting: pale green-gold light, teal
-     water, moss earth. Fire is held back as a warning colour. */
-  --ground:#F1F5E7;
-  --surface:#FAFCF3;
-  --surface-2:#E6EDDA;
-  --ink:#0C2226;
-  --ink-soft:#4A6560;
-  --ink-faint:#728A83;
-  --rule:#D2DEC8;
-  --rule-firm:#A9BC9F;
-  --accent:#0E6B78;
-  --accent-lift:#0A5763;
-  --accent-wash:#DCEDE9;
-  --ember:#B4552A;
-  --ember-wash:#F6E2D5;
-  --air:#4B9FA6;
-  --water:#0A7A93;
-  --earth:#4D7F49;
-  --fire:#C2622C;
-  --gold:#9A7A24;
-  --spirit:#76508E;
-  --shadow:rgba(12,34,38,.11);
+  /* Neutral ground with no realm allegiance, so the artwork and the four
+     nations carry the colour. Realm hues follow Avatar canon: Air is
+     saffron, not a second blue. War red is held apart from Fire red. */
+  --ground:#EFF1F2;
+  --surface:#FAFBFB;
+  --surface-2:#E3E7E9;
+  --ink:#141A1D;
+  --ink-soft:#4E5B61;
+  --ink-faint:#75858C;
+  --rule:#D6DCDF;
+  --rule-firm:#AEBAC0;
+  --accent:#175E8C;
+  --accent-lift:#0F4A72;
+  --accent-wash:#DCE8F0;
+  --ember:#9C1F3C;
+  --ember-wash:#F4DDE3;
+  --air:#8C5A10;
+  --water:#175E8C;
+  --earth:#4C7130;
+  --fire:#A83A1C;
+  --gold:#8A6A12;
+  --spirit:#6B4A8C;
+  --shadow:rgba(20,26,29,.12);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    /* The realm under the Latency Lord. Same hues, lifted for a
-       dark ground, with gold carrying the light the painting has. */
-    --ground:#061713;
-    --surface:#0D211B;
-    --surface-2:#163127;
-    --ink:#F1EAD8;
-    --ink-soft:#B1C1B7;
-    --ink-faint:#789088;
-    --rule:#264238;
-    --rule-firm:#3C5B50;
-    --accent:#E0B454;
-    --accent-lift:#F1C76A;
-    --accent-wash:#2C2717;
-    --ember:#F17742;
-    --ember-wash:#331F18;
-    --air:#7FCFCB;
-    --water:#3EB6D2;
-    --earth:#8FBE6A;
-    --fire:#F5924F;
-    --gold:#E7C878;
-    --spirit:#B897D5;
-    --shadow:rgba(0,0,0,.4);
+    --ground:#0F1418;
+    --surface:#161D22;
+    --surface-2:#1F282E;
+    --ink:#E8EDF0;
+    --ink-soft:#A7B5BC;
+    --ink-faint:#7B8B93;
+    --rule:#28333A;
+    --rule-firm:#3E4C54;
+    --accent:#54A9DA;
+    --accent-lift:#79C0E8;
+    --accent-wash:#132833;
+    --ember:#F0526F;
+    --ember-wash:#2E141C;
+    --air:#E3A94A;
+    --water:#54A9DA;
+    --earth:#8DBE5C;
+    --fire:#EE6A3C;
+    --gold:#E3C173;
+    --spirit:#B995DC;
+    --shadow:rgba(0,0,0,.46);
   }
 }
 :root[data-theme="dark"]{
-  /* The realm under the Latency Lord. Same hues, lifted for a
-     dark ground, with gold carrying the light the painting has. */
-  --ground:#061713;
-  --surface:#0D211B;
-  --surface-2:#163127;
-  --ink:#F1EAD8;
-  --ink-soft:#B1C1B7;
-  --ink-faint:#789088;
-  --rule:#264238;
-  --rule-firm:#3C5B50;
-  --accent:#E0B454;
-  --accent-lift:#F1C76A;
-  --accent-wash:#2C2717;
-  --ember:#F17742;
-  --ember-wash:#331F18;
-  --air:#7FCFCB;
-  --water:#3EB6D2;
-  --earth:#8FBE6A;
-  --fire:#F5924F;
-  --gold:#E7C878;
-  --spirit:#B897D5;
-  --shadow:rgba(0,0,0,.4);
+  --ground:#0F1418;
+  --surface:#161D22;
+  --surface-2:#1F282E;
+  --ink:#E8EDF0;
+  --ink-soft:#A7B5BC;
+  --ink-faint:#7B8B93;
+  --rule:#28333A;
+  --rule-firm:#3E4C54;
+  --accent:#54A9DA;
+  --accent-lift:#79C0E8;
+  --accent-wash:#132833;
+  --ember:#F0526F;
+  --ember-wash:#2E141C;
+  --air:#E3A94A;
+  --water:#54A9DA;
+  --earth:#8DBE5C;
+  --fire:#EE6A3C;
+  --gold:#E3C173;
+  --spirit:#B995DC;
+  --shadow:rgba(0,0,0,.46);
 }
 
 *{box-sizing:border-box}
@@ -113,10 +109,8 @@ body{
 
 /* ---------- shell ---------- */
 .shell{
-  display:grid;
-  grid-template-columns:266px minmax(0,1fr);
-  gap:0;
-  max-width:1240px;
+  display:block;
+  max-width:1120px;
   margin:0 auto;
 }
 
@@ -199,27 +193,34 @@ body{
 
 /* ---------- main ---------- */
 main{padding:0 0 140px;min-width:0}
-.wrap{max-width:min(720px,100%);padding:0 40px}
+.wrap{width:100%;max-width:800px;margin:0 auto;padding:0 40px}
 
 .masthead{
-  min-height:430px;padding:80px 40px 52px;border-bottom:1px solid var(--rule);
+  min-height:500px;margin:20px 0 0;padding:86px 56px 58px;
+  border:1px solid color-mix(in srgb,var(--accent) 32%,var(--rule));border-radius:20px;
   position:relative;isolation:isolate;overflow:hidden;
   display:flex;flex-direction:column;justify-content:flex-end;
-  background:#DCE5D9;
+  background:var(--ground);box-shadow:0 30px 80px color-mix(in srgb,var(--shadow) 78%,transparent);
+}
+.masthead-art{
+  position:absolute;inset:-2%;z-index:-2;width:104%;height:104%;display:block;
+  object-fit:cover;object-position:center 42%;transform:scale(1.02);
 }
 .masthead::before{
-  content:"";position:absolute;inset:-3%;z-index:-2;
-  background:url("../public/elemental-realms.webp") center/cover no-repeat;
-  transform:scale(1.03);
-}
-.masthead::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(242,237,221,.97) 0%,rgba(242,237,221,.9) 42%,rgba(6,23,19,.22) 72%,rgba(6,23,19,.52) 100%),
-    linear-gradient(0deg,rgba(242,237,221,.82),transparent 56%);
+    linear-gradient(90deg,rgba(239,241,242,.97) 0%,rgba(239,241,242,.9) 44%,rgba(239,241,242,.32) 72%,rgba(15,20,24,.22) 100%),
+    linear-gradient(0deg,rgba(239,241,242,.9),transparent 62%);
 }
-.masthead > *{position:relative;z-index:1}
+.masthead::after{
+  content:"";position:absolute;z-index:2;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--air),var(--water),var(--earth),var(--fire));
+}
+.masthead > :not(.masthead-art){position:relative;z-index:1}
 .masthead .eyebrow{
+  align-self:flex-start;padding:7px 11px;border:1px solid color-mix(in srgb,var(--accent) 42%,var(--rule));
+  border-radius:999px;background:color-mix(in srgb,var(--surface) 78%,transparent);
+  box-shadow:0 6px 20px color-mix(in srgb,var(--shadow) 40%,transparent);backdrop-filter:blur(8px);
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--accent);margin-bottom:18px;
@@ -239,23 +240,23 @@ main{padding:0 0 140px;min-width:0}
 }
 .status .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
 
-:root[data-theme="dark"] .masthead{background:#061713}
-:root[data-theme="dark"] .masthead::after{
+:root[data-theme="dark"] .masthead{background:var(--ground)}
+:root[data-theme="dark"] .masthead::before{
   background:
-    linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.62) 100%),
-    linear-gradient(0deg,rgba(6,23,19,.88),transparent 58%);
+    linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.62) 100%),
+    linear-gradient(0deg,rgba(15,20,24,.88),transparent 58%);
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .masthead{background:#061713}
-  :root:not([data-theme="light"]) .masthead::after{
+  :root:not([data-theme="light"]) .masthead{background:var(--ground)}
+  :root:not([data-theme="light"]) .masthead::before{
     background:
-      linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.62) 100%),
-      linear-gradient(0deg,rgba(6,23,19,.88),transparent 58%);
+      linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.62) 100%),
+      linear-gradient(0deg,rgba(15,20,24,.88),transparent 58%);
   }
 }
 
 @media (prefers-reduced-motion:no-preference){
-  .masthead::before{animation:realm-scene-drift 18s cubic-bezier(.45,0,.55,1) infinite alternate}
+  .masthead-art{animation:realm-scene-drift 18s cubic-bezier(.45,0,.55,1) infinite alternate}
 }
 @keyframes realm-scene-drift{
   from{transform:scale(1.03) translate3d(0,0,0)}
@@ -291,11 +292,25 @@ main{padding:0 0 140px;min-width:0}
 }
 
 /* lesson head */
-.lesson-head{padding:56px 40px 10px;position:relative}
+.lesson-head{
+  min-height:210px;margin-top:26px;padding:58px 48px 32px;position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  border-top:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 44%,var(--rule));
+  border-bottom:1px solid var(--rule);background:var(--surface-2);
+}
 .lesson-head::before{
-  content:"";position:absolute;left:40px;top:36px;width:42px;height:2px;
+  content:"";position:absolute;z-index:1;left:48px;top:38px;width:42px;height:2px;
   background:linear-gradient(90deg,var(--realm-color,var(--accent)),transparent);
 }
+.lesson-head::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,var(--ground) 0%,color-mix(in srgb,var(--ground) 94%,transparent) 40%,color-mix(in srgb,var(--ground) 32%,transparent) 76%,color-mix(in srgb,var(--ground) 56%,transparent) 100%);
+}
+.lesson-art{
+  position:absolute;inset:0;z-index:-2;width:100%;height:100%;display:block;object-fit:cover;object-position:center;
+  filter:saturate(.86) contrast(1.03);
+}
+.lesson-head > :not(.lesson-art){position:relative;z-index:2}
 .lesson-head .num{
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;
@@ -361,6 +376,124 @@ th{
 }
 tbody tr:last-child td{border-bottom:none}
 td code{font-size:.8em}
+
+/* ---------- shared storefront component ---------- */
+.storefront-overview{max-width:1040px;padding-top:62px}
+.storefront-intro{max-width:720px;margin-bottom:25px}
+.storefront-intro h3{margin:7px 0 10px}
+.section-kicker{
+  font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+}
+.storefront-warning{
+  margin:20px 0 0;padding:15px 18px;border-left:3px solid var(--ember);
+  background:var(--ember-wash);color:var(--ink-soft);border-radius:0 5px 5px 0;
+}
+
+.product-page{
+  min-height:0;display:flex;flex-direction:column;overflow:hidden;
+  border:1px solid var(--rule);border-radius:10px;background:var(--surface);
+  box-shadow:0 22px 55px color-mix(in srgb,var(--shadow) 56%,transparent);
+}
+.store-bar{
+  position:relative;display:flex;align-items:center;gap:16px;min-height:64px;
+  padding:14px 50px 20px 18px;color:#EDE8D9;background:#0B2722;border-bottom:1px solid rgba(255,255,255,.12);
+}
+.store-mark{
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:700;
+  font-size:.88rem;letter-spacing:.01em;white-space:nowrap;
+}
+.store-mark::before{
+  content:"◇";display:inline-grid;place-items:center;width:26px;height:26px;margin-right:9px;
+  color:#0B2722;background:#E8B64F;border-radius:50%;vertical-align:middle;
+}
+.store-nav{margin-left:auto;font-size:.7rem;color:#B8C9C2;white-space:nowrap}
+.store-nav b{
+  display:inline-grid;place-items:center;width:19px;height:19px;margin-left:3px;
+  color:#0B2722;background:#E8B64F;border-radius:50%;font-size:.64rem;
+}
+.cache-policy{
+  display:block;font-family:"JetBrains Mono",ui-monospace,monospace;font-style:normal;
+  font-size:.53rem;line-height:1.35;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);
+}
+.store-bar .cache-policy{position:absolute;left:53px;bottom:7px;color:#86A79D}
+.part-number{
+  position:absolute;z-index:3;right:9px;top:9px;display:grid;place-items:center;
+  width:22px;height:22px;border-radius:50%;background:var(--gold);color:#17211D;
+  font:600 .64rem/1 "JetBrains Mono",ui-monospace,monospace;
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 18%,transparent);
+}
+.store-bar .part-number{top:50%;transform:translateY(-50%)}
+.product-shell{
+  display:grid;grid-template-columns:minmax(160px,.5fr) minmax(0,1.5fr);
+  gap:18px;padding:18px;flex:1;background:color-mix(in srgb,var(--ground) 56%,var(--surface));
+}
+.product-gallery{
+  position:relative;min-height:420px;margin:0;overflow:hidden;
+  border:1px solid var(--rule);border-radius:7px;background:var(--surface-2);
+}
+.product-gallery::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(5,21,18,.82),transparent 44%)}
+.product-gallery img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+.product-gallery figcaption{
+  position:absolute;z-index:2;left:14px;right:14px;bottom:14px;
+  display:flex;align-items:end;justify-content:space-between;gap:12px;color:#F1EAD8;
+}
+.product-gallery figcaption b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:.82rem;font-weight:600}
+.product-gallery figcaption .cache-policy{color:#BFD1C8;text-align:right;max-width:22ch}
+.product-buy{display:flex;flex-direction:column;gap:10px;min-width:0}
+.product-overline{
+  margin:1px 0 -2px;font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.54rem;letter-spacing:.13em;text-transform:uppercase;color:var(--earth);
+}
+.product-details,.product-review,.product-price,.product-stock,.product-cart{
+  position:relative;border:1px solid var(--rule);border-radius:7px;background:var(--surface);padding:12px 42px 12px 13px;
+}
+.course-storefront .product-details h3{
+  margin:6px 0 5px;font-family:"Bricolage Grotesque",system-ui,sans-serif;
+  font-size:1.42rem;line-height:1.06;letter-spacing:-.025em;color:var(--ink);
+}
+.course-storefront .product-details p{margin:0;font-size:.78rem;line-height:1.48;color:var(--ink-soft)}
+.product-review{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:6px 8px}
+.product-review .stars{color:#D69A2D;font-size:.72rem;letter-spacing:.04em}
+.product-review b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:.83rem;color:var(--ink)}
+.product-review > span:not(.stars):not(.part-number){font-size:.7rem;color:var(--ink-soft)}
+.product-review .cache-policy{grid-column:1/-1}
+.product-facts{display:grid;grid-template-columns:.72fr 1.28fr;gap:10px}
+.product-price strong{
+  display:block;margin-top:6px;font-family:"Bricolage Grotesque",system-ui,sans-serif;
+  font-size:1.55rem;line-height:1;color:var(--ink);
+}
+.product-stock > span:not(.part-number){display:block;margin-top:7px;font-size:.74rem;color:var(--earth)}
+.product-stock i{display:inline-block;width:6px;height:6px;margin-right:4px;border-radius:50%;background:var(--earth);box-shadow:0 0 0 3px color-mix(in srgb,var(--earth) 15%,transparent)}
+.product-stock b{display:block;margin-top:2px;font-size:.76rem;color:var(--ink)}
+.product-cart{margin-top:auto;padding:9px 42px 9px 9px;background:var(--ember-wash);border-color:color-mix(in srgb,var(--ember) 28%,var(--rule))}
+.cart-button{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;
+  border-radius:5px;background:var(--ink);color:var(--ground);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:600;font-size:.82rem;
+}
+.cart-button b{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;color:#17211D;background:#E8B64F;font-size:.7rem}
+.product-cart .cache-policy{margin:7px 3px 0;color:var(--ember)}
+
+.storefront-study{
+  position:relative;left:50%;transform:translateX(-50%);
+  width:min(1080px,calc(100vw - 48px));margin:24px 0 26px;
+  display:grid;grid-template-columns:minmax(0,1.08fr) minmax(430px,.92fr);gap:18px;align-items:stretch;
+}
+.course-storefront.compact .product-gallery{min-height:400px}
+.course-storefront.compact .product-shell{padding:14px;gap:14px}
+.course-storefront.compact .store-nav{display:none}
+.stale-panel{
+  min-width:0;padding:20px 18px 16px;border:1px solid color-mix(in srgb,var(--accent) 32%,var(--rule));
+  border-radius:10px;background:color-mix(in srgb,var(--surface) 92%,transparent);
+  box-shadow:0 22px 55px color-mix(in srgb,var(--shadow) 42%,transparent);
+}
+.stale-panel h4{margin:5px 0 6px;font-size:1.22rem}
+.stale-panel > p{margin:0 0 14px;color:var(--ink-soft);font-size:.88rem}
+.stale-panel .tablewrap{margin:0}
+.stale-panel table{font-size:.72rem}
+.stale-panel th,.stale-panel td{padding:7px 8px;line-height:1.35}
+.stale-panel th{font-size:.52rem;white-space:normal}
 
 /* narrative */
 .saga{
@@ -596,24 +729,35 @@ td code{font-size:.8em}
   .mobile-nav > summary::before{content:"☰";color:var(--accent)}
   .mobile-nav .inner{padding:4px 24px 24px;max-height:66vh;overflow-y:auto}
   .mobile-nav .mobile-theme-toggle{margin-top:18px}
-  .masthead{min-height:390px;padding:48px 24px 36px}
-  .masthead::before{background-position:58% center}
-  .masthead::after{right:0;opacity:1}
+  .masthead{min-height:390px;margin-top:0;padding:48px 24px 36px;border-left:0;border-right:0;border-radius:0}
+  .masthead-art{object-position:58% center}
   .wrap,.book,.lesson-head{padding-left:24px;padding-right:24px}
   .lesson-end,.tail{margin-left:24px;margin-right:24px}
   .book{padding-top:56px}
+  .storefront-study{grid-template-columns:1fr;width:min(720px,calc(100vw - 48px))}
+  .stale-panel{order:2}
   body{font-size:16.5px}
 }
 
 @media (max-width:620px){
   .masthead{min-height:400px}
-  .masthead::after{
-    display:block;
+  .masthead::before{
     background:linear-gradient(0deg,color-mix(in srgb,var(--ground) 96%,transparent),color-mix(in srgb,var(--ground) 78%,transparent));
   }
   .masthead h1{font-size:clamp(2rem,10vw,2.75rem);overflow-wrap:anywhere}
   .book::after{right:22px;font-size:4.5rem}
   .lesson-head::before{left:24px}
+  .lesson-head{min-height:190px;padding-top:54px;padding-bottom:26px}
+  .lesson-head::after{background:linear-gradient(90deg,color-mix(in srgb,var(--ground) 94%,transparent),color-mix(in srgb,var(--ground) 66%,transparent))}
+  .storefront-overview{padding-top:42px}
+  .product-shell{grid-template-columns:1fr;padding:12px}
+  .product-gallery,.course-storefront.compact .product-gallery{min-height:270px}
+  .store-nav{display:none}
+  .store-bar{padding-right:46px}
+  .store-bar .cache-policy{max-width:34ch}
+  .stale-panel{padding:17px 12px 12px}
+  .stale-panel table{font-size:.68rem}
+  .stale-panel th,.stale-panel td{padding:7px 6px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}

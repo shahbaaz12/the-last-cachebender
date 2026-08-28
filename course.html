@@ -6,7 +6,7 @@
 <title>The Last Cachebender</title>
 <meta name="description" content="A course on caching in fourteen lessons — the browser, the CDN edge, the application, the database, and the five attacks that break all of them.">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#061713">
+<meta name="theme-color" content="#0F1418">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Last Cachebender">
@@ -20,7 +20,7 @@
 <meta name="twitter:description" content="Master the four cache realms and restore balance to a system under pressure.">
 <meta name="twitter:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png">
 <link rel="canonical" href="https://shahbaaz12.github.io/the-last-cachebender/course.html">
-<link rel="preload" as="image" href="public/elemental-realms.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png" type="image/png" fetchpriority="high">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
 
@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=3">
 
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
@@ -43,172 +43,6 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <div class="progress" id="progress"></div>
 
 <div class="shell">
-
-<aside class="rail">
-  <div class="rail-brand"><a href="index.html">The Last Cachebender</a></div>
-  <div class="rail-sub">A course on caching</div>
-
-  <ul class="realms">
-    <li class="realm live realm-air"><span class="glyph">◌</span><span>Air · Browser</span><span class="state">Book I</span></li>
-    <li class="realm live realm-water"><span class="glyph">≈</span><span>Water · CDN</span><span class="state">Book II</span></li>
-    <li class="realm live realm-earth"><span class="glyph">◇</span><span>Earth · App</span><span class="state">Book III</span></li>
-    <li class="realm live realm-fire"><span class="glyph">△</span><span>Fire · Database</span><span class="state">Book IV</span></li>
-  </ul>
-
-  <h3>Contents</h3>
-  <ul class="toc" id="toc">
-    <li><details open>
-      <summary>Prologue</summary>
-      <ul>
-        <li><a href="#storefront">The Storefront</a></li>
-        <li><a href="#l1">1 · The Forgotten Art</a></li>
-        <li><a href="#l2">2 · Hits and Misses</a></li>
-      </ul>
-    </details></li>
-    <li><details open>
-      <summary>Book One · Air</summary>
-      <ul>
-        <li><a href="#l3">3 · The Browser Realm</a></li>
-      <li><a href="#l4">4 · The Edge Kingdom</a></li>
-      <li><a href="#l5">5 · The Application Sanctum</a></li>
-      <li><a href="#l6">6 · The Distributed Cache Tribes</a></li>
-      <li><a href="#l7">7 · The Database Depths</a></li>
-      <li><a href="#l8">8 · The Three Reading Techniques</a></li>
-      <li><a href="#l9">9 · The Three Writing Techniques</a></li>
-      <li><a href="#l10">10 · The Temple of Eviction</a></li>
-      <li><a href="#l11">11 · The Invalidation Paradox</a></li>
-      <li><a href="#l12">12 · The Latency Lord's Attacks</a></li>
-      <li><a href="#l13">13 · Restoring Balance</a></li>
-      <li><a href="#l14">14 · The Final Battle</a></li>
-        <li><a href="#l3-page">What happens on request</a></li>
-        <li><a href="#l3-cc">How you control it</a></li>
-        <li><a href="#l3-fp">Fingerprinted URLs</a></li>
-        <li><a href="#l3-good">The good news</a></li>
-      </ul>
-    </details></li>
-    <li><details open>
-      <summary>Book Two · Water</summary>
-      <ul>
-        <li><a href="#l4">4 · The Edge Kingdom</a></li>
-      <li><a href="#l5">5 · The Application Sanctum</a></li>
-      <li><a href="#l6">6 · The Distributed Cache Tribes</a></li>
-      <li><a href="#l7">7 · The Database Depths</a></li>
-      <li><a href="#l8">8 · The Three Reading Techniques</a></li>
-      <li><a href="#l9">9 · The Three Writing Techniques</a></li>
-      <li><a href="#l10">10 · The Temple of Eviction</a></li>
-      <li><a href="#l11">11 · The Invalidation Paradox</a></li>
-      <li><a href="#l12">12 · The Latency Lord's Attacks</a></li>
-      <li><a href="#l13">13 · Restoring Balance</a></li>
-      <li><a href="#l14">14 · The Final Battle</a></li>
-        <li><a href="#l4-geo">Why geography is latency</a></li>
-        <li><a href="#l4-keys">Cache keys at the edge</a></li>
-        <li><a href="#l4-change">Changing what it holds</a></li>
-        <li><a href="#l4-shield">Origin shield</a></li>
-        <li><a href="#l4-proxy">Reverse proxies</a></li>
-      </ul>
-    </details></li>
-    <li><details open>
-      <summary>Book Three · Earth</summary>
-      <ul>
-        <li><a href="#l5">5 · The Application Sanctum</a></li>
-      <li><a href="#l6">6 · The Distributed Cache Tribes</a></li>
-      <li><a href="#l7">7 · The Database Depths</a></li>
-      <li><a href="#l8">8 · The Three Reading Techniques</a></li>
-      <li><a href="#l9">9 · The Three Writing Techniques</a></li>
-      <li><a href="#l10">10 · The Temple of Eviction</a></li>
-      <li><a href="#l11">11 · The Invalidation Paradox</a></li>
-      <li><a href="#l12">12 · The Latency Lord's Attacks</a></li>
-      <li><a href="#l13">13 · Restoring Balance</a></li>
-      <li><a href="#l14">14 · The Final Battle</a></li>
-        <li><a href="#l5-hold">What you can hold here</a></li>
-        <li><a href="#l5-memo">Memoization</a></li>
-        <li><a href="#l5-costs">The costs</a></li>
-        <li><a href="#l5-redis">Redis, introduced</a></li>
-        <li><a href="#l5-hook">The closing hook</a></li>
-        <li><a href="#l6">6 · The Distributed Tribes</a></li>
-        <li><a href="#l6-gives">What Redis gives you</a></li>
-        <li><a href="#l6-good">Where Redis excels</a></li>
-        <li><a href="#l6-scale">How Redis scales</a></li>
-        <li><a href="#l6-down">The downsides</a></li>
-      </ul>
-    </details></li>
-    <li><details open>
-      <summary>Book Four · Fire</summary>
-      <ul>
-        <li><a href="#l7">7 · The Database Depths</a></li>
-      <li><a href="#l8">8 · The Three Reading Techniques</a></li>
-      <li><a href="#l9">9 · The Three Writing Techniques</a></li>
-      <li><a href="#l10">10 · The Temple of Eviction</a></li>
-      <li><a href="#l11">11 · The Invalidation Paradox</a></li>
-      <li><a href="#l12">12 · The Latency Lord's Attacks</a></li>
-      <li><a href="#l13">13 · Restoring Balance</a></li>
-      <li><a href="#l14">14 · The Final Battle</a></li>
-        <li><a href="#l7-tune">You tune, you do not build</a></li>
-        <li><a href="#l7-index">Why an index beats a cache</a></li>
-        <li><a href="#l7-before">Before you cache</a></li>
-      </ul>
-    </details></li>
-    <li><details open>
-      <summary>Interlude · The Library</summary>
-      <ul>
-        <li><a href="#l8">8 · Reading Techniques</a></li>
-        <li><a href="#l8-aside">Cache-aside</a></li>
-        <li><a href="#l8-through">Read-through</a></li>
-        <li><a href="#l8-ahead">Refresh-ahead</a></li>
-        <li><a href="#l8-race">The race</a></li>
-        <li><a href="#l8-single">Single-flight</a></li>
-        <li><a href="#l9">9 · Writing Techniques</a></li>
-        <li><a href="#l9-through">Write-through</a></li>
-        <li><a href="#l9-behind">Write-behind</a></li>
-        <li><a href="#l9-around">Write-around</a></li>
-        <li><a href="#l9-choose">Choosing</a></li>
-        <li><a href="#l10">10 · The Temple of Eviction</a></li>
-        <li><a href="#l10-two">Two reasons data leaves</a></li>
-        <li><a href="#l10-ttl">TTL, used deliberately</a></li>
-        <li><a href="#l10-jitter">TTL jitter</a></li>
-        <li><a href="#l10-policies">Eviction policies</a></li>
-        <li><a href="#l11">11 · The Invalidation Paradox</a></li>
-      <li><a href="#l12">12 · The Latency Lord's Attacks</a></li>
-      <li><a href="#l13">13 · Restoring Balance</a></li>
-      <li><a href="#l14">14 · The Final Battle</a></li>
-        <li><a href="#l11-delete">Delete, do not update</a></li>
-        <li><a href="#l11-version">Versioned keys</a></li>
-        <li><a href="#l11-realms">Across all four realms</a></li>
-        <li><a href="#l11-repop">The repopulation race</a></li>
-      </ul>
-    </details></li>
-    <li><details open>
-      <summary>Book Five · The War</summary>
-      <ul>
-        <li><a href="#l12">12 · The Attacks</a></li>
-        <li><a href="#l12-stampede">1 · Stampede</a></li>
-        <li><a href="#l12-penetration">2 · Penetration</a></li>
-        <li><a href="#l12-avalanche">3 · Avalanche</a></li>
-        <li><a href="#l12-hotkey">4 · Hot key</a></li>
-        <li><a href="#l12-poisoning">5 · Poisoning</a></li>
-        <li><a href="#l13">13 · Restoring Balance</a></li>
-        <li><a href="#l13-ratio">Hit ratio per key</a></li>
-        <li><a href="#l13-percentile">Latency percentiles</a></li>
-        <li><a href="#l13-notcache">What not to cache</a></li>
-        <li><a href="#l14">14 · The Final Battle</a></li>
-        <li><a href="#l14-rubric">The rubric</a></li>
-        <li><a href="#l14-worked">A worked example</a></li>
-        <li><a href="#l14-end">The end</a></li>
-        <li><a href="#appendix">Appendices</a></li>
-      </ul>
-    </details></li>
-  </ul>
-
-  <div class="rail-foot">
-    Complete<br>14 lessons
-  </div>
-
-  <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Switch theme" data-theme-toggle>
-    <span class="icon moon" aria-hidden="true">☾</span><span class="icon sun" aria-hidden="true">☀</span>
-    <span data-theme-label>Light</span>
-  </button>
-</aside>
-
 <main id="top">
 
 <details class="mobile-nav">
@@ -239,6 +73,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 </details>
 
 <header class="masthead">
+  <img class="masthead-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png" width="1376" height="768" fetchpriority="high" decoding="async" alt="">
   <div class="eyebrow">The complete course</div>
   <h1>The Last Cachebender</h1>
   <p>A course on caching — what it is, where copies live, and what it costs to keep them. Built around one product page and the seven things on it that each want a different answer.</p>
@@ -246,27 +81,63 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 </header>
 
 <!-- ============ STOREFRONT ============ -->
-<section class="wrap">
-  <h3 id="storefront">The Storefront</h3>
+<section class="wrap storefront-overview">
+  <div class="storefront-intro">
+    <div class="section-kicker">The shared example</div>
+    <h3 id="storefront">The Storefront</h3>
+    <p>Every lesson uses the same product page. Its labels show the seven answers that change at seven different speeds.</p>
+  </div>
 
-  <p>Every lesson uses the same example application: <strong>a product page on an online store.</strong></p>
+  <article class="product-page course-storefront" aria-label="Wayfinder Supply product page with seven annotated fields">
+    <div class="store-bar cache-piece">
+      <span class="part-number">1</span>
+      <span class="store-mark">Wayfinder Supply</span>
+      <span class="store-nav">Atlas&nbsp;&nbsp; Field notes&nbsp;&nbsp; Bag <b>1</b></span>
+      <small class="cache-policy">Asset bundle · changes on deploy · shared</small>
+    </div>
 
-  <p>It has seven parts, and each one wants a different answer. That is why it was chosen.</p>
+    <div class="product-shell">
+      <figure class="product-gallery cache-piece">
+        <span class="part-number">2</span>
+        <img src="public/atlas.png" width="1264" height="848" loading="lazy" decoding="async" alt="An open illustrated atlas whose pages rise into four elemental realms.">
+        <figcaption><b>Product images</b><small class="cache-policy">Changes rarely · shared</small></figcaption>
+      </figure>
 
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>Part of the page</th><th>How often it changes</th><th>Per user?</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>Asset bundle — the CSS, JavaScript and logo files</td><td>Only when you deploy new code</td><td>No</td></tr>
-      <tr><td>2</td><td>Product images</td><td>Rarely</td><td>No</td></tr>
-      <tr><td>3</td><td>Product details — name, description</td><td>Rarely</td><td>No</td></tr>
-      <tr><td>4</td><td>Price</td><td>Sometimes, and must be right</td><td>No</td></tr>
-      <tr><td>5</td><td>Stock count — &ldquo;3 left&rdquo;</td><td>Constantly</td><td>No</td></tr>
-      <tr><td>6</td><td>Reviews</td><td>Slowly, but read a lot</td><td>No</td></tr>
-      <tr><td>7</td><td>Cart badge — &ldquo;2 items in your cart&rdquo;</td><td>Every time the user acts</td><td><strong>Yes</strong></td></tr>
-    </tbody>
-  </table></div>
+      <div class="product-buy">
+        <p class="product-overline">Field edition · Volume I</p>
 
-  <p>Watch #7. It is the one part of this page that must <strong>never</strong> be shared between users. It will come up in every lesson, and by the end you will be able to explain exactly why it was left alone.</p>
+        <div class="product-details cache-piece">
+          <span class="part-number">3</span>
+          <small class="cache-policy">Product details · changes rarely · shared</small>
+          <h3>Four Realms Atlas</h3>
+          <p>A hand-bound guide to the roads, rivers and hidden passages connecting every realm.</p>
+        </div>
+
+        <div class="product-review cache-piece">
+          <span class="part-number">6</span>
+          <span class="stars" aria-label="Rated 4.9 out of 5">★★★★★</span><b>4.9</b><span>248 reviews</span>
+          <small class="cache-policy">Reviews · read often · shared</small>
+        </div>
+
+        <div class="product-facts">
+          <div class="product-price cache-piece">
+            <span class="part-number">4</span><small class="cache-policy">Price · changes sometimes · shared</small><strong>$84</strong>
+          </div>
+          <div class="product-stock cache-piece">
+            <span class="part-number">5</span><small class="cache-policy">Stock · changes constantly · shared</small><span><i></i> In stock</span><b>12 left</b>
+          </div>
+        </div>
+
+        <div class="product-cart cache-piece">
+          <span class="part-number">7</span>
+          <div class="cart-button"><span>Add to cart</span><b aria-label="1 item in cart">1</b></div>
+          <small class="cache-policy">Cart badge · changes per action · private</small>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <p class="storefront-warning"><strong>Watch part 7.</strong> It is the only answer owned by one user. It must never be shared, no matter how fresh it is.</p>
 </section>
 
 <!-- ============ PROLOGUE ============ -->
@@ -282,6 +153,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
 <!-- ============ LESSON 1 ============ -->
 <section class="lesson-head realm-prologue" id="l1">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_composition_of_air_nomad_artifacts._an/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson One</div>
   <h2>The Forgotten Art of Caching</h2>
 </section>
@@ -380,45 +252,70 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <h3>At the Storefront</h3>
 
-  <pre class="figure">┌────────────────────────────────────────────────┐
-│  [LOGO]                          [cart] 2  &lt;-7 │
-├────────────────────────────────────────────────┤
-│                                                │
-│  ┌─────────────┐  Wireless Headphones      &lt;-3 │
-│  │             │  Over-ear, 40h battery        │
-│  │    image    │                               │
-│  │        &lt;-2  │  £25.00                   &lt;-4 │
-│  │             │  Only 3 left!             &lt;-5 │
-│  └─────────────┘  [ Add to cart ]              │
-│                                                │
-│  4.5 stars  128 reviews                   &lt;-6  │
-│  "Great sound for the price..."                │
-└────────────────────────────────────────────────┘
+  <p>Put the page beside its freshness promises. The same seven fields now become seven different correctness decisions.</p>
 
-   styling + scripts + logo files            &lt;-1</pre>
+  <div class="storefront-study" id="storefront-study">
+    <article class="product-page course-storefront compact" aria-label="Wayfinder Supply product page annotated with cache freshness rules">
+      <div class="store-bar cache-piece">
+        <span class="part-number">1</span>
+        <span class="store-mark">Wayfinder Supply</span>
+        <span class="store-nav">Atlas&nbsp;&nbsp; Field notes&nbsp;&nbsp; Bag <b>1</b></span>
+        <small class="cache-policy">Asset bundle · may stay old indefinitely</small>
+      </div>
+
+      <div class="product-shell">
+        <figure class="product-gallery cache-piece">
+          <span class="part-number">2</span>
+          <img src="public/atlas.png" width="1264" height="848" loading="lazy" decoding="async" alt="An open illustrated atlas whose pages rise into four elemental realms.">
+          <figcaption><b>Product images</b><small class="cache-policy">May be old for days</small></figcaption>
+        </figure>
+
+        <div class="product-buy">
+          <p class="product-overline">Field edition · Volume I</p>
+          <div class="product-details cache-piece">
+            <span class="part-number">3</span><small class="cache-policy">Details · may be old for hours</small>
+            <h3>Four Realms Atlas</h3><p>A hand-bound guide to the roads, rivers and hidden passages connecting every realm.</p>
+          </div>
+          <div class="product-review cache-piece">
+            <span class="part-number">6</span><span class="stars" aria-label="Rated 4.9 out of 5">★★★★★</span><b>4.9</b><span>248 reviews</span>
+            <small class="cache-policy">Reviews · may be old for minutes</small>
+          </div>
+          <div class="product-facts">
+            <div class="product-price cache-piece"><span class="part-number">4</span><small class="cache-policy">Price · seconds only</small><strong>$84</strong></div>
+            <div class="product-stock cache-piece"><span class="part-number">5</span><small class="cache-policy">Stock · barely, if at all</small><span><i></i> In stock</span><b>12 left</b></div>
+          </div>
+          <div class="product-cart cache-piece">
+            <span class="part-number">7</span><div class="cart-button"><span>Add to cart</span><b aria-label="1 item in cart">1</b></div>
+            <small class="cache-policy">Cart badge · private, never shared</small>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="stale-panel">
+      <div class="section-kicker">Freshness contract</div>
+      <h4>What is allowed to be old?</h4>
+      <p>Each limit protects a different consequence.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>#</th><th>Part</th><th>May it be stale?</th><th>If it is, what happens</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Asset bundle</td><td>Indefinitely</td><td>Nothing — version the file</td></tr>
+          <tr><td>2</td><td>Product images</td><td>For days</td><td>An old photo remains</td></tr>
+          <tr><td>3</td><td>Product details</td><td>For hours</td><td>A correction appears late</td></tr>
+          <tr><td>4</td><td>Price</td><td>For seconds</td><td>A customer sees an old price</td></tr>
+          <tr><td>5</td><td>Stock count</td><td>Barely, if at all</td><td>You may oversell</td></tr>
+          <tr><td>6</td><td>Reviews</td><td>For minutes</td><td>A new review appears late</td></tr>
+          <tr><td>7</td><td>Cart badge</td><td>Not applicable</td><td>Another user's answer is wrong</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
 
   <p>Look at each part and ask two questions.</p>
 
   <p><strong>What does it cost to produce?</strong> How long does it take, and how many database queries does it need? That tells you what is worth caching. This is The Sight — you cannot decide what to cache until you know what is expensive.</p>
 
   <p><strong>How old is it allowed to be?</strong> That tells you what you are <em>permitted</em> to cache, which is a different question entirely.</p>
-
-  <h3>What is allowed to be old?</h3>
-
-  <p>You have just decided that caching is a promise about what may be out of date. Here is that promise made concrete, part by part.</p>
-
-  <div class="tablewrap"><table>
-    <thead><tr><th>#</th><th>Part</th><th>May it be stale?</th><th>If it is, what happens</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td>Asset bundle</td><td>Yes, indefinitely</td><td>Nothing — see below</td></tr>
-      <tr><td>2</td><td>Product images</td><td>Yes, for days</td><td>An old photo shows for a while</td></tr>
-      <tr><td>3</td><td>Product details</td><td>Yes, for hours</td><td>A corrected description appears late</td></tr>
-      <tr><td>4</td><td>Price</td><td>Only for seconds</td><td>A customer sees a price you no longer offer</td></tr>
-      <tr><td>5</td><td>Stock count</td><td>Barely, if at all</td><td>You sell something you do not have</td></tr>
-      <tr><td>6</td><td>Reviews</td><td>Yes, for minutes</td><td>A new review takes a few minutes to appear</td></tr>
-      <tr><td>7</td><td>Cart badge</td><td><strong>Not applicable</strong></td><td>A different problem — see below</td></tr>
-    </tbody>
-  </table></div>
 
   <p>Notice the shape: the parts that change slowly are safe to keep for a long time, and the parts that change constantly are not. That is the basis of every caching decision you will make in this course.</p>
 
@@ -472,6 +369,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
 <!-- ============ LESSON 2 ============ -->
 <section class="lesson-head realm-prologue" id="l2">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Two</div>
   <h2>The Trial of Hits and Misses</h2>
 </section>
@@ -681,6 +579,7 @@ TTL:   300     ← usable for 5 minutes, then thrown away</pre>
 
 <!-- ============ LESSON 3 ============ -->
 <section class="lesson-head realm-air" id="l3">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_air_nomads/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Three</div>
   <h2>The Browser Realm</h2>
 </section>
@@ -1027,6 +926,7 @@ Cache-Control: no-cache          ← always revalidated</pre>
 
 <!-- ============ LESSON 4 ============ -->
 <section class="lesson-head realm-water" id="l4">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_water_tribe_s/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Four</div>
   <h2>The Edge Kingdom</h2>
 </section>
@@ -1231,6 +1131,7 @@ Nearest edge server (Singapore)
 
 <!-- ============ LESSON 5 ============ -->
 <section class="lesson-head realm-earth" id="l5">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_still_life_of_earth_kingdom_symbols._a/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Five</div>
   <h2>The Application Sanctum</h2>
 </section>
@@ -1352,6 +1253,7 @@ Nearest edge server (Singapore)
 
 <!-- ============ LESSON 6 ============ -->
 <section class="lesson-head realm-earth" id="l6">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Six</div>
   <h2>The Distributed Cache Tribes</h2>
 </section>
@@ -1526,6 +1428,7 @@ Caching — store a product for five minutes
 
 <!-- ============ LESSON 7 ============ -->
 <section class="lesson-head realm-fire" id="l7">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_fire_nation_regalia_and_power._a/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Seven</div>
   <h2>The Database Depths</h2>
 </section>
@@ -1643,6 +1546,7 @@ Caching — store a product for five minutes
 
 <!-- ============ LESSON 8 ============ -->
 <section class="lesson-head realm-spirit" id="l8">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Eight</div>
   <h2>The Three Reading Techniques</h2>
 </section>
@@ -1850,6 +1754,7 @@ t=0.050   Request 1 gets the value, stores it, and hands it to all 999 waiters</
 
 <!-- ============ LESSON 9 ============ -->
 <section class="lesson-head realm-spirit" id="l9">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_water_tribe_bending/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Nine</div>
   <h2>The Three Writing Techniques</h2>
 </section>
@@ -2012,6 +1917,7 @@ t=0.050   Request 1 gets the value, stores it, and hands it to all 999 waiters</
 
 <!-- ============ LESSON 10 ============ -->
 <section class="lesson-head realm-spirit" id="l10">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Ten</div>
   <h2>The Temple of Eviction</h2>
 </section>
@@ -2188,6 +2094,7 @@ t=0.050   Request 1 gets the value, stores it, and hands it to all 999 waiters</
 
 <!-- ============ LESSON 11 ============ -->
 <section class="lesson-head realm-spirit" id="l11">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_fire_nation_bending/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Eleven</div>
   <h2>The Invalidation Paradox</h2>
 </section>
@@ -2420,6 +2327,7 @@ Browsers: nothing you can do                  ← up to 60s, by your own TTL</pr
 
 <!-- ============ LESSON 12 ============ -->
 <section class="lesson-head realm-war" id="l12">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_siege_of_ba_sing/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Twelve</div>
   <h2>The Latency Lord's Attacks</h2>
 </section>
@@ -2669,6 +2577,7 @@ product:42:copy9      ← 10 keys, one value, spread across 10 nodes</pre>
 
 <!-- ============ LESSON 13 ============ -->
 <section class="lesson-head realm-war" id="l13">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_for_the_water/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Thirteen</div>
   <h2>Restoring Balance</h2>
 </section>
@@ -2851,6 +2760,7 @@ X-DB-Queries:   3</pre>
 
 <!-- ============ LESSON 14 ============ -->
 <section class="lesson-head realm-war" id="l14">
+  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png" loading="lazy" decoding="async" alt="">
   <div class="num">Lesson Fourteen</div>
   <h2>The Final Battle</h2>
 </section>

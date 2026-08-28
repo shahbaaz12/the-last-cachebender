@@ -6,7 +6,7 @@
 <title>The Last Cachebender</title>
 <meta name="description" content="A course on caching in fourteen lessons. Follow one product page through the browser, the edge, the application and the database, then defend it against five attacks.">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#061713">
+<meta name="theme-color" content="#0F1418">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Last Cachebender">
@@ -44,7 +44,17 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
 <header class="top">
   <div class="top-in">
-    <div class="mark" aria-hidden="true">LC</div>
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 48 48" focusable="false">
+        <circle class="crest-track" cx="24" cy="24" r="19"></circle>
+        <path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+        <path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+        <path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+        <path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+        <path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+        <circle class="crest-core" cx="24" cy="24" r="3"></circle>
+      </svg>
+    </div>
     <div class="wordmark">
       <b>The Last Cachebender</b>
       <span>Four realms, one page</span>
@@ -157,8 +167,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
     <div class="parts-wrap">
       <div class="optimization-cue">
-        <span>Optimization target</span>
-        <b>This is the page we are making faster</b>
+        <span>System under test</span>
+        <b>The complete storefront below</b>
       </div>
 
       <article class="product-page" aria-label="Example product page with seven different cache decisions">

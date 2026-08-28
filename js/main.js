@@ -61,7 +61,7 @@
       var label = toggle.querySelector('[data-theme-label]');
       if (label) label.textContent = nextLabel;
     });
-    if (themeColor) themeColor.setAttribute('content', dark ? '#061713' : '#F2EDDD');
+    if (themeColor) themeColor.setAttribute('content', dark ? '#0F1418' : '#EFF1F2');
   }
 
   toggles.forEach(function (toggle) {

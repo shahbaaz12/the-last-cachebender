@@ -24,15 +24,24 @@
   height:68px;display:flex;align-items:center;gap:16px;
 }
 .mark{
-  width:36px;height:36px;flex:none;border-radius:8px;
-  border:1px solid var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  font-family:"Bricolage Grotesque",system-ui,sans-serif;
-  font-weight:700;font-size:.78rem;letter-spacing:.02em;
-  color:var(--ink);
-  background:conic-gradient(from 20deg,var(--air),var(--water),var(--earth),var(--fire),var(--air));
-  box-shadow:inset 0 0 0 3px var(--ground),0 6px 18px color-mix(in srgb,var(--water) 20%,transparent);
+  width:38px;height:38px;flex:none;padding:5px;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--gold) 56%,var(--rule));
+  display:grid;place-items:center;background:color-mix(in srgb,var(--surface) 92%,var(--ground));
+  box-shadow:inset 0 0 0 2px var(--ground),0 7px 20px color-mix(in srgb,var(--gold) 18%,transparent);
 }
+.mark svg{width:100%;height:100%;display:block;overflow:visible}
+.mark .crest-track{fill:none;stroke:var(--rule-firm);stroke-width:1}
+.mark [class^="crest-"]:not(.crest-track):not(.crest-diamond):not(.crest-core){
+  fill:none;stroke-width:4;stroke-linecap:round;
+}
+.mark .crest-air{stroke:var(--air)}
+.mark .crest-water{stroke:var(--water)}
+.mark .crest-earth{stroke:var(--earth)}
+.mark .crest-fire{stroke:var(--fire)}
+.mark .crest-diamond{
+  fill:color-mix(in srgb,var(--gold) 12%,transparent);stroke:var(--gold);stroke-width:1.5;
+}
+.mark .crest-core{fill:var(--gold)}
 .wordmark{display:flex;flex-direction:column;gap:1px;min-width:0}
 .wordmark b{
   font-family:"Bricolage Grotesque",system-ui,sans-serif;
@@ -60,7 +69,7 @@
   display:grid;grid-template-columns:minmax(0,1.08fr) minmax(380px,.92fr);
   align-items:center;gap:54px;
   border:1px solid color-mix(in srgb,var(--accent) 34%,var(--rule));
-  border-radius:24px;background:#DCE5D9;
+  border-radius:24px;background:var(--surface-2);
   box-shadow:0 30px 80px color-mix(in srgb,var(--shadow) 82%,transparent);
 }
 .hero::before{
@@ -71,22 +80,22 @@
 .hero::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(241,245,231,.95) 0%,rgba(241,245,231,.80) 34%,rgba(241,245,231,.22) 58%,rgba(241,245,231,.04) 100%),
-    linear-gradient(0deg,rgba(241,245,231,.5),transparent 46%);
+    linear-gradient(90deg,rgba(239,241,242,.95) 0%,rgba(239,241,242,.80) 34%,rgba(239,241,242,.22) 58%,rgba(239,241,242,.04) 100%),
+    linear-gradient(0deg,rgba(239,241,242,.5),transparent 46%);
 }
-:root[data-theme="dark"] .hero{background:#061713}
+:root[data-theme="dark"] .hero{background:var(--ground)}
 :root[data-theme="dark"] .hero::before{background-image:url("../public/realm-besieged.webp");background-position:center}
 :root[data-theme="dark"] .hero::after{
   background:
-    linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.66) 100%),
-    linear-gradient(0deg,rgba(6,23,19,.86),transparent 58%);
+    linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.66) 100%),
+    linear-gradient(0deg,rgba(15,20,24,.86),transparent 58%);
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .hero{background:#061713}
+  :root:not([data-theme="light"]) .hero{background:var(--ground)}
   :root:not([data-theme="light"]) .hero::after{
     background:
-      linear-gradient(90deg,rgba(6,23,19,.96) 0%,rgba(6,23,19,.86) 43%,rgba(6,23,19,.3) 72%,rgba(6,23,19,.66) 100%),
-      linear-gradient(0deg,rgba(6,23,19,.86),transparent 58%);
+      linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.66) 100%),
+      linear-gradient(0deg,rgba(15,20,24,.86),transparent 58%);
   }
 }
 .hero-copy{min-width:0;position:relative;z-index:2}
@@ -294,21 +303,25 @@
 
 /* ---------- the seven parts, shown as a product page ---------- */
 
-.parts-wrap{padding:0;min-width:0;display:flex;flex-direction:column}
+.parts-wrap{
+  position:relative;min-width:0;display:flex;flex-direction:column;
+  margin-top:14px;padding:18px 9px 9px;
+  border:1px dashed color-mix(in srgb,var(--ember) 46%,var(--rule));border-radius:10px;
+  background:color-mix(in srgb,var(--ember) 3%,transparent);
+}
 .optimization-cue{
-  position:relative;display:flex;align-items:center;gap:9px;
-  align-self:flex-end;margin:0 5px 9px;padding:7px 11px;
-  border:1px solid color-mix(in srgb,var(--ember) 34%,var(--rule));border-radius:5px;
-  background:var(--ember-wash);color:var(--ink);
+  position:absolute;z-index:3;top:-14px;left:16px;
+  display:flex;align-items:center;gap:9px;margin:0;padding:6px 11px;
+  border:1px solid color-mix(in srgb,var(--ember) 46%,var(--rule));border-radius:999px;
+  background:var(--surface);color:var(--ink);
+  box-shadow:0 5px 14px color-mix(in srgb,var(--shadow) 42%,transparent);
 }
 .optimization-cue::before{
   content:"";width:7px;height:7px;flex:0 0 auto;border-radius:50%;background:var(--ember);
   box-shadow:0 0 0 4px color-mix(in srgb,var(--ember) 16%,transparent);
 }
 .optimization-cue::after{
-  content:"";position:absolute;right:20px;bottom:-6px;width:10px;height:10px;
-  background:var(--ember-wash);border-right:1px solid color-mix(in srgb,var(--ember) 34%,var(--rule));
-  border-bottom:1px solid color-mix(in srgb,var(--ember) 34%,var(--rule));transform:rotate(45deg);
+  content:none;
 }
 .optimization-cue span{
   font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.5rem;
@@ -438,7 +451,7 @@
 .voice cite{
   display:block;font-style:normal;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#F28A52;
+  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#F0526F;
   margin-bottom:26px;
 }
 .voice p{color:#AEBAB1;max-width:52ch;margin:0 0 17px}
@@ -484,13 +497,13 @@
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
     linear-gradient(180deg,
-      color-mix(in srgb,var(--ground) 34%,transparent) 0%,
-      color-mix(in srgb,var(--ground) 76%,transparent) 46%,
-      color-mix(in srgb,var(--ground) 90%,transparent) 100%),
+      color-mix(in srgb,var(--ground) 12%,transparent) 0%,
+      color-mix(in srgb,var(--ground) 24%,transparent) 46%,
+      color-mix(in srgb,var(--ground) 38%,transparent) 100%),
     linear-gradient(90deg,
-      color-mix(in srgb,var(--ground) 62%,transparent) 0%,
-      color-mix(in srgb,var(--ground) 30%,transparent) 55%,
-      color-mix(in srgb,var(--ground) 66%,transparent) 100%);
+      color-mix(in srgb,var(--ground) 24%,transparent) 0%,
+      color-mix(in srgb,var(--ground) 8%,transparent) 55%,
+      color-mix(in srgb,var(--ground) 20%,transparent) 100%);
 }
 .book-group.realm-prologue{--group-tex:url("../public/card-earth.webp")}
 .book-group.realm-air{--group-tex:url("../public/card-air.webp")}
@@ -502,13 +515,13 @@
 :root[data-theme="dark"] .book-group::after{
   background:
     linear-gradient(180deg,
-      color-mix(in srgb,var(--ground) 42%,transparent) 0%,
-      color-mix(in srgb,var(--ground) 78%,transparent) 46%,
-      color-mix(in srgb,var(--ground) 92%,transparent) 100%),
+      color-mix(in srgb,var(--ground) 18%,transparent) 0%,
+      color-mix(in srgb,var(--ground) 30%,transparent) 46%,
+      color-mix(in srgb,var(--ground) 46%,transparent) 100%),
     linear-gradient(90deg,
-      color-mix(in srgb,var(--ground) 58%,transparent) 0%,
-      color-mix(in srgb,var(--ground) 26%,transparent) 55%,
-      color-mix(in srgb,var(--ground) 62%,transparent) 100%);
+      color-mix(in srgb,var(--ground) 28%,transparent) 0%,
+      color-mix(in srgb,var(--ground) 10%,transparent) 55%,
+      color-mix(in srgb,var(--ground) 26%,transparent) 100%);
 }
 
 .book-band{
@@ -549,15 +562,15 @@
 /* Cards are glass now. The artwork behind them belongs to the book. */
 .card::before,.card::after{content:none}
 .card{
-  background:color-mix(in srgb,var(--surface) 86%,transparent);
-  backdrop-filter:blur(9px) saturate(115%);
-  border-color:color-mix(in srgb,var(--realm-color,var(--accent)) 26%,var(--rule));
+  background:color-mix(in srgb,var(--surface) 38%,transparent);
+  backdrop-filter:blur(2px) saturate(108%);
+  border-color:color-mix(in srgb,var(--realm-color,var(--accent)) 38%,var(--rule));
 }
 @supports not (backdrop-filter:blur(4px)){
-  .card{background:color-mix(in srgb,var(--surface) 96%,transparent)}
+  .card{background:color-mix(in srgb,var(--surface) 68%,transparent)}
 }
 .card:hover{
-  background:color-mix(in srgb,var(--surface) 94%,transparent);
+  background:color-mix(in srgb,var(--surface) 52%,transparent);
   border-color:var(--realm-color,var(--accent));
 }
 
@@ -597,14 +610,14 @@
   background:color-mix(in srgb,var(--realm-color) 8%,var(--surface-2));
   border-color:color-mix(in srgb,var(--realm-color) 24%,var(--rule));
 }
-.card.trial{background:var(--ember-wash);border-color:var(--ember)}
+.card.trial{background:color-mix(in srgb,var(--ember-wash) 46%,transparent);border-color:var(--ember)}
 .card.trial .card-no,.card.trial .card-kind{color:var(--ember)}
 .card.trial:hover{border-color:var(--ember)}
 
 /* ---------- closing ---------- */
 
 .closing{
-  margin:90px 0 0;padding:62px 34px 78px;border-top:1px solid var(--rule);border-radius:12px;
+  margin:90px auto 0;padding:62px 34px 78px;border-top:1px solid var(--rule);border-radius:12px;
   text-align:center;
   background:
     radial-gradient(circle at 20% 0,color-mix(in srgb,var(--air) 10%,transparent),transparent 18rem),
@@ -619,9 +632,13 @@
   line-height:1.28;letter-spacing:-.018em;color:var(--ink);text-wrap:balance;
 }
 .closing .who{
+  display:flex;align-items:center;justify-content:center;gap:12px;width:max-content;
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
-  margin-bottom:34px;
+  margin:0 auto 34px;
+}
+.closing .who::before,.closing .who::after{
+  content:"";width:28px;height:1px;background:var(--rule-firm);
 }
 
 .foot{
