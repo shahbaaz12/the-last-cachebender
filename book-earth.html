@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css?v=22">
+<link rel="stylesheet" href="css/styles.css?v=23">
 
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
@@ -282,7 +282,7 @@ Server C ─┘</pre>
     <li><strong>TTL is built into every key.</strong> You do not implement expiry — you set it and Redis honours it.</li>
     <li><strong>Eviction is built in.</strong> When memory fills, Redis decides what to drop using a policy you choose <em>(Lesson 10)</em>.</li>
     <li><strong>Operations are atomic.</strong> Two servers incrementing the same counter cannot overwrite each other, because the increment happens inside Redis rather than in your code.</li>
-    <li><strong>It can tell your servers when something changed.</strong> Redis can publish a message that every server receives — the mechanism behind event-driven invalidation <em>(Lesson 11)</em>.</li>
+    <li><strong>It can pass messages between your servers.</strong> Redis can publish a message that every subscribed server receives, which is useful well beyond caching.</li>
     <li><strong>It stores more than strings.</strong> Counters, lists, sets and sorted sets are native, which makes some problems trivial that are awkward anywhere else.</li>
   </ul>
 

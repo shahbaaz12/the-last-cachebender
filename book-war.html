@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css?v=22">
+<link rel="stylesheet" href="css/styles.css?v=23">
 
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
@@ -599,8 +599,6 @@ X-DB-Queries:   3</pre>
 Database updated                                    immediate
     ↓
 Redis DELETE price:42:*                             immediate
-    ↓
-Event published → app servers drop local copies     ~milliseconds
     ↓
 CDN purge /product/42                               ~seconds
     ↓
