@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 9: The Three Writing Techniques · The Last Cachebender</title>
+<meta content="Lesson 9 of The Last Cachebender: The Three Writing Techniques." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Spirit Library · The Last Cachebender" property="og:title"/>
+<meta content="Read and write strategies, eviction, expiration, and invalidation across every cache realm." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l9.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l9.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-spirit lesson-page" data-course-lesson="l9">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Interlude · Spirit</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a aria-current="page" href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Interlude · Spirit</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li>
+<a href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a aria-current="page" class="here" href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-spirit lesson-book-intro">
+      <div class="marker">Interlude · Spirit · Lesson 9 of 14</div>
+      <h2>The Spirit Library</h2>
+      <div class="saga"><p>The Three Writing Techniques</p></div>
+    </header>
+    <section class="lesson-head realm-spirit" id="l9">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_water_tribe_bending/screen.png"/>
+<div class="num">Lesson Nine</div>
+<h2>The Three Writing Techniques</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Three Seals</span>
+<span class="gloss">write-through, write-behind, write-around</span>
+</div>
+<h3>The problem</h3>
+<p>Reading was straightforward: the value is there or it is not.</p>
+<p>
+            Writing is harder, because now
+            <strong>two places hold the same fact</strong> — the cache and the
+            database — and a write must deal with both. Between the moment you
+            update one and the moment you update the other, they disagree.
+          </p>
+<p>
+            There are three strategies. They differ in <em>when</em> the
+            database is written and
+            <em>whether the cache is written at all</em>.
+          </p>
+<h3 id="l9-through">Write-through</h3>
+<p>
+<strong>Write-through</strong> means the cache owns the write. Your
+            application writes to the cache, the cache writes to the database,
+            and the call does not return until the database write has completed.
+          </p>
+<p>
+            Both writes happen — but one after the other, not at the same time.
+            The caller waits for the whole chain.
+          </p>
+<figure class="flow">
+<svg aria-label="Write-through: the application writes to the cache and the database together, and only then reports success." role="img" viewbox="0 0 560 150">
+<defs>
+<marker id="ahw" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="agw" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="bx bx-src" height="46" rx="5" width="130" x="8" y="46"></rect>
+<text class="tx" x="73" y="75">Application</text>
+<rect class="bx" height="46" rx="5" width="130" x="215" y="46"></rect>
+<text class="tx" x="280" y="75">Cache</text>
+<rect class="bx" height="46" rx="5" width="130" x="422" y="46"></rect>
+<text class="tx" x="487" y="75">Database</text>
+<path class="ar" d="M138 62 L209 62" marker-end="url(#ahw)"></path>
+<text class="nt" text-anchor="middle" x="173" y="52">write</text>
+<path class="ar" d="M345 62 L416 62" marker-end="url(#ahw)"></path>
+<text class="nt" text-anchor="middle" x="380" y="52">write</text>
+<path class="ar" d="M416 82 L140 82" marker-end="url(#ahw)"></path>
+<text class="nt" text-anchor="middle" x="280" y="104">
+                success — only after both have been written
+              </text>
+</svg>
+<figcaption>Nothing succeeds until both are written</figcaption>
+</figure>
+<pre class="figure">
+Application → cache.put(key, value)
+                    ↓
+              cache writes to the database
+                    ↓
+              database confirms
+                    ↓
+Application ← success</pre>
+<p>
+            Note who is doing the work:
+            <strong>the cache talks to the database, not your application.</strong>
+            That is what makes it <em>through</em> — and it is the same
+            distinction that separates read-through from cache-aside.
+          </p>
+<p>
+            Implementations differ on the order. Some write the cache first,
+            then the database. Oracle's Coherence writes the database first and
+            updates the cache only once that has succeeded, so that a failed
+            database write can never leave a value sitting in the cache that the
+            database has never seen.
+          </p>
+<p>
+<strong>Why people use it:</strong> the cache is never behind the
+            database, because success is not reported until the database has the
+            write. A subsequent read is correct. Reasoning about the system is
+            simple.
+          </p>
+<p><strong>The costs:</strong></p>
+<ul>
+<li>
+<strong>Writes are slower.</strong> You pay for both systems on
+              every write.
+            </li>
+<li>
+<strong>You cache things nobody reads.</strong> Every write
+              populates the cache, whether or not that item will ever be
+              requested. On write-heavy data with few reads, you fill your cache
+              with dead weight and evict things people actually want.
+            </li>
+<li>
+<strong>It is not actually atomic.</strong> Writing to two systems
+              without a transaction spanning both means one can succeed and the
+              other fail. If the cache write succeeds and the database write
+              fails, your cache now holds a value that does not exist in the
+              source of truth — which is worse than being stale.
+            </li>
+</ul>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span>
+</p>
+<ul>
+<li>
+<strong>Account and profile settings.</strong> Someone changes
+              their display name and lands straight back on a page showing it.
+              The cache is already correct when that page renders.
+            </li>
+<li>
+<strong>Feature flags and configuration.</strong> Written rarely,
+              read on nearly every request, and every server needs the new value
+              at once.
+            </li>
+<li>
+<strong>Stock counts on a low-volume catalogue.</strong> Being
+              wrong means overselling, and the write rate is low enough that the
+              extra latency does not matter.
+            </li>
+<li>
+<strong>Shopping cart contents.</strong> Written, then immediately
+              read on the next page, every time.
+            </li>
+</ul>
+<div class="aside">
+<p>
+              The pattern:
+              <strong>read-after-write is common, and being wrong is worse than being
+                slow.</strong>
+</p>
+</div>
+<h3 id="l9-behind">Write-behind</h3>
+<p>
+<strong>Write-behind</strong> — also called
+            <strong>write-back</strong> — writes to the cache, returns success
+            immediately, and writes to the database later in the background.
+          </p>
+<figure class="flow">
+<svg aria-label="Write-behind: the application writes to the cache and is told it succeeded immediately, and the database is written afterwards." role="img" viewbox="0 0 560 168">
+<defs>
+<marker id="ahb" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="agb" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="bx bx-src" height="46" rx="5" width="130" x="8" y="46"></rect>
+<text class="tx" x="73" y="75">Application</text>
+<rect class="bx" height="46" rx="5" width="130" x="215" y="46"></rect>
+<text class="tx" x="280" y="75">Cache</text>
+<rect class="bx" height="46" rx="5" width="130" x="422" y="46"></rect>
+<text class="tx" x="487" y="75">Database</text>
+<path class="ar" d="M138 62 L209 62" marker-end="url(#ahb)"></path>
+<text class="nt" text-anchor="middle" x="173" y="52">write</text>
+<path class="ar" d="M209 82 L140 82" marker-end="url(#ahb)"></path>
+<text class="nt" text-anchor="middle" x="173" y="104">
+                success, now
+              </text>
+<path class="ar ar-late" d="M345 68 L416 68" marker-end="url(#ahb)"></path>
+<text class="nt" text-anchor="middle" x="380" y="104">later</text>
+<text class="nt" text-anchor="middle" x="380" y="140">
+                lost if the cache dies first
+              </text>
+</svg>
+<figcaption>
+              Success is reported before the database is written
+            </figcaption>
+</figure>
+<pre class="figure">
+Application → write to cache → return success   ← user is done here
+                             ↓
+                    (later) write to database</pre>
+<p><strong>Why people use it:</strong></p>
+<ul>
+<li>
+<strong>Writes are very fast.</strong> The user waits for a memory
+              write, not a disk write.
+            </li>
+<li>
+<strong>Writes can be batched.</strong> A counter updated 1,000
+              times in a second becomes one database write of the final value.
+              For write-heavy workloads this is a genuine order-of-magnitude
+              reduction in database load.
+            </li>
+<li>
+              Sudden write spikes get absorbed instead of overwhelming the
+              database.
+            </li>
+</ul>
+<p><strong>The cost, stated plainly: you can lose data.</strong></p>
+<p>
+            If the cache dies between the acknowledgement and the database
+            write, that write is gone. You told the user it succeeded. It did
+            not.
+          </p>
+<p>
+            This is not a rare edge case to design around — it is the
+            fundamental trade. Write-behind is correct for data where losing
+            some is acceptable. It is wrong for orders, payments, and inventory.
+          </p>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span>
+</p>
+<ul>
+<li>
+<strong>View counts.</strong> A page viewed a million times an
+              hour becomes a handful of database writes instead of a million.
+            </li>
+<li>
+<strong>“Last seen” and “last active”
+                timestamps.</strong>
+              Updated on every single request, and nobody notices if one is a
+              minute stale or lost entirely.
+            </li>
+<li>
+<strong>Likes, reactions, and vote tallies.</strong> High volume,
+              and an occasional lost increment is invisible.
+            </li>
+<li>
+<strong>Analytics and telemetry events.</strong> Losing a fraction
+              of a percent does not change any dashboard anyone looks at.
+            </li>
+</ul>
+<div class="aside">
+<p>
+              The pattern:
+              <strong>enormous write volume, and nobody files a support ticket if a
+                few writes vanish.</strong>
+</p>
+<p>
+              The test to apply:
+              <em>if thirty seconds of these writes disappeared in a crash, would
+                anyone notice?</em>
+              If the answer is yes, this is not your strategy.
+            </p>
+</div>
+<div class="keystone">
+            Write-behind is not a faster write-through. It is a different
+            guarantee. Write-through promises durability. Write-behind promises
+            speed, and explicitly does not promise durability.
+          </div>
+<h3 id="l9-around">Write-around</h3>
+<p>
+<strong>Write-around</strong> writes only to the database and does
+            not populate the cache at all. Usually it also removes any existing
+            cached copy, so a stale one cannot survive.
+          </p>
+<figure class="flow">
+<svg aria-label="Write-around: the application writes straight to the database and removes the cached copy, so the next read reloads it." role="img" viewbox="0 0 560 168">
+<defs>
+<marker id="ahn" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="agn" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="bx bx-src" height="46" rx="5" width="130" x="8" y="90"></rect>
+<text class="tx" x="73" y="119">Application</text>
+<rect class="bx" height="46" rx="5" width="130" x="215" y="10"></rect>
+<text class="tx" x="280" y="39">Cache</text>
+<rect class="bx" height="46" rx="5" width="130" x="422" y="90"></rect>
+<text class="tx" x="487" y="119">Database</text>
+<path class="ar" d="M138 113 L416 113" marker-end="url(#ahn)"></path>
+<text class="nt" text-anchor="middle" x="277" y="103">write</text>
+<path class="ar-dim" d="M120 90 L245 62" marker-end="url(#agn)"></path>
+<text class="nt" x="150" y="60">delete the copy</text>
+<text class="nt" text-anchor="middle" x="280" y="158">
+                the next read misses, and reloads it
+              </text>
+</svg>
+<figcaption>The cache is stepped around, not written to</figcaption>
+</figure>
+<pre class="figure">
+Application → write to database → return success
+              (cache entry deleted if present)
+              next read misses and loads fresh</pre>
+<p>
+<strong>Why people use it:</strong> write-heavy data that is rarely
+            read soon after writing does not pollute the cache. Your cache stays
+            full of things people are actually reading.
+          </p>
+<p>
+<strong>The cost:</strong> the next read of that item is a miss. If
+            your write pattern is “write then immediately read” —
+            which is extremely common, since users usually look at what they
+            just did — write-around gives you a guaranteed miss on every one.
+          </p>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span>
+</p>
+<ul>
+<li>
+<strong>Bulk imports and migrations.</strong> Loading a million
+              rows overnight. Filling the cache with all of them would evict
+              everything real users actually want — the exact scan problem you
+              will meet in Lesson 10.
+            </li>
+<li>
+<strong>Audit logs and event records.</strong> Written constantly,
+              read almost never, and usually only during an investigation.
+            </li>
+<li>
+<strong>Historical and archival data.</strong> An order from three
+              years ago is written once and may never be read again.
+            </li>
+<li>
+<strong>Draft autosave.</strong> A user saves every few seconds;
+              only the final version is ever read by anybody else.
+            </li>
+<li>
+<strong>Sensor and IoT readings.</strong> High write volume,
+              queried later in aggregate rather than individually.
+            </li>
+</ul>
+<div class="aside">
+<p>
+              The pattern:
+              <strong>written far more often than read, or not read again for a long
+                time.</strong>
+</p>
+</div>
+<h3 id="l9-choose">Choosing</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Strategy</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read soon after write, must be correct</td>
+<td><strong>Write-through</strong></td>
+<td>Cache is right immediately</td>
+</tr>
+<tr>
+<td>Very high write rate, some loss acceptable</td>
+<td><strong>Write-behind</strong></td>
+<td>Speed and batching</td>
+</tr>
+<tr>
+<td>Written often, read rarely</td>
+<td><strong>Write-around</strong></td>
+<td>Keeps the cache useful</td>
+</tr>
+<tr>
+<td>Read-heavy, occasionally written</td>
+<td><strong>Write-around + cache-aside</strong></td>
+<td>Simple, safe, and the common default</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            That last row deserves attention.
+            <strong>Write-around paired with cache-aside</strong> — write to the
+            database, delete the cached copy, let the next read reload it — is
+            the most widely used combination in practice, because it is simple
+            and it fails safely. It is also, under a different name, the subject
+            of Lesson 11.
+          </p>
+<h3>At the Storefront</h3>
+<p>
+<strong>Stock count</strong> — decrements constantly, and being
+            wrong means selling something you do not have. Write-through keeps
+            the cache from showing more stock than exists, but note that a write
+            strategy alone does not make a decrement safe: two servers can both
+            read 5, both subtract 1, and both write 4. That is the
+            read-modify-write race from Lesson 6, and it needs an atomic
+            decrement rather than a write pattern. Not caching the stock count
+            at all is a legitimate answer here.
+          </p>
+<p>
+<strong>Review submission</strong> — written rarely, read
+            constantly. Write-around: store it, drop the cached review list, let
+            the next reader rebuild it.
+          </p>
+<p>
+<strong>Product view counter</strong> — written on every page view,
+            read almost never, and losing a few is fine. Write-behind, batched.
+          </p>
+<p>Three write paths, three different strategies, on one page.</p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">
+              “Write-behind is just a faster write-through.”
+            </p>
+<p>
+              It trades durability for speed. If the cache dies before the
+              flush, the write is gone — after you told the user it succeeded.
+              Choose it deliberately, for data you can afford to lose.
+            </p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l9"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-fire.html"><small>Previous</small><b>← Book Four · Fire</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-war.html"><small>Next</small><b>Book Five · War →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

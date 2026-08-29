@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Technique Index · The Last Cachebender</title>
+<meta content="Lesson 14 of The Last Cachebender: The Final Battle." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Great War · The Last Cachebender" property="og:title"/>
+<meta content="Cache attacks, measurement, restoration, and the final multi-layer caching design." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l14.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l14.html" rel="canonical"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+/* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="course-page realm-spirit techniques-page">
+<a class="skip" href="#top">Skip to content</a>
+<div class="progress" id="progress"></div>
+<header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle>
+</svg></span>
+<span><b>The Last Cachebender</b><small>Book Five · War</small></span>
+</a>
+<nav aria-label="Course books" class="course-books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a aria-current="page" href="book-war.html">War</a></nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+<div class="shell"><main id="top"><details class="mobile-nav">
+<summary>Book Five · War</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
+<li><a href="book-water.html">Book Two · Water · The Edge Kingdom</a></li>
+<li><a href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
+<li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
+<li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
+<li><a aria-current="page" class="here" href="book-war.html">Book Five · War · The Great War</a></li>
+</ul>
+</div>
+</details><header class="book realm-spirit technique-index-hero">
+<div class="marker">The complete course</div>
+<h2>Technique Index</h2>
+<div class="saga"><p>Fourteen techniques, one line each. Use this page as a map, a glossary, or a way back into the lesson you need.</p></div>
+</header><section class="wrap"><div class="technique-index-grid"><a class="technique-index-card" href="l1.html#l1">
+<span class="technique-number">01</span>
+<span><b>The Sight</b><small>See repeated work before reaching for a cache.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l2.html#l2">
+<span class="technique-number">02</span>
+<span><b>The Naming</b><small>Name keys, values, hits, misses, lifetimes and warming.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l3.html#l3">
+<span class="technique-number">03</span>
+<span><b>Windkeeping</b><small>Hold a validated copy closest to the user.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l4.html#l4">
+<span class="technique-number">04</span>
+<span><b>Tidecall</b><small>Push shared copies outward to the edge.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l5.html#l5">
+<span class="technique-number">05</span>
+<span><b>Stonehold</b><small>Keep reusable answers inside application memory.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l6.html#l6">
+<span class="technique-number">06</span>
+<span><b>Stonesplit</b><small>Spread one shared cache across many nodes.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l7.html#l7">
+<span class="technique-number">07</span>
+<span><b>Emberdraw</b><small>Use the database’s existing heat before adding another cache.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l8.html#l8">
+<span class="technique-number">08</span>
+<span><b>The Three Draws</b><small>Choose who owns a miss and when refresh happens.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l9.html#l9">
+<span class="technique-number">09</span>
+<span><b>The Three Seals</b><small>Choose when the cache and source are updated.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l10.html#l10">
+<span class="technique-number">10</span>
+<span><b>The Letting Go</b><small>Control expiration and eviction under pressure.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l11.html#l11">
+<span class="technique-number">11</span>
+<span><b>The Truthbinding</b><small>Keep every copy aligned with the source of truth.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l12.html#l12">
+<span class="technique-number">12</span>
+<span><b>The Trial</b><small>Derive defenses from the techniques already mastered.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l13.html#l13">
+<span class="technique-number">13</span>
+<span><b>The Measure</b><small>Instrument the cache and remove what earns no place.</small></span>
+<span class="technique-arrow">→</span>
+</a><a class="technique-index-card" href="l14.html#l14">
+<span class="technique-number">14</span>
+<span><b>The Convergence</b><small>Combine all four realms into one defended design.</small></span>
+<span class="technique-arrow">→</span>
+</a></div></section><footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-spirit.html"><small>Previous</small><b>← Interlude · Spirit</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<span class="course-step next is-empty"></span>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer></main></div>
+<button aria-label="Back to top" class="totop" id="totop" type="button">↑</button>
+<script src="js/main.js?v=25"></script>
+<script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

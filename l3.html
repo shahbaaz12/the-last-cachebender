@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 3: The Browser Realm · The Last Cachebender</title>
+<meta content="Lesson 3 of The Last Cachebender: The Browser Realm." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Browser Realm · The Last Cachebender" property="og:title"/>
+<meta content="Browser caching, HTTP headers, validation, ETags, and fingerprinted assets." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l3.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l3.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-air lesson-page" data-course-lesson="l3">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Book One · Air</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a href="course.html">Prologue</a><a aria-current="page" href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Book One · Air</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li>
+<a aria-current="page" class="here" href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-air lesson-book-intro">
+      <div class="marker">Book One · Air · Lesson 3 of 14</div>
+      <h2>The Browser Realm</h2>
+      <div class="saga"><p>The Browser Realm</p></div>
+    </header>
+    <section class="lesson-head realm-air" id="l3">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_the_air_nomads/screen.png"/>
+<div class="num">Lesson Three</div>
+<h2>The Browser Realm</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">Windkeeping</span>
+<span class="gloss">holding a copy closest to the user</span>
+</div>
+<h3>The realm</h3>
+<p>
+            The <strong>browser cache</strong> is a store of files kept on the
+            user's own computer by their web browser.
+          </p>
+<p>
+            It is the closest cache to the user — there is nothing closer. A hit
+            here involves no network at all. The file is already on their disk.
+            Response time is effectively zero.
+          </p>
+<p>
+            It also has a property no other realm has:
+            <strong>the storage is free to you.</strong> It is the user's disk,
+            not your server's memory. You are not paying for it.
+          </p>
+<p>
+            And it has a matching weakness, which will matter enormously in
+            Lesson 11: <strong>you cannot reach it.</strong> Once you have sent
+            a file to a user's browser with permission to keep it for a year,
+            you have no way to take it back. You cannot delete it. You cannot
+            update it. You can only wait for it to expire.
+          </p>
+<p>
+            Everything about browser caching follows from those two facts: it is
+            free and instant, and it is irreversible.
+          </p>
+<h3 id="l3-page">What happens when a page is requested</h3>
+<p>
+            A page is not one thing the server hands over. It is one file that
+            refers to other files.
+          </p>
+<p>
+            The first request. The browser turns the domain into an address,
+            opens a connection, and asks for exactly one thing:
+          </p>
+<pre class="figure plain">
+GET /product/42   →   server returns HTML</pre>
+<p>
+            That HTML contains no images and no styling. It contains
+            <em>references</em> to them:
+          </p>
+<pre class="figure">
+&lt;link rel="stylesheet" href="/app.a91f3c.css"&gt;
+&lt;script src="/app.7b2e10.js"&gt;&lt;/script&gt;
+&lt;img src="/headphones.jpg"&gt;</pre>
+<p>
+            The browser then asks for each one separately. Those files can
+            reference further files, so requests arrive in waves:
+          </p>
+<pre class="figure">
+Time →
+
+[1]  GET /product/42            HTML
+      │
+      ├─[2]  GET /app.a91f3c.css     stylesheet  ┐
+      ├─[3]  GET /app.7b2e10.js      script      │  in parallel
+      ├─[4]  GET /logo.svg           image       │
+      └─[5]  GET /headphones.jpg     image       ┘
+              │
+              ├─[6]  GET /inter.woff2      font  ←  the CSS asked for this
+              │
+              ├─[7]  GET /api/price/42     JSON  ┐
+              ├─[8]  GET /api/stock/42     JSON  │  the JavaScript
+              └─[9]  GET /api/cart         JSON  ┘  asked for these</pre>
+<p>A real product page is 50 to 100 requests, not nine.</p>
+<h4>Two kinds of response</h4>
+<p>This is the part that decides where caching rules live.</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Who produces it</th>
+<th>Where its caching rule is set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<strong>Dynamic</strong> — <code>/product/42</code>,
+                    <code>/api/price/42</code>
+</td>
+<td>Your application code runs</td>
+<td>In your code</td>
+</tr>
+<tr>
+<td>
+<strong>Static</strong> — <code>/app.js</code>,
+                    <code>/logo.svg</code>
+</td>
+<td>A file is read from disk and sent</td>
+<td>In configuration</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            Most of those 50–100 requests are the second kind. The request for
+            <code>/app.js</code> never reaches your application code — it is
+            answered by nginx, or your platform, or a CDN. You configure the
+            rule once, by file type or folder, and it applies from then on.
+          </p>
+<p>Which leads to the most important sentence in this lesson:</p>
+<div class="keystone">The browser cache stores files, not pages.</div>
+<p>
+            There is no cached copy of your product page. There are sixty
+            independently cached files, each with its own address and its own
+            rule. The storefront's seven parts were never a conceptual division
+            — they are separate HTTP responses, which is exactly why they can
+            have seven different answers.
+          </p>
+<h4>How caching instructions travel</h4>
+<p>
+            An <strong>HTTP header</strong> is a line of information sent
+            alongside a response, separate from the content itself.
+          </p>
+<pre class="figure">
+HTTP/1.1 200 OK
+Content-Type: application/javascript
+Cache-Control: public, max-age=86400
+
+(function(){ ...the JavaScript... })</pre>
+<h3 id="l3-cc">How you control it</h3>
+<p>
+            You control the browser cache by sending instructions along with
+            your responses. The main one is <code>Cache-Control</code>:
+          </p>
+<pre class="figure plain">
+Cache-Control: public, max-age=31536000, immutable</pre>
+<p>
+            That is three separate instructions in one line. Below is each of
+            them, along with the other headers that matter — and where you will
+            actually meet each one.
+          </p>
+<div class="opt-intro">Reference — expand as needed</div>
+<details class="opt">
+<summary>
+<code>max-age=N</code><span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+                Keep this file and reuse it for
+                <strong>N seconds</strong> without asking me again.
+              </p>
+<pre class="figure plain">Cache-Control: max-age=300</pre>
+<p>
+                For the next 300 seconds, the browser uses its stored copy
+                directly. It will not contact your server at all. Your server
+                does not know those requests happened.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Universal. Every asset
+                on every major site. Nothing has replaced it.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+<code>no-cache</code> and <code>no-store</code> — the classic
+              confusion<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+                These sound like they mean the same thing. They do not, and
+                mixing them up is one of the most common caching mistakes in the
+                field.
+              </p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th>What it actually means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>no-store</code></td>
+<td>
+<strong>Do not keep a copy at all.</strong> Never write
+                        it to disk.
+                      </td>
+</tr>
+<tr>
+<td><code>no-cache</code></td>
+<td>
+<strong>Keep a copy, but ask me before using it each
+                          time.</strong>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+<code>no-cache</code> does <em>not</em> mean “do not
+                cache.” It means “cache, but always check
+                first.” It is a caching instruction, not a refusal to
+                cache.
+              </p>
+<p>
+                Use <code>no-store</code> for anything genuinely sensitive — a
+                bank statement, a page containing someone's personal details.
+                Use <code>no-cache</code> when you want the speed benefit of a
+                stored copy but need to guarantee it is current.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Both current.
+                <code>no-store</code> is standard on banking, health and account
+                pages. <code>no-cache</code> is the standard setting for HTML in
+                the fingerprinting pattern further down this lesson.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+<code>public</code> and <code>private</code><span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+<strong><code>private</code></strong> means only the user's own
+                browser may store this. Shared caches — the CDN in Book Two, any
+                company proxy in between — must not keep a copy.
+              </p>
+<p>
+<strong><code>public</code></strong> means anyone along the path
+                may store it.
+              </p>
+<p>
+                This distinction is a safety mechanism. Anything personalised
+                must be <code>private</code>. The storefront's cart badge is
+                personalised, and if it were ever marked <code>public</code>, a
+                shared cache could store one user's cart and hand it to the next
+                person who came along. That exact failure has a name —
+                <strong>cache poisoning</strong> — and it is one of the five
+                attacks in Lesson 12.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Current, and
+                <code>private</code> is load-bearing for security. It is the
+                instruction that stops a shared cache storing an authenticated
+                response.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+<code>immutable</code><span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+                This file will <strong>never</strong> change. Do not even ask.
+              </p>
+<p>
+                Without it, browsers often revalidate stored files when the user
+                hits reload. <code>immutable</code> tells the browser not to
+                bother. It is only safe when the statement is literally true,
+                which brings us to fingerprinted URLs, below.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Standard on
+                fingerprinted bundles. Firefox and Safari honour it. Chrome
+                never implemented it, having argued that its own reload handling
+                already avoids the problem — so it is harmless where it is
+                ignored.
+              </p>
+</div>
+</details>
+<details class="opt legacy">
+<summary>
+<code>Expires</code> — the one you should not write<span class="flag">legacy</span>
+</summary>
+<div class="body">
+<p>
+                The predecessor to <code>max-age</code>. Instead of a duration,
+                it carries an absolute date:
+              </p>
+<pre class="figure plain">
+Expires: Wed, 21 Oct 2026 07:28:00 GMT</pre>
+<p>
+                It has an obvious flaw: it depends on the browser's clock
+                agreeing with your server's. <code>max-age</code> counts seconds
+                from when the response arrived, so no clock comparison is
+                needed.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span>
+<strong>Legacy.</strong> Superseded by <code>max-age</code>,
+                which wins whenever both are present. Some servers still send it
+                alongside <code>max-age</code> for very old clients. You will
+                meet it in real codebases and configuration files. Do not write
+                new ones.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+<code>ETag</code> — asking “has this changed?”<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+<code>max-age</code> covers the period where the browser can
+                skip the server entirely. When that time runs out, the browser
+                would otherwise re-download the whole file — even if it is
+                byte-for-byte identical to the copy it already holds.
+              </p>
+<p>
+                An <strong>ETag</strong> (entity tag) avoids that waste. It is a
+                short identifier your server attaches to a response, acting as a
+                fingerprint of the content. If the content changes, the ETag
+                changes.
+              </p>
+<pre class="figure plain">Server → Browser:   ETag: "a91f3c"</pre>
+<p>
+                The browser stores the file along with that tag. Later, when it
+                wants to check:
+              </p>
+<pre class="figure plain">
+Browser → Server:   If-None-Match: "a91f3c"      ("I have version a91f3c")</pre>
+<p>
+                The server compares. If the content still has that fingerprint:
+              </p>
+<pre class="figure plain">
+Server → Browser:   304 Not Modified              (no body at all)</pre>
+<p>
+<strong><code>304 Not Modified</code></strong> is a response
+                that says “your copy is still good” and contains no
+                content. It is a few hundred bytes instead of a few hundred
+                kilobytes.
+              </p>
+<p>
+                If the content <em>has</em> changed, the server sends
+                <code>200 OK</code> with the new content and a new ETag, as
+                normal.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Current and
+                everywhere, especially on APIs. One caveat worth knowing: when
+                several servers sit behind a load balancer, ETags generated from
+                file metadata can differ between them, so the same file produces
+                a different tag depending on which server answered — and the
+                browser re-downloads for no reason. ETags derived from the
+                content itself avoid this.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+<code>Last-Modified</code><span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+                The same idea as an ETag, using a date instead of a fingerprint.
+                The server sends <code>Last-Modified: &lt;date&gt;</code>; the
+                browser later asks with
+                <code>If-Modified-Since: &lt;date&gt;</code>; the server replies
+                <code>304</code> or sends the new version.
+              </p>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Still sent by most
+                static file servers, usually beside an ETag. It is the weaker of
+                the two — one-second resolution means a file changed twice
+                within the same second looks unchanged. Treat it as a fallback,
+                not a first choice.
+              </p>
+</div>
+</details>
+<details class="opt" id="l3-swr">
+<summary>
+<code>stale-while-revalidate</code><span class="flag">optional read</span>
+</summary>
+<div class="body">
+<pre class="figure plain">
+Cache-Control: max-age=60, stale-while-revalidate=3600</pre>
+<p>
+                This says:
+                <em>use the stored copy freely for 60 seconds. After that, for up
+                  to an hour, you may
+                  <strong>still use the old copy immediately</strong> — but
+                  fetch a fresh one in the background at the same time.</em>
+</p>
+<p>
+                The effect is that the user never waits. They get an instant
+                response from the slightly-stale copy, and the next visitor gets
+                the fresh one.
+              </p>
+<p>
+                You are trading a small amount of freshness for the complete
+                removal of waiting. For content where being 60 seconds out of
+                date is harmless, this is close to free performance.
+              </p>
+<div class="aside">
+<p>
+                  Notice what this is doing: refreshing a value
+                  <em>before</em> anyone is blocked waiting for it. That pattern
+                  has a formal name — <strong>refresh-ahead</strong> — and you
+                  will meet it properly in Lesson 8. This is its browser-shaped
+                  version.
+                </p>
+</div>
+<p class="wild">
+<span class="wild-tag">In the wild</span> Current, and growing.
+                It is the mechanism behind Next.js incremental regeneration and
+                the edge caching offered by Vercel and Cloudflare.
+              </p>
+</div>
+</details>
+<h3 id="l3-fp">
+            Fingerprinted URLs: the trick that makes it all safe
+          </h3>
+<div class="callout problem">
+<h4>The problem</h4>
+<p>
+              You ship <code>app.js</code> with
+              <code>Cache-Control: public, max-age=31536000</code> — one year.
+              That is the right setting: the file is used by every page on the
+              site, and re-downloading it on every visit is pure waste.
+            </p>
+<p>
+              Then you find a bug in it. You fix it, you deploy, you refresh the
+              page.
+            </p>
+<p>Nothing changes.</p>
+<p>
+              The browser has a copy it was told to keep for a year, so it does
+              not ask whether there is a newer one. That is precisely what
+              <code>max-age</code> means. Every user who visited before your fix
+              is holding the broken version, and you have no way to reach them.
+            </p>
+<p>
+              The same happens with an image. You upload a corrected product
+              photo over <code>/headphones.jpg</code>. Everyone who already
+              loaded the page keeps seeing the old one.
+            </p>
+</div>
+<div class="callout solution">
+<h4>Never change a file, change its name</h4>
+<p>
+              Instead of <code>app.js</code>, publish
+              <code>app.a91f3c.js</code>, where <code>a91f3c</code> is derived
+              from the file's contents. Change one character of the code and
+              that value changes, so the filename changes.
+            </p>
+<pre class="figure plain">
+app.a91f3c.js     ← still cached, now referenced by nothing
+app.5d20e8.js     ← never seen before, must be fetched</pre>
+<p>
+              The browser is not being persuaded to re-check anything. It is
+              being asked for a file it has never heard of, and it has no choice
+              but to download it.
+            </p>
+</div>
+<h4>How does the browser learn the new name?</h4>
+<p>
+            This is the part that makes the whole scheme work, and it is easy to
+            miss.
+          </p>
+<p><strong>The HTML is not cached.</strong></p>
+<pre class="figure plain">
+GET /product/42
+Cache-Control: no-cache          ← always revalidated</pre>
+<pre class="figure">
+&lt;script src="/app.5d20e8.js"&gt;&lt;/script&gt;    ← the new name lives here</pre>
+<p>
+            The HTML is the index. It is small, it is checked every time, and it
+            holds the current names of everything else. The assets are cached
+            forever and never change. The HTML changes constantly and is never
+            cached.
+          </p>
+<p>So a deploy spreads like this:</p>
+<ol>
+<li>New code produces new filenames</li>
+<li>The new HTML references those names</li>
+<li>
+              The browser revalidates the HTML — it is <code>no-cache</code> —
+              and receives the new references
+            </li>
+<li>Those filenames are unknown to it, so it fetches them</li>
+<li>
+              The old files sit unreferenced in the cache until they expire
+            </li>
+</ol>
+<p>
+            The user gets the fix on their next page load. No hard refresh, no
+            purge, and you never had to reach into their browser.
+          </p>
+<h4>The standard pairing</h4>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>What</th>
+<th>Header</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fingerprinted assets</td>
+<td><code>public, max-age=31536000, immutable</code></td>
+</tr>
+<tr>
+<td>HTML</td>
+<td><code>no-cache</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            That combination is the industry standard on the web. Nearly every
+            major site you use is doing exactly this right now.
+          </p>
+<div class="good-news">
+<h3 id="l3-good">Most of this is already handled</h3>
+<p>
+              You have just read a lesson full of headers, and it would be
+              reasonable to conclude that you now have to write all of them by
+              hand. You do not.
+            </p>
+</div>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Who sets it</th>
+<th>What they set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your build tool</td>
+<td>Fingerprinted filenames</td>
+</tr>
+<tr>
+<td>
+                    Your host or web server — nginx, Apache, Vercel, Netlify,
+                    Cloudflare Pages, CloudFront
+                  </td>
+<td>
+<code>max-age</code> and <code>immutable</code> on static
+                    assets, usually by file type or folder
+                  </td>
+</tr>
+<tr>
+<td>Your framework</td>
+<td>
+<code>no-cache</code> on rendered HTML,
+                    <code>private</code> on authenticated responses
+                  </td>
+</tr>
+<tr>
+<td>Your static file server</td>
+<td>
+<code>ETag</code> and <code>Last-Modified</code>, generated
+                    for you
+                  </td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            On a typical modern project, the entire static-asset story is
+            handled before you write a line of configuration.
+          </p>
+<p>
+<strong>What is left to you</strong> — and this is where your
+            attention belongs:
+          </p>
+<ul>
+<li>
+<strong>Your dynamic responses.</strong> The HTML your application
+              renders and the API endpoints it exposes. No tool can guess how
+              stale your price is allowed to be. That is the decision from
+              Lesson 1, and it is yours.
+            </li>
+<li>
+<strong>Anything users upload.</strong> Nothing fingerprints it
+              for you, as the table above explains.
+            </li>
+<li>
+<strong>Knowing what the defaults already are.</strong> A default
+              you never looked at is still a decision you made. The common
+              failure is not a wrong header — it is a <code>max-age</code> that
+              nobody ever read.
+            </li>
+</ul>
+<div class="keystone">
+            The lesson is not “write these headers everywhere.” It
+            is: know what they mean, so you can read the ones already set and
+            change the few that are wrong.
+          </div>
+<h3>At the Storefront</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Header</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Asset bundle</td>
+<td><code>public, max-age=31536000, immutable</code></td>
+<td>Fingerprinted name — a change makes a new URL</td>
+</tr>
+<tr>
+<td>Product images</td>
+<td><code>public, max-age=86400</code></td>
+<td>Change rarely; a day stale is harmless</td>
+</tr>
+<tr>
+<td>Product details</td>
+<td><code>public, max-age=300</code></td>
+<td>
+                    Slow-changing, but edits should appear reasonably soon
+                  </td>
+</tr>
+<tr>
+<td>Price</td>
+<td>
+<code>public, max-age=60, stale-while-revalidate=300</code>
+</td>
+<td>
+                    Must be close to current; never make a user wait for it
+                  </td>
+</tr>
+<tr>
+<td>Stock count</td>
+<td><code>no-cache</code></td>
+<td>Store it, but always check — this must be current</td>
+</tr>
+<tr>
+<td>Reviews</td>
+<td><code>public, max-age=600</code></td>
+<td>Read heavily, changes slowly</td>
+</tr>
+<tr>
+<td><strong>Cart badge</strong></td>
+<td><code>private, no-store</code></td>
+<td>Personal. Must never be stored anywhere shared.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">
+              “<code>no-cache</code> means don't cache it.”
+            </p>
+<p>
+              It means <em>store it, but revalidate before every use</em>. The
+              one that means “do not store it” is
+              <code>no-store</code>. People reach for
+              <code>no-cache</code> intending <code>no-store</code> constantly,
+              and end up writing sensitive data to disk.
+            </p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l3"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="course.html"><small>Previous</small><b>← Prologue</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-water.html"><small>Next</small><b>Book Two · Water →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

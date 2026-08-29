@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 14: The Final Battle · The Last Cachebender</title>
+<meta content="Lesson 14 of The Last Cachebender: The Final Battle." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Great War · The Last Cachebender" property="og:title"/>
+<meta content="Cache attacks, measurement, restoration, and the final multi-layer caching design." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l14.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l14.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+/* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="course-page realm-war lesson-page" data-course-lesson="l14">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle>
+</svg></span>
+<span><b>The Last Cachebender</b><small>Book Five · War</small></span>
+</a>
+<nav aria-label="Course books" class="course-books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a aria-current="page" href="book-war.html">War</a></nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Book Five · War</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
+<li><a href="book-water.html">Book Two · Water · The Edge Kingdom</a></li>
+<li><a href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
+<li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
+<li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
+<li><a aria-current="page" class="here" href="book-war.html">Book Five · War · The Great War</a></li>
+</ul>
+</div>
+</details>
+    <header class="book realm-war lesson-book-intro">
+      <div class="marker">Book Five · War · Lesson 14 of 14</div>
+      <h2>The Great War</h2>
+      <div class="saga"><p>The Final Battle</p></div>
+    </header>
+    <section class="lesson-head realm-war" id="l14">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_and_rebirth/screen.png"/>
+<div class="num">Lesson Fourteen</div>
+<h2>The Final Battle</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Convergence</span>
+<span class="gloss">all four realms in one design</span>
+</div>
+<h3>The task</h3>
+<p>Design the complete caching strategy for the storefront, across every realm.</p>
+<p>You are not learning anything new here. Every piece of this was built in an earlier lesson. <strong>This is assembly, not invention</strong> — and if it feels like assembly, the course worked.</p>
+<h3 id="l14-rubric">The rubric</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>#</th><th>Requirement</th><th>From</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Every one of the seven parts assigned to a realm — or marked <em>never cached</em>, with a reason</td><td>L1–L7</td></tr>
+<tr><td>2</td><td>A cache key and a TTL for each cached part</td><td>L2, L10</td></tr>
+<tr><td>3</td><td>A read strategy and a write strategy for the application layer</td><td>L8, L9</td></tr>
+<tr><td>4</td><td>An invalidation path for every mutable part, across every realm that holds it</td><td>L11</td></tr>
+<tr><td>5</td><td>A named defense for each of the five attacks</td><td>L12</td></tr>
+<tr><td>6</td><td>An instrumentation plan — what you measure, what alerts you</td><td>L13</td></tr>
+<tr><td>7</td><td>A stated failure mode: what happens when the cache dies</td><td>L6, L13</td></tr>
+</tbody>
+</table></div>
+<h3 id="l14-worked">A worked example</h3>
+<p>Here is requirement-complete coverage of <strong>one</strong> element — the price — as a model for the shape expected. Do the other six yourself.</p>
+<h4>Element: Price</h4>
+<p><strong>1. Realms</strong> — Browser, CDN, Redis. Not local cache: it changes too often to risk per-server divergence.</p>
+<p><strong>2. Keys and TTLs</strong></p>
+<div class="tablewrap"><table>
+<thead><tr><th>Realm</th><th>Key</th><th>TTL</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Browser</td><td>URL</td><td>60s + <code>stale-while-revalidate=300</code></td><td>60s is the hard ceiling on how fast a correction reaches users (L11)</td></tr>
+<tr><td>CDN</td><td>URL + currency + customer tier</td><td>300s</td><td>Purgeable, so a longer TTL is safe</td></tr>
+<tr><td>Redis</td><td><code>price:{id}:{currency}:{tier}</code></td><td>300s + jitter</td><td>Jitter prevents avalanche (L10)</td></tr>
+</tbody>
+</table></div>
+<p>Currency and tier appear in every key that has a key at all. They change the answer, so they are in the key (L2).</p>
+<p><strong>3. Read and write</strong></p>
+<ul>
+<li><strong>Read:</strong> cache-aside with single-flight — it is a hot key and it <em>will</em> stampede (L8)</li>
+<li><strong>Write:</strong> write-around — update the database, delete the cached copy (L9)</li>
+<li><strong>Delete, never update</strong> — concurrent writes can land out of order (L11)</li>
+</ul>
+<p><strong>4. Invalidation path</strong></p>
+<pre class="figure">Admin changes price
+    ↓
+Database updated                                    immediate
+    ↓
+Redis DELETE price:42:*                             immediate
+    ↓
+CDN purge /product/42                               ~seconds
+    ↓
+Browser: no mechanism — bounded by the 60s TTL      up to 60s</pre>
+<p><strong>Worst-case staleness: 60 seconds</strong>, entirely in the browser realm, entirely because that realm cannot be reached (L11). Everything reachable is corrected in under a second.</p>
+<p><strong>5. Attack defenses</strong></p>
+<div class="tablewrap"><table>
+<thead><tr><th>Attack</th><th>Defense</th></tr></thead>
+<tbody>
+<tr><td>Stampede</td><td>Single-flight + refresh-ahead on top-100 products (L8)</td></tr>
+<tr><td>Penetration</td><td>Negative caching, 60s TTL, plus ID validation (L12)</td></tr>
+<tr><td>Avalanche</td><td>TTL jitter on every price key (L10)</td></tr>
+<tr><td>Hot key</td><td>5-second local cache in front of Redis for top products (L5)</td></tr>
+<tr><td>Poisoning</td><td>Currency and tier in the key; <code>public</code> is safe only because price is not per-user (L2, L12)</td></tr>
+</tbody>
+</table></div>
+<p><strong>6. Instrumentation</strong></p>
+<ul>
+<li>Hit ratio for the <code>price:</code> prefix specifically — not the global number (L13)</li>
+<li>p99 latency on price lookups; alert if it exceeds 100ms</li>
+<li>Alert on stale-price reports with <code>Age</code> attached, to identify the realm</li>
+<li>Track invalidation event failures — a silent failure here is a wrong price for 60 seconds</li>
+</ul>
+<p><strong>7. Failure mode</strong></p>
+<p>Redis unavailable → every price read goes to the database. The local 5-second cache absorbs the hot products. Database load rises roughly 4×, which is within capacity. <strong>Degraded but alive.</strong> Tested under load in staging.</p>
+<h3 id="l14-rest">Do the other six</h3>
+<p>Product details. Product images. The asset bundle. Stock count. Reviews.</p>
+<p>And the cart badge — for which the complete answer is: <strong>never cached, in any realm, at any layer</strong>, because it differs per user and Lesson 12 attack 5 shows exactly what happens if you get that wrong.</p>
+<p>It has been in every table since Lesson 1, always marked “never.” Requirement 1 is satisfied not by caching it, but by being able to say precisely why you did not.</p>
+<h3>The final assessment</h3>
+<p>When you can produce that document for a real system — and defend every TTL in it — you have finished this course.</p>
+<div class="keystone">The test is not whether you can list caching techniques. It is whether you can look at a piece of data and say: this belongs here, for this long, invalidated this way, and here is what happens when it goes wrong.</div>
+<h3 id="l14-end">The end</h3>
+<div class="saga finale">
+<p>The Surge arrives.</p>
+<p>It arrives at the browser cache, and most of it stops there — never reaching the network at all.</p>
+<p>What continues arrives at the edge, spread across the world, and is answered locally by copies already waiting.</p>
+<p>What continues past that arrives at the application, and finds its answers in memory. The keys that are hot are already held close. The values approaching expiry have already been refreshed. The thousand requests that arrive for one missing key send one query and share its answer.</p>
+<p>What reaches the database is a trickle. The database, which has been quietly caching all along, does not even notice.</p>
+<p>And the Latency Lord, who built five weapons out of your own timers and your own keys, watches every one of them break against decisions you made eleven lessons ago.</p>
+<p>He was never defeated by a new technique.</p>
+<p><strong>He was defeated by someone who had measured first.</strong></p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l14"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-spirit.html"><small>Previous</small><b>← Interlude · Spirit</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<span class="course-step next is-empty"></span>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

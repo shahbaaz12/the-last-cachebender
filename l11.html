@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 11: The Invalidation Paradox · The Last Cachebender</title>
+<meta content="Lesson 11 of The Last Cachebender: The Invalidation Paradox." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Spirit Library · The Last Cachebender" property="og:title"/>
+<meta content="Read and write strategies, eviction, expiration, and invalidation across every cache realm." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l11.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l11.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-spirit lesson-page" data-course-lesson="l11">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Interlude · Spirit</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a aria-current="page" href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Interlude · Spirit</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li>
+<a href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a aria-current="page" class="here" href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-spirit lesson-book-intro">
+      <div class="marker">Interlude · Spirit · Lesson 11 of 14</div>
+      <h2>The Spirit Library</h2>
+      <div class="saga"><p>The Invalidation Paradox</p></div>
+    </header>
+    <section class="lesson-head realm-spirit" id="l11">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_fire_nation_bending/screen.png"/>
+<div class="num">Lesson Eleven</div>
+<h2>The Invalidation Paradox</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Truthbinding</span>
+<span class="gloss">keeping the copy true to the source</span>
+</div>
+<h3 id="l11-hard">The hardest problem in the course</h3>
+<p>
+            The moment you cache something, the same fact exists in two places:
+          </p>
+<ul>
+<li>
+<strong>The original</strong>, in your database. This is the
+              truth.
+            </li>
+<li>
+<strong>The copy</strong>, in your cache. This is what your users
+              actually see.
+            </li>
+</ul>
+<p>
+            Two places holding one fact can disagree — and when they do, the
+            cache has no idea. Nothing tells it the database moved on without
+            it.
+          </p>
+<p>
+<strong class="term">Staleness</strong> is a cached copy no longer matching the
+            truth it was copied from. It is not an error state — a stale cache
+            does not crash, log a warning, or fail a health check. It quietly
+            serves a wrong answer with complete confidence.
+          </p>
+<h3 id="l11-three">Three questions</h3>
+<p>
+            Before choosing a technique, answer these for the data in question:
+          </p>
+<p>
+<strong>1. How wrong can it be?</strong> A view count off by three
+            is fine. A price off by £5 is a legal problem.
+          </p>
+<p><strong>2. For how long?</strong> Seconds, minutes, hours?</p>
+<p>
+<strong>3. What does being wrong cost?</strong> A stale description
+            is an annoyance. A stale stock count is an oversold order, a refund,
+            and an angry customer.
+          </p>
+<p>
+            These answers give you your TTL and tell you how much effort
+            invalidation deserves. Data that can be five minutes stale needs a
+            TTL and nothing else. Data that must be correct within a second
+            needs real machinery.
+          </p>
+<h3 id="l11-onwrite">Invalidate-on-write</h3>
+<p>
+            The standard approach, and the natural partner to cache-aside from
+            Lesson 8:
+          </p>
+<pre class="figure">
+On write:
+    database.update(key, new_value)
+    cache.delete(key)
+
+On the next read:
+    cache miss → load from database → cache the fresh value</pre>
+<p>Update the truth, remove the copy, let it rebuild on demand.</p>
+<p>
+<strong>Delete — do not update in place.</strong> Writing the new
+            value into the cache looks better, because it saves the next reader
+            a miss. It is not. Two administrators change a price at nearly the
+            same time:
+          </p>
+<pre class="figure">
+t=0   Writer A: database ← 10
+t=1   Writer B: database ← 12
+      Database is now 12.  ✓ correct
+
+t=2   Writer B: cache ← 12
+t=3   Writer A: cache ← 10        ← arrived late
+      Cache is now 10.  ✗ WRONG</pre>
+<p>
+            Both writes reached the database in order. The two cache writes did
+            not — network timing, thread scheduling, a garbage-collection pause.
+            The cache now serves 10 until its TTL runs out.
+          </p>
+<p>
+            A delete cannot go wrong that way, because it carries no value.
+            Whatever order two deletes land in, the result is the same: no
+            cached copy, and the next read takes the truth from the source.
+          </p>
+<div class="keystone">
+            When your application owns both writes, delete on write — do not
+            update on write. It costs one extra miss and removes an entire
+            category of bug that is nearly impossible to reproduce.
+          </div>
+<p>
+            This is <strong>write-around</strong> from Lesson 9, seen from the
+            invalidation side. Write-through is exempt: there the cache owns the
+            write path, so it decides the order both systems see.
+          </p>
+<h3 id="l11-version">Versioned keys</h3>
+<p>
+            A different approach:
+            <strong>never delete anything. Change the name instead.</strong>
+</p>
+<p>
+            When a price changes you leave the cached copy exactly where it is —
+            and start reading from a different key. The version lives in a small
+            key of its own:
+          </p>
+<pre class="figure plain">
+product:42:version  =  7</pre>
+<p>Reading a price becomes two steps:</p>
+<pre class="figure plain">
+1. read  product:42:version     →  7
+2. read  product:42:price:v7    →  £25.00</pre>
+<p>
+            When the price changes, the writer updates the database and
+            increments the version:
+          </p>
+<pre class="figure plain">
+product:42:version  =  8</pre>
+<p>The next reader takes the same two steps and lands somewhere else:</p>
+<pre class="figure plain">
+1. read  product:42:version     →  8
+2. read  product:42:price:v8    →  miss → loads £20.00 from the database</pre>
+<p>
+            Nothing was deleted. <code>product:42:price:v7</code> is still
+            sitting in the cache holding £25.00 — but nobody will ever ask for
+            it again, and it expires on its own.
+          </p>
+<p>
+<strong>“Haven't you just added a lookup?”</strong> Yes —
+            one, on a tiny key that is read constantly and is therefore always
+            hot. In exchange you never issue a delete, and one version can
+            retire any number of keys at once.
+          </p>
+<p>
+            Often you do not need a counter at all. Anything that already
+            changes when the data changes will do:
+          </p>
+<pre class="figure plain">
+product:42:price:v&lt;updated_at&gt;
+product:42:price:v&lt;row_version&gt;</pre>
+<p>
+            Now the version is a fact the row already carries, and there is
+            nothing extra to maintain. This is the common case for caching
+            anything <em>derived</em> from a row you have already loaded — a
+            rendered HTML fragment, a computed shipping estimate, a formatted
+            price.
+          </p>
+<details class="opt">
+<summary>
+              How the version reaches the cache in a real application<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+                The reassuring part: <strong>the version never leaves the cache
+                layer.</strong> The browser does not know about it, the
+                controller does not know about it, and the database does not
+                know about it.
+              </p>
+<pre class="figure plain">
+Browser        GET /product/42                    ← no version anywhere
+                    ↓
+Controller     ProductController.Get(42)          ← no version here either
+                    ↓
+Service        GetPriceAsync(42)
+                    │
+                    │  1. read  product:42:version      → 7
+                    │  2. build product:42:price:v7
+                    │  3. read that key                 → £25.00  (hit)
+                    ↓
+Response       £25.00</pre>
+<p>
+                The URL is <code>/product/42</code> before and after a price
+                change. Nothing in the request changes. Steps 1–3 happen
+                entirely inside your service.
+              </p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Knows about the version?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td><strong>No.</strong> Always requests <code>/product/42</code></td>
+</tr>
+<tr>
+<td>Controller</td>
+<td><strong>No.</strong> Calls <code>GetPriceAsync(42)</code></td>
+</tr>
+<tr>
+<td>Service / cache layer</td>
+<td><strong>Yes</strong> — the only place it exists</td>
+</tr>
+<tr>
+<td>Database</td>
+<td><strong>No.</strong> Queried normally on a miss</td>
+</tr>
+</tbody>
+</table>
+<p>
+                Because it is a private detail of one layer, nothing above or
+                below it has to change to adopt it.
+              </p>
+<pre class="figure">
+public async Task&lt;decimal&gt; GetPriceAsync(int id)
+{
+    // 1. the version pointer — a tiny key, read constantly, always hot
+    var version = await _cache.StringGetAsync($"product:{id}:version") ?? 1;
+
+    // 2. build the real key from it
+    var key = $"product:{id}:price:v{version}";
+
+    // 3. ordinary cache-aside from here on
+    var cached = await _cache.StringGetAsync(key);
+    if (cached.HasValue) return (decimal)cached;
+
+    var price = await _repo.GetPriceAsync(id);
+    await _cache.StringSetAsync(key, price, TimeSpan.FromMinutes(30));
+    return price;
+}</pre>
+<p>And the write:</p>
+<pre class="figure">
+public async Task UpdatePriceAsync(int id, decimal price)
+{
+    await _repo.UpdatePriceAsync(id, price);                    // database first
+    await _cache.StringIncrementAsync($"product:{id}:version"); // 7 → 8
+}</pre>
+<p>
+                That <code>INCR</code> is the whole invalidation. No delete is
+                issued, no message is broadcast, and no other server needs
+                telling — they all read the same pointer on their next request
+                and start building <code>v8</code> keys by themselves.
+              </p>
+<p class="wild">
+<span class="wild-tag">Why this matters with many servers</span>
+                Delete-on-write has to reach ten local caches on ten machines. A
+                version bump reaches them for free, because they look the
+                version up rather than being told about it. If the pointer key
+                is ever lost — a cache restart, say — every key simply looks new,
+                which is a cold cache rather than a wrong answer. It fails safe.
+              </p>
+</div>
+</details>
+<p><strong>Retiring many keys at once</strong></p>
+<p>
+            Put the version in a <em>prefix</em> rather than a suffix and it
+            covers everything beneath it:
+          </p>
+<pre class="figure plain">
+catalog:v3:product:42
+catalog:v3:product:99
+catalog:v3:category:8</pre>
+<p>
+            Increment that single version to <code>v4</code> and every catalog
+            key becomes unreachable in one operation. No message has to reach
+            every cache node, and no key has to be found and deleted.
+          </p>
+<p><strong>Why this is powerful:</strong></p>
+<ul>
+<li>
+<strong>No invalidation race.</strong> Nothing is being deleted,
+              so nothing can be deleted at the wrong moment.
+            </li>
+<li>
+<strong>No purge cost.</strong> No message needs to reach every
+              cache node.
+            </li>
+<li>
+<strong>It works in realms you cannot reach.</strong> You cannot
+              delete anything from a user's browser cache — but you can serve a
+              page referencing a new name, and the old entry becomes irrelevant.
+              This is the <em>only</em> mechanism that works for the browser
+              realm.
+            </li>
+</ul>
+<p>
+<strong>The costs:</strong> you must track the current version and
+            get it to everyone who builds keys. Old entries occupy memory until
+            they expire, so you are paying for garbage for a while.
+          </p>
+<p>
+            You have now seen this three times: fingerprinted filenames in
+            Lesson 3, versioned URLs in Lesson 4, versioned keys here.
+            <strong>It is the same technique, and it is the strongest tool in this
+              lesson.</strong>
+</p>
+<p>
+            Same idea, but do not conflate them — they act at different layers
+            and reach different people.
+          </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fingerprinting (Lesson 3)</th>
+<th>Versioned keys (here)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What changes</td>
+<td>The <strong>URL</strong></td>
+<td>An internal <strong>cache key</strong></td>
+</tr>
+<tr>
+<td>Who sees it</td>
+<td>The browser, the CDN, everyone</td>
+<td>Only your server</td>
+</tr>
+<tr>
+<td>How the new name arrives</td>
+<td>The HTML references it</td>
+<td>The reader looks up the pointer</td>
+</tr>
+<tr>
+<td>Reaches a user already holding a copy</td>
+<td><strong>Yes</strong> — the old URL is never requested again</td>
+<td><strong>No</strong> — their browser copy is untouched</td>
+</tr>
+<tr>
+<td>Retires</td>
+<td>One file</td>
+<td>One key, or a whole namespace</td>
+</tr>
+</tbody>
+</table>
+<p>
+            The practical consequence: bumping an internal version fixes every
+            copy <em>on your servers</em> instantly, and does nothing whatsoever
+            for the copy already sitting on a reader's disk. If a corrected price
+            has to reach a browser sooner, that is a lifetime decision — the
+            <code>max-age</code> you chose in Lesson 3 — not a versioning one.
+          </p>
+<p class="keystone">
+            Fingerprinting changes what the reader asks for. Versioned keys
+            change what you look under. Only the first one can reach a copy you
+            have already given away.
+          </p>
+<h3 id="l11-realms">Invalidating across all four realms</h3>
+<p>
+            Here is where the whole course converges. A price changes. Where
+            does the old value live?
+          </p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Realm</th>
+<th>How you invalidate</th>
+<th>How fast</th>
+<th>Can you force it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Browser</strong></td>
+<td>Not possible — TTL expiry or a versioned URL</td>
+<td>Up to the full TTL</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td><strong>CDN</strong></td>
+<td>Purge, or a versioned URL</td>
+<td>Seconds to minutes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Local caches</strong></td>
+<td>Not reachable from another process — TTL expiry only</td>
+<td>Up to the local TTL</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td><strong>Redis</strong></td>
+<td>Delete the key</td>
+<td>Immediate</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Automatic</td>
+<td>—</td>
+<td>Not your concern</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Read the first row again, because it governs your whole design:</p>
+<div class="keystone">
+            You cannot reach the browser cache. Once you have told a browser to
+            keep something for an hour, it is gone for an hour. There is no
+            recall.
+          </div>
+<p>
+            This is the reason the storefront's price header in Lesson 3 was
+            <code>max-age=60</code> and not <code>max-age=3600</code>. Your
+            browser TTL is not a performance setting —
+            <strong>it is a hard limit on how fast a correction can possibly reach
+              your users.</strong>
+            Set it to the longest wrong-answer window you can defend.
+          </p>
+<p>
+            And it is the reason versioned URLs matter so much: they are the
+            only way to make a change reach a browser instantly, because they do
+            not require reaching the browser at all.
+          </p>
+<h3 id="l11-repop">The repopulation race</h3>
+<p>
+            One more trap, and it defeats people who have done everything else
+            correctly.
+          </p>
+<pre class="figure">
+t=0   Reader:  cache miss → begins reading database → gets 10
+t=1   Writer:  database ← 12
+t=2   Writer:  cache.delete("price")        ← correctly invalidated
+t=3   Reader:  cache.set("price", 10)       ← writes the stale value it
+                                              fetched at t=0</pre>
+<p>
+            The cache now holds 10, was correctly invalidated, and will serve
+            the wrong value until its TTL expires. Every step followed the
+            rules. The reader was simply holding a stale value in flight when
+            the delete happened.
+          </p>
+<p>
+            The reader's two steps — read the database, then write the cache —
+            have to be <strong>atomic with respect to writers</strong>. Each
+            step is already atomic on its own; the gap between them is the
+            problem. Close it by holding a lock across both, or by making the
+            cache write conditional so it fails if the key changed underneath
+            it.
+          </p>
+<p>
+<strong>Versioned keys sidestep it entirely.</strong> The in-flight
+            reader writes to <code>v7</code> while everyone has moved on to
+            <code>v8</code>, so its stale value lands where nobody is looking.
+            And where neither is in place, a TTL still bounds how long the
+            damage lasts.
+          </p>
+<h3 id="l11-net">TTL as the safety net</h3>
+<p>
+            Every technique in this lesson can fail. Messages get dropped.
+            Services restart mid-broadcast. Somebody adds a write path and
+            forgets the invalidation. The repopulation race happens.
+          </p>
+<p>
+<strong>TTL is what stops any of those becoming permanent.</strong>
+</p>
+<div class="aside">
+<p>
+              Put a TTL on everything. Invalidate explicitly for speed. Let TTL
+              be the guarantee that a failure is temporary rather than forever.
+            </p>
+</div>
+<p>That sentence is the practical summary of this lesson.</p>
+<h3>At the Storefront</h3>
+<p>Trace a price change from £25 to £20:</p>
+<pre class="figure">
+Admin saves £20
+    ↓
+Database updated                              ← truth, immediately
+    ↓
+Redis: DELETE price:42:GBP:retail             ← immediate
+    ↓
+CDN: purge /product/42                        ← seconds
+    ↓
+Browsers: nothing you can do                  ← up to 60s, by your own TTL</pre>
+<p>
+            Total worst case: <strong>60 seconds</strong>, and every second of
+            it is the browser realm you cannot reach. Everything else was fixed
+            almost instantly.
+          </p>
+<p>
+            That single trace is what Lesson 14 asks you to produce for every
+            mutable element.
+          </p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">
+              “I'll just update the cache when I write.”
+            </p>
+<p>
+              Two concurrent writes can reach the cache in the opposite order
+              they reached the database, leaving a permanently wrong value that
+              no test will reproduce. Delete instead. It costs one miss and
+              eliminates the bug class.
+            </p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l11"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-fire.html"><small>Previous</small><b>← Book Four · Fire</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-war.html"><small>Next</small><b>Book Five · War →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

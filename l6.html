@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 6: The Distributed Cache Tribes · The Last Cachebender</title>
+<meta content="Lesson 6 of The Last Cachebender: The Distributed Cache Tribes." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Application Sanctum · The Last Cachebender" property="og:title"/>
+<meta content="Application memory, Redis, distributed caches, replication, and failover." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l6.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l6.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+/* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="course-page realm-earth lesson-page" data-course-lesson="l6">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle>
+</svg></span>
+<span><b>The Last Cachebender</b><small>Book Three · Earth</small></span>
+</a>
+<nav aria-label="Course books" class="course-books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a aria-current="page" href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a></nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Book Three · Earth</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
+<li><a href="book-water.html">Book Two · Water · The Edge Kingdom</a></li>
+<li><a aria-current="page" class="here" href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
+<li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
+<li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
+<li><a href="book-war.html">Book Five · War · The Great War</a></li>
+</ul>
+</div>
+</details>
+    <header class="book realm-earth lesson-book-intro">
+      <div class="marker">Book Three · Earth · Lesson 6 of 14</div>
+      <h2>The Application Sanctum</h2>
+      <div class="saga"><p>The Distributed Cache Tribes</p></div>
+    </header>
+    <section class="lesson-head realm-earth" id="l6">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png"/>
+<div class="num">Lesson Six</div>
+<h2>The Distributed Cache Tribes</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">Stonesplit</span>
+<span class="gloss">one cache spread across many nodes</span>
+</div>
+<h3 id="l6-problem">The problem, stated properly</h3>
+<p>You have 10 application servers. Each has its own local cache. This gives you three distinct problems.</p>
+<div class="callout problem">
+<h4>1. They disagree</h4>
+<p>The scenario that ended Lesson 5, now with ten servers instead of two. It is worth walking through slowly, because <em>“the same code produced two different answers”</em> sounds impossible.</p>
+<p>The code <strong>is</strong> identical on every server. What differs is <em>when</em> each one last looked.</p>
+<pre class="figure">09:00   Server A   reads price £25 from the database, caches it
+09:00   Server B   reads price £25 from the database, caches it
+
+09:30   Admin      changes the price to £20 in the database
+        Server A   handled that write, so it updates its own cache   → £20
+        Server B   was not involved. It has no idea anything happened → £25
+
+09:31   Customer   request lands on Server A    → sees £20
+09:31   Customer   refreshes, lands on Server B → sees £25</pre>
+<p>Neither server has a bug. Both are running exactly the code you wrote. They disagree because a cache is a <strong>copy</strong>, and each server made its own copy at its own moment.</p>
+<p>So with ten servers you do not have one cache with a stale entry. You have ten separate caches, each stale in its own way.</p>
+<h4>2. Your hit ratio collapses</h4>
+<p>The same product must be loaded and stored ten separate times — once per server. Each server only sees a tenth of the traffic, so each takes far longer to warm up. You are paying ten times the memory for a fraction of the benefit.</p>
+<h4>3. You cannot invalidate</h4>
+<p>Change something, and you would need to reach into all ten processes to remove the stale copy. There is no mechanism to do that. As you add servers, it gets worse.</p>
+</div>
+<div class="callout solution">
+<span class="callout-label">SOLUTION</span>
+<p>A <strong>distributed cache</strong> solves all three: one shared cache that every server reads from and writes to.</p>
+<pre class="figure">Server A ─┐
+Server B ─┼─→  Shared cache  ─→  Database
+Server C ─┘</pre>
+<p>One value. One place to update. One warm-up. All ten servers benefit from the first one's miss.</p>
+</div>
+<p>In practice, for most teams, that shared cache is Redis. So the rest of this lesson is about what Redis actually gives you, where it genuinely shines, and what it costs.</p>
+<h3 id="l6-gives">What Redis gives you</h3>
+<p>You met Redis in Lesson 5 as “a separate program that stores key-value data in memory.” Here is what that buys you beyond simply being shared:</p>
+<ul>
+<li><strong>Every server sees the same value.</strong> The reason this lesson exists.</li>
+<li><strong>It survives your application restarting.</strong> Deploys no longer empty your cache.</li>
+<li><strong>Sub-millisecond reads.</strong> Slower than local memory, far faster than a database.</li>
+<li><strong>TTL is built into every key.</strong> You do not implement expiry — you set it and Redis honours it.</li>
+<li><strong>Eviction is built in.</strong> When memory fills, Redis decides what to drop using a policy you choose <em>(Lesson 10)</em>.</li>
+<li><strong>Operations are atomic.</strong> Two servers incrementing the same counter cannot overwrite each other, because the increment happens inside Redis rather than in your code.</li>
+<li><strong>It can pass messages between your servers.</strong> Redis can publish a message that every subscribed server receives, which is useful well beyond caching.</li>
+<li><strong>It stores more than strings.</strong> Counters, lists, sets and sorted sets are native, which makes some problems trivial that are awkward anywhere else.</li>
+</ul>
+<h3 id="l6-good">Where Redis is genuinely excellent</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Scenario</th><th>Why Redis specifically</th></tr></thead>
+<tbody>
+<tr><td><strong>Session storage</strong></td><td>Every server needs the same session. The original use case, and still the most common.</td></tr>
+<tr><td><strong>Rate limiting</strong></td><td>Atomic counters with an expiry — correct under concurrency without you writing locks</td></tr>
+<tr><td><strong>Counters and leaderboards</strong></td><td>Sorted sets do natively what is genuinely awkward in a relational database</td></tr>
+<tr><td><strong>Shared cache in front of a database</strong></td><td>The case this course is about</td></tr>
+<tr><td><strong>Simple queues</strong></td><td>Lists as job handoff between services</td></tr>
+</tbody>
+</table></div>
+<p>Those are the scenarios. Here is what they actually look like to write.</p>
+<h4>Reading a Redis command</h4>
+<p>Every command is a <strong>verb</strong>, a <strong>key</strong>, and usually a <strong>value</strong>:</p>
+<pre class="figure">SET  product:42  "{name: Headphones, price: 25}"  EX 300
+│    │           │                                │
+verb key         value                            how long to keep it</pre>
+<p>Keys are just text. The colons in <code>product:42</code> mean nothing to Redis — they are a naming habit, the way folders organise files.</p>
+<p>The last part is the one that matters most here. <strong>Expiry is built into the write.</strong> You say how long the value should live at the moment you store it, and Redis deletes it for you when the time is up. There is no cleanup job to write and no cleanup job to forget.</p>
+<h4>Four of them in practice</h4>
+<p><strong>A session — signed in for 30 minutes.</strong></p>
+<pre class="figure">SET session:a91f3c "{user_id: 88}" EX 1800
+
+    EX 1800  →  delete this in 1800 seconds, which is 30 minutes</pre>
+<p>Half an hour later the key is gone and the user is signed out. Nothing had to notice or tidy up.</p>
+<p><strong>A rate limit — five attempts a minute.</strong></p>
+<pre class="figure">INCR   ratelimit:user:42:0930        →  1     their first try this minute
+EXPIRE ratelimit:user:42:0930 60              throw the counter away after a minute
+
+INCR   ratelimit:user:42:0930        →  2
+INCR   ratelimit:user:42:0930        →  3     ... refuse them at 6</pre>
+<p><code>INCR</code> adds one and hands back the new total, so you get the count and the increment in a single step. The <code>0930</code> on the end is the current minute — 09:30. Each minute quietly gets its own counter, and yesterday's counters have long since deleted themselves.</p>
+<p><strong>A leaderboard — the top ten, instantly.</strong></p>
+<pre class="figure">ZADD      leaderboard 4820 "player:17"    record a score of 4820
+
+ZREVRANGE leaderboard 0 9            →  the ten highest scores, in order</pre>
+<p>A <strong>sorted set</strong> keeps its members in score order at all times. So "the top ten" is a read, not a sort — Redis already knows the answer. The same thing in a relational database means ordering the table on every request.</p>
+<p><strong>A cache — hold a product for five minutes.</strong></p>
+<pre class="figure">SETEX product:42 300 "{name: Headphones, price: 25}"
+
+GET   product:42    →  the value, if it is still there
+                    →  nil, if it is not</pre>
+<p><code>SETEX</code> is just <code>SET</code> with the expiry built into the name. And that <code>nil</code> is worth pausing on: <strong>it is your cache miss.</strong> It is the moment your code stops asking Redis and goes to the database instead — the exact fork you met in Lesson 2.</p>
+<p>Look at the rate-limiting example. Two servers can run <code>INCR</code> on the same key at the same moment and the count is still correct, because Redis performs the increment itself. Doing that with a plain read-modify-write in your own code — read 10, add 1, write 11, twice, concurrently — loses one of the increments.</p>
+<div class="keystone">This is the read-modify-write race, and Redis solves it by doing the work for you.</div>
+<h3 id="l6-belongs">What belongs in Redis</h3>
+<p>Things that must be <strong>the same on every server</strong>, or must <strong>survive a restart</strong>, or are <strong>about one particular person</strong>.</p>
+<ul>
+<li><strong>Login sessions</strong> — the request that signs you in might land on server 3 and the next one on server 7. Both have to know who you are.</li>
+<li><strong>Shopping carts</strong> — the same reason, and people expect them to still be there tomorrow.</li>
+<li><strong>One-time codes and password-reset links</strong> — store them with an expiry and Redis deletes them for you when the time is up.</li>
+<li><strong>Rate limits</strong> — “five login attempts a minute” only works if every server counts into the same place.</li>
+<li><strong>Results fetched from the database</strong> — one server's slow query becomes every server's fast answer.</li>
+<li><strong>Live counters</strong> — view counts, or “3 people are looking at this right now.”</li>
+</ul>
+<p>Set that against the local-cache list from Lesson 5 and the split becomes clear: <strong>local for facts about your application, Redis for facts about your users.</strong></p>
+<h3 id="l6-choose">Local cache or Redis?</h3>
+<p>One question settles most cases.</p>
+<div class="keystone">If two of your servers gave different answers for this, would anything actually break?</div>
+<p><strong>No</strong> — put it in a local cache. It is faster, simpler, and costs nothing to run.</p>
+<p><strong>Yes</strong> — put it in Redis, and pay the network trip for the privilege.</p>
+<p>The category tree can be five seconds out of date on one server and nobody will ever notice. A shopping cart cannot.</p>
+<h3 id="l6-down">The downsides</h3>
+<p>Redis is not free, and the costs are worth stating plainly:</p>
+<ul>
+<li><strong>It is a network hop.</strong> Roughly 5,000 times slower than local memory. Do not send it a request you could have answered in-process.</li>
+<li><strong>It is another thing that can go down.</strong> See the rule above.</li>
+<li><strong>Memory is expensive.</strong> RAM costs far more per gigabyte than disk. A cache that holds everything is usually a cache that costs more than the problem.</li>
+<li><strong>Everything is serialized.</strong> Objects go in as bytes and come back as bytes, and that conversion is not free.</li>
+<li><strong>It is not a database.</strong> Redis can persist to disk, but that is not what it is for. Do not store anything there that you cannot afford to lose.</li>
+<li><strong>One key lives on one node.</strong> A single very popular key concentrates all of its traffic on one machine, and adding nodes does not help — the key still lives in exactly one place.</li>
+</ul>
+<p>That last one is not a flaw you can configure away. It is a property of how sharding works, and the Latency Lord is about to notice it.</p>
+<h3>At the Storefront</h3>
+<p>Move product details, price, and reviews to shared Redis. Pick a key scheme and a shard key. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Two realms, used together, on purpose.</strong></p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">“A shared cache makes my data consistent.”</p>
+<p>It makes your servers agree with <em>each other</em>. All ten can now confidently serve the same stale price. Agreement is not correctness, and the gap between them is Lesson 11.</p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>The Latency Lord counts the nodes and studies the traffic flowing to each.</p>
+<p>They are evenly spread — except for one. A single key, asked for more often than every other key combined. The front-page item. The one everybody wants.</p>
+<p>He does not need to attack every node in the cluster. He needs the one node that holds that key.</p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l6"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-water.html"><small>Previous</small><b>← Book Two · Water</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-fire.html"><small>Next</small><b>Book Four · Fire →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

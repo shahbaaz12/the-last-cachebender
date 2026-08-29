@@ -91,40 +91,69 @@
     });
   }
 
-  /* ---------- sidebar scroll-spy ---------- */
+  /* ---------- course progress and resume ---------- */
 
-  var links = Array.prototype.slice.call(
-    document.querySelectorAll('#toc ul a')
-  );
-  var targets = links.map(function (a) {
-    return document.getElementById(a.getAttribute('href').slice(1));
-  });
+  var PROGRESS_KEY = 'cachebender-progress';
+  var COMPLETED_KEY = 'cachebender-completed';
+  var lessonHead = document.querySelector('.lesson-head[id]');
 
-  function setCurrent(target) {
-    var best = targets.indexOf(target);
-    if (best < 0) best = 0;
-    links.forEach(function (a, i) {
-      a.classList.toggle('here', i === best);
-    });
+  function readJson(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) || fallback; }
+    catch (e) { return fallback; }
   }
 
-  if (links.length) {
-    var initial = location.hash ? document.getElementById(location.hash.slice(1)) : targets[0];
-    setCurrent(initial || targets[0]);
+  function writeJson(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); }
+    catch (e) { /* progress is optional */ }
+  }
 
-    if ('IntersectionObserver' in window) {
-      var spyObserver = new IntersectionObserver(function (entries) {
-        var visible = entries.filter(function (entry) { return entry.isIntersecting; });
-        visible.sort(function (a, b) {
-          return Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top);
-        });
-        if (visible.length) setCurrent(visible[0].target);
-      }, { rootMargin: '-8% 0px -78% 0px', threshold: 0 });
+  if (lessonHead) {
+    var lessonId = document.body.getAttribute('data-course-lesson') || lessonHead.id;
+    var lessonNumber = parseInt(lessonId.slice(1), 10);
+    var lessonTitle = (lessonHead.querySelector('h2') || {}).textContent || ('Lesson ' + lessonNumber);
+    writeJson(PROGRESS_KEY, {
+      id: lessonId,
+      href: 'l' + lessonNumber + '.html#' + lessonId,
+      title: lessonTitle
+    });
 
-      targets.forEach(function (target) {
-        if (target) spyObserver.observe(target);
-      });
+    var lessonEnd = document.querySelector('[data-lesson-end="' + lessonId + '"]');
+    if (lessonEnd && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries, observer) {
+        if (!entries[0].isIntersecting) return;
+        var complete = readJson(COMPLETED_KEY, []);
+        if (complete.indexOf(lessonId) < 0) complete.push(lessonId);
+        writeJson(COMPLETED_KEY, complete);
+        if (lessonNumber < 14) {
+          writeJson(PROGRESS_KEY, {
+            id: 'l' + (lessonNumber + 1),
+            href: 'l' + (lessonNumber + 1) + '.html#l' + (lessonNumber + 1),
+            title: 'Lesson ' + (lessonNumber + 1)
+          });
+        }
+        observer.disconnect();
+      }, { threshold: 0.25 }).observe(lessonEnd);
     }
+  }
+
+  if (document.body.classList.contains('home-page')) {
+    var saved = readJson(PROGRESS_KEY, null);
+    var completed = readJson(COMPLETED_KEY, []);
+    if (saved && saved.href) {
+      var actions = document.querySelector('.hero-actions, .home-actions, .cta-row');
+      if (actions) {
+        var resume = document.createElement('a');
+        resume.className = 'resume-course';
+        resume.href = saved.href;
+        resume.innerHTML = '<small>Continue your journey</small><strong>' + saved.title + ' →</strong>';
+        actions.appendChild(resume);
+      }
+    }
+    completed.forEach(function (id) {
+      document.querySelectorAll('a[href$="#' + id + '"]').forEach(function (link) {
+        link.classList.add('lesson-complete');
+      });
+    });
   }
 
   /* ---------- mobile nav closes on selection ---------- */

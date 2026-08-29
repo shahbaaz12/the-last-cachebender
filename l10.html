@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 10: The Temple of Eviction · The Last Cachebender</title>
+<meta content="Lesson 10 of The Last Cachebender: The Temple of Eviction." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Spirit Library · The Last Cachebender" property="og:title"/>
+<meta content="Read and write strategies, eviction, expiration, and invalidation across every cache realm." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l10.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l10.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-spirit lesson-page" data-course-lesson="l10">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Interlude · Spirit</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a aria-current="page" href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Interlude · Spirit</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li>
+<a href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a aria-current="page" class="here" href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-spirit lesson-book-intro">
+      <div class="marker">Interlude · Spirit · Lesson 10 of 14</div>
+      <h2>The Spirit Library</h2>
+      <div class="saga"><p>The Temple of Eviction</p></div>
+    </header>
+    <section class="lesson-head realm-spirit" id="l10">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png"/>
+<div class="num">Lesson Ten</div>
+<h2>The Temple of Eviction</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Letting Go</span>
+<span class="gloss">expiry and eviction</span>
+</div>
+<h3 id="l10-two">Two different reasons data leaves</h3>
+<p>
+            Things disappear from a cache for two reasons, and the two have
+            nothing to do with each other.
+          </p>
+<ol>
+<li>
+<strong>Expiration</strong> — the copy got old, so you stopped
+              trusting it.
+            </li>
+<li>
+<strong>Eviction</strong> — you ran out of room, so something had
+              to go.
+            </li>
+</ol>
+<p>
+            That is the whole distinction. It is worth stating that plainly,
+            because the two are confused constantly — including in
+            documentation.
+          </p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Trigger</th>
+<th>Reason</th>
+<th>Controlled by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Expiration</strong></td>
+<td>Time</td>
+<td>The copy is <strong>too old to trust</strong></td>
+<td>TTL</td>
+</tr>
+<tr>
+<td><strong>Eviction</strong></td>
+<td>Memory pressure</td>
+<td>You <strong>ran out of room</strong></td>
+<td>Eviction policy</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+<strong>Expiration is time-driven.</strong> It is about correctness.
+            The value may still be perfectly useful and there may be plenty of
+            memory — you remove it because you no longer believe it.
+          </p>
+<p>
+<strong>Eviction is memory-driven.</strong> It is about capacity.
+            The value might be perfectly current and useful — you remove it
+            because something else needs the space.
+          </p>
+<p>
+            A cache with infinite memory still needs expiration. A cache holding
+            data that never changes still needs eviction. They are independent,
+            and confusing them leads to setting TTLs to manage memory (which
+            makes your data needlessly stale) or sizing memory to manage
+            freshness (which does not work at all).
+          </p>
+<h3 id="l10-ttl">TTL, used deliberately</h3>
+<p>You met TTL in Lesson 2. Now use it for two distinct jobs.</p>
+<p>
+<strong>TTL as a correctness tool.</strong> The TTL is your
+            statement about how wrong you are willing to be.
+            <code>TTL = 300</code> says:
+            <em>I accept this may be up to five minutes out of date.</em> Pick
+            it from the business requirement, not from habit.
+          </p>
+<p>
+<strong>TTL as a safety net.</strong> This one is subtle and
+            important. Even with perfect invalidation (Lesson 11), things go
+            wrong — a message is dropped, a service is down, a code path is
+            missed. TTL bounds the damage. Without it, a failed invalidation
+            means a value is wrong <strong>forever</strong>. With it, the worst
+            case is bounded by the TTL.
+          </p>
+<div class="aside">
+<p>
+<strong>Put a TTL on everything, even data you invalidate
+                explicitly.</strong>
+              It is the backstop for the day your invalidation silently fails.
+              It will.
+            </p>
+</div>
+<h3 id="l10-jitter">TTL jitter</h3>
+<p>
+            Set 10,000 keys during a deployment, all with
+            <code>TTL = 3600</code>.
+          </p>
+<p>One hour later, all 10,000 expire in the same second.</p>
+<p>
+<strong>Jitter</strong> is adding a small random amount to each TTL
+            so they spread out:
+          </p>
+<pre class="figure plain">
+ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre>
+<p>
+            Now those 10,000 keys expire spread across ten minutes rather than
+            in a single instant. This single line prevents a specific attack in
+            Lesson 12, and it costs you nothing.
+          </p>
+<h3 id="l10-policies">Eviction policies</h3>
+<p>
+            When the cache is full and something new arrives, something old must
+            go. The <strong>eviction policy</strong> decides what.
+          </p>
+<div class="opt-intro">Reference — expand as needed</div>
+<details class="opt">
+<summary>
+              LRU — Least Recently Used<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>Remove whatever has not been touched for the longest time.</p>
+<p>
+<strong>The logic:</strong> recently used things tend to be used
+                again soon. Usually true, which is why LRU is the sensible
+                default and what you should choose absent a reason.
+              </p>
+<p>
+<strong>The weakness — and it is severe.</strong> LRU is
+                destroyed by a <strong>scan</strong>: one large pass over data
+                that will not be requested again. A nightly report reading a
+                million products marks all of them “recently used,”
+                pushing out the small hot set that your actual users depend on.
+                The report finishes; your cache is full of things nobody wants;
+                your hit ratio collapses; your database absorbs the difference.
+              </p>
+<p>
+                A single batch job can wipe out a perfectly healthy cache. Watch
+                for this.
+              </p>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> Almost
+                everywhere, as the default. It is what Redis
+                <code>allkeys-lru</code> gives you, what most application cache
+                libraries do without being asked, and what your CPU does with
+                its own caches. Session data fits it especially well — a user
+                who was active a minute ago is the one most likely to be back.
+                Reach for something else only if you have batch jobs sweeping
+                the cache, or a hot set stable enough for LFU to protect.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+              LFU — Least Frequently Used<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
+                Remove whatever has been requested <strong>least often</strong>,
+                regardless of when.
+              </p>
+<p>
+<strong>The logic:</strong> popularity is more meaningful than
+                recency. A page requested 10,000 times matters more than one
+                requested once, even if the once was more recent.
+              </p>
+<p>
+<strong>Why it can beat LRU:</strong> it survives scans. The
+                report's million products each get one access; the front-page
+                item has thousands. LFU keeps the front page and discards the
+                report data — exactly right.
+              </p>
+<p><strong>The weaknesses:</strong></p>
+<ul>
+<li>
+<strong>New items look unpopular.</strong> Something added a
+                  second ago has a count of 1 and is a prime eviction target,
+                  even if it is about to become the most popular item on the
+                  site. New content struggles to establish itself.
+                </li>
+<li>
+<strong>Old items overstay.</strong> Something enormously
+                  popular last month keeps a high count long after people
+                  stopped wanting it.
+                </li>
+</ul>
+<p>
+                Practical implementations use <strong>windowed</strong> or
+                <strong>decaying</strong> LFU, counting recent accesses more
+                heavily, which fixes both. If you choose LFU, choose one of
+                these.
+              </p>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> When a
+                small, stable set of items takes most of the traffic — the top
+                1% of products that account for most views, a CDN holding assets
+                that stay popular for months, reference data that barely
+                changes. It is also the right answer when you have a nightly
+                batch job that would otherwise flush an LRU cache. Avoid it
+                where content turns over quickly: news, social feeds, anything
+                where today's popular item was created this morning.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>
+              FIFO — First In, First Out<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>Remove whatever was added earliest, regardless of use.</p>
+<p>
+                Simple and cheap — no bookkeeping. It also ignores usage
+                entirely, so it will happily evict your most popular item
+                because it happened to be cached first. Rarely the right choice
+                for a cache; fine for a queue.
+              </p>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> Honestly,
+                rarely, and almost never for a general cache. Where it does fit
+                is anywhere insertion order is the point rather than an accident
+                — a fixed-size buffer of recent events, a replay window, a
+                rolling log kept in memory. If every entry has roughly equal
+                value and you want zero bookkeeping, FIFO is defensible. If some
+                entries are more valuable than others, it is the wrong tool.
+              </p>
+</div>
+</details>
+<details class="opt">
+<summary>Random<span class="flag">optional read</span></summary>
+<div class="body">
+<p>Remove a randomly chosen item.</p>
+<p>
+                This sounds like giving up, and it is not. It requires no
+                bookkeeping at all, which makes it very fast and
+                memory-efficient — LRU must maintain ordering on every single
+                access, and that costs something on every read.
+              </p>
+<p>
+                For workloads without a strong recency pattern, random performs
+                surprisingly close to LRU at a fraction of the overhead. Redis
+                offers it deliberately. Do not dismiss it.
+              </p>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> Very
+                high-throughput caches where LRU's per-read bookkeeping is a
+                measurable cost, and memory-constrained systems where the
+                ordering structure itself is too expensive to keep. It also does
+                well where access is genuinely uniform and no hot set exists to
+                protect. Redis exposes it as <code>allkeys-random</code> for
+                exactly these cases.
+              </p>
+</div>
+</details>
+<h4>Choosing</h4>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Best when</th>
+<th>Fails when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LRU</strong></td>
+<td>Access is bursty and recency-driven</td>
+<td>A scan sweeps through it</td>
+</tr>
+<tr>
+<td><strong>LFU</strong></td>
+<td>There is a stable hot set</td>
+<td>Content turns over quickly</td>
+</tr>
+<tr>
+<td><strong>FIFO</strong></td>
+<td>Almost never for caches</td>
+<td>Any time popularity matters</td>
+</tr>
+<tr>
+<td><strong>Random</strong></td>
+<td>Low overhead matters; access is uniform</td>
+<td>A clear hot set deserves protecting</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            Real caches offer combinations — Redis has <code>allkeys-lru</code>,
+            <code>volatile-lru</code> (only keys with a TTL set),
+            <code>allkeys-lfu</code>, <code>volatile-ttl</code> (shortest
+            remaining life first), and <code>noeviction</code> (reject writes
+            when full).
+          </p>
+<p>
+<code>volatile-*</code> variants matter more than they look: they
+            let you mark some entries as never-evictable by giving them no TTL,
+            protecting data you cannot afford to lose.
+          </p>
+<h3 id="l10-rate">Reading the eviction rate</h3>
+<p>
+            The <strong>eviction rate</strong> — how many items are being
+            removed per second for lack of space — is one of the most useful
+            signals a cache gives you.
+          </p>
+<ul class="signal-list">
+<li class="signal-good">
+<strong>Near zero:</strong> your cache is big enough. Good.
+            </li>
+<li class="signal-warn">
+<strong>High and rising:</strong> your cache is too small. Items
+              are being thrown out before they can be reused, and your hit ratio
+              is being destroyed by capacity, not by TTL.
+            </li>
+<li class="signal-alarm">
+<strong>Sudden spike:</strong> something just flooded the cache. A
+              batch job, a scan, a bug writing far too much.
+            </li>
+</ul>
+<p>
+            A high eviction rate paired with a falling hit ratio is a specific,
+            actionable diagnosis:
+            <strong>the cache needs more memory, or you are caching too much.</strong>
+            Lesson 13 will show you where to watch this.
+          </p>
+<h3>At the Storefront</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>TTL</th>
+<th>Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product details</td>
+<td>1 hour + jitter</td>
+<td>Changes rarely; an hour stale is harmless</td>
+</tr>
+<tr>
+<td>Price</td>
+<td>60 seconds</td>
+<td>Must be close to correct</td>
+</tr>
+<tr>
+<td>Stock count</td>
+<td>10 seconds, or uncached</td>
+<td>Being wrong here sells things you do not have</td>
+</tr>
+<tr>
+<td>Reviews</td>
+<td>10 minutes + jitter</td>
+<td>Slow-changing, heavily read</td>
+</tr>
+<tr>
+<td>Category tree</td>
+<td>5 minutes</td>
+<td>Small, hot, rarely edited</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            Policy for the Redis instance:
+            <strong><code>allkeys-lru</code></strong> as the default — and check
+            for batch jobs that scan products, because those will wreck it. If
+            you have one, either route it around the cache or move to windowed
+            LFU.
+          </p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">“LRU is always the right choice.”</p>
+<p>
+              LRU is a good default that a single batch job can destroy. LFU
+              survives scans but starves new content. Random is cheaper than
+              both and often nearly as good. Choose from your access pattern,
+              not from habit.
+            </p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>
+              The Latency Lord walks the realm at a quiet hour and does
+              something very simple.
+            </p>
+<p>
+              He does not delete anything. He does not break anything. He simply
+              finds every expiry timer in the kingdom and sets them all to the
+              same hour.
+            </p>
+<p>
+              Nothing is stolen. Nothing is broken. Everything simply ends at
+              once.
+            </p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l10"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-fire.html"><small>Previous</small><b>← Book Four · Fire</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-war.html"><small>Next</small><b>Book Five · War →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 8: The Three Reading Techniques · The Last Cachebender</title>
+<meta content="Lesson 8 of The Last Cachebender: The Three Reading Techniques." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Spirit Library · The Last Cachebender" property="og:title"/>
+<meta content="Read and write strategies, eviction, expiration, and invalidation across every cache realm." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l8.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l8.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-spirit lesson-page" data-course-lesson="l8">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Interlude · Spirit</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a aria-current="page" href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Interlude · Spirit</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li>
+<a href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a aria-current="page" class="here" href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-spirit lesson-book-intro">
+      <div class="marker">Interlude · Spirit · Lesson 8 of 14</div>
+      <h2>The Spirit Library</h2>
+      <div class="saga"><p>The Three Reading Techniques</p></div>
+    </header>
+    <section class="lesson-head realm-spirit" id="l8">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png"/>
+<div class="num">Lesson Eight</div>
+<h2>The Three Reading Techniques</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Three Draws</span>
+<span class="gloss">cache-aside, read-through, refresh-ahead</span>
+</div>
+<h3>The question</h3>
+<p>
+            Every read has the same shape: the data might be in the cache, or it
+            might not. What happens on a miss?
+          </p>
+<p>
+            There are three answers, and the difference between the first two is
+            <em>who is responsible</em>.
+          </p>
+<h3 id="l8-aside">Cache-aside</h3>
+<p>
+<strong>Cache-aside</strong> — also called
+            <strong>lazy loading</strong> — means your application manages the
+            cache directly. It is the most common pattern in use, and the
+            default you should assume unless there is a reason otherwise.
+          </p>
+<pre class="figure">
+value = cache.get(key)
+
+if value is not None:
+    return value                 # HIT
+
+value = database.query(key)      # MISS — application fetches
+cache.set(key, value, ttl=300)   # application stores
+return value</pre>
+<figure class="flow">
+<svg aria-label="Cache-aside as a sequence: the application asks the cache and misses, then queries the database itself, then writes the value back into the cache." role="img" viewbox="0 0 560 242">
+<defs>
+<marker id="sa" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="ra" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="hd hd-src" height="34" rx="5" width="104" x="18" y="8"></rect>
+<text class="tx" x="70" y="31">Application</text>
+<rect class="hd" height="34" rx="5" width="100" x="230" y="8"></rect>
+<text class="tx" x="280" y="31">Cache</text>
+<rect class="hd" height="34" rx="5" width="124" x="418" y="8"></rect>
+<text class="tx" x="480" y="31">Database</text>
+<line class="ll" x1="70" x2="70" y1="42" y2="228"></line>
+<line class="ll" x1="280" x2="280" y1="42" y2="228"></line>
+<line class="ll" x1="480" x2="480" y1="42" y2="228"></line>
+<path class="ar" d="M70 78 L272 78" marker-end="url(#sa)"></path>
+<text class="n" x="150" y="68">1</text>
+<text class="nt" x="164" y="68">get</text>
+<path class="ar-ret" d="M280 106 L78 106" marker-end="url(#ra)"></path>
+<text class="nt" x="152" y="98">miss</text>
+<path class="ar" d="M70 152 L472 152" marker-end="url(#sa)"></path>
+<text class="n" x="248" y="142">2</text>
+<text class="nt" x="262" y="142">
+                query — straight past the cache
+              </text>
+<path class="ar-ret" d="M480 180 L78 180" marker-end="url(#ra)"></path>
+<text class="nt" x="252" y="172">row</text>
+<path class="ar" d="M70 220 L272 220" marker-end="url(#sa)"></path>
+<text class="n" x="150" y="210">3</text>
+<text class="nt" x="164" y="210">set</text>
+</svg>
+<figcaption>
+              Three calls, all of them made by the application
+            </figcaption>
+</figure>
+<p>
+            The application talks to both the cache and the database, and it
+            owns every step.
+          </p>
+<p><strong>Why people use it:</strong></p>
+<ul>
+<li>
+              Only requested data is cached. Nothing is stored that nobody
+              wants.
+            </li>
+<li>
+              The cache going down is survivable — <code>cache.get</code> fails,
+              you read the database, the app is slower but alive.
+            </li>
+<li>
+              It works with any cache and any database. No special library
+              required.
+            </li>
+<li>You can see exactly what is happening.</li>
+</ul>
+<p><strong>The costs:</strong></p>
+<ul>
+<li>
+              Every miss pays three trips: check cache, query database, write
+              cache.
+            </li>
+<li>
+              The logic is repeated everywhere you cache something, and someone
+              will eventually get it wrong.
+            </li>
+<li>
+              It has a specific race condition, which is the second half of this
+              lesson.
+            </li>
+</ul>
+<h3 id="l8-through">Read-through</h3>
+<p>
+<strong>Read-through</strong> means your application only ever talks
+            to the cache. The cache knows how to load missing data by itself.
+          </p>
+<figure class="flow">
+<svg aria-label="Read-through as a sequence: the application asks the cache, and the cache loads from the database itself before answering." role="img" viewbox="0 0 560 208">
+<defs>
+<marker id="st" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="rt" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="hd hd-src" height="34" rx="5" width="104" x="18" y="8"></rect>
+<text class="tx" x="70" y="31">Application</text>
+<rect class="hd" height="34" rx="5" width="100" x="230" y="8"></rect>
+<text class="tx" x="280" y="31">Cache</text>
+<rect class="hd" height="34" rx="5" width="124" x="418" y="8"></rect>
+<text class="tx" x="480" y="31">Database</text>
+<line class="ll" x1="70" x2="70" y1="42" y2="194"></line>
+<line class="ll" x1="280" x2="280" y1="42" y2="194"></line>
+<line class="ll" x1="480" x2="480" y1="42" y2="194"></line>
+<path class="ar" d="M70 78 L272 78" marker-end="url(#st)"></path>
+<text class="n" x="150" y="68">1</text>
+<text class="nt" x="164" y="68">get</text>
+<path class="ar" d="M280 112 L472 112" marker-end="url(#st)"></path>
+<text class="n" x="342" y="102">2</text>
+<text class="nt" x="356" y="102">load</text>
+<path class="ar-ret" d="M480 144 L288 144" marker-end="url(#rt)"></path>
+<text class="nt" x="352" y="136">row</text>
+<path class="ar-ret" d="M280 186 L78 186" marker-end="url(#rt)"></path>
+<text class="nt" x="150" y="178">value</text>
+</svg>
+<figcaption>
+              The application never reaches past the cache
+            </figcaption>
+</figure>
+<pre class="figure">
+value = cache.get(key)    # cache handles the miss internally
+return value</pre>
+<p>
+            You configure the cache with a <strong>loader function</strong> —
+            the code that fetches from the database — and the cache calls it
+            when it needs to.
+          </p>
+<p>The distinction is exactly this:</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Who handles the miss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cache-aside</strong></td>
+<td>Your application</td>
+</tr>
+<tr>
+<td><strong>Read-through</strong></td>
+<td>The cache layer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            That is the whole difference. Not performance, not freshness —
+            <strong>responsibility.</strong> And because it decides where the
+            logic lives, it decides where the bugs live.
+          </p>
+<p>
+<strong>Why people use it:</strong> the loading logic exists once,
+            not scattered everywhere. Application code becomes simple. Many
+            caching libraries do the hard parts (like the race below) for you.
+          </p>
+<p>
+<strong>The costs:</strong> you need a library that supports it. The
+            cache going down is now harder to survive, because your app has no
+            other path to the data. And the loading logic is one step further
+            from the code that uses it.
+          </p>
+<div class="aside">
+<p>
+<strong>You have already met one.</strong> In Lesson 4, the CDN
+              fetched from origin on a miss without your application knowing.
+              <strong>A CDN is a read-through cache.</strong> You did not
+              implement it, so it did not feel like a pattern. It was.
+            </p>
+</div>
+<h3 id="l8-ahead">Refresh-ahead</h3>
+<p>
+            Both patterns above are reactive: a user hits a miss, and
+            <em>that user waits</em> while the data loads.
+          </p>
+<figure class="flow">
+<svg aria-label="Refresh-ahead: the value is refreshed in the background before its lifetime runs out, so no request ever meets a miss." role="img" viewbox="0 0 560 140">
+<defs>
+<marker id="ahr" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+</defs>
+<line stroke="var(--rule-firm)" stroke-width="1.4" x1="40" x2="520" y1="66" y2="66"></line>
+<circle cx="60" cy="66" fill="var(--realm-color,var(--accent))" r="4.5"></circle>
+<text class="nt" text-anchor="middle" x="60" y="88">t = 0</text>
+<text class="nt" text-anchor="middle" x="60" y="102">cached</text>
+<circle cx="380" cy="66" fill="var(--realm-color,var(--accent))" r="4.5"></circle>
+<text class="nt" text-anchor="middle" x="380" y="88">
+                t = 240
+              </text>
+<text class="nt" text-anchor="middle" x="380" y="102">
+                refreshed
+              </text>
+<circle cx="470" cy="66" fill="none" r="4.5" stroke="var(--rule-firm)" stroke-width="1.4"></circle>
+<text class="nt" text-anchor="middle" x="470" y="88">
+                t = 300
+              </text>
+<text class="nt" text-anchor="middle" x="470" y="102">
+                would expire
+              </text>
+<path class="ar ar-late" d="M380 46 L380 22 L300 22" marker-end="url(#ahr)"></path>
+<text class="nt" text-anchor="end" x="292" y="26">
+                background refresh — nobody is waiting
+              </text>
+</svg>
+<figcaption>
+              The value is replaced before anyone meets a miss
+            </figcaption>
+</figure>
+<p>
+<strong>Refresh-ahead</strong> is proactive. For values you know are
+            hot, refresh them <strong>before</strong> they expire, so no user
+            ever encounters the miss.
+          </p>
+<pre class="figure">
+TTL = 300 seconds, refresh at 240
+
+t=0    value cached
+t=240  ─→ background job refreshes it   (no user is waiting)
+t=245  value replaced, timer resets
+       ...no user ever sees a miss on this key</pre>
+<p>
+<strong>Why people use it:</strong> for hot keys, misses effectively
+            disappear. Your p99 latency — the slow tail you will meet in Lesson
+            13 — improves dramatically, because the tail <em>was</em> the
+            misses.
+          </p>
+<p>
+<strong>The costs:</strong> you refresh values that may never be
+            requested again, so you do work for nothing. You need to identify
+            which keys deserve it. Applying it to everything is a way to
+            generate constant pointless load.
+          </p>
+<div class="aside">
+<p>
+<strong>You have met this one too.</strong>
+<code>stale-while-revalidate</code> from Lesson 3 is refresh-ahead
+              expressed as an HTTP header: serve the old copy now, refresh
+              behind it, nobody waits.
+            </p>
+</div>
+<h3 id="l8-realms">Which realm uses which</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Realm</th>
+<th>Natural pattern</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td>Cache-first with revalidation</td>
+<td>Controlled by headers, not code</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td><strong>Read-through</strong></td>
+<td>Fetches from origin on a miss automatically</td>
+</tr>
+<tr>
+<td>Local cache</td>
+<td><strong>Cache-aside</strong> or memoization</td>
+<td>You wrote it, you own it</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td><strong>Cache-aside</strong></td>
+<td>The usual default</td>
+</tr>
+<tr>
+<td>Database buffer pool</td>
+<td><strong>Read-through</strong></td>
+<td>The database handles its own misses</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            Notice the pattern:
+            <strong>when you own the code, you get cache-aside. When someone else
+              built the cache, you get read-through.</strong>
+            The techniques are the same everywhere; only the ownership moves.
+          </p>
+<h3 id="l8-race">The race: many readers, one missing key</h3>
+<p>
+            Here is the flaw in cache-aside, and it is not a rare edge case — it
+            is a guaranteed event on any popular key.
+          </p>
+<p>
+            The front-page product is requested 1,000 times per second. Its
+            cached value expires.
+          </p>
+<pre class="figure">
+t=0.000   TTL expires
+t=0.001   Request 1    → miss → queries database
+t=0.001   Request 2    → miss → queries database
+t=0.001   Request 3    → miss → queries database
+   ...
+t=0.001   Request 1000 → miss → queries database
+t=0.050   first query returns, cache is written
+          — 49 milliseconds too late for the other 999</pre>
+<div class="keystone">
+            One thousand identical database queries, for one value.
+          </div>
+<p>
+            The cache did not fail. Every one of those requests followed
+            cache-aside correctly. The pattern has a gap between “the
+            value expired” and “the value has been reloaded,”
+            and every request arriving in that gap goes to the database.
+          </p>
+<p>
+            Worse, this is self-amplifying. A thousand simultaneous queries slow
+            the database, which makes the reload take longer, which widens the
+            gap, which lets more requests through.
+          </p>
+<h3 id="l8-single">Single-flight</h3>
+<p>
+<strong>Request coalescing</strong> — usually called
+            <strong>single-flight</strong> — fixes it: when many requests need
+            the same missing key, <strong>one</strong> of them fetches it, and
+            the rest wait for that one result.
+          </p>
+<pre class="figure">
+t=0.001   Request 1    → miss → acquires the loader slot → queries database
+t=0.001   Request 2    → miss → someone is loading → waits
+t=0.001   Request 3    → miss → someone is loading → waits
+   ...
+t=0.050   Request 1 gets the value, stores it, and hands it to all 999 waiters</pre>
+<p><strong>One database query. All 1,000 requests served.</strong></p>
+<p>The shape:</p>
+<pre class="figure">
+def get(key):
+    value = cache.get(key)
+    if value is not None:
+        return value
+
+    # only one caller per key gets past this point;
+    # the others block here and receive the same result
+    with single_flight(key):
+        value = cache.get(key)        # check again — someone may have
+        if value is not None:         # filled it while we waited
+            return value
+        value = database.query(key)
+        cache.set(key, value, ttl=300)
+        return value</pre>
+<p>Two details that matter:</p>
+<ul>
+<li>
+<strong>The second <code>cache.get</code> is not redundant.</strong>
+              By the time a waiter is released, the value usually exists.
+              Checking again avoids a pointless second query. This is the
+              <em>double-checked</em> pattern.
+            </li>
+<li>
+<strong>The lock is per key</strong>, not global. A global lock
+              would make every miss on every key wait behind every other, which
+              would be far worse than the problem.
+            </li>
+</ul>
+<p>
+            Most mature caching libraries provide this. It is worth knowing it
+            exists before you need it — and you are about to need it.
+          </p>
+<div class="aside">
+<p>
+<strong>Remember this.</strong> This is your first weapon against
+              the Latency Lord, and it is deliberately being handed to you four
+              lessons before the fight.
+            </p>
+</div>
+<h3>At the Storefront</h3>
+<p>
+            Cache-aside for product details, with single-flight — it is the
+            front page item and it will stampede.
+          </p>
+<p>
+            Refresh-ahead for the category tree — small, hot, expensive, on
+            every page.
+          </p>
+<p>Nothing for the cart badge, in any pattern.</p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">
+              “Cache-aside and read-through are the same thing.”
+            </p>
+<p>
+              They differ in who owns the miss, and that decides who owns the
+              race condition above. With cache-aside, it is yours to solve. With
+              read-through, your library probably solved it — which is a genuine
+              reason to prefer one.
+            </p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>
+              The Latency Lord has been watching the reading techniques, and he
+              has found the gap.
+            </p>
+<p>
+              Not a flaw in the cache. A gap in time — the space between the
+              moment a value expires and the moment it is restored. It is small.
+              Fifty milliseconds, perhaps.
+            </p>
+<p>A thousand requests can arrive in fifty milliseconds.</p>
+<p>
+              He does not need to take the cache away. He only needs to choose
+              the moment it empties.
+            </p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l8"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-fire.html"><small>Previous</small><b>← Book Four · Fire</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-war.html"><small>Next</small><b>Book Five · War →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

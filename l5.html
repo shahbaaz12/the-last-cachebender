@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 5: The Application Sanctum · The Last Cachebender</title>
+<meta content="Lesson 5 of The Last Cachebender: The Application Sanctum." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Application Sanctum · The Last Cachebender" property="og:title"/>
+<meta content="Application memory, Redis, distributed caches, replication, and failover." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l5.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l5.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+/* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="course-page realm-earth lesson-page" data-course-lesson="l5">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle>
+</svg></span>
+<span><b>The Last Cachebender</b><small>Book Three · Earth</small></span>
+</a>
+<nav aria-label="Course books" class="course-books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a aria-current="page" href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a></nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Book Three · Earth</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
+<li><a href="book-water.html">Book Two · Water · The Edge Kingdom</a></li>
+<li><a aria-current="page" class="here" href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
+<li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
+<li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
+<li><a href="book-war.html">Book Five · War · The Great War</a></li>
+</ul>
+</div>
+</details>
+    <header class="book realm-earth lesson-book-intro">
+      <div class="marker">Book Three · Earth · Lesson 5 of 14</div>
+      <h2>The Application Sanctum</h2>
+      <div class="saga"><p>The Application Sanctum</p></div>
+    </header>
+    <section class="lesson-head realm-earth" id="l5">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_still_life_of_earth_kingdom_symbols._a/screen.png"/>
+<div class="num">Lesson Five</div>
+<h2>The Application Sanctum</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">Stonehold</span>
+<span class="gloss">holding data in your own memory</span>
+</div>
+<div class="aside">
+<p><strong>Scope of this lesson: one process, on one machine.</strong> Caching across many servers is Lesson 6. Caches the database keeps for itself are Lesson 7. Keeping these separate matters, because they fail in completely different ways.</p>
+</div>
+<h3>The realm</h3>
+<p>An <strong>in-memory cache</strong> — also called a <strong>local cache</strong> or <strong>in-process cache</strong> — is data your application keeps in its own memory, inside the running program.</p>
+<p>A <strong>process</strong> is one running copy of your program. When you start your server, that is a process. It has its own memory that no other program can see.</p>
+<p>This is the fastest cache that exists. There is no network. There is no serialization — the object in the cache is a real object in your program, ready to use. A hit takes roughly 100 nanoseconds.</p>
+<h3 id="l5-hold">What you can hold here</h3>
+<p>You now have somewhere very fast to put things. The question is what to put there.</p>
+<p>Inside your own process, two different kinds of thing are worth keeping — and they carry completely different risks.</p>
+<p><strong>Work you already did.</strong> A calculation, a parsed file, a rendered fragment. The inputs are still sitting right there in your program; you simply do not want to do the arithmetic twice. This can only go stale if the inputs change, and you control the inputs.</p>
+<p><strong>Data that came from somewhere else.</strong> A product row from the database, a response from another service. This copy can become wrong at any moment, because somebody else can change the original without telling you.</p>
+<p>The first is nearly free of risk. The second is where Lesson 11 comes from.</p>
+<p>Start with the safe one.</p>
+<h3 id="l5-memo">Memoization</h3>
+<p><strong>Memoization</strong> is caching the result of a function so that calling it again with the same inputs returns the stored answer instead of recomputing it.</p>
+<pre class="figure plain">calculate_shipping(weight=2.5, zone="EU", express=false)
+   → first call:  runs the calculation      12ms
+   → second call: returns the stored answer  0.0001ms</pre>
+<p>The inputs form the key. The return value is the value. It is Lesson 2's key rule applied to a function signature — and it has the same failure mode. If the function secretly depends on something not in its arguments (today's date, a config setting, a database row), then that hidden input is missing from your key, and you will serve the wrong answer.</p>
+<p>Memoization is only safe for functions where <strong>the same inputs always produce the same output.</strong></p>
+<h3 id="l5-costs">The costs</h3>
+<p><strong>Memory is shared with your application.</strong> A local cache lives in the same memory your app needs to run. An unbounded cache will consume it all and crash the process. Always set a maximum size — how the cache decides what to remove when it hits that limit is Lesson 10.</p>
+<p><strong>The cache dies with the process.</strong> Restart, deploy, crash, or scale down, and it is gone. Every deploy gives you a cold cache and the full cold-start problem from Lesson 2.</p>
+<p><strong>It does not scale with your data.</strong> A local cache can hold what fits in one machine's spare memory. That is a hard ceiling.</p>
+<h3 id="l5-redis">Redis, introduced carefully</h3>
+<p><strong>Redis</strong> is a separate program that stores key-value data in memory and is reachable over a network. Many applications can talk to the same Redis instance.</p>
+<p>It is important to be precise about this, because the terms get muddled constantly:</p>
+<div class="tablewrap"><table>
+<thead><tr><th></th><th>Local cache</th><th>Redis</th></tr></thead>
+<tbody>
+<tr><td>Where it lives</td><td>Inside your process</td><td>A separate program, usually another machine</td></tr>
+<tr><td>Access time</td><td>~100 nanoseconds</td><td>~500 microseconds</td></tr>
+<tr><td>Serialization</td><td>None — real objects</td><td>Yes, every read and write</td></tr>
+<tr><td>Survives restart</td><td>No</td><td>Yes</td></tr>
+<tr><td>Shared between servers</td><td><strong>No</strong></td><td><strong>Yes</strong></td></tr>
+</tbody>
+</table></div>
+<p>Redis is roughly <strong>5,000 times slower</strong> than a local cache. It is also roughly 200 times faster than a cross-continent request, and — the reason it exists — it is <em>shared</em>.</p>
+<p>Both are “caching in the application layer.” They are not the same realm at all, and treating them as interchangeable is a source of real confusion.</p>
+<h3>What belongs in a local cache</h3>
+<p>Things that are <strong>the same for every user</strong>, cheap to rebuild, and harmless if two servers are a few seconds out of step with each other.</p>
+<ul>
+<li><strong>Feature flags</strong> — is the new checkout switched on?</li>
+<li><strong>The country list</strong> behind a dropdown</li>
+<li><strong>The navigation menu and category tree</strong></li>
+<li><strong>Currency conversion rates</strong></li>
+<li><strong>An expensive calculation</strong> you keep repeating with the same inputs</li>
+</ul>
+<p>If your server restarts and loses all of it, nothing breaks. It rebuilds on the next request and the user never knows.</p>
+<p><strong>What does not belong here:</strong> anything about one particular person. Your process serves thousands of users at once, and a key that forgets to say <em>which</em> of them will hand one customer's data to the next.</p>
+<h3>At the Storefront</h3>
+<p>Memoize the shipping and price calculations. Keep the category tree in a local cache with a 5-minute TTL.</p>
+<p>Leave the product data alone for now. You are about to find out why.</p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">“In-memory cache means Redis.”</p>
+<p>Local is inside your process — no network, no serialization, gone on restart, invisible to your other servers. Redis is across a network and shared. The gap between them is three orders of magnitude, and the <em>shared</em> part is the entire reason the next lesson exists.</p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l5"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-water.html"><small>Previous</small><b>← Book Two · Water</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-fire.html"><small>Next</small><b>Book Four · Fire →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

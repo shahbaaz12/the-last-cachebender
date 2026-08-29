@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 2: The Trial of Hits and Misses · The Last Cachebender</title>
+<meta content="Lesson 2 of The Last Cachebender: The Trial of Hits and Misses." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Forgotten Art · The Last Cachebender" property="og:title"/>
+<meta content="Caching foundations, hits and misses, and the shared storefront used throughout the course." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l2.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l2.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-prologue lesson-page" data-course-lesson="l2">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Prologue</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a aria-current="page" href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Prologue</summary>
+<div class="inner">
+<ul class="toc">
+<li>
+<a aria-current="page" class="here" href="course.html">Prologue · The Forgotten Art</a>
+</li>
+<li>
+<a href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-prologue lesson-book-intro">
+      <div class="marker">Prologue · Lesson 2 of 14</div>
+      <h2>The Forgotten Art</h2>
+      <div class="saga"><p>The Trial of Hits and Misses</p></div>
+    </header>
+    <section class="lesson-head realm-prologue" id="l2">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png"/>
+<div class="num">Lesson Two</div>
+<h2>The Trial of Hits and Misses</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Naming</span>
+<span class="gloss">keys, values, lifetimes, and warming</span>
+</div>
+<h3>Hits and misses</h3>
+<p>
+            You ask the cache for something. Exactly one of two things happens.
+          </p>
+<ul>
+<li>
+<strong>Hit</strong> — the cache has it. You get the answer
+              immediately. No database, no network trip to origin, no
+              recomputation.
+            </li>
+<li>
+<strong>Miss</strong> — the cache does not have it. You must go
+              and get the answer the slow way, and then (usually) put a copy in
+              the cache for next time.
+            </li>
+</ul>
+<p>That is the entire vocabulary. Hit: found it. Miss: didn't.</p>
+<h3>Hit ratio</h3>
+<p>
+            The <strong>hit ratio</strong> is the fraction of requests that were
+            hits.
+          </p>
+<pre class="figure plain">hit ratio = hits ÷ (hits + misses)</pre>
+<p>
+            If 1,000 requests produce 900 hits and 100 misses, the hit ratio is
+            900 ÷ 1000 = <strong>0.9</strong>, or 90%.
+          </p>
+<p>
+            Why it matters — work out the average response time. Say a hit takes
+            <strong>1ms</strong> and a miss takes <strong>100ms</strong>:
+          </p>
+<pre class="figure plain">
+average = (0.90 × 1ms) + (0.10 × 100ms)
+        = 0.9ms + 10ms
+        = 10.9ms</pre>
+<p>Two things worth noticing in that number.</p>
+<p>
+<strong>First:</strong> you went from 100ms to 10.9ms. Nearly ten
+            times faster.
+          </p>
+<p>
+<strong>Second, and more important:</strong> almost all of the
+            remaining time — 10ms of the 10.9ms — is the misses. At a 90% hit
+            ratio, the 10% that miss are still doing 92% of the waiting.
+          </p>
+<p>Now try 99%:</p>
+<pre class="figure plain">
+average = (0.99 × 1ms) + (0.01 × 100ms) = 1.99ms</pre>
+<p>
+            Going from 90% to 99% is another 5× improvement.
+            <strong>The last few percent of hit ratio are worth far more than the
+              first fifty.</strong>
+            Keep that in mind — it comes back in Lesson 13.
+          </p>
+<div class="aside">
+<p>
+              We are only <em>defining</em> hit ratio here. How to deliberately
+              raise it is Lesson 13.
+            </p>
+</div>
+<h3>Cold and warm</h3>
+<p>
+            A <strong>cold cache</strong> is empty. It has just been created, or
+            restarted, or cleared. Every request misses.
+          </p>
+<p>
+            A <strong>warm cache</strong> has been running long enough to hold
+            the things people actually ask for. Most requests hit.
+          </p>
+<p>
+            Every cache starts cold. The period in between — where your app is
+            running but the cache has not filled up yet — is genuinely
+            dangerous, because your database is taking the full load with no
+            protection. This is the <strong>cold start problem</strong>, and
+            Lesson 12 will show you what an attacker can do with it.
+          </p>
+<h3>Keys: the most important idea in this lesson</h3>
+<p>A cache stores pairs. Each pair is:</p>
+<ul>
+<li>a <strong>key</strong> — the question</li>
+<li>a <strong>value</strong> — the answer</li>
+</ul>
+<p>
+            To get something out, you ask with the same key you put it in with.
+            If the key does not match exactly, it is a miss.
+          </p>
+<p>
+            So the whole behaviour of your cache depends on how you write your
+            keys. Here is the rule:
+          </p>
+<div class="keystone">
+            The key must contain every input that changes the answer.
+          </div>
+<p>
+            Read it again. Nearly every cache bug in this course is a violation
+            of that one sentence.
+          </p>
+<h4>A key that is too coarse</h4>
+<p>You cache the product price:</p>
+<pre class="figure plain">
+key:   product:42:price
+value: 25.00</pre>
+<p>
+            Looks fine. Then someone visits from Japan and sees
+            <strong>¥25.00</strong> instead of ¥3,800. Or a wholesale customer
+            with a negotiated discount sees the retail price. Or a logged-in
+            member sees the non-member price.
+          </p>
+<p>
+            The price depends on currency and customer type. Those inputs
+            changed the answer, and they were not in the key. So the cache
+            handed out an answer to a question nobody asked.
+          </p>
+<p>The fix:</p>
+<pre class="figure plain">
+key: product:42:price:currency=JPY:tier=wholesale</pre>
+<p>
+<strong>A key that is too coarse gives wrong answers.</strong>
+<mark class="danger-highlight">This is the worse failure of the two, because nothing crashes —
+              it just quietly lies.</mark>
+</p>
+<h4>A key that is too fine</h4>
+<p>Overcorrecting, you add everything you can think of:</p>
+<pre class="figure plain">
+key: product:42:price:currency=JPY:tier=wholesale:request_id=a91f3c:time=1699384726</pre>
+<p>
+            Every request has a different request ID and a different timestamp.
+            So every key is unique. So every request is a miss. You have built a
+            cache with a hit ratio of zero, and it is now slower than having no
+            cache at all, because you also pay the cost of storing everything.
+          </p>
+<p><strong>A key that is too fine gives no hits.</strong></p>
+<h4>The judgement</h4>
+<p>
+            Good key design sits between those two failures. Include everything
+            that changes the answer. Include nothing else.
+          </p>
+<p>
+            When you are unsure, ask:
+            <em>“If two requests have different values for this thing,
+              would they get different answers?”</em>
+            If yes, it goes in the key. If no, it stays out.
+          </p>
+<h3>Values: what you actually store</h3>
+<p>
+            The <strong>value</strong> is what you get back on a hit. Some
+            choices:
+          </p>
+<p>
+<strong>How much to store.</strong> You can cache the whole rendered
+            product page, or the product record, or just the price. Bigger
+            values mean fewer, larger cache entries; smaller values mean more
+            entries and more flexibility. A cached whole page is fast but must
+            be thrown away when anything on it changes. A cached price survives
+            a description edit.
+          </p>
+<p>
+<strong>Whole objects or references.</strong> You can store the full
+            review objects, or just a list of review IDs and look them up
+            separately. Storing IDs keeps entries small and avoids duplicating
+            the same review in twenty places — at the cost of a second lookup.
+          </p>
+<p>
+<strong>Serialization.</strong> Most caches store bytes, not
+            objects. <strong>Serialization</strong> is turning an object in your
+            program's memory into a sequence of bytes that can be stored or
+            sent, and <strong>deserialization</strong> is turning it back. This
+            is not free. For small, very hot values, the time spent serializing
+            can be a real fraction of the time you saved — which is one reason
+            keeping a cache inside your own process (Lesson 5) is so fast: no
+            serialization at all.
+          </p>
+<h3>TTL: how long a copy is allowed to live</h3>
+<p>
+<strong>TTL</strong> stands for <strong>time to live</strong>. It is
+            the number of seconds a cached copy is considered usable. When the
+            TTL runs out, the copy has <strong>expired</strong>, and the next
+            request for it is treated as a miss.
+          </p>
+<pre class="figure plain">
+key:   product:42:price:currency=USD
+value: 25.00
+TTL:   300     ← usable for 5 minutes, then thrown away</pre>
+<p>
+            TTL is your main tool for controlling staleness. A 300-second TTL is
+            you saying:
+            <em>“I accept that this price may be up to five minutes out of
+              date.”</em>
+</p>
+<p>
+            That is a business decision as much as a technical one. Five minutes
+            of a stale product description is fine. Five minutes of a stale
+            stock count might mean selling something you do not have.
+          </p>
+<div class="aside">
+<p>
+              TTL is introduced here because you need it from Lesson 3 onward.
+              The <em>policies</em> for what to throw away when memory runs out
+              are Lesson 10 — a related but genuinely different topic.
+            </p>
+</div>
+<h3>Warming: filling the cache on purpose</h3>
+<p>
+<strong>Cache warming</strong> is loading data into a cache before
+            anyone asks for it, so the first real user gets a hit instead of a
+            miss.
+          </p>
+<p>Three common approaches:</p>
+<p>
+<strong>Warm on deploy.</strong> After releasing new code, run a
+            script that requests your most important pages so their entries
+            exist before traffic arrives.
+          </p>
+<p>
+<strong>Warm from a log.</strong> Take the top few thousand keys
+            from yesterday's traffic and load those. Simple and effective,
+            because yesterday's popular items are usually today's.
+          </p>
+<p>
+<strong>Lazy warming.</strong> Do nothing special — let the cache
+            fill as real requests arrive. This is the default. It is fine for
+            small caches and dangerous for large ones, because the whole warm-up
+            period runs with your database unprotected.
+          </p>
+<p>
+            Warming matters most when your cache is large and your database is
+            only just able to cope without it. If your database can handle full
+            traffic with a cold cache, warming is a nicety. If it cannot,
+            warming is the difference between a deploy and an outage.
+          </p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">
+              “The cache key is just the record's ID.”
+            </p>
+<p>
+              The ID is the beginning of the key. The rest is language,
+              currency, permissions, device, feature flags — every input that
+              changes the answer. The forgotten one is where your bug lives.
+            </p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>
+              In a room far from the light, the Latency Lord watches a single
+              request pass by. It asks for product 999999999 — a product that
+              does not exist and never has.
+            </p>
+<p>
+              He watches it slip past the browser, which has no copy of it. Past
+              the edge, which has no copy of it. Past the application cache,
+              which has no copy of it. And he watches it strike the database
+              directly, and the database dutifully search its entire index for
+              something that was never there.
+            </p>
+<p>
+              He has found the weakness: nonexistent products are not cached, so
+              every new fake ID forces another useless database lookup. He
+              begins generating thousands of fake product IDs.
+            </p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l2"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<span class="course-step previous is-empty"></span>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-air.html"><small>Next</small><b>Book One · Air →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 1: The Forgotten Art of Caching · The Last Cachebender</title>
+<meta content="Lesson 1 of The Last Cachebender: The Forgotten Art of Caching." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Forgotten Art · The Last Cachebender" property="og:title"/>
+<meta content="Caching foundations, hits and misses, and the shared storefront used throughout the course." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l1.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l1.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+      /* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+      (function () {
+        try {
+          var t = localStorage.getItem("cachebender-theme");
+          if (t === "light" || t === "dark")
+            document.documentElement.setAttribute("data-theme", t);
+        } catch (e) {}
+      })();
+    </script>
+</head>
+<body class="course-page realm-prologue lesson-page" data-course-lesson="l1">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle></svg></span>
+<span><b>The Last Cachebender</b><small>Prologue</small></span>
+</a>
+<nav aria-label="Course books" class="course-books">
+<a aria-current="page" href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a href="book-war.html">War</a>
+</nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Prologue</summary>
+<div class="inner">
+<ul class="toc">
+<li>
+<a aria-current="page" class="here" href="course.html">Prologue · The Forgotten Art</a>
+</li>
+<li>
+<a href="book-air.html">Book One · Air · The Browser Realm</a>
+</li>
+<li>
+<a href="book-water.html">Book Two · Water · The Edge Kingdom</a>
+</li>
+<li>
+<a href="book-earth.html">Book Three · Earth · The Application Sanctum</a>
+</li>
+<li>
+<a href="book-fire.html">Book Four · Fire · The Database Depths</a>
+</li>
+<li>
+<a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a>
+</li>
+<li>
+<a href="book-war.html">Book Five · War · The Great War</a>
+</li>
+</ul>
+</div>
+</details>
+    <header class="book realm-prologue lesson-book-intro">
+      <div class="marker">Prologue · Lesson 1 of 14</div>
+      <h2>The Forgotten Art</h2>
+      <div class="saga"><p>The Forgotten Art of Caching</p></div>
+    </header>
+    <section class="lesson-head realm-prologue" id="l1">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_composition_of_air_nomad_artifacts._an/screen.png"/>
+<div class="num">Lesson One</div>
+<h2>The Forgotten Art of Caching</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Sight</span>
+<span class="gloss">seeing where time is being wasted</span>
+</div>
+<h3>The problem</h3>
+<p>
+            Open the storefront's product page. It takes
+            <strong>900 milliseconds</strong> to appear.
+          </p>
+<p>Now open it again. It takes 900 milliseconds again.</p>
+<p>
+            Nothing changed between those two visits. The product has the same
+            name, the same description, the same picture. Your server did the
+            exact same work, twice, and got the exact same answer, twice.
+          </p>
+<p>That is the waste. Caching is the art of noticing it.</p>
+<h3>What a cache is</h3>
+<p>
+            A <strong>cache</strong> (say it “cash”) is a copy of an
+            answer, kept somewhere faster to reach than the place the answer
+            came from.
+          </p>
+<p class="definition-callout">
+<strong>That is the whole idea.</strong> Everything else in this
+            course is detail about <em>where</em> you keep the copy,
+            <em>how long</em> you keep it, and
+            <em>what happens when the copy stops being true</em>.
+          </p>
+<h3>Why things are slow: two reasons</h3>
+<p>Almost all slowness comes from one of two causes.</p>
+<p>
+<strong>1. Distance.</strong> The data is far away and has to
+            travel.
+          </p>
+<p>
+<strong>2. Recomputation.</strong> The work was already done once,
+            and you are doing it again.
+          </p>
+<p>
+            A cache fixes both, in the same way: keep the answer nearby, and
+            stop redoing the work.
+          </p>
+<h3>How far is “far”?</h3>
+<p>
+            These numbers are approximate, and they vary by hardware. What
+            matters is not the exact figures but the <em>gaps between them</em>.
+          </p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Where the data is</th>
+<th>Roughly how long it takes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>In your program's own memory</td>
+<td>100 nanoseconds</td>
+</tr>
+<tr>
+<td>On a local SSD</td>
+<td>100 microseconds <em>(1,000× slower)</em></td>
+</tr>
+<tr>
+<td>On another server in the same datacentre</td>
+<td>500 microseconds <em>(5,000× slower)</em></td>
+</tr>
+<tr>
+<td>On a server on another continent</td>
+<td>150 milliseconds <em>(1,500,000× slower)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            Those numbers are too small to feel. So here is the same table
+            again, with every figure multiplied by the same amount.
+          </p>
+<p>
+<strong>These are not real durations. Only the ratios are real.</strong>
+            If reading from memory took 1 second, then:
+          </p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Where the data is</th>
+<th>If memory took 1 second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Program memory</td>
+<td>1 second</td>
+</tr>
+<tr>
+<td>Local SSD</td>
+<td>17 minutes</td>
+</tr>
+<tr>
+<td>Same datacentre</td>
+<td>1.4 hours</td>
+</tr>
+<tr>
+<td>Another continent</td>
+<td><strong>17 days</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            This is the single most useful intuition in caching. Moving an
+            answer from “another continent” to “program
+            memory” is not a small improvement. It is the difference
+            between waiting 17 days and waiting 1 second.
+          </p>
+<h3>The trade-off</h3>
+<p>
+            Caching gives you speed, but it charges you in freshness and memory.
+          </p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>You want</th>
+<th>What caching does</th>
+<th>The cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Speed</strong></td>
+<td>Reuses an answer instead of producing it again</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Freshness</strong></td>
+<td>May return an older copy</td>
+<td>The answer may be out of date</td>
+</tr>
+<tr>
+<td><strong>Low memory use</strong></td>
+<td>Stores additional copies</td>
+<td>Every copy takes space</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+            A cached copy that no longer matches the latest answer is called
+            <mark class="term-highlight">stale</mark>.
+          </p>
+<p>
+            Caching buys speed by accepting some risk of stale data and using
+            additional memory. Every technique in this course makes that
+            trade-off differently.
+          </p>
+<h3>Why caching is a design decision</h3>
+<p>
+            Caching is sometimes described as an optimisation added after a
+            system becomes slow. That is only partly true.
+          </p>
+<p>
+            Adding a cache creates another copy of your data. That copy may fall
+            behind the original.
+          </p>
+<p>
+            For a product description, that may be harmless. For a price or
+            stock count, it may cause a customer to see incorrect information.
+          </p>
+<p>
+            You do not need to build every cache from the beginning. But you do
+            need to decide which answers are allowed to be old and for how long.
+            That is a correctness decision, so it belongs in the system design.
+          </p>
+<h3>At the Storefront</h3>
+<p>
+            Put the page beside its freshness promises. The same seven fields
+            now become seven different correctness decisions.
+          </p>
+<div class="storefront-study" id="storefront-study">
+<article aria-label="Wayfinder Supply product page annotated with cache freshness rules" class="product-page course-storefront compact">
+<div class="store-bar cache-piece">
+<span class="store-mark">Wayfinder Supply</span>
+<span class="store-nav">Atlas   Field notes   Bag <b>1</b></span>
+</div>
+<div class="product-shell">
+<figure class="product-gallery cache-piece">
+<span class="part-number">2</span>
+<img alt="An open illustrated atlas whose pages rise into four elemental realms." decoding="async" height="848" loading="lazy" src="public/atlas.png" width="1264"/>
+<figcaption>
+<b>Product images</b><small class="cache-policy">May be old for days</small>
+</figcaption>
+</figure>
+<div class="product-buy">
+<p class="product-overline">Field edition · Volume I</p>
+<div class="product-details cache-piece">
+<span class="part-number">3</span><small class="cache-policy">Details · may be old for hours</small>
+<h3>Four Realms Atlas</h3>
+<p>
+                      A hand-bound guide to the roads, rivers and hidden
+                      passages connecting every realm.
+                    </p>
+</div>
+<div class="product-review cache-piece">
+<span class="part-number">6</span><span aria-label="Rated 4.9 out of 5" class="stars">★★★★★</span><b>4.9</b><span>248 reviews</span>
+<small class="cache-policy">Reviews · may be old for minutes</small>
+</div>
+<div class="product-facts">
+<div class="product-price cache-piece">
+<span class="part-number">4</span><small class="cache-policy">Price · seconds only</small><strong>$84</strong>
+</div>
+<div class="product-stock cache-piece">
+<span class="part-number">5</span><small class="cache-policy">Stock · barely, if at all</small><span><i></i> In stock</span><b>12 left</b>
+</div>
+</div>
+<div class="product-cart cache-piece">
+<span class="part-number">7</span>
+<div class="cart-button">
+<span>Add to cart</span><b aria-label="1 item in cart">1</b>
+</div>
+<small class="cache-policy">Cart badge · private, never shared</small>
+</div>
+</div>
+</div>
+<div class="asset-bundle cache-piece">
+<span class="part-number">1</span>
+<span class="asset-bundle-label">Asset bundle</span>
+<strong><span>CSS</span><span class="asset-plus">+</span><span>JS</span></strong>
+<small class="cache-policy">May stay old indefinitely</small>
+</div>
+</article>
+<div class="stale-panel">
+<div class="section-kicker">Freshness contract</div>
+<h4>What is allowed to be old?</h4>
+<p>Each limit protects a different consequence.</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Part</th>
+<th>May it be stale?</th>
+<th>If it is, what happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Asset bundle</td>
+<td>Indefinitely</td>
+<td>Nothing — version the file</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Product images</td>
+<td>For days</td>
+<td>An old photo remains</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Product details</td>
+<td>For hours</td>
+<td>A correction appears late</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Price</td>
+<td>For seconds</td>
+<td>A customer sees an old price</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Stock count</td>
+<td>Barely, if at all</td>
+<td>You may oversell</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Reviews</td>
+<td>For minutes</td>
+<td>A new review appears late</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Cart badge</td>
+<td>Not applicable</td>
+<td>Another user's answer is wrong</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Look at each part and ask two questions.</p>
+<p>
+<strong>What does it cost to produce?</strong> How long does it
+            take, and how many database queries does it need? That tells you
+            what is worth caching. This is The Sight — you cannot decide what to
+            cache until you know what is expensive.
+          </p>
+<p>
+<strong>How old is it allowed to be?</strong> That tells you what
+            you are <em>permitted</em> to cache, which is a different question
+            entirely.
+          </p>
+<p>
+            Look at part 1 again — the CSS and JavaScript files. It is drawn
+            below the storefront because it is not really part of this page.
+          </p>
+<p>It is part of <em>every</em> page.</p>
+<p>
+            The same bundle is used by the home page, the category listing, the
+            search results, the checkout, and the account screen. Cache it once
+            and you have not made one page faster — you have made the whole site
+            faster, for every visitor, on every page after their first.
+          </p>
+<p>
+            The same goes for anything that repeats: the header, the navigation
+            menu, the footer, the category list that fills the menu.
+          </p>
+<div class="keystone">
+            The value of a cached copy is not what it saves once — it is what it
+            saves multiplied by how often it is reused.
+          </div>
+<p>
+            A product description is reused by everyone who views that product.
+            A logo is reused by everyone who views anything.
+          </p>
+<p>
+            And the counter-example is on the same page. The cart badge appears
+            on every page too, exactly like the header does. But
+            <em>“on every page”</em> and
+            <em>“the same for everyone”</em> are different things —
+            and only the second one makes something safe to share.
+          </p>
+</section>
+    <div class="lesson-end" data-lesson-end="l1"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<span class="course-step previous is-empty"></span>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<a class="course-step next" href="book-air.html"><small>Next</small><b>Book One · Air →</b></a>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>

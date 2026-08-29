@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Lesson 13: Restoring Balance · The Last Cachebender</title>
+<meta content="Lesson 13 of The Last Cachebender: Restoring Balance." name="description"/>
+<meta content="light dark" name="color-scheme"/>
+<meta content="#0F1418" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="The Great War · The Last Cachebender" property="og:title"/>
+<meta content="Cache attacks, measurement, restoration, and the final multi-layer caching design." property="og:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/l13.html" property="og:url"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" property="og:image"/>
+<meta content="1731" property="og:image:width"/>
+<meta content="909" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="The Last Cachebender" name="twitter:title"/>
+<meta content="Master the four cache realms and restore balance to a system under pressure." name="twitter:description"/>
+<meta content="https://shahbaaz12.github.io/the-last-cachebender/public/og.png" name="twitter:image"/>
+<link href="https://shahbaaz12.github.io/the-last-cachebender/l13.html" rel="canonical"/>
+
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" rel="icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="css/styles.css?v=25" rel="stylesheet"/>
+<script>
+/* Apply the stored theme before first paint, so the page never flashes
+   the wrong palette. Deliberately inline and deliberately tiny. */
+(function(){try{var t=localStorage.getItem('cachebender-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body class="course-page realm-war lesson-page" data-course-lesson="l13">
+  <a class="skip" href="#top">Skip to content</a>
+  <div class="progress" id="progress"></div>
+  <header class="course-top">
+<div class="course-top-in">
+<a aria-label="The Last Cachebender home" class="course-brand" href="index.html">
+<span class="course-crest"><svg aria-hidden="true" focusable="false" viewbox="0 0 48 48">
+<circle class="crest-track" cx="24" cy="24" r="19"></circle>
+<path class="crest-air" d="M24 5a19 19 0 0 1 19 19"></path>
+<path class="crest-water" d="M43 24a19 19 0 0 1-19 19"></path>
+<path class="crest-earth" d="M24 43A19 19 0 0 1 5 24"></path>
+<path class="crest-fire" d="M5 24A19 19 0 0 1 24 5"></path>
+<path class="crest-diamond" d="M24 14 34 24 24 34 14 24Z"></path>
+<circle class="crest-core" cx="24" cy="24" r="3"></circle>
+</svg></span>
+<span><b>The Last Cachebender</b><small>Book Five · War</small></span>
+</a>
+<nav aria-label="Course books" class="course-books"><a href="course.html">Prologue</a><a href="book-air.html">Air</a><a href="book-water.html">Water</a><a href="book-earth.html">Earth</a><a href="book-fire.html">Fire</a><a href="book-spirit.html">Spirit</a><a aria-current="page" href="book-war.html">War</a></nav>
+<button aria-label="Switch theme" aria-pressed="false" class="theme-toggle course-theme-toggle" data-theme-toggle="" type="button">
+<span aria-hidden="true" class="icon moon">☾</span><span aria-hidden="true" class="icon sun">☀</span>
+<span data-theme-label="">Light</span>
+</button>
+</div>
+</header>
+  <div class="shell"><main id="top">
+    <details class="mobile-nav">
+<summary>Book Five · War</summary>
+<div class="inner">
+<ul class="toc">
+<li><a href="course.html">Prologue · The Forgotten Art</a></li>
+<li><a href="book-air.html">Book One · Air · The Browser Realm</a></li>
+<li><a href="book-water.html">Book Two · Water · The Edge Kingdom</a></li>
+<li><a href="book-earth.html">Book Three · Earth · The Application Sanctum</a></li>
+<li><a href="book-fire.html">Book Four · Fire · The Database Depths</a></li>
+<li><a href="book-spirit.html">Interlude · Spirit · The Spirit Library</a></li>
+<li><a aria-current="page" class="here" href="book-war.html">Book Five · War · The Great War</a></li>
+</ul>
+</div>
+</details>
+    <header class="book realm-war lesson-book-intro">
+      <div class="marker">Book Five · War · Lesson 13 of 14</div>
+      <h2>The Great War</h2>
+      <div class="saga"><p>Restoring Balance</p></div>
+    </header>
+    <section class="lesson-head realm-war" id="l13">
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_cinematic_landscape_of_victory_for_the_water/screen.png"/>
+<div class="num">Lesson Thirteen</div>
+<h2>Restoring Balance</h2>
+</section>
+    <section class="wrap">
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Measure</span>
+<span class="gloss">instrumentation, honesty, and restraint</span>
+</div>
+<h3>You survived. Now find out what actually happened.</h3>
+<p>You have four realms of caching, five defenses, and an application that stayed up. You cannot see any of it.</p>
+<p>This lesson is about seeing — and about the harder discipline of removing caching that has not earned its place.</p>
+<h3 id="l13-ratio">Measure hit ratio per key, never globally</h3>
+<p>A single global hit ratio is close to useless, because it averages away exactly what you need to see.</p>
+<pre class="figure">Global hit ratio: 85%    ← looks healthy
+
+Broken down:
+    asset bundles      99.8%     cheap on a miss anyway
+    product images     99.1%     cheap on a miss
+    product details    94%       moderate
+    reviews            78%       moderate
+    price               6%       ← expensive, and effectively uncached</pre>
+<p>That 85% is real, and it is hiding the fact that your most expensive query has essentially no cache at all. The cheap, high-volume things inflated the average until the problem disappeared inside it.</p>
+<div class="keystone">Measure hit ratio per key prefix. A global number can only tell you that everything is fine — which is the one thing you did not need to know.</div>
+<p>Also, from Lesson 2: the last few percent are worth the most. Going 90% → 99% removes 90% of your remaining misses. Going 50% → 59% removes 18%. Effort spent on an already-good ratio pays more than effort spent on a bad one — provided the traffic is expensive.</p>
+<h3 id="l13-percentile">Latency percentiles</h3>
+<p>A <strong>percentile</strong> tells you what a given fraction of requests experienced.</p>
+<ul>
+<li><strong>p50</strong> (the median) — half of requests were faster than this</li>
+<li><strong>p95</strong> — 95% were faster; the slowest 1 in 20 were worse</li>
+<li><strong>p99</strong> — 99% were faster; the slowest 1 in 100 were worse</li>
+</ul>
+<p>Averages hide caching problems, because caches make most requests fast and a few requests slow — which is precisely the shape an average erases.</p>
+<pre class="figure plain">Average:  12ms      ← "we're fine"
+p50:       2ms      ← the hits
+p95:      15ms
+p99:     450ms      ← the misses, and every user who hit one</pre>
+<p><strong>Your p50 is your hit path. Your p99 is your miss path.</strong> If p50 is excellent and p99 is terrible, your cache is working and your misses are expensive — that is exactly the case for single-flight and refresh-ahead from Lesson 8.</p>
+<p>At scale, p99 is not rare. At 1,000 requests per second, it is 10 users every second, and a user loading a page with 20 requests will very likely hit it at least once.</p>
+<h3 id="l13-memory">Memory and eviction rate</h3>
+<p>From Lesson 10 — the combination is diagnostic:</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Hit ratio</th><th>Eviction rate</th><th>Diagnosis</th></tr></thead>
+<tbody>
+<tr><td>Low</td><td>High</td><td><strong>Cache is too small.</strong> Items evicted before reuse.</td></tr>
+<tr><td>Low</td><td>Low</td><td><strong>TTLs too short</strong>, or the data genuinely isn't reused.</td></tr>
+<tr><td>High</td><td>High</td><td>Working, but under pressure. More memory would help.</td></tr>
+<tr><td>High</td><td>Low</td><td>Healthy.</td></tr>
+</tbody>
+</table></div>
+<p>A low hit ratio means very different things depending on the eviction rate, and you cannot tell them apart without both numbers.</p>
+<h3 id="l13-raise">Raising a hit ratio deliberately</h3>
+<p>Four techniques, with honest costs:</p>
+<p><strong>1. Adjust key granularity.</strong> Caching a whole rendered page gives one entry that must be discarded when anything on it changes. Caching pieces gives more entries, each surviving independently. Finer keys usually mean a higher hit ratio and more lookups.</p>
+<p><strong>2. Tune TTLs.</strong> Longer TTL, higher hit ratio, more staleness. Pure trade, and the answer comes from the business, not from you. Ask: how wrong can this be?</p>
+<p><strong>3. Warm the cache (L2).</strong> Attacks the cold-start portion of your misses. Effective after deploys and restarts; does nothing for steady-state misses.</p>
+<p><strong>4. Separate hot from cold.</strong> If 5% of products get 95% of traffic, cache the hot 5% aggressively — locally, long TTL, refresh-ahead — and barely cache the rest. This usually beats treating everything uniformly, and it is how the hot-key defense in Lesson 12 is built.</p>
+<p>And the option people forget: <strong>accept the ratio.</strong> 60% on data that must be fresh may be the correct answer. Not every number needs improving.</p>
+<h3 id="l13-debug">Debugging across four realms</h3>
+<p>A user reports a stale price. You have four caches. <strong>Which one served it?</strong></p>
+<p>Without instrumentation this is guesswork. With it, it is a header.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Header</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>Age: 240</code></td><td>This copy has been in a cache for 240 seconds</td></tr>
+<tr><td><code>X-Cache: HIT</code> / <code>MISS</code></td><td>Common CDN convention (non-standard)</td></tr>
+<tr><td><code>Cache-Status: cdn; hit, origin; miss</code></td><td>The standard version — reports each cache in the chain</td></tr>
+</tbody>
+</table></div>
+<p><code>Age</code> is the most useful for stale-data reports. If a user sees a wrong price and <code>Age: 3400</code>, you know it came from a cache with a long TTL and can identify which. If <code>Age: 2</code>, the problem is not staleness — it is your database or your invalidation.</p>
+<p>For your own layers, add your own:</p>
+<pre class="figure plain">X-Cache-Local:  HIT
+X-Cache-Redis:  MISS
+X-DB-Queries:   3</pre>
+<p>Not for production users — for you, behind a debug flag, so that “which realm served this?” is a question with an answer.</p>
+<p>Also log <strong>cache errors separately from misses.</strong> They look identical to your application (both mean “go to the database”), and they mean completely different things. A rising cache error rate is a failing cache node. A rising miss rate is a tuning problem. Conflating them hides outages.</p>
+<h3 id="l13-kill">Test what happens when the cache dies</h3>
+<p>The question from Lesson 6, and you should now answer it experimentally.</p>
+<p><strong>Turn the cache off in a staging environment under realistic load.</strong></p>
+<p>Two possible outcomes:</p>
+<p><strong>It gets slower but survives.</strong> Good. Your cache is a genuine optimisation.</p>
+<p><strong>It falls over.</strong> Then what you have is not a cache — it is an undeclared load-bearing dependency with no durability guarantees, and a cache node failure is a full outage.</p>
+<p>If the second happens, your options are: size the database for cache-free operation (expensive), add graceful degradation (serve stale, shed non-essential load, queue writes), make the cache highly available, or accept the risk knowingly. All four are legitimate. <strong>Not knowing which one you have chosen is not.</strong></p>
+<h3 id="l13-notcache">What not to cache</h3>
+<p>The most valuable discipline in the course. Caching is not free — it costs memory, complexity, and correctness. Some things should not be cached at all.</p>
+<p><strong>Anything personal, in a shared cache.</strong> The cart badge. Lesson 12 attack 5.</p>
+<p><strong>Anything genuinely secret.</strong> Credentials, tokens, payment details. Not in a shared cache, not on disk, <code>no-store</code>.</p>
+<p><strong>Cheap queries.</strong> An indexed primary-key lookup served from the buffer pool takes 0.3ms. A Redis lookup takes 0.5ms. <strong>You made it slower and added a staleness bug.</strong> This is Lesson 7's warning, and it is extremely common.</p>
+<p><strong>Data that is written far more than read.</strong> Every write invalidates; almost no read benefits. Write-around (L9) and move on.</p>
+<p><strong>Data that must be exact.</strong> Account balances, remaining stock at the moment of purchase, anything with a legal or financial consequence for being wrong. Read the truth.</p>
+<p><strong>Data with no reuse.</strong> Caching depends on the same key being asked for again. A per-request unique key is never reused, and caching it is pure cost.</p>
+<h3 id="l13-honest">The honest question</h3>
+<p>For every cache in your system:</p>
+<div class="keystone">What does this layer buy me, and is it worth what it costs?</div>
+<p>Cost is memory, code, an invalidation path, a new failure mode, a new way to be wrong, and a permanent increase in how hard your system is to reason about.</p>
+<p>Sometimes the answer is a clear yes. Sometimes it is a layer added years ago in front of a query that got an index six months later, and nobody has checked since.</p>
+<p><strong>Deleting a cache that no longer earns its place is as much a use of this technique as adding one.</strong></p>
+<h3>At the Storefront</h3>
+<p>Instrument all four realms. Then answer, for the last request:</p>
+<ol>
+<li>Which realm served it?</li>
+<li>How old was the copy?</li>
+<li>If it missed, where did the time go?</li>
+</ol>
+<p>Then turn off Redis under load and watch what happens.</p>
+<div class="myth">
+<div class="label">The misconception to kill</div>
+<p class="claim">“A higher hit ratio is always better.”</p>
+<p>A 99% hit ratio on data that must be fresh is not a success — it is a bug with excellent metrics. The right target comes from what the data is allowed to be wrong about, not from the number being large.</p>
+</div>
+</section>
+    <div class="lesson-end" data-lesson-end="l13"></div>
+    <footer class="course-footer">
+<nav aria-label="Book navigation" class="course-footer-nav">
+<a class="course-step previous" href="book-spirit.html"><small>Previous</small><b>← Interlude · Spirit</b></a>
+<a class="course-map-link" href="index.html#lessons"><small>Course map</small><b>All fourteen lessons</b></a>
+<span class="course-step next is-empty"></span>
+</nav>
+<div class="course-footer-meta">
+<span>The Last Cachebender</span>
+<a href="index.html">Home</a>
+<a href="https://shahbaaz12.github.io/silicon-lanes/">Silicon Lanes</a>
+<a href="https://shahbaaz12.github.io/dungeons-and-databases/">Dungeons &amp; Databases</a>
+</div>
+</footer>
+  </main></div>
+  <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
+  <script src="js/main.js?v=25"></script>
+  <script src="js/lesson-card.js?v=25"></script>
+<script src="js/journey-map.js?v=25"></script>
+</body>
+</html>
