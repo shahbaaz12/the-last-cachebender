@@ -1975,17 +1975,12 @@ On the next read:
 
           <p>Update the truth, remove the copy, let it rebuild on demand.</p>
 
-          <h3 id="l11-delete">Delete, do not update</h3>
-
           <p>
-            Given a write, you could either delete the cached copy or update it
-            in place with the new value. Updating seems better — it avoids the
-            next reader missing.
+            <strong>Delete — do not update in place.</strong> Writing the new
+            value into the cache looks better, because it saves the next reader
+            a miss. It is not. Two administrators change a price at nearly the
+            same time:
           </p>
-
-          <p><strong>It is not better, and here is why.</strong></p>
-
-          <p>Two administrators change a price at nearly the same time:</p>
 
           <pre class="figure">
 t=0   Writer A: database ← 10
@@ -1998,49 +1993,231 @@ t=3   Writer A: cache ← 10        ← arrived late
           >
 
           <p>
-            The database ended at 12, correctly. But the two cache writes
-            arrived in the opposite order — network timing, thread scheduling, a
-            garbage-collection pause, any of a dozen reasons. The cache now
-            holds 10 and will keep serving it until its TTL runs out.
+            Both writes reached the database in order. The two cache writes did
+            not — network timing, thread scheduling, a garbage-collection pause.
+            The cache now serves 10 until its TTL runs out.
           </p>
 
-          <p>Now the same sequence with deletion:</p>
-
-          <pre class="figure">
-t=0   Writer A: database ← 10,  cache.delete
-t=1   Writer B: database ← 12,  cache.delete
-t=2   Reader:   cache miss → reads database → gets 12  ✓ correct</pre
-          >
-
           <p>
-            Deletes cannot arrive out of order in a harmful way, because a
-            delete carries no value. Whatever order they land in, the result is
-            the same: no cached copy, and the next read gets the truth from the
-            source.
+            A delete cannot go wrong that way, because it carries no value.
+            Whatever order two deletes land in, the result is the same: no
+            cached copy, and the next read takes the truth from the source.
           </p>
 
           <div class="keystone">
-            Delete on write. Do not update on write. It costs one extra miss and
-            removes an entire category of bug that is nearly impossible to
-            reproduce.
+            When your application owns both writes, delete on write — do not
+            update on write. It costs one extra miss and removes an entire
+            category of bug that is nearly impossible to reproduce.
           </div>
+
+          <p>
+            This is <strong>write-around</strong> from Lesson 9, seen from the
+            invalidation side. Write-through is exempt: there the cache owns the
+            write path, so it decides the order both systems see.
+          </p>
 
           <h3 id="l11-version">Versioned keys</h3>
 
           <p>
             A different approach:
-            <strong>never invalidate anything. Change the name instead.</strong>
+            <strong>never delete anything. Change the name instead.</strong>
+          </p>
+
+          <p>
+            When a price changes you leave the cached copy exactly where it is —
+            and start reading from a different key. The version lives in a small
+            key of its own:
           </p>
 
           <pre class="figure plain">
-product:42:v7    ← everyone reads this
-                   price changes
-product:42:v8    ← everyone reads this now</pre
+product:42:version  =  7</pre
+          >
+
+          <p>Reading a price becomes two steps:</p>
+
+          <pre class="figure plain">
+1. read  product:42:version     →  7
+2. read  product:42:price:v7    →  £25.00</pre
           >
 
           <p>
-            The old entry is not deleted. It simply becomes unreferenced and
-            expires on its own.
+            When the price changes, the writer updates the database and
+            increments the version:
+          </p>
+
+          <pre class="figure plain">
+product:42:version  =  8</pre
+          >
+
+          <p>The next reader takes the same two steps and lands somewhere else:</p>
+
+          <pre class="figure plain">
+1. read  product:42:version     →  8
+2. read  product:42:price:v8    →  miss → loads £20.00 from the database</pre
+          >
+
+          <p>
+            Nothing was deleted. <code>product:42:price:v7</code> is still
+            sitting in the cache holding £25.00 — but nobody will ever ask for
+            it again, and it expires on its own.
+          </p>
+
+          <p>
+            <strong>&ldquo;Haven't you just added a lookup?&rdquo;</strong> Yes —
+            one, on a tiny key that is read constantly and is therefore always
+            hot. In exchange you never issue a delete, and one version can
+            retire any number of keys at once.
+          </p>
+
+          <p>
+            Often you do not need a counter at all. Anything that already
+            changes when the data changes will do:
+          </p>
+
+          <pre class="figure plain">
+product:42:price:v&lt;updated_at&gt;
+product:42:price:v&lt;row_version&gt;</pre
+          >
+
+          <p>
+            Now the version is a fact the row already carries, and there is
+            nothing extra to maintain. This is the common case for caching
+            anything <em>derived</em> from a row you have already loaded — a
+            rendered HTML fragment, a computed shipping estimate, a formatted
+            price.
+          </p>
+
+          <details class="opt">
+            <summary>
+              How the version reaches the cache in a real application<span
+                class="flag"
+                >optional read</span
+              >
+            </summary>
+            <div class="body">
+              <p>
+                The reassuring part: <strong>the version never leaves the cache
+                layer.</strong> The browser does not know about it, the
+                controller does not know about it, and the database does not
+                know about it.
+              </p>
+
+              <pre class="figure plain">
+Browser        GET /product/42                    ← no version anywhere
+                    ↓
+Controller     ProductController.Get(42)          ← no version here either
+                    ↓
+Service        GetPriceAsync(42)
+                    │
+                    │  1. read  product:42:version      → 7
+                    │  2. build product:42:price:v7
+                    │  3. read that key                 → £25.00  (hit)
+                    ↓
+Response       £25.00</pre
+              >
+
+              <p>
+                The URL is <code>/product/42</code> before and after a price
+                change. Nothing in the request changes. Steps 1–3 happen
+                entirely inside your service.
+              </p>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Layer</th>
+                    <th>Knows about the version?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Browser</td>
+                    <td><strong>No.</strong> Always requests <code>/product/42</code></td>
+                  </tr>
+                  <tr>
+                    <td>Controller</td>
+                    <td><strong>No.</strong> Calls <code>GetPriceAsync(42)</code></td>
+                  </tr>
+                  <tr>
+                    <td>Service / cache layer</td>
+                    <td><strong>Yes</strong> — the only place it exists</td>
+                  </tr>
+                  <tr>
+                    <td>Database</td>
+                    <td><strong>No.</strong> Queried normally on a miss</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p>
+                Because it is a private detail of one layer, nothing above or
+                below it has to change to adopt it.
+              </p>
+
+              <pre class="figure">
+public async Task&lt;decimal&gt; GetPriceAsync(int id)
+{
+    // 1. the version pointer — a tiny key, read constantly, always hot
+    var version = await _cache.StringGetAsync($"product:{id}:version") ?? 1;
+
+    // 2. build the real key from it
+    var key = $"product:{id}:price:v{version}";
+
+    // 3. ordinary cache-aside from here on
+    var cached = await _cache.StringGetAsync(key);
+    if (cached.HasValue) return (decimal)cached;
+
+    var price = await _repo.GetPriceAsync(id);
+    await _cache.StringSetAsync(key, price, TimeSpan.FromMinutes(30));
+    return price;
+}</pre
+              >
+
+              <p>And the write:</p>
+
+              <pre class="figure">
+public async Task UpdatePriceAsync(int id, decimal price)
+{
+    await _repo.UpdatePriceAsync(id, price);                    // database first
+    await _cache.StringIncrementAsync($"product:{id}:version"); // 7 → 8
+}</pre
+              >
+
+              <p>
+                That <code>INCR</code> is the whole invalidation. No delete is
+                issued, no message is broadcast, and no other server needs
+                telling — they all read the same pointer on their next request
+                and start building <code>v8</code> keys by themselves.
+              </p>
+
+              <p class="wild">
+                <span class="wild-tag">Why this matters with many servers</span>
+                Delete-on-write has to reach ten local caches on ten machines. A
+                version bump reaches them for free, because they look the
+                version up rather than being told about it. If the pointer key
+                is ever lost — a cache restart, say — every key simply looks new,
+                which is a cold cache rather than a wrong answer. It fails safe.
+              </p>
+            </div>
+          </details>
+
+          <p><strong>Retiring many keys at once</strong></p>
+
+          <p>
+            Put the version in a <em>prefix</em> rather than a suffix and it
+            covers everything beneath it:
+          </p>
+
+          <pre class="figure plain">
+catalog:v3:product:42
+catalog:v3:product:99
+catalog:v3:category:8</pre
+          >
+
+          <p>
+            Increment that single version to <code>v4</code> and every catalog
+            key becomes unreachable in one operation. No message has to reach
+            every cache node, and no key has to be found and deleted.
           </p>
 
           <p><strong>Why this is powerful:</strong></p>
@@ -2057,23 +2234,11 @@ product:42:v8    ← everyone reads this now</pre
             <li>
               <strong>It works in realms you cannot reach.</strong> You cannot
               delete anything from a user's browser cache — but you can serve a
-              page referencing <code>v8</code>, and the old entry becomes
-              irrelevant. This is the <em>only</em> mechanism that works for the
-              browser realm.
-            </li>
-            <li>
-              <strong>Bulk invalidation becomes free.</strong> Put a version in
-              a namespace prefix and increment it, and thousands of keys become
-              unreachable in one operation.
+              page referencing a new name, and the old entry becomes irrelevant.
+              This is the <em>only</em> mechanism that works for the browser
+              realm.
             </li>
           </ul>
-
-          <pre class="figure plain">
-catalog:v3:product:42
-catalog:v3:product:99
-catalog:v3:category:8
-    ...increment to v4 and every catalog key is invalidated at once</pre
-          >
 
           <p>
             <strong>The costs:</strong> you must track the current version and
@@ -2088,6 +2253,62 @@ catalog:v3:category:8
               >It is the same technique, and it is the strongest tool in this
               lesson.</strong
             >
+          </p>
+
+          <p>
+            Same idea, but do not conflate them — they act at different layers
+            and reach different people.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Fingerprinting (Lesson 3)</th>
+                <th>Versioned keys (here)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>What changes</td>
+                <td>The <strong>URL</strong></td>
+                <td>An internal <strong>cache key</strong></td>
+              </tr>
+              <tr>
+                <td>Who sees it</td>
+                <td>The browser, the CDN, everyone</td>
+                <td>Only your server</td>
+              </tr>
+              <tr>
+                <td>How the new name arrives</td>
+                <td>The HTML references it</td>
+                <td>The reader looks up the pointer</td>
+              </tr>
+              <tr>
+                <td>Reaches a user already holding a copy</td>
+                <td><strong>Yes</strong> — the old URL is never requested again</td>
+                <td><strong>No</strong> — their browser copy is untouched</td>
+              </tr>
+              <tr>
+                <td>Retires</td>
+                <td>One file</td>
+                <td>One key, or a whole namespace</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>
+            The practical consequence: bumping an internal version fixes every
+            copy <em>on your servers</em> instantly, and does nothing whatsoever
+            for the copy already sitting on a reader's disk. If a corrected price
+            has to reach a browser sooner, that is a lifetime decision — the
+            <code>max-age</code> you chose in Lesson 3 — not a versioning one.
+          </p>
+
+          <p class="keystone">
+            Fingerprinting changes what the reader asks for. Versioned keys
+            change what you look under. Only the first one can reach a copy you
+            have already given away.
           </p>
 
           <h3 id="l11-realms">Invalidating across all four realms</h3>
@@ -2189,27 +2410,22 @@ t=3   Reader:  cache.set("price", 10)       ← writes the stale value it
             the delete happened.
           </p>
 
-          <p>Mitigations:</p>
+          <p>
+            The reader's two steps — read the database, then write the cache —
+            have to be <strong>atomic with respect to writers</strong>. Each
+            step is already atomic on its own; the gap between them is the
+            problem. Close it by holding a lock across both, or by making the
+            cache write conditional so it fails if the key changed underneath
+            it.
+          </p>
 
-          <ul>
-            <li>
-              <strong>Versioned keys</strong> avoid it entirely — the reader
-              writes to <code>v7</code>, everyone is reading <code>v8</code>.
-              This is the cleanest answer.
-            </li>
-            <li>
-              <strong>Delayed double delete</strong> — delete, then delete again
-              after a short delay, to catch in-flight writers.
-            </li>
-            <li>
-              <strong>Short TTLs</strong> bound the damage without preventing
-              it.
-            </li>
-            <li>
-              <strong>Single-flight with locking</strong> (Lesson 8) narrows the
-              window considerably.
-            </li>
-          </ul>
+          <p>
+            <strong>Versioned keys sidestep it entirely.</strong> The in-flight
+            reader writes to <code>v7</code> while everyone has moved on to
+            <code>v8</code>, so its stale value lands where nobody is looking.
+            And where neither is in place, a TTL still bounds how long the
+            damage lasts.
+          </p>
 
           <h3 id="l11-net">TTL as the safety net</h3>
 
