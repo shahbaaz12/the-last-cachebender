@@ -802,50 +802,19 @@ td code{font-size:.8em}
 .aside p:last-child{margin:0}
 .aside strong{color:var(--ink)}
 
-/* Keystone teaching scroll */
+/* Keystone teaching box. Its restrained tint follows the active book. */
 .keystone{
-  position:relative;isolation:isolate;
-  margin:42px 16px;padding:34px 46px;text-align:center;
-  background:
-    radial-gradient(circle at 14% 28%,rgba(122,81,31,.11) 0 1px,transparent 2px),
-    radial-gradient(circle at 82% 68%,rgba(122,81,31,.09) 0 1px,transparent 2px),
-    repeating-linear-gradient(0deg,rgba(104,68,25,.025) 0 1px,transparent 1px 5px),
-    linear-gradient(135deg,#F8EDCD 0%,#EED9A8 52%,#E3C58C 100%);
-  background-size:90px 80px,110px 94px,auto,auto;
-  border:1px solid #B58B4A;border-left:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 64%,#8A5B27);
-  border-right:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 64%,#8A5B27);
-  border-radius:3px;
-  box-shadow:0 18px 38px rgba(54,36,17,.2),inset 0 1px rgba(255,255,255,.72),inset 0 -1px rgba(103,67,25,.18);
-  font-family:"Spectral",Georgia,serif;font-style:italic;
-  font-weight:600;font-size:1.34rem;line-height:1.46;letter-spacing:-.008em;
-  color:#3D2B18;text-shadow:0 1px rgba(255,255,255,.55);text-wrap:balance;
-}
-.keystone::before,.keystone::after{
-  content:"";position:absolute;z-index:-1;left:-13px;right:-13px;height:15px;
-  border:1px solid #A77A3C;border-left:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 68%,#80501F);
-  border-right:4px solid color-mix(in srgb,var(--realm-color,var(--accent)) 68%,#80501F);
-  border-radius:50%;
-  background:linear-gradient(180deg,#FFF3D1 0%,#E5C58A 52%,#BE914F 100%);
-}
-.keystone::before{top:-8px;box-shadow:0 3px 7px rgba(67,43,18,.2)}
-.keystone::after{bottom:-8px;box-shadow:0 5px 9px rgba(67,43,18,.24)}
-:root[data-theme="dark"] .keystone{
-  background:
-    radial-gradient(circle at 14% 28%,rgba(84,49,15,.13) 0 1px,transparent 2px),
-    radial-gradient(circle at 82% 68%,rgba(84,49,15,.11) 0 1px,transparent 2px),
-    repeating-linear-gradient(0deg,rgba(77,47,16,.035) 0 1px,transparent 1px 5px),
-    linear-gradient(135deg,#EBD9AD 0%,#DDBE82 54%,#C99D5B 100%);
-  box-shadow:0 20px 44px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.48),inset 0 -1px rgba(73,43,13,.25);
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .keystone{
-    background:
-      radial-gradient(circle at 14% 28%,rgba(84,49,15,.13) 0 1px,transparent 2px),
-      radial-gradient(circle at 82% 68%,rgba(84,49,15,.11) 0 1px,transparent 2px),
-      repeating-linear-gradient(0deg,rgba(77,47,16,.035) 0 1px,transparent 1px 5px),
-      linear-gradient(135deg,#EBD9AD 0%,#DDBE82 54%,#C99D5B 100%);
-    box-shadow:0 20px 44px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.48),inset 0 -1px rgba(73,43,13,.25);
-  }
+  margin:32px 0;padding:24px 26px;text-align:center;
+  background:linear-gradient(135deg,
+    color-mix(in srgb,var(--realm-color,var(--accent)) 12%,var(--surface)),
+    color-mix(in srgb,var(--realm-color,var(--accent)) 5%,var(--surface)));
+  border:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 38%,var(--rule-firm));
+  border-left:4px solid var(--realm-color,var(--accent));
+  border-radius:4px;
+  box-shadow:0 10px 24px color-mix(in srgb,var(--shadow) 26%,transparent);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;
+  font-weight:600;font-size:1.24rem;line-height:1.35;letter-spacing:-.014em;
+  color:var(--ink);text-wrap:balance;
 }
 
 /* placeholder */
@@ -1017,8 +986,7 @@ td code{font-size:.8em}
   .lesson-head::after{background:linear-gradient(90deg,color-mix(in srgb,var(--ground) 94%,transparent),color-mix(in srgb,var(--ground) 12%,transparent))}
   .technique{padding:18px 16px 18px 64px}
   .technique::before{left:16px;width:32px;height:32px}
-  .keystone{margin:38px 8px;padding:30px 24px;font-size:1.2rem}
-  .keystone::before,.keystone::after{left:-8px;right:-8px}
+  .keystone{margin:30px 0;padding:22px 20px;font-size:1.12rem}
   .bloom-panel{padding:20px 17px}
   .bloom-verdicts{grid-template-columns:1fr}
   .storefront-overview{padding-top:42px}
