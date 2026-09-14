@@ -1309,8 +1309,10 @@ td code{font-size:.8em}
 
 .course-top{position:sticky;top:0}
 .lesson-head{scroll-margin-top:92px}
-.lesson-book-intro{min-height:auto;padding-top:38px;padding-bottom:28px}
-.lesson-book-intro .saga{margin-bottom:0}
+.lesson-book-intro{min-height:0;margin-top:16px;padding-top:16px;padding-bottom:0;border-top:0;background:transparent}
+.lesson-book-intro::after,.lesson-book-intro h2,.lesson-book-intro .saga{display:none}
+.lesson-book-intro .marker{margin:0;font-size:.62rem}
+.lesson-book-intro + .lesson-head{margin-top:10px}
 
 .course-lesson-menu{position:relative}
 .course-lesson-menu > summary{
