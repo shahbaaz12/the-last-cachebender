@@ -4,7 +4,7 @@ Reviewed 14 September 2026. Learner-facing copy and technical explanations were 
 
 **Implementation status — 15 September 2026.** Sections A and B have been applied across the standalone lessons, grouped book pages, course page, reference page, and shared lesson copy. The text items in C2, C5, and C6, along with the readability, homepage-diagram, and standalone-opening changes in C3, C4, and C7, are also applied. For A1, the accepted policy is `max-age=10, must-revalidate`; this is stricter than the report's initial 60-second suggestion and is now used consistently in the price examples.
 
-The metadata, social-image, and README cleanup in D are applied. The source-of-truth cleanup remains pending.
+The metadata, social-image, and README cleanup in D are applied. Bloom filters are now explained in Lesson 12 and used in Lesson 14's attack defenses, with matching grouped-book copy and shared summaries (see A7). The source-of-truth cleanup remains pending.
 
 The elemental setting, the Latency Lord, and the recurring storefront give this course a clear identity. Keep them. The biggest opportunity is to make the teaching voice more direct: explain the idea plainly, use the story to make it memorable, and avoid repeating why the course was designed this way. Some passages also need correction because their examples and conclusions disagree.
 
@@ -87,6 +87,12 @@ Locations: [l12.html:150](C:/a/Arena/Learnings/SystemDesigns/HLD/the-last-cacheb
 Current: “Placeholder — Bloom filters” / “The second defense for this attack, deferred by decision.” The War book also exposes “Appendix — Open Placeholders,” including deferred Bloom filters and unplaced service-worker material.
 
 Proposed: move these notes to the development documentation. Until Bloom filters are explained, remove them from the lesson's “Key takeaways” claim. Keep the negative-caching explanation that is already present. The learner should not encounter production notes or be told they learned material that is missing.
+
+**Follow-up — Bloom filters added, 15 September 2026.** Replaced the removed placeholder with a full explanation under Lesson 12's penetration attack, including bits and hashes, false positives, the limits of the no-false-negative guarantee, and the difference from negative caching. The request path only rejects an ID when a current, complete filter confirms absence. New products must be included before publication; missing, unavailable, or incomplete filters fall back to normal lookups. Deletion, rebuilds, capacity, negative-entry invalidation, and traffic limits are covered.
+
+Lesson 14 now includes the filter in the price read path and penetration defense, plus its update, monitoring, and failure policies. The grouped War book, lesson cards, learning map, homepage, and reference index agree with this addition. Lesson 12's old “nothing new” promise was revised. Browser checks also led to refreshed shared asset versions, a clear anchor offset for the new panel, and a 1500px threshold for the floating contents panel so it cannot cover the lesson at narrower desktop widths.
+
+Technical references: [Redis Bloom-filter guide](https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/) and [BF.EXISTS command behavior](https://redis.io/docs/latest/commands/bf.exists/). The lifecycle safeguards describe the proposed storefront design; they are not automatic guarantees supplied by the filter.
 
 **A8. Correct the p99 example without losing its point.**
 

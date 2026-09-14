@@ -830,6 +830,7 @@ td code{font-size:.8em}
 .placeholder p{margin:0;font-size:.94rem;color:var(--ink-soft);font-style:italic}
 
 /* Bloom filters — an early defense against cache penetration */
+.bloom-panel,#l14-bloom{scroll-margin-top:132px}
 .bloom-panel{
   margin:32px 0;padding:24px 26px 22px;border:1px solid color-mix(in srgb,var(--earth) 42%,var(--rule));
   border-radius:8px;background:
@@ -838,7 +839,7 @@ td code{font-size:.8em}
   box-shadow:0 18px 42px color-mix(in srgb,var(--shadow) 34%,transparent);
 }
 .bloom-panel h3{margin:7px 0 14px;font-size:1.4rem}
-.bloom-panel > p{margin:0 0 17px;color:var(--ink-soft)}
+.bloom-panel > p{max-width:var(--prose);margin:0 0 17px;color:var(--ink-soft)}
 .bloom-panel > p:last-child{margin-bottom:0}
 .bloom-verdicts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:21px 0}
 .bloom-verdict{
@@ -1290,7 +1291,7 @@ td code{font-size:.8em}
 }
 
 /* Not enough room beside the text — the inline card already did this job. */
-@media (max-width:1099px){
+@media (max-width:1499px){
   .lesson-rail{display:none}
 }
 
@@ -1373,10 +1374,10 @@ td code{font-size:.8em}
 .xref:hover::after,.xref:focus-visible::after{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
 .lesson-compact-toc{display:none}
-@media (max-width:1099px){
+@media (max-width:1499px){
   .lesson-rail{display:none!important}
   .lesson-compact-toc{
-    display:block;position:sticky;z-index:35;top:64px;margin:0 0 32px;
+    display:block;position:sticky;z-index:35;top:72px;margin:0 0 32px;
     border:1px solid var(--rule);border-left:3px solid var(--realm-color,var(--accent));
     border-radius:4px;background:color-mix(in srgb,var(--surface) 95%,transparent);backdrop-filter:blur(12px);
   }
@@ -1569,6 +1570,7 @@ td code{font-size:.8em}
 @media (max-width:940px){
   .course-top{top:0}
   .mobile-nav{top:64px}
+  .lesson-compact-toc{top:64px}
   .lesson-book-intro{padding-left:24px;padding-right:24px}
 }
 @media (max-width:700px){

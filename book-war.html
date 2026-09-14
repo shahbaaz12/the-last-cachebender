@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css?v=25">
+<link rel="stylesheet" href="css/styles.css?v=26">
 
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
@@ -90,7 +90,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <div class="saga">
     <p>The Surge arrives at midnight.</p>
     <p>The Latency Lord comes with five weapons, and you have watched him forge every one. He built them out in the open, in front of you, while you were learning.</p>
-    <p>You are not given anything new here. You do not need anything new.</p>
+    <p>Bring your earlier techniques together, and learn when a Bloom filter can help turn away requests for nonexistent products.</p>
   </div>
 </header>
 
@@ -104,22 +104,22 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <section class="wrap">
   <div class="trial">
     <span class="trial-tag">The trial</span>
-    <span class="trial-line">You fight with what you already have.</span>
+    <span class="trial-line">Put your cache defenses to the test.</span>
   </div>
 
   <h3>How this lesson works</h3>
 
-  <p>Every other lesson gave you a technique. This one does not, and that is the entire design.</p>
+  <p>Use the earlier lessons to work through five attacks. For requests that name nonexistent products, you will also learn an extra defense: Bloom filters.</p>
 
   <p>For each attack:</p>
 
   <ol>
     <li><strong>The attack</strong> — watch it break the storefront.</li>
-    <li><strong>Your attempt</strong> — before reading on, work out the defense from what you already know. Everything you need has been taught.</li>
-    <li><strong>The confirmation</strong> — the defense named properly, with the lesson it came from.</li>
+    <li><strong>Your attempt</strong> — before reading on, use what you already know to propose a defense.</li>
+    <li><strong>The confirmation</strong> — compare your answer with the defense and follow links to earlier lessons when you need a refresher.</li>
   </ol>
 
-  <p><strong>The rule this lesson obeys:</strong> every defense below is an application of something in Lessons 1–11. Nothing new is introduced. If you find yourself needing something you have not seen, look again — you have seen it.</p>
+  <p>Most defenses build on Lessons 1–11. The Bloom-filter section explains a new tool, including when it helps and how to avoid rejecting real products.</p>
 
   <h3 id="l12-stampede">Attack 1 — The Stampede</h3>
 
@@ -157,7 +157,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <p>Follow it through your realms. The browser has no copy — nothing was ever stored. The CDN has no copy. Redis has no copy. So the request reaches the database, which searches its index and confirms the product does not exist.</p>
 
-  <p>Then the same request arrives again. Every step repeats. <strong>A miss is cached; a &ldquo;does not exist&rdquo; is not.</strong></p>
+  <p>Then the same request arrives again. Every step repeats. <strong>This implementation caches found products, but forgets missing ones.</strong></p>
 
   <p>Your entire caching architecture is transparent to these requests. Every one goes straight to the database, and an attacker can send thousands per second using randomly generated IDs. Your cache defends nothing, because there is nothing to cache.</p>
 
@@ -170,7 +170,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <p><strong>Negative caching</strong> — cache the fact that something does not exist.</p>
 
-  <pre class="figure">value = cache.get("product:999999999")
+  <pre class="figure">key = "product:999999999"
+value = cache.get(key)
 
 if value is NOT_FOUND_MARKER:
     return 404                          # HIT — never touches the database
@@ -181,20 +182,60 @@ if value is None:                       # genuinely not in cache
         cache.set(key, NOT_FOUND_MARKER, ttl=60)   # ← cache the absence
         return 404
     cache.set(key, row, ttl=300)
-    return row</pre>
+    return row
+
+return value                           # ordinary cache hit</pre>
 
   <p>Where this comes from: <strong>L2</strong> taught that a key maps to a value, and <strong>L8</strong> taught cache-aside. The insight is that <em>&ldquo;there is no such product&rdquo;</em> is a perfectly valid answer, and valid answers can be cached. Nothing new — just noticing that a negative result is still a result.</p>
 
   <p>Two details:</p>
 
   <ul>
-    <li><strong>Use a short TTL.</strong> If someone creates product 999999999 tomorrow, you do not want to serve a stale 404 for an hour. Sixty seconds is typical.</li>
+    <li><strong>Use a short TTL.</strong> For this example, cache confirmed absence for 60 seconds. If the product is created, clear its negative entry; the TTL is a fallback if that invalidation is missed.</li>
     <li><strong>Use a distinct marker.</strong> You must be able to tell &ldquo;cached as non-existent&rdquo; apart from &ldquo;not in the cache.&rdquo; Storing plain <code>null</code> usually makes those indistinguishable, and you get a permanent miss instead of a hit.</li>
   </ul>
 
   <p>Also worth applying: <strong>input validation.</strong> If product IDs are always under 8 digits, reject <code>999999999</code> before it reaches any cache or database at all. The cheapest defense is not answering the question.</p>
 
-  <h3 id="l12-avalanche">Attack 3 — The Avalanche</h3>
+  <div class="bloom-panel" id="l12-bloom">
+<h3>Bloom filters: checking whether an ID could exist</h3>
+<p>Negative caching helps when the same missing ID is requested again. If each request uses a different fake ID, the first lookup still reaches the database. A <strong>Bloom filter</strong> can reject many of those requests before that lookup.</p>
+<p>Think of it as a compact checklist of product IDs. It stores a pattern of bits, not product records. To add an ID, several hash functions pick positions in the bit array and set them to 1. To check an ID, the filter examines those same positions.</p>
+<div class="bloom-verdicts">
+<div class="bloom-verdict absent"><span>Definitely absent</span><strong>At least one bit is 0. This ID was never added to this filter.</strong></div>
+<div class="bloom-verdict maybe"><span>Possibly present</span><strong>All the bits are 1. Continue the lookup to find out whether the product exists.</strong></div>
+</div>
+<p>Different IDs can set the same bits. That overlap can produce a <strong>false positive</strong>: an ID looks familiar even though it was never added. An intact Bloom filter has no false negatives for IDs successfully added to it. That guarantee only covers the filter's contents; a new product missing from the filter could still be rejected by the application.</p>
+<div class="bloom-example"><code>product 42</code><span>→ bits 1, 4 and 6 are set</span></div>
+<p>If another ID also maps to bits 1, 4 and 6, the answer is “possibly present.” If one of its positions is still 0, the answer is “definitely absent.” A positive answer never proves that a product exists.</p>
+<h4>Where it fits</h4>
+<p>Validate the ID, then check the cache. On a cache miss, consult a filter built from <strong>all published product IDs</strong>, including products whose cache entries have expired. A definite absence can return 404; a possible match continues to the database.</p>
+<pre class="figure"># After validation and a cache miss.
+# Application helper, not a raw Redis command:
+verdict = product_filter.check_if_current(product_id)
+
+if verdict == DEFINITELY_ABSENT:
+    return 404
+
+# POSSIBLY_PRESENT or UNKNOWN: use the normal lookup.
+row = database.find_product(product_id)
+if row is None:
+    cache.set(key, NOT_FOUND_MARKER, ttl=60)
+    return 404
+cache.set(key, row, ttl=300)
+return row</pre>
+<p>The helper returns <code>UNKNOWN</code> if the filter is missing, rebuilding, unavailable, or not known to cover the current catalogue. It must check readiness and membership against the same filter version; a separate existence check can race with deletion or replacement. A database error is also an error, not proof of absence; never cache it as a 404.</p>
+<h4>Keep the checklist safe to use</h4>
+<ul>
+<li><strong>Load it before trusting it.</strong> Build from the catalogue and include writes made during the build before enabling rejection. Checking a newly created, empty filter would hide real products.</li>
+<li><strong>Add new products before publishing them.</strong> Every filter used to reject requests must include the ID before the product becomes readable. If that cannot be guaranteed, bypass rejection until the filter catches up. Clear any negative cache entry for the new product too; a short TTL only limits how long an old 404 can last.</li>
+<li><strong>Do not clear bits to delete an ID.</strong> Other products may share them. Keep deleted IDs until a safe rebuild; they cause extra lookups, which the database can resolve.</li>
+<li><strong>Plan for growth and failure.</strong> Size the filter for the expected catalogue and a chosen false-positive rate. Monitor capacity and rebuild or expand as needed. Keep rate limits and database concurrency limits in place when the filter is bypassed.</li>
+</ul>
+<p>Use this extra check when requests for many different missing IDs are a measured problem. It reduces unnecessary lookups; it does not stop every attack. False positives, deleted products, and requests for real products can still reach the database. Negative caching handles repeated confirmed misses, while rate limits bound incoming traffic.</p>
+<p class="wild"><span class="wild-tag">Redis example</span><a href="https://redis.io/docs/latest/commands/bf.exists/"><code>BF.EXISTS</code></a> returns 0 both when an item is absent and when the filter key does not exist. A missing filter must trigger fallback, not a blanket 404. Read more in the <a href="https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/">Redis Bloom-filter guide</a>.</p>
+</div>
+<h3 id="l12-avalanche">Attack 3 — The Avalanche</h3>
 
   <p>You deployed at 14:00 and warmed the cache — 50,000 keys, all written within a few seconds, all with <code>TTL = 3600</code>.</p>
 
@@ -582,7 +623,7 @@ X-DB-Queries:   3</pre>
   <p><strong>3. Read and write</strong></p>
 
   <ul>
-    <li><strong>Read:</strong> cache-aside with single-flight — a hot key can stampede without it (L8)</li>
+    <li><strong>Read:</strong> validate the ID, check local memory and Redis, then apply the Bloom-filter check on a miss before the database lookup. Use single-flight to combine concurrent requests for the same price key (L8, L12).</li>
     <li><strong>Write:</strong> write-around — update the database, delete the cached copy (L9)</li>
     <li><strong>Invalidate after the database update:</strong> this avoids the write-ordering problem, though concurrent reads still need protection (L11)</li>
   </ul>
@@ -609,25 +650,27 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
     <thead><tr><th>Attack</th><th>Defense</th></tr></thead>
     <tbody>
       <tr><td>Stampede</td><td>Single-flight + refresh-ahead on top-100 products (L8)</td></tr>
-      <tr><td>Penetration</td><td>Negative caching, 60s TTL, plus ID validation (L12)</td></tr>
+      <tr><td>Penetration</td><td>ID validation, a current product-ID Bloom filter, and 60-second negative caching for confirmed misses; rate-limit requests (L12)</td></tr>
       <tr><td>Avalanche</td><td>TTL jitter on every price key (L10)</td></tr>
       <tr><td>Hot key</td><td>5-second local cache in front of Redis for top products (L5)</td></tr>
       <tr><td>Poisoning</td><td>Currency and tier in the key; <code>public</code> is safe only because price is not per-user (L2, L12)</td></tr>
     </tbody>
   </table></div>
 
-  <p><strong>6. Instrumentation</strong></p>
+  <p id="l14-bloom"><strong>Bloom-filter policy:</strong> use the <a href="l12.html#l12-bloom">Lesson 12 filter</a> to check product IDs, not prices or stock. A possible match still needs the normal lookup, and price cache keys must still include currency and tier. Before publishing a new product, add its ID to every filter used for rejection and clear any negative cache entry. If coverage is uncertain, bypass the filter.</p>
+<p><strong>6. Instrumentation</strong></p>
 
   <ul>
     <li>Hit ratio for the <code>price:</code> prefix specifically — not the global number (L13)</li>
     <li>p99 latency on price lookups; alert if it exceeds 100ms</li>
+<li>Track Bloom-filter rejections, bypasses, update failures and capacity; compare possible matches with database misses to spot wasted lookups</li>
     <li>Alert on stale-price reports with <code>Age</code> attached, to identify the realm</li>
     <li>Track invalidation-event and CDN-purge failures — either can leave a stale price in place</li>
   </ul>
 
   <p><strong>7. Failure mode</strong></p>
 
-  <p>If Redis is unavailable, reads that miss the local cache fall back to the database. For this example, assume the database can handle four times its usual load. Verify that assumption with a staging load test.</p>
+  <p>If Redis is unavailable, bypass its cache and any Bloom filter it hosts. Keep rate limits and database concurrency limits active so fallback traffic cannot grow without bound; return a temporary error when capacity is exhausted. Filter failures and database errors must never become “product not found” responses. For this example, assume the database can handle four times its usual load. Verify that assumption with a staging load test.</p>
 
   <h3 id="l14-rest">Do the other six</h3>
 
@@ -651,8 +694,8 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
     <p>What continues arrives at the edge, spread across the world, and is answered locally by copies already waiting.</p>
     <p>What continues past that arrives at the application, and finds its answers in memory. The keys that are hot are already held close. The values approaching expiry have already been refreshed. The thousand requests that arrive for one missing key send one query and share its answer.</p>
     <p>What reaches the database is a trickle. The database, which has been quietly caching all along, does not even notice.</p>
-    <p>And the Latency Lord, who built five weapons out of your own timers and your own keys, watches every one of them break against decisions you made eleven lessons ago.</p>
-    <p>He was never defeated by a new technique.</p>
+    <p>And the Latency Lord, who built five weapons out of your own timers and your own keys, watches his attacks meet defenses you built throughout the course.</p>
+    <p>No single technique defeated him.</p>
     <p><strong>He was defeated by someone who had measured first.</strong></p>
   </div>
 </section>
@@ -675,7 +718,7 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
       <tr><td>The Three Seals</td><td>L9</td><td>Write-through, write-behind, write-around</td></tr>
       <tr><td>The Letting Go</td><td>L10</td><td>Expiration is time; eviction is memory</td></tr>
       <tr><td>The Truthbinding</td><td>L11</td><td>Invalidate after database updates. Version keys. Use TTL as the safety net.</td></tr>
-      <tr><td><em>(the trial)</em></td><td>L12</td><td>Five attacks, no new techniques</td></tr>
+      <tr><td><em>(the trial)</em></td><td>L12</td><td>Five attacks, layered defenses, and Bloom filters</td></tr>
       <tr><td>The Measure</td><td>L13</td><td>Per-key metrics, p99, and deleting caches that don't earn their place</td></tr>
       <tr><td>The Convergence</td><td>L14</td><td>All four realms, one design, every TTL defended</td></tr>
     </tbody>
@@ -702,7 +745,7 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
 
 <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
 <script src="js/main.js?v=25"></script>
-    <script src="js/lesson-card.js?v=25"></script>
-<script src="js/journey-map.js?v=25"></script>
+    <script src="js/lesson-card.js?v=26"></script>
+<script src="js/journey-map.js?v=26"></script>
 </body>
 </html>

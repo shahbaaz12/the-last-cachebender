@@ -24,7 +24,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Spectral:ital,wght@0,400;0,600;1,400&amp;display=swap" rel="stylesheet"/>
-<link href="css/styles.css?v=25" rel="stylesheet"/>
+<link href="css/styles.css?v=26" rel="stylesheet"/>
 <script>
 /* Apply the stored theme before first paint, so the page never flashes
    the wrong palette. Deliberately inline and deliberately tiny. */
@@ -118,7 +118,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <p>Currency and tier appear in every key that has a key at all. They change the answer, so they are in the key (L2).</p>
 <p><strong>3. Read and write</strong></p>
 <ul>
-<li><strong>Read:</strong> cache-aside with single-flight — a hot key can stampede without it (L8)</li>
+<li><strong>Read:</strong> validate the ID, check local memory and Redis, then apply the Bloom-filter check on a miss before the database lookup. Use single-flight to combine concurrent requests for the same price key (L8, L12).</li>
 <li><strong>Write:</strong> write-around — update the database, delete the cached copy (L9)</li>
 <li><strong>Invalidate after the database update:</strong> this avoids the write-ordering problem, though concurrent reads still need protection (L11)</li>
 </ul>
@@ -140,21 +140,23 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
 <thead><tr><th>Attack</th><th>Defense</th></tr></thead>
 <tbody>
 <tr><td>Stampede</td><td>Single-flight + refresh-ahead on top-100 products (L8)</td></tr>
-<tr><td>Penetration</td><td>Negative caching, 60s TTL, plus ID validation (L12)</td></tr>
+<tr><td>Penetration</td><td>ID validation, a current product-ID Bloom filter, and 60-second negative caching for confirmed misses; rate-limit requests (L12)</td></tr>
 <tr><td>Avalanche</td><td>TTL jitter on every price key (L10)</td></tr>
 <tr><td>Hot key</td><td>5-second local cache in front of Redis for top products (L5)</td></tr>
 <tr><td>Poisoning</td><td>Currency and tier in the key; <code>public</code> is safe only because price is not per-user (L2, L12)</td></tr>
 </tbody>
 </table></div>
+<p id="l14-bloom"><strong>Bloom-filter policy:</strong> use the <a href="l12.html#l12-bloom">Lesson 12 filter</a> to check product IDs, not prices or stock. A possible match still needs the normal lookup, and price cache keys must still include currency and tier. Before publishing a new product, add its ID to every filter used for rejection and clear any negative cache entry. If coverage is uncertain, bypass the filter.</p>
 <p><strong>6. Instrumentation</strong></p>
 <ul>
 <li>Hit ratio for the <code>price:</code> prefix specifically — not the global number (L13)</li>
 <li>p99 latency on price lookups; alert if it exceeds 100ms</li>
+<li>Track Bloom-filter rejections, bypasses, update failures and capacity; compare possible matches with database misses to spot wasted lookups</li>
 <li>Alert on stale-price reports with <code>Age</code> attached, to identify the realm</li>
 <li>Track invalidation-event and CDN-purge failures — either can leave a stale price in place</li>
 </ul>
 <p><strong>7. Failure mode</strong></p>
-<p>If Redis is unavailable, reads that miss the local cache fall back to the database. For this example, assume the database can handle four times its usual load. Verify that assumption with a staging load test.</p>
+<p>If Redis is unavailable, bypass its cache and any Bloom filter it hosts. Keep rate limits and database concurrency limits active so fallback traffic cannot grow without bound; return a temporary error when capacity is exhausted. Filter failures and database errors must never become “product not found” responses. For this example, assume the database can handle four times its usual load. Verify that assumption with a staging load test.</p>
 <h3 id="l14-rest">Do the other six</h3>
 <p>Product details. Product images. The asset bundle. Stock count. Reviews.</p>
 <p>For this storefront, leave the cart badge response uncached to keep the policy simple. It belongs to one user and must never be reused as another user's answer. Cart data stored in Redis under a user-specific key is a separate decision.</p>
@@ -169,8 +171,8 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
 <p>What continues arrives at the edge, spread across the world, and is answered locally by copies already waiting.</p>
 <p>What continues past that arrives at the application, and finds its answers in memory. The keys that are hot are already held close. The values approaching expiry have already been refreshed. The thousand requests that arrive for one missing key send one query and share its answer.</p>
 <p>What reaches the database is a trickle. The database, which has been quietly caching all along, does not even notice.</p>
-<p>And the Latency Lord, who built five weapons out of your own timers and your own keys, watches every one of them break against decisions you made eleven lessons ago.</p>
-<p>He was never defeated by a new technique.</p>
+<p>And the Latency Lord, who built five weapons out of your own timers and your own keys, watches his attacks meet defenses you built throughout the course.</p>
+<p>No single technique defeated him.</p>
 <p><strong>He was defeated by someone who had measured first.</strong></p>
 </div>
 </section>
@@ -191,7 +193,7 @@ Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
   </main></div>
   <button class="totop" id="totop" type="button" aria-label="Back to top">↑</button>
   <script src="js/main.js?v=25"></script>
-  <script src="js/lesson-card.js?v=25"></script>
-<script src="js/journey-map.js?v=25"></script>
+  <script src="js/lesson-card.js?v=26"></script>
+<script src="js/journey-map.js?v=26"></script>
 </body>
 </html>

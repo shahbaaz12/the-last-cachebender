@@ -3,7 +3,7 @@
   'use strict';
 
   var WORDS_PER_MINUTE = 220;
-  var RAIL_MIN_WIDTH = 1100;
+  var RAIL_MIN_WIDTH = 1500;
 
   var DATA = {
     l1: { title:'The Forgotten Art of Caching', technique:'The Sight', gloss:'see repeated work before reaching for a cache',
@@ -50,10 +50,10 @@
       does:['Explain why invalidation is hard','Delete on write and version keys','Invalidate across all four realms'],
       from:['l2','l3','l4','l9','l10'], bridge:'Every earlier lesson created or retained a copy. Now one source update must find those copies—or make their keys impossible to reuse.',
       carry:['Invalidation must reach every layer that can answer.','Versioned keys make old entries unreachable.','Events propagate change, but consumers must tolerate delay and replay.'], feeds:['l12','l14'] },
-    l12: { title:'The Latency Lord’s Attacks', technique:'The Trial', gloss:'derive defenses from techniques already mastered',
-      does:['Recognize all five cache attacks','Derive every defense from an earlier lesson','Notice which failures are self-inflicted'],
-      from:['l2','l3','l4','l6','l8','l10','l11'], bridge:'This lesson grants no new technique. Each attack is a pressure test for something you already learned; follow the lesson links if you need a refresher.',
-      carry:['Single-flight stops a stampede.','Negative caching stops repeated impossible lookups.','TTL jitter, hot-key replication and complete cache keys defend the remaining attacks.'], feeds:['l13','l14'] },
+    l12: { title:'The Latency Lord’s Attacks', technique:'The Trial', gloss:'combine earlier techniques with defenses against missing IDs',
+      does:['Recognize all five cache attacks','Apply earlier techniques to defend the storefront','Use Bloom filters without rejecting real products'],
+      from:['l2','l3','l4','l6','l8','l10','l11'], bridge:'Apply the earlier lessons to five attacks, then learn how Bloom filters help with requests for nonexistent products.',
+      carry:['Single-flight stops a stampede.','Negative caching handles repeated missing IDs; a current Bloom filter can reject many new ones.','TTL jitter, hot-key replication and complete cache keys defend the remaining attacks.'], feeds:['l13','l14'] },
     l13: { title:'Restoring Balance', technique:'The Measure', gloss:'measure how the cache performs, then remove it if it no longer helps',
       does:['Instrument a cache properly','Raise hit ratio deliberately','Decide what not to cache'],
       from:['l12'], bridge:'Lesson 12 showed how caches fail under pressure. Measurement tells you which failure is happening and whether the cache is still worth its cost.',
