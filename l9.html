@@ -374,7 +374,7 @@ Application → write to cache → return success   ← user is done here
                 the next read misses, and reloads it
               </text>
 </svg>
-<figcaption>The cache is stepped around, not written to</figcaption>
+<figcaption>Write to the database, then remove any cached copy.</figcaption>
 </figure>
 <pre class="figure">
 Application → write to database → return success

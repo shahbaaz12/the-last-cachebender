@@ -85,13 +85,13 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <div class="technique">
 <span class="tag">Technique unlocked</span>
 <span class="name">Stonesplit</span>
-<span class="gloss">one cache spread across many nodes</span>
+<span class="gloss">one cache shared across many application servers</span>
 </div>
-<h3 id="l6-problem">The problem, stated properly</h3>
+<h3 id="l6-problem">When each server keeps its own copy</h3>
 <p>You have 10 application servers. Each has its own local cache. This gives you three distinct problems.</p>
 <div class="callout problem">
 <h4>1. They disagree</h4>
-<p>The scenario that ended Lesson 5, now with ten servers instead of two. It is worth walking through slowly, because <em>“the same code produced two different answers”</em> sounds impossible.</p>
+<p>Imagine ten servers running the same code, each with its own cached copy of the price. What happens when the price changes?</p>
 <p>The code <strong>is</strong> identical on every server. What differs is <em>when</em> each one last looked.</p>
 <pre class="figure">09:00   Server A   reads price £25 from the database, caches it
 09:00   Server B   reads price £25 from the database, caches it
@@ -117,7 +117,8 @@ Server B ─┼─→  Shared cache  ─→  Database
 Server C ─┘</pre>
 <p>One value. One place to update. One warm-up. All ten servers benefit from the first one's miss.</p>
 </div>
-<p>In practice, for most teams, that shared cache is Redis. So the rest of this lesson is about what Redis actually gives you, where it genuinely shines, and what it costs.</p>
+<p>When the cache has more than one node, sharding decides which node owns a key. The same key always goes to the same node; replicas can keep extra copies to make a node failure less disruptive. A popular key can still concentrate load on its owner.</p>
+<p>In practice, for most teams, that shared cache is Redis. So the rest of this lesson is about what Redis gives you, when it helps, and what it costs.</p>
 <h3 id="l6-gives">What Redis gives you</h3>
 <p>You met Redis in Lesson 5 as “a separate program that stores key-value data in memory.” Here is what that buys you beyond simply being shared:</p>
 <ul>
@@ -130,7 +131,7 @@ Server C ─┘</pre>
 <li><strong>It can pass messages between your servers.</strong> Redis can publish a message that every subscribed server receives, which is useful well beyond caching.</li>
 <li><strong>It stores more than strings.</strong> Counters, lists, sets and sorted sets are native, which makes some problems trivial that are awkward anywhere else.</li>
 </ul>
-<h3 id="l6-good">Where Redis is genuinely excellent</h3>
+<h3 id="l6-good">When Redis helps</h3>
 <div class="tablewrap"><table>
 <thead><tr><th>Scenario</th><th>Why Redis specifically</th></tr></thead>
 <tbody>
@@ -144,7 +145,7 @@ Server C ─┘</pre>
 <p>Those are the scenarios. Here is what they actually look like to write.</p>
 <h4>Reading a Redis command</h4>
 <p>Every command is a <strong>verb</strong>, a <strong>key</strong>, and usually a <strong>value</strong>:</p>
-<pre class="figure">SET  product:42  "{name: Headphones, price: 25}"  EX 300
+<pre class="figure">SET  product:42  "{name: Four Realms Atlas, price: 84}"  EX 300
 │    │           │                                │
 verb key         value                            how long to keep it</pre>
 <p>Keys are just text. The colons in <code>product:42</code> mean nothing to Redis — they are a naming habit, the way folders organise files.</p>
@@ -168,7 +169,7 @@ INCR   ratelimit:user:42:0930        →  3     ... refuse them at 6</pre>
 ZREVRANGE leaderboard 0 9            →  the ten highest scores, in order</pre>
 <p>A <strong>sorted set</strong> keeps its members in score order at all times. So "the top ten" is a read, not a sort — Redis already knows the answer. The same thing in a relational database means ordering the table on every request.</p>
 <p><strong>A cache — hold a product for five minutes.</strong></p>
-<pre class="figure">SETEX product:42 300 "{name: Headphones, price: 25}"
+<pre class="figure">SETEX product:42 300 "{name: Four Realms Atlas, price: 84}"
 
 GET   product:42    →  the value, if it is still there
                     →  nil, if it is not</pre>
@@ -189,8 +190,8 @@ GET   product:42    →  the value, if it is still there
 <h3 id="l6-choose">Local cache or Redis?</h3>
 <p>One question settles most cases.</p>
 <div class="keystone">If two of your servers gave different answers for this, would anything actually break?</div>
-<p><strong>No</strong> — put it in a local cache. It is faster, simpler, and costs nothing to run.</p>
-<p><strong>Yes</strong> — put it in Redis, and pay the network trip for the privilege.</p>
+<p><strong>No</strong> — use a local cache. It is faster and simpler.</p>
+<p><strong>Yes</strong> — use a shared cache such as Redis, and allow for the network round trip.</p>
 <p>The category tree can be five seconds out of date on one server and nobody will ever notice. A shopping cart cannot.</p>
 <h3 id="l6-down">The downsides</h3>
 <p>Redis is not free, and the costs are worth stating plainly:</p>
@@ -204,9 +205,9 @@ GET   product:42    →  the value, if it is still there
 </ul>
 <p>That last one is not a flaw you can configure away. It is a property of how sharding works, and the Latency Lord is about to notice it.</p>
 <h3>At the Storefront</h3>
-<p>Move product details, price, and reviews to shared Redis. Pick a key scheme and a shard key. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Two realms, used together, on purpose.</strong></p>
+<p>Move product details, price, and reviews to shared Redis. Choose a key scheme that includes every input that changes the answer. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Local and shared caching, used together.</strong></p>
 <div class="myth">
-<div class="label">The misconception to kill</div>
+<div class="label">Common misconception</div>
 <p class="claim">“A shared cache makes my data consistent.”</p>
 <p>It makes your servers agree with <em>each other</em>. All ten can now confidently serve the same stale price. Agreement is not correctness, and the gap between them is Lesson 11.</p>
 </div>

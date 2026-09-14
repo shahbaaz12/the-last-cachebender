@@ -149,7 +149,7 @@ GET /product/42   →   server returns HTML</pre>
 <pre class="figure">
 &lt;link rel="stylesheet" href="/app.a91f3c.css"&gt;
 &lt;script src="/app.7b2e10.js"&gt;&lt;/script&gt;
-&lt;img src="/headphones.jpg"&gt;</pre>
+&lt;img src="/public/atlas.png"&gt;</pre>
 <p>
             The browser then asks for each one separately. Those files can
             reference further files, so requests arrive in waves:
@@ -162,7 +162,7 @@ Time →
       ├─[2]  GET /app.a91f3c.css     stylesheet  ┐
       ├─[3]  GET /app.7b2e10.js      script      │  in parallel
       ├─[4]  GET /logo.svg           image       │
-      └─[5]  GET /headphones.jpg     image       ┘
+      └─[5]  GET /public/atlas.png   image       ┘
               │
               ├─[6]  GET /inter.woff2      font  ←  the CSS asked for this
               │
@@ -207,14 +207,12 @@ Time →
             answered by nginx, or your platform, or a CDN. You configure the
             rule once, by file type or folder, and it applies from then on.
           </p>
-<p>Which leads to the most important sentence in this lesson:</p>
-<div class="keystone">The browser cache stores files, not pages.</div>
+<p>Each response has its own caching rules.</p>
 <p>
-            There is no cached copy of your product page. There are sixty
-            independently cached files, each with its own address and its own
-            rule. The storefront's seven parts were never a conceptual division
-            — they are separate HTTP responses, which is exactly why they can
-            have seven different answers.
+            A page uses several responses: HTML, images, styles, scripts, and
+            API data. Each can have its own caching rules. Here, we fetch
+            changing product fields separately so they can have different
+            lifetimes.
           </p>
 <h4>How caching instructions travel</h4>
 <p>
@@ -342,10 +340,8 @@ Cache-Control: public, max-age=31536000, immutable</pre>
                 attacks in Lesson 12.
               </p>
 <p class="wild">
-<span class="wild-tag">In the wild</span> Current, and
-                <code>private</code> is load-bearing for security. It is the
-                instruction that stops a shared cache storing an authenticated
-                response.
+<span class="wild-tag">In practice</span> Use <code>private</code> to keep a
+                personal response out of shared HTTP caches.
               </p>
 </div>
 </details>
@@ -486,22 +482,22 @@ Cache-Control: max-age=60, stale-while-revalidate=3600</pre>
                   fetch a fresh one in the background at the same time.</em>
 </p>
 <p>
-                The effect is that the user never waits. They get an instant
-                response from the slightly-stale copy, and the next visitor gets
-                the fresh one.
+                During that extra hour, the browser can show the old copy while
+                checking for an update. Once the check finishes, later requests
+                use the refreshed copy. A request may still wait if there is no
+                usable cached copy.
               </p>
 <p>
-                You are trading a small amount of freshness for the complete
-                removal of waiting. For content where being 60 seconds out of
-                date is harmless, this is close to free performance.
+                This example allows a response to be served for up to 61 minutes
+                without a completed freshness check: 60 seconds of freshness,
+                plus an hour of stale reuse. Choose both windows to match how
+                old the content may be.
               </p>
 <div class="aside">
 <p>
-                  Notice what this is doing: refreshing a value
-                  <em>before</em> anyone is blocked waiting for it. That pattern
-                  has a formal name — <strong>refresh-ahead</strong> — and you
-                  will meet it properly in Lesson 8. This is its browser-shaped
-                  version.
+                  Here, a request triggers a background check after the copy
+                  becomes stale. Lesson 8 introduces refresh-ahead, which
+                  refreshes a copy before it expires.
                 </p>
 </div>
 <p class="wild">
@@ -535,7 +531,7 @@ Cache-Control: max-age=60, stale-while-revalidate=3600</pre>
             </p>
 <p>
               The same happens with an image. You upload a corrected product
-              photo over <code>/headphones.jpg</code>. Everyone who already
+              photo over <code>/public/atlas.png</code>. Everyone who already
               loaded the page keeps seeing the old one.
             </p>
 </div>
@@ -561,17 +557,17 @@ app.5d20e8.js     ← never seen before, must be fetched</pre>
             This is the part that makes the whole scheme work, and it is easy to
             miss.
           </p>
-<p><strong>The HTML is not cached.</strong></p>
+<p><strong>The HTML is checked before every reuse.</strong></p>
 <pre class="figure plain">
 GET /product/42
 Cache-Control: no-cache          ← always revalidated</pre>
 <pre class="figure">
 &lt;script src="/app.5d20e8.js"&gt;&lt;/script&gt;    ← the new name lives here</pre>
 <p>
-            The HTML is the index. It is small, it is checked every time, and it
-            holds the current names of everything else. The assets are cached
-            forever and never change. The HTML changes constantly and is never
-            cached.
+            The HTML lists the current asset filenames. The browser may keep a
+            copy, but it checks with the server before using it again. Each
+            versioned asset keeps the same contents and can be cached for a long
+            time.
           </p>
 <p>So a deploy spreads like this:</p>
 <ol>
@@ -725,10 +721,10 @@ Cache-Control: no-cache          ← always revalidated</pre>
 <tr>
 <td>Price</td>
 <td>
-<code>public, max-age=60, stale-while-revalidate=300</code>
+<code>public, max-age=10, must-revalidate</code>
 </td>
 <td>
-                    Must be close to current; never make a user wait for it
+                    Reuse it for up to 10 seconds, then check for an update
                   </td>
 </tr>
 <tr>

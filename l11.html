@@ -568,11 +568,11 @@ Redis: DELETE price:42:GBP:retail             ← immediate
     ↓
 CDN: purge /product/42                        ← seconds
     ↓
-Browsers: nothing you can do                  ← up to 60s, by your own TTL</pre>
+Browsers: no direct mechanism                  ← up to 10s, by your own TTL</pre>
 <p>
-            Total worst case: <strong>60 seconds</strong>, and every second of
-            it is the browser realm you cannot reach. Everything else was fixed
-            almost instantly.
+            The browser may reuse a price response for up to <strong>10 seconds</strong>.
+            Monitor CDN purges and invalidation delivery too, because their timing
+            determines when the other copies change.
           </p>
 <p>
             That single trace is what Lesson 14 asks you to produce for every
@@ -584,10 +584,10 @@ Browsers: nothing you can do                  ← up to 60s, by your own TTL</pr
               “I'll just update the cache when I write.”
             </p>
 <p>
-              Two concurrent writes can reach the cache in the opposite order
-              they reached the database, leaving a permanently wrong value that
-              no test will reproduce. Delete instead. It costs one miss and
-              eliminates the bug class.
+              Two concurrent writes can reach the cache in a different order
+              from the database, leaving the wrong value until it expires.
+              Deleting the cached value avoids this ordering problem, though the
+              next read will miss.
             </p>
 </div>
 </section>

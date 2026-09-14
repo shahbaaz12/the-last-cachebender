@@ -180,8 +180,8 @@ return value</pre>
               wants.
             </li>
 <li>
-              The cache going down is survivable — <code>cache.get</code> fails,
-              you read the database, the app is slower but alive.
+              If the cache is unavailable, the app can fall back to the
+              database, as long as the database can handle the extra load.
             </li>
 <li>
               It works with any cache and any database. No special library
@@ -361,10 +361,9 @@ t=245  value replaced, timer resets
           </p>
 <div class="aside">
 <p>
-<strong>You have met this one too.</strong>
-<code>stale-while-revalidate</code> from Lesson 3 is refresh-ahead
-              expressed as an HTTP header: serve the old copy now, refresh
-              behind it, nobody waits.
+<strong>You have seen a related idea in Lesson 3.</strong>
+<code>stale-while-revalidate</code> serves a stale copy while fetching a
+              fresh one. Refresh-ahead starts before the copy expires.
             </p>
 </div>
 <h3 id="l8-realms">Which realm uses which</h3>

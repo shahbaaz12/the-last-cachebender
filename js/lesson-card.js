@@ -53,7 +53,7 @@
     l12: { title:'The Latency Lord’s Attacks', technique:'The Trial', gloss:'derive defenses from techniques already mastered',
       does:['Recognise all five cache attacks','Derive every defense from an earlier lesson','Notice which failures are self-inflicted'],
       from:['l2','l3','l4','l6','l8','l10','l11'], bridge:'This lesson grants no new technique. Each attack is a pressure test for something you already learned; use the linked lesson previews whenever a defense feels distant.',
-      carry:['Single-flight stops a stampede.','Negative caching or Bloom filters stop repeated impossible lookups.','TTL jitter, hot-key replication and complete cache keys defend the remaining attacks.'], feeds:['l13','l14'] },
+      carry:['Single-flight stops a stampede.','Negative caching stops repeated impossible lookups.','TTL jitter, hot-key replication and complete cache keys defend the remaining attacks.'], feeds:['l13','l14'] },
     l13: { title:'Restoring Balance', technique:'The Measure', gloss:'instrument the cache and remove what no longer earns its place',
       does:['Instrument a cache properly','Raise hit ratio deliberately','Decide what not to cache'],
       from:['l12'], bridge:'Lesson 12 showed how caches fail under pressure. Measurement tells you which failure is happening and whether the cache is still worth its cost.',
@@ -61,7 +61,7 @@
     l14: { title:'The Final Battle', technique:'The Convergence', gloss:'combine all four realms into one defended design',
       does:['Design across four cache realms','Justify every layer, key and lifetime','State what must not be cached'],
       from:['l1','l2','l8','l9','l10','l11','l12','l13'], bridge:'Nothing new is introduced here. Assemble the locations, read and write paths, lifetimes, invalidation and defenses you have already earned.',
-      carry:['Choose where each answer may live.','Choose how reads and writes interact with each copy.','Defend every key, lifetime and invalidation path—and leave private data out.'] }
+      carry:['Choose where each answer may live.','Choose how reads and writes interact with each copy.','Defend every key, lifetime and invalidation path—and keep each user\'s data separate.'] }
   };
 
   var GROUPS = [

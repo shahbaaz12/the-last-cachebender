@@ -223,9 +223,8 @@ ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre>
 <div class="body">
 <p>Remove whatever has not been touched for the longest time.</p>
 <p>
-<strong>The logic:</strong> recently used things tend to be used
-                again soon. Usually true, which is why LRU is the sensible
-                default and what you should choose absent a reason.
+<strong>The idea is simple:</strong> recently used items are often used
+                again soon. That makes LRU a useful starting point.
               </p>
 <p>
 <strong>The weakness — and it is severe.</strong> LRU is

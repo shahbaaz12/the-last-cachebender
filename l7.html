@@ -126,22 +126,21 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <pre class="figure">products = load_all_products()      1 query
 for p in products:
     show(p.reviews)                 1 query each — 50 more</pre>
-<p>Fifty-one queries where two would do. It is called <strong>N+1</strong> because that is the shape: one query for the list, then N more for the things hanging off it.</p>
+<p>Fifty-one queries when one joined query would do. It is called <strong>N+1</strong> because that is the shape: one query for the list, then N more for the things hanging off it.</p>
 <p>It is easy to miss because nothing looks wrong. Each individual query is fast. The page is slow because there are fifty of them, and each one costs a round trip to the database.</p>
 <p>The tempting fix is to cache the fifty lookups. That works — it turns fifty-one database queries into one query and fifty cache hits, and the page does get faster.</p>
 <p>But you have not removed the fifty round trips. You have moved them to a faster machine, and taken on a staleness problem for the privilege.</p>
 <p>The real fix is to ask for the reviews alongside the products, in one query:</p>
 <pre class="figure">products = load_all_products_with_reviews()      1 query, joined</pre>
-<p>Two queries become one. Nothing to invalidate, nothing to expire, nothing to go stale — the work is simply gone. Most ORMs have a single option for this; it is usually called <em>eager loading</em> or <em>include</em>.</p>
+<p>Fifty-one queries become one joined query. There is no extra cache to invalidate or keep fresh. Your ORM may call this <em>eager loading</em> or <em>include</em>; some implementations use two queries instead of a join.</p>
 <div class="keystone">Caching an N+1 hides it. Fixing the query deletes it.</div>
 </div>
 </details>
-<p>An index is not free — it makes writes slightly slower and it uses disk. But it is paid for in a currency you understand, once, rather than in correctness, forever.</p>
 <h3 id="l7-before">Before you cache in front of a database</h3>
 <p>Two things to do first.</p>
 <p><strong>Measure.</strong> You may find the product query takes 0.8ms, served entirely from the buffer pool, while your Redis lookup takes 0.5ms. That cache bought you 0.3ms and a staleness problem. This is The Sight from Lesson 1, applied where it is easiest to skip.</p>
 <p><strong>Then read the following, twice.</strong></p>
-<h4>A cache that was removed because it could not be kept correct</h4>
+<h4>When keeping a cache up to date costs too much</h4>
 <p>MySQL used to have a query cache: same query text, same result handed back without executing anything. It was deprecated, and then removed entirely.</p>
 <p>The reason is the most useful thing in this lesson.</p>
 <p>Any write to a table had to invalidate every cached result that touched that table. On a busy system, tracking which results those were cost more than simply running the queries again. Under concurrent load the cache itself became the bottleneck, with every request queuing on the lock that protected it.</p>

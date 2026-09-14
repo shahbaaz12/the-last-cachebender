@@ -90,8 +90,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <h3>You survived. Now find out what actually happened.</h3>
 <p>You have four realms of caching, five defenses, and an application that stayed up. You cannot see any of it.</p>
 <p>This lesson is about seeing — and about the harder discipline of removing caching that has not earned its place.</p>
-<h3 id="l13-ratio">Measure hit ratio per key, never globally</h3>
-<p>A single global hit ratio is close to useless, because it averages away exactly what you need to see.</p>
+<h3 id="l13-ratio">Measure hit ratio by key prefix</h3>
+<p>A global hit ratio is not enough, because it can average away the data you need to investigate.</p>
 <pre class="figure">Global hit ratio: 85%    ← looks healthy
 
 Broken down:
@@ -101,7 +101,7 @@ Broken down:
     reviews            78%       moderate
     price               6%       ← expensive, and effectively uncached</pre>
 <p>That 85% is real, and it is hiding the fact that your most expensive query has essentially no cache at all. The cheap, high-volume things inflated the average until the problem disappeared inside it.</p>
-<div class="keystone">Measure hit ratio per key prefix. A global number can only tell you that everything is fine — which is the one thing you did not need to know.</div>
+<div class="keystone">Measure hit ratio by key prefix as well as overall. The breakdown shows which data benefits from caching and which misses are still expensive.</div>
 <p>Also, from Lesson 2: the last few percent are worth the most. Going 90% → 99% removes 90% of your remaining misses. Going 50% → 59% removes 18%. Effort spent on an already-good ratio pays more than effort spent on a bad one — provided the traffic is expensive.</p>
 <h3 id="l13-percentile">Latency percentiles</h3>
 <p>A <strong>percentile</strong> tells you what a given fraction of requests experienced.</p>
@@ -116,7 +116,7 @@ p50:       2ms      ← the hits
 p95:      15ms
 p99:     450ms      ← the misses, and every user who hit one</pre>
 <p><strong>Your p50 is your hit path. Your p99 is your miss path.</strong> If p50 is excellent and p99 is terrible, your cache is working and your misses are expensive — that is exactly the case for single-flight and refresh-ahead from Lesson 8.</p>
-<p>At scale, p99 is not rare. At 1,000 requests per second, it is 10 users every second, and a user loading a page with 20 requests will very likely hit it at least once.</p>
+<p>At 1,000 requests per second, the slowest 1% is 10 requests every second. Pages that make many requests have more chances to encounter a slow response.</p>
 <h3 id="l13-memory">Memory and eviction rate</h3>
 <p>From Lesson 10 — the combination is diagnostic:</p>
 <div class="tablewrap"><table>

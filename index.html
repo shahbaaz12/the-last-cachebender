@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Last Cachebender</title>
-<meta name="description" content="A course on caching in fourteen lessons. Follow one product page through the browser, the edge, the application and the database, then defend it against five attacks.">
+<meta name="description" content="Learn caching in fourteen lessons. Follow one product page through the browser, CDN, application and database, then learn how to handle heavy traffic.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0F1418">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Last Cachebender">
-<meta property="og:description" content="Four places to keep a copy, and the cost of every one. A guided path through caching in fourteen lessons.">
+<meta property="og:description" content="Learn where to cache and what each choice costs in fourteen guided lessons.">
 <meta property="og:url" content="https://shahbaaz12.github.io/the-last-cachebender/">
 <meta property="og:image" content="https://shahbaaz12.github.io/the-last-cachebender/public/og.webp">
 <meta property="og:image:width" content="1200">
@@ -74,8 +74,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <section class="home hero">
   <div class="hero-copy">
     <div class="eyebrow">A guided path · fourteen lessons</div>
-    <h1>Four places to keep a copy, and the cost of every one.</h1>
-    <p class="deck">Follow one product page through the browser, the edge, the application and the database. Then defend it.</p>
+    <h1>Learn where to cache — and what each choice costs.</h1>
+    <p class="deck">Follow one product page through the browser, CDN, application and database. Learn where to cache each part and how to handle heavy traffic.</p>
 
     <div class="cta-row">
       <a class="btn btn-primary" href="l1.html#l1">Start Lesson 1 <span aria-hidden="true">→</span></a>
@@ -106,7 +106,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
         <i>△</i><span><b>Fire</b><small>Database</small></span>
       </div>
 
-      <div class="wheel-core"><span>One request</span><strong>900 ms</strong></div>
+      <div class="wheel-core"><span>Example uncached request</span><strong>900 ms</strong></div>
     </div>
 
     <div class="compass-foot" aria-hidden="true">
@@ -138,24 +138,24 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <section class="home system-map">
   <header class="system-map-intro">
     <h2>One page. Seven parts. Seven different answers.</h2>
-    <p class="lede">Every lesson works on the same product page, because the interesting decisions only appear when the same page holds things that disagree about how stale they may be.</p>
+    <p class="lede">Every lesson uses the same product page. Its images, price, stock and cart need different caching rules.</p>
   </header>
 
   <div class="system-map-grid">
     <div class="descent">
-    <div class="descent-head">One request, falling through four realms</div>
+    <div class="descent-head">Follow a request through the four realms</div>
 
     <div class="layer realm-air">
       <span class="layer-el">Air</span>
       <span class="layer-name">Browser cache</span>
-      <span class="layer-where">On the reader's own disk</span>
+      <span class="layer-where">On the user's device</span>
     </div>
     <div class="miss">Not stored here</div>
 
     <div class="layer realm-water">
       <span class="layer-el">Water</span>
       <span class="layer-name">CDN edge</span>
-      <span class="layer-where">A few miles from the reader</span>
+      <span class="layer-where">At a nearby CDN location</span>
     </div>
     <div class="miss">Not stored here</div>
 
@@ -172,7 +172,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span class="layer-where">The source of truth</span>
     </div>
 
-      <p class="descent-foot">Every realm that answers is a trip the request never takes. <b>The course is about deciding which ones are allowed to.</b></p>
+      <p class="descent-foot">When a cache answers, the request can skip the layers below it. <b>You will learn when it is safe to reuse that answer.</b></p>
     </div>
 
     <div class="parts-wrap">
@@ -218,7 +218,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
                 <strong>$84</strong>
               </div>
               <div class="product-stock cache-piece">
-                <small class="cache-policy">Stock · barely, if at all</small>
+                <small class="cache-policy">Stock · very short TTL or no cache</small>
                 <span><i></i> In stock</span>
                 <b>12 left</b>
               </div>
@@ -244,13 +244,12 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <section class="home">
   <div class="voice">
     <div class="voice-copy">
-      <h2>The Latency Lord forges his weapons in front of you.</h2>
+      <h2>The Latency Lord studies every choice you make.</h2>
 
       <blockquote>"He does not need to take the cache away. He only needs to choose the moment it empties."</blockquote>
       <cite>The Forge, Lesson 8</cite>
 
-      <p>Five times across the course, the villain stops to study something you have just learned, and builds a weapon out of it. By the time the attacks arrive in Lesson 12, you have watched every one of them being made.</p>
-      <p>So Lesson 12 grants no new technique. It is the only lesson that does not, and that is the point: every defense is something you were handed earlier, in a lesson that never mentioned an attack.</p>
+      <p>As you learn, the Latency Lord studies your caches and prepares five attacks. In Lesson 12, you use techniques from earlier lessons to defend against them.</p>
     </div>
 
     <figure class="villain-portrait">
@@ -274,7 +273,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <div class="chips"><span class="chip">Latency</span><span class="chip">Trade-offs</span></div>
     </a>
     <a class="card" href="l2.html#l2">
-      <div class="card-top"><span class="card-no">02</span><span class="card-kind">The heaviest lesson</span></div>
+      <div class="card-top"><span class="card-no">02</span><span class="card-kind">Keys and lifetimes</span></div>
       <h3>The Trial of Hits and Misses</h3>
       <p>Keys, values, lifetimes and warming. Three of the five defenses in Lesson 12 trace back to here.</p>
       <div class="chips"><span class="chip">Keys</span><span class="chip">TTL</span><span class="chip">Hit ratio</span></div>
@@ -300,7 +299,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <a class="card" href="l4.html#l4">
       <div class="card-top"><span class="card-no">04</span><span class="card-kind">Copies worldwide</span></div>
       <h3>The Edge Kingdom</h3>
-      <p>A CDN does not make anything faster. It makes things closer. Learn what its cache key is really made of.</p>
+      <p>A CDN serves shared content closer to users. Learn how its cache key decides which requests can reuse a response.</p>
       <div class="chips"><span class="chip">Edge keys</span><span class="chip">Vary</span><span class="chip">Purge</span></div>
     </a>
     </div>
@@ -312,13 +311,13 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <a class="card" href="l5.html#l5">
       <div class="card-top"><span class="card-no">05</span><span class="card-kind">Your own memory</span></div>
       <h3>The Application Sanctum</h3>
-      <p>The fastest cache there is, and the reason two servers can disagree about the same price.</p>
+      <p>Reuse data inside your application process, and see why two servers can hold different prices.</p>
       <div class="chips"><span class="chip">In-process</span><span class="chip">Memoization</span></div>
     </a>
     <a class="card" href="l6.html#l6">
       <div class="card-top"><span class="card-no">06</span><span class="card-kind">One cache, many nodes</span></div>
       <h3>The Distributed Cache Tribes</h3>
-      <p>What Redis actually gives you beyond being shared, where it genuinely shines, and what it costs.</p>
+      <p>What Redis adds beyond a shared cache, when it helps, and what it costs.</p>
       <div class="chips"><span class="chip">Redis</span><span class="chip">Replicas</span><span class="chip">Failover</span></div>
     </a>
     </div>
@@ -354,13 +353,13 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <a class="card" href="l10.html#l10">
       <div class="card-top"><span class="card-no">10</span><span class="card-kind">Letting go</span></div>
       <h3>The Temple of Eviction</h3>
-      <p>Expiration is time. Eviction is memory. They are confused constantly, and they need different fixes.</p>
+      <p>Expiration removes old entries. Eviction makes room for new ones. Learn when to use each.</p>
       <div class="chips"><span class="chip">LRU</span><span class="chip">LFU</span><span class="chip">Jitter</span></div>
     </a>
     <a class="card" href="l11.html#l11">
       <div class="card-top"><span class="card-no">11</span><span class="card-kind">The hardest problem</span></div>
       <h3>The Invalidation Paradox</h3>
-      <p>Delete, never update. Version the key instead. And accept that one of the four realms cannot be reached at all.</p>
+      <p>Learn when to delete a cached entry, when to change its key, and how to handle browser copies you cannot purge.</p>
       <div class="chips"><span class="chip">Invalidation</span><span class="chip">Versioned keys</span></div>
     </a>
     </div>
@@ -372,7 +371,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <a class="card trial" href="l12.html#l12">
       <div class="card-top"><span class="card-no">12</span><span class="card-kind">No new technique</span></div>
       <h3>The Latency Lord's Attacks</h3>
-      <p>Stampede, penetration, avalanche, hot keys and poisoning. Four of the five are caused by your own settings.</p>
+      <p>Explore five cache failure modes, from stampedes to poisoning, and the design choices that help prevent them.</p>
       <div class="chips"><span class="chip">The trial</span><span class="chip">Five defenses</span></div>
     </a>
     <a class="card" href="l13.html#l13">
@@ -384,7 +383,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <a class="card" href="l14.html#l14">
       <div class="card-top"><span class="card-no">14</span><span class="card-kind">Everything at once</span></div>
       <h3>The Final Battle</h3>
-      <p>Design the whole thing across four realms, and defend every lifetime you chose. Assembly, not invention.</p>
+      <p>Bring the four realms together in one design, and explain each caching decision.</p>
       <div class="chips"><span class="chip">Rubric</span><span class="chip">Worked example</span></div>
     </a>
     </div>

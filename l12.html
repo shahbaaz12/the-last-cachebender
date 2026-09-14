@@ -146,10 +146,6 @@ if value is None:                       # genuinely not in cache
 <li><strong>Use a distinct marker.</strong> You must be able to tell “cached as non-existent” apart from “not in the cache.” Storing plain <code>null</code> usually makes those indistinguishable, and you get a permanent miss instead of a hit.</li>
 </ul>
 <p>Also worth applying: <strong>input validation.</strong> If product IDs are always under 8 digits, reject <code>999999999</code> before it reaches any cache or database at all. The cheapest defense is not answering the question.</p>
-<div class="placeholder">
-<div class="label">Placeholder — Bloom filters</div>
-<p>The second defense for this attack, deferred by decision.</p>
-</div>
 <h3 id="l12-avalanche">Attack 3 — The Avalanche</h3>
 <p>You deployed at 14:00 and warmed the cache — 50,000 keys, all written within a few seconds, all with <code>TTL = 3600</code>.</p>
 <p>At 15:00, all 50,000 expire in the same second.</p>
@@ -191,7 +187,7 @@ product:42:copy9      ← 10 keys, one value, spread across 10 nodes</pre>
 <p>Reading picks a random copy, so traffic distributes. Writing must update all ten, so this is for read-heavy data only.</p>
 <p><strong>3. Replication (L6).</strong> Put the hot partition on replicas and spread reads across them.</p>
 <p><strong>4. Detection first (L13).</strong> You cannot defend a hot key you have not found. Per-key metrics are how you find them — which is next lesson.</p>
-<p>Notice that this attack is defeated by using <strong>two realms together</strong>: a local cache in front of a distributed cache. That is what Book Three was building toward.</p>
+<p>This defense combines a local cache with a distributed cache — the two parts of the application realm from Book Three.</p>
 <h3 id="l12-poisoning">Attack 5 — The Poisoning</h3>
 <p>The worst one, because it is a correctness failure rather than a performance failure — and it can be a security incident.</p>
 <p>A logged-in user requests the product page. The response includes their cart badge: <em>“2 items.”</em> Something in your stack caches that response under the key <code>/product/42</code>, without the user in the key.</p>
