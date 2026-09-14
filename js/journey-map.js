@@ -13,7 +13,7 @@
     {n:8, realm:'spirit', stage:2, title:'The Three Reading Techniques', technique:'The Three Draws', insight:'Choose the read path', impact:'Controls misses, filling and refresh', learned:'Cache-aside, read-through and refresh-ahead differ by who owns a miss and when refresh happens.', helped:'You can design a read path and coalesce concurrent misses with single-flight.', from:[2,4,6], to:[9,11,12,14]},
     {n:9, realm:'spirit', stage:2, title:'The Three Writing Techniques', technique:'The Three Seals', insight:'Choose the write path', impact:'Balances consistency, speed and risk', learned:'Write-through, write-behind and write-around place durability, speed and cache pollution differently.', helped:'You can choose a write path from the failure your workload can tolerate.', from:[8], to:[11,14]},
     {n:10, realm:'spirit', stage:2, title:'The Temple of Eviction', technique:'The Letting Go', insight:'Control expiry and eviction', impact:'Prevents pressure and expiry spikes', learned:'Expiration controls age; eviction controls space; policies predict which entry leaves.', helped:'You can choose TTL and eviction deliberately and prevent synchronized expiry.', from:[2,6], to:[11,12,13]},
-    {n:11, realm:'spirit', stage:2, title:'The Invalidation Paradox', technique:'The Truthbinding', insight:'Keep every copy truthful', impact:'Stops stale data across layers', learned:'Delete-on-write, versioned keys and events keep copies aligned with their source.', helped:'You can trace one update through every layer that might answer.', from:[2,3,4,9,10], to:[12,14]},
+    {n:11, realm:'spirit', stage:2, title:'The Invalidation Paradox', technique:'The Truthbinding', insight:'Keep copies up to date', impact:'Limits stale data across layers', learned:'Delete-on-write, versioned keys and events keep copies aligned with their source.', helped:'You can trace one update through every layer that might answer.', from:[2,3,4,9,10], to:[12,14]},
     {n:12, realm:'war', stage:3, title:'The Latency Lord’s Attacks', technique:'The Trial', insight:'Defend cache failure modes', impact:'Turns prior lessons into resilience', learned:'Stampede, penetration, avalanche, hot keys and poisoning are pressure tests of earlier choices.', helped:'You can derive defenses from keys, TTL, single-flight, validation and replication.', from:[2,3,4,6,8,10,11], to:[13,14]},
     {n:13, realm:'war', stage:3, title:'Restoring Balance', technique:'The Measure', insight:'Measure whether caching helps', impact:'Shows what to tune or remove', learned:'Per-key hit ratio, tail latency and memory cost reveal whether a cache earns its place.', helped:'You can optimize the right bottleneck—or remove a cache that no longer helps.', from:[12], to:[14]},
     {n:14, realm:'war', stage:3, title:'The Final Battle', technique:'The Convergence', insight:'Assemble the full strategy', impact:'Makes every trade-off explicit', learned:'A complete strategy combines locations, keys, reads, writes, lifetimes, invalidation and defenses.', helped:'You can justify the whole design and state clearly what must never be cached.', from:[1,2,8,9,10,11,12,13], to:[]}
@@ -59,8 +59,8 @@
   var header = el('header', 'journey-map-header');
   var heading = el('div');
   heading.appendChild(el('span', 'journey-map-kicker', 'Your path through the four realms'));
-  var h2 = el('h2', null, 'What you know — and what comes next'); h2.id = 'journey-map-title'; heading.appendChild(h2);
-  heading.appendChild(el('p', null, 'Select a concept to see what it taught you, how it helped and what it unlocks.'));
+  var h2 = el('h2', null, 'The learning map'); h2.id = 'journey-map-title'; heading.appendChild(h2);
+  heading.appendChild(el('p', null, 'Select a lesson to see its main ideas and how it connects to the rest of the course.'));
   header.appendChild(heading);
   var close = el('button', 'journey-map-close', 'Close'); close.type = 'button'; close.setAttribute('aria-label', 'Close learning map'); header.appendChild(close);
   shell.appendChild(header);
@@ -94,7 +94,7 @@
       button.type = 'button'; button.setAttribute('data-lesson', String(lesson.n)); button.setAttribute('aria-pressed', lesson.n === selected ? 'true' : 'false');
       button.appendChild(el('span', 'journey-node-number', String(lesson.n).padStart(2, '0')));
       var nodeCopy = el('span'); nodeCopy.appendChild(el('b', null, lesson.insight)); nodeCopy.appendChild(el('small', null, lesson.impact)); button.appendChild(nodeCopy);
-      button.appendChild(el('span', 'journey-node-state', lesson.n < current ? 'Learned earlier' : (lesson.n === current ? 'Learning now' : 'Learn later')));
+      button.appendChild(el('span', 'journey-node-state', lesson.n < current ? 'Earlier lesson' : (lesson.n === current ? 'Current lesson' : 'Later lesson')));
       button.addEventListener('click', function () { selectLesson(lesson.n); });
       nodes.appendChild(button); nodeByNumber[lesson.n] = button;
     });
@@ -125,17 +125,17 @@
     });
 
     detail.textContent = '';
-    var status = number < current ? 'Learned earlier' : (number === current ? 'Learning now' : 'Learn later');
+    var status = number < current ? 'Earlier lesson' : (number === current ? 'Current lesson' : 'Later lesson');
     detail.appendChild(el('span', 'journey-detail-status realm-' + lesson.realm, status));
     detail.appendChild(el('div', 'journey-detail-number', 'Lesson ' + number + ' · ' + lesson.technique));
     detail.appendChild(el('h3', null, lesson.insight));
 
-    var learnedHeading = number < current ? 'What you learned earlier' : (number === current ? 'What you are learning now' : 'What this will teach');
-    var helpedHeading = number < current ? 'How it helped' : 'Why it matters';
+    var learnedHeading = 'What this lesson covers';
+    var helpedHeading = 'Why it matters';
     var learned = el('section'); learned.appendChild(el('h4', null, learnedHeading)); learned.appendChild(el('p', null, lesson.learned)); detail.appendChild(learned);
     var helped = el('section', 'journey-helped'); helped.appendChild(el('h4', null, helpedHeading)); helped.appendChild(el('p', null, lesson.helped)); detail.appendChild(helped);
     var relations = el('section', 'journey-relations'); relations.appendChild(el('h4', null, 'How it connects')); relations.appendChild(relationLinks('Builds on', lesson.from)); relations.appendChild(relationLinks('Unlocks', lesson.to)); detail.appendChild(relations);
-    var open = el('a', 'journey-open-lesson', number <= current ? 'Review Lesson ' + number + ' →' : 'Preview Lesson ' + number + ' →'); open.href = 'l' + number + '.html#l' + number; detail.appendChild(open);
+    var open = el('a', 'journey-open-lesson', 'Open Lesson ' + number + ' →'); open.href = 'l' + number + '.html#l' + number; detail.appendChild(open);
   }
 
   selectLesson(selected);

@@ -142,7 +142,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <p>Memoize the shipping and price calculations. Keep the category tree in a local cache with a 5-minute TTL.</p>
 <p>Leave the product data alone for now. You are about to find out why.</p>
 <div class="myth">
-<div class="label">The misconception to kill</div>
+<div class="label">Common misconception</div>
 <p class="claim">“In-memory cache means Redis.”</p>
 <p>Local is inside your process — no network, no serialization, gone on restart, invisible to your other servers. Redis is across a network and shared. The gap between them is three orders of magnitude, and the <em>shared</em> part is the entire reason the next lesson exists.</p>
 </div>

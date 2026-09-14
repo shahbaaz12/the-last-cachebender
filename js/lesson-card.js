@@ -23,7 +23,7 @@
       from:['l2','l3'], bridge:'The browser proved that HTTP can control a cache. At the edge, the same signals operate on shared copies and a much more dangerous cache key.',
       carry:['A CDN makes content closer, not intrinsically faster.','The edge key must vary on every request input that changes the response.','TTL, purge and versioning solve different freshness problems.'], feeds:['l8','l11','l12'] },
     l5: { title:'The Application Sanctum', technique:'Stonehold', gloss:'hold data inside the application process',
-      does:['Cache inside the application process','Memoize pure computation','Recognise where in-process caching stops working'],
+      does:['Cache inside the application process','Memoize pure computation','Recognize where in-process caching stops working'],
       from:['l2'], bridge:'Lesson 2 gave every cached answer a key and lifetime. Here you place that answer in the fastest memory your own code controls.',
       carry:['In-process memory is fast and simple.','Memoization is safe when the same inputs always produce the same output.','Each application instance owns a different local cache.'], feeds:['l6','l8','l12'] },
     l6: { title:'The Distributed Cache Tribes', technique:'Stonesplit', gloss:'spread one shared cache across many nodes',
@@ -31,7 +31,7 @@
       from:['l5'], bridge:'Lesson 5 exposed the limit of local memory: each server can disagree. A distributed cache gives those servers one shared realm.',
       carry:['Partitioning decides which node owns a key.','Replication trades memory for availability.','Hot keys and node movement must be designed for, not discovered in production.'], feeds:['l8','l12'] },
     l7: { title:'The Database Depths', technique:'Emberdraw', gloss:'draw on the database’s own caches before adding another',
-      does:['Describe the caches the database already keeps','Separate what you tune from what you build','Recognise ORM caching and its traps'],
+      does:['Describe the caches the database already keeps','Separate what you tune from what you build','Recognize ORM caching and its traps'],
       from:['l5','l6'], bridge:'Databases reuse data pages and query plans. Indexes also help reduce query work. Consider those before adding another cache.',
       carry:['A database is already a caching system.','An index often removes more work than a query cache.','ORM identity maps are scoped caches with consistency limits.'], feeds:['l13','l14'] },
     l8: { title:'The Three Reading Techniques', technique:'The Three Draws', gloss:'choose who owns a miss and when refresh happens',
@@ -51,7 +51,7 @@
       from:['l2','l3','l4','l9','l10'], bridge:'Every earlier lesson created or retained a copy. Now one source update must find those copies—or make their keys impossible to reuse.',
       carry:['Invalidation must reach every layer that can answer.','Versioned keys make old entries unreachable.','Events propagate change, but consumers must tolerate delay and replay.'], feeds:['l12','l14'] },
     l12: { title:'The Latency Lord’s Attacks', technique:'The Trial', gloss:'derive defenses from techniques already mastered',
-      does:['Recognise all five cache attacks','Derive every defense from an earlier lesson','Notice which failures are self-inflicted'],
+      does:['Recognize all five cache attacks','Derive every defense from an earlier lesson','Notice which failures are self-inflicted'],
       from:['l2','l3','l4','l6','l8','l10','l11'], bridge:'This lesson grants no new technique. Each attack is a pressure test for something you already learned; follow the lesson links if you need a refresher.',
       carry:['Single-flight stops a stampede.','Negative caching stops repeated impossible lookups.','TTL jitter, hot-key replication and complete cache keys defend the remaining attacks.'], feeds:['l13','l14'] },
     l13: { title:'Restoring Balance', technique:'The Measure', gloss:'measure how the cache performs, then remove it if it no longer helps',
@@ -148,11 +148,11 @@
     var card=el('aside','lesson-card'); card.setAttribute('aria-label',lesson.label+' overview');
     var top=el('div','lc-top'); top.appendChild(el('span','lc-eyebrow','In this lesson')); top.appendChild(el('span','lc-meta',Math.max(1,Math.round(words/WORDS_PER_MINUTE))+' min read · '+lesson.headings.length+' parts')); card.appendChild(top);
     var list=el('ol','lc-contents'); lesson.headings.forEach(function(h){ var li=el('li'); var a=el('a',null,h.textContent.trim()); a.href='#'+h.id; li.appendChild(a); list.appendChild(li); }); card.appendChild(list);
-    var bridge=el('div','lc-bridge'); bridge.appendChild(el('span','lc-eyebrow','Where this sits')); bridge.appendChild(el('p',null,info.bridge));
+    var bridge=el('div','lc-bridge'); bridge.appendChild(el('span','lc-eyebrow','How this lesson fits')); bridge.appendChild(el('p',null,info.bridge));
     if(info.from && info.from.length){ var deps=el('div','lc-deps'); info.from.forEach(function(id){ var b=el('span','lc-dep'); b.appendChild(el('span','lc-dep-tag','Builds on')); b.appendChild(lessonLink(id)); deps.appendChild(b); }); bridge.appendChild(deps); }
     card.appendChild(bridge);
     var obj=el('div','lc-objectives'); obj.appendChild(el('span','lc-eyebrow','By the end you can')); var ul=el('ul'); (info.does||[]).forEach(function(d){ul.appendChild(el('li',null,d));}); obj.appendChild(ul); card.appendChild(obj);
-    if(info.feeds && info.feeds.length){ var feed=el('div','lc-feeds'); feed.appendChild(el('span','lc-dep-tag','Carries into')); info.feeds.forEach(function(id){feed.appendChild(lessonLink(id));}); card.appendChild(feed); }
+    if(info.feeds && info.feeds.length){ var feed=el('div','lc-feeds'); feed.appendChild(el('span','lc-dep-tag','Used in')); info.feeds.forEach(function(id){feed.appendChild(lessonLink(id));}); card.appendChild(feed); }
     var anchor=body.querySelector(':scope > .technique, :scope > .trial');
     if(anchor) anchor.insertAdjacentElement('afterend',card); else body.insertBefore(card,body.firstChild);
 
@@ -164,7 +164,7 @@
     var info=DATA[lesson.id]||{}; var end=document.querySelector('[data-lesson-end="'+lesson.id+'"]');
     if(!end){ end=lesson.body.nextElementSibling; if(!end || !end.classList.contains('lesson-end')) return; }
     end.textContent='';
-    var carry=el('section','lesson-carry'); carry.appendChild(el('span','lc-eyebrow','What you carry forward')); carry.appendChild(el('h3',null,lesson.label+' complete'));
+    var carry=el('section','lesson-carry'); carry.appendChild(el('span','lc-eyebrow','Key takeaways')); carry.appendChild(el('h3',null,lesson.label+' complete'));
     var ul=el('ul'); (info.carry||[]).forEach(function(item){ul.appendChild(el('li',null,item));}); carry.appendChild(ul); end.appendChild(carry);
     var nav=el('nav','lesson-step-nav'); nav.setAttribute('aria-label','Lesson navigation'); var n=numberOf(lesson.id);
     if(n>1){ var prev=el('a','lesson-step previous','← Lesson '+(n-1)); prev.href=href('l'+(n-1)); nav.appendChild(prev); }

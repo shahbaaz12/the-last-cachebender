@@ -151,7 +151,7 @@ for p in products:
 <p>Before caching the product query anywhere, check two things: whether it is already being served from the buffer pool, and whether it uses an index.</p>
 <p>You may discover the cache you were about to add is a cache in front of a cache.</p>
 <div class="myth">
-<div class="label">The misconception to kill</div>
+<div class="label">Common misconception</div>
 <p class="claim">“The database is slow, so I need a cache in front of it.”</p>
 <p>The database is already caching aggressively, at several levels, and it is very good at it. Measure before adding a layer — otherwise you are paying in staleness for a problem you did not have.</p>
 </div>

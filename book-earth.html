@@ -173,7 +173,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <p>Redis is roughly <strong>5,000 times slower</strong> than a local cache. It is also roughly 200 times faster than a cross-continent request, and — the reason it exists — it is <em>shared</em>.</p>
 
-  <p>Both are &ldquo;caching in the application layer.&rdquo; They are not the same realm at all, and treating them as interchangeable is a source of real confusion.</p>
+  <p>Both belong to the application layer, but they have different costs: a local cache stays inside one process; Redis is shared over the network.</p>
 
   <h3>What belongs in a local cache</h3>
 
@@ -198,7 +198,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <p>Leave the product data alone for now. You are about to find out why.</p>
 
   <div class="myth">
-    <div class="label">The misconception to kill</div>
+    <div class="label">Common misconception</div>
     <p class="claim">&ldquo;In-memory cache means Redis.&rdquo;</p>
     <p>Local is inside your process — no network, no serialization, gone on restart, invisible to your other servers. Redis is across a network and shared. The gap between them is three orders of magnitude, and the <em>shared</em> part is the entire reason the next lesson exists.</p>
   </div>
@@ -218,7 +218,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <div class="technique">
     <span class="tag">Technique unlocked</span>
     <span class="name">Stonesplit</span>
-    <span class="gloss">one cache spread across many nodes</span>
+    <span class="gloss">one cache shared across many application servers</span>
   </div>
 
   <h3 id="l6-problem">When each server keeps its own copy</h3>
@@ -229,7 +229,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
   <h4>1. They disagree</h4>
 
-  <p>The scenario that ended Lesson 5, now with ten servers instead of two. It is worth walking through slowly, because <em>&ldquo;the same code produced two different answers&rdquo;</em> sounds impossible.</p>
+  <p>Imagine ten servers running the same code, each with its own cached copy of the price. What happens when the price changes?</p>
 
   <p>The code <strong>is</strong> identical on every server. What differs is <em>when</em> each one last looked.</p>
 
@@ -269,6 +269,8 @@ Server C ─┘</pre>
 
   <p>One value. One place to update. One warm-up. All ten servers benefit from the first one's miss.</p>
 
+  <p>When the cache has more than one node, sharding decides which node owns a key. The same key always goes to the same node; replicas can keep extra copies to make a node failure less disruptive. A popular key can still concentrate load on its owner.</p>
+
   </div>
 
   <p>In practice, most teams use Redis as the shared cache. This lesson covers what Redis adds beyond a shared cache, when it helps, and what it costs.</p>
@@ -307,7 +309,7 @@ Server C ─┘</pre>
 
   <p>Every command is a <strong>verb</strong>, a <strong>key</strong>, and usually a <strong>value</strong>:</p>
 
-  <pre class="figure">SET  product:42  "{name: Headphones, price: 25}"  EX 300
+  <pre class="figure">SET  product:42  "{name: Four Realms Atlas, price: 84}"  EX 300
 │    │           │                                │
 verb key         value                            how long to keep it</pre>
 
@@ -345,7 +347,7 @@ ZREVRANGE leaderboard 0 9            →  the ten highest scores, in order</pre>
 
   <p><strong>A cache — hold a product for five minutes.</strong></p>
 
-  <pre class="figure">SETEX product:42 300 "{name: Headphones, price: 25}"
+  <pre class="figure">SETEX product:42 300 "{name: Four Realms Atlas, price: 84}"
 
 GET   product:42    →  the value, if it is still there
                     →  nil, if it is not</pre>
@@ -377,7 +379,7 @@ GET   product:42    →  the value, if it is still there
 
   <div class="keystone">If two of your servers gave different answers for this, would anything actually break?</div>
 
-  <p><strong>No</strong> — put it in a local cache. It is faster, simpler, and costs nothing to run.</p>
+  <p><strong>No</strong> — use a local cache. It is faster and simpler.</p>
 
   <p><strong>Yes</strong> — use a shared cache such as Redis, and allow for the network round trip.</p>
 
@@ -401,10 +403,10 @@ GET   product:42    →  the value, if it is still there
 
   <h3>At the Storefront</h3>
 
-  <p>Move product details, price, and reviews to shared Redis. Pick a key scheme and a shard key. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Two realms, used together, on purpose.</strong></p>
+  <p>Move product details, price, and reviews to shared Redis. Choose a key scheme that includes every input that changes the answer. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Local and shared caching, used together.</strong></p>
 
   <div class="myth">
-    <div class="label">The misconception to kill</div>
+    <div class="label">Common misconception</div>
     <p class="claim">&ldquo;A shared cache makes my data consistent.&rdquo;</p>
     <p>It makes your servers agree with <em>each other</em>. All ten can now confidently serve the same stale price. Agreement is not correctness, and the gap between them is Lesson 11.</p>
   </div>

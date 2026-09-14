@@ -194,11 +194,6 @@ if value is None:                       # genuinely not in cache
 
   <p>Also worth applying: <strong>input validation.</strong> If product IDs are always under 8 digits, reject <code>999999999</code> before it reaches any cache or database at all. The cheapest defense is not answering the question.</p>
 
-  <div class="placeholder">
-    <div class="label">Placeholder — Bloom filters</div>
-    <p>The second defense for this attack, deferred by decision.</p>
-  </div>
-
   <h3 id="l12-avalanche">Attack 3 — The Avalanche</h3>
 
   <p>You deployed at 14:00 and warmed the cache — 50,000 keys, all written within a few seconds, all with <code>TTL = 3600</code>.</p>
@@ -263,7 +258,7 @@ product:42:copy9      ← 10 keys, one value, spread across 10 nodes</pre>
 
   <p><strong>4. Detection first (L13).</strong> You cannot defend a hot key you have not found. Per-key metrics are how you find them — which is next lesson.</p>
 
-  <p>Notice that this attack is defeated by using <strong>two realms together</strong>: a local cache in front of a distributed cache. That is what Book Three was building toward.</p>
+  <p>This defense combines a local cache with a distributed cache, the two parts of the application realm from Book Three.</p>
 
   <h3 id="l12-poisoning">Attack 5 — The Poisoning</h3>
 
@@ -333,7 +328,7 @@ product:42:copy9      ← 10 keys, one value, spread across 10 nodes</pre>
   <p>Then the question worth carrying out of this lesson: <strong>which of the five would your current design already survive, and which would take you down tonight?</strong></p>
 
   <div class="myth">
-    <div class="label">The misconception to kill</div>
+    <div class="label">Common misconception</div>
     <p class="claim">&ldquo;These are exotic problems for systems much bigger than mine.&rdquo;</p>
     <p>Every one of these happens at ordinary scale on an ordinary weekday. Avalanche in particular is usually self-inflicted, by a deploy, on a Tuesday afternoon, with no attacker involved at all.</p>
   </div>
@@ -402,7 +397,7 @@ p99:     450ms      ← the misses, and every user who hit one</pre>
 
   <p><strong>Your p50 is your hit path. Your p99 is your miss path.</strong> If p50 is excellent and p99 is terrible, your cache is working and your misses are expensive — that is exactly the case for single-flight and refresh-ahead from Lesson 8.</p>
 
-  <p>At scale, p99 is not rare. At 1,000 requests per second, it is 10 users every second, and a user loading a page with 20 requests will very likely hit it at least once.</p>
+  <p>At 1,000 requests per second, the slowest 1% is 10 requests every second. Pages that make many requests have more chances to encounter a slow response.</p>
 
   <h3 id="l13-memory">Memory and eviction rate</h3>
 
@@ -516,7 +511,7 @@ X-DB-Queries:   3</pre>
   <p>Then turn off Redis under load and watch what happens.</p>
 
   <div class="myth">
-    <div class="label">The misconception to kill</div>
+    <div class="label">Common misconception</div>
     <p class="claim">&ldquo;A higher hit ratio is always better.&rdquo;</p>
     <p>A 99% hit ratio on data that must be fresh is not a success — it is a bug with excellent metrics. The right target comes from what the data is allowed to be wrong about, not from the number being large.</p>
   </div>
@@ -568,16 +563,17 @@ X-DB-Queries:   3</pre>
 
   <h4>Element: Price</h4>
 
-  <p><strong>1. Realms</strong> — Browser, CDN, Redis. Not local cache: it changes too often to risk per-server divergence.</p>
+  <p><strong>1. Realms</strong> — Browser, CDN and Redis, with a 5-second local cache for the most popular products.</p>
 
   <p><strong>2. Keys and TTLs</strong></p>
 
   <div class="tablewrap"><table>
     <thead><tr><th>Realm</th><th>Key</th><th>TTL</th><th>Why</th></tr></thead>
     <tbody>
-      <tr><td>Browser</td><td>URL</td><td>60s + <code>stale-while-revalidate=300</code></td><td>60s is the hard ceiling on how fast a correction reaches users (L11)</td></tr>
-      <tr><td>CDN</td><td>URL + currency + customer tier</td><td>300s</td><td>Purgeable, so a longer TTL is safe</td></tr>
+      <tr><td>Browser</td><td>URL + currency + customer tier</td><td><code>max-age=10, must-revalidate</code></td><td>A browser cannot be purged, so 10 seconds caps reuse without revalidation</td></tr>
+      <tr><td>CDN</td><td>URL + currency + customer tier</td><td>300s, purged on price change</td><td>A purge updates shared copies promptly; alert if it fails</td></tr>
       <tr><td>Redis</td><td><code>price:{id}:{currency}:{tier}</code></td><td>300s + jitter</td><td>Jitter prevents avalanche (L10)</td></tr>
+      <tr><td>Local cache</td><td><code>price:{id}:{currency}:{tier}</code></td><td>5s</td><td>Absorbs hot-key traffic before it reaches Redis</td></tr>
     </tbody>
   </table></div>
 
@@ -586,9 +582,9 @@ X-DB-Queries:   3</pre>
   <p><strong>3. Read and write</strong></p>
 
   <ul>
-    <li><strong>Read:</strong> cache-aside with single-flight — it is a hot key and it <em>will</em> stampede (L8)</li>
+    <li><strong>Read:</strong> cache-aside with single-flight — a hot key can stampede without it (L8)</li>
     <li><strong>Write:</strong> write-around — update the database, delete the cached copy (L9)</li>
-    <li><strong>Delete, never update</strong> — concurrent writes can land out of order (L11)</li>
+    <li><strong>Invalidate after the database update:</strong> this avoids the write-ordering problem, though concurrent reads still need protection (L11)</li>
   </ul>
 
   <p><strong>4. Invalidation path</strong></p>
@@ -597,13 +593,15 @@ X-DB-Queries:   3</pre>
     ↓
 Database updated                                    immediate
     ↓
-Redis DELETE price:42:*                             immediate
+Local caches invalidate affected price keys          immediate
     ↓
-CDN purge /product/42                               ~seconds
+Redis invalidates affected price keys                immediate
     ↓
-Browser: no mechanism — bounded by the 60s TTL      up to 60s</pre>
+CDN purges affected product responses                monitor completion
+    ↓
+Browser: no direct mechanism — bounded by its TTL    up to 10s</pre>
 
-  <p><strong>Worst-case staleness: 60 seconds</strong>, entirely in the browser realm, entirely because that realm cannot be reached (L11). Everything reachable is corrected in under a second.</p>
+  <p>The browser reuse limit is <strong>10 seconds</strong>. Staleness across the system also depends on successful invalidation delivery and CDN purges, so monitor both.</p>
 
   <p><strong>5. Attack defenses</strong></p>
 
@@ -624,20 +622,20 @@ Browser: no mechanism — bounded by the 60s TTL      up to 60s</pre>
     <li>Hit ratio for the <code>price:</code> prefix specifically — not the global number (L13)</li>
     <li>p99 latency on price lookups; alert if it exceeds 100ms</li>
     <li>Alert on stale-price reports with <code>Age</code> attached, to identify the realm</li>
-    <li>Track invalidation event failures — a silent failure here is a wrong price for 60 seconds</li>
+    <li>Track invalidation-event and CDN-purge failures — either can leave a stale price in place</li>
   </ul>
 
   <p><strong>7. Failure mode</strong></p>
 
-  <p>Redis unavailable → every price read goes to the database. The local 5-second cache absorbs the hot products. Database load rises roughly 4×, which is within capacity. <strong>Degraded but alive.</strong> Tested under load in staging.</p>
+  <p>If Redis is unavailable, reads that miss the local cache fall back to the database. For this example, assume the database can handle four times its usual load. Verify that assumption with a staging load test.</p>
 
   <h3 id="l14-rest">Do the other six</h3>
 
   <p>Product details. Product images. The asset bundle. Stock count. Reviews.</p>
 
-  <p>And the cart badge — for which the complete answer is: <strong>never cached, in any realm, at any layer</strong>, because it differs per user and Lesson 12 attack 5 shows exactly what happens if you get that wrong.</p>
+  <p>For this storefront, leave the cart badge response uncached to keep the policy simple. It belongs to one user and must never be reused as another user's answer. Cart data stored in Redis under a user-specific key is a separate decision.</p>
 
-  <p>It has been in every table since Lesson 1, always marked &ldquo;never.&rdquo; Requirement 1 is satisfied not by caching it, but by being able to say precisely why you did not.</p>
+  <p>The cart has needed a separate policy throughout the course. Requirement 1 is satisfied by explaining precisely why it is not shared.</p>
 
   <h3>The final assessment</h3>
 
@@ -676,22 +674,13 @@ Browser: no mechanism — bounded by the 60s TTL      up to 60s</pre>
       <tr><td>The Three Draws</td><td>L8</td><td>Cache-aside, read-through, refresh-ahead, single-flight</td></tr>
       <tr><td>The Three Seals</td><td>L9</td><td>Write-through, write-behind, write-around</td></tr>
       <tr><td>The Letting Go</td><td>L10</td><td>Expiration is time; eviction is memory</td></tr>
-      <tr><td>The Truthbinding</td><td>L11</td><td>Delete, don't update. Version keys. TTL is the safety net.</td></tr>
+      <tr><td>The Truthbinding</td><td>L11</td><td>Invalidate after database updates. Version keys. Use TTL as the safety net.</td></tr>
       <tr><td><em>(the trial)</em></td><td>L12</td><td>Five attacks, no new techniques</td></tr>
       <tr><td>The Measure</td><td>L13</td><td>Per-key metrics, p99, and deleting caches that don't earn their place</td></tr>
       <tr><td>The Convergence</td><td>L14</td><td>All four realms, one design, every TTL defended</td></tr>
     </tbody>
   </table></div>
 
-  <h3>Appendix — Open Placeholders</h3>
-
-  <div class="tablewrap"><table>
-    <thead><tr><th>Item</th><th>Where</th><th>Status</th></tr></thead>
-    <tbody>
-      <tr><td>Bloom filters</td><td>L2 (hook), L12 (penetration defense)</td><td>Deferred</td></tr>
-      <tr><td>Service-worker caching</td><td>Cut from L3</td><td>Unplaced</td></tr>
-    </tbody>
-  </table></div>
 </section>
 
 <footer class="course-footer">
