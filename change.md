@@ -2,9 +2,9 @@
 
 Reviewed 14 September 2026. Learner-facing copy and technical explanations were applied on 14–15 September 2026.
 
-**Implementation status — 15 September 2026.** Sections A and B have been applied across the standalone lessons, grouped book pages, course page, reference page, and shared lesson copy. The text items in C2, C5, and C6 are also applied. For A1, the accepted policy is `max-age=10, must-revalidate`; this is stricter than the report's initial 60-second suggestion and is now used consistently in the price examples.
+**Implementation status — 15 September 2026.** Sections A and B have been applied across the standalone lessons, grouped book pages, course page, reference page, and shared lesson copy. The text items in C2, C5, and C6, along with the readability, homepage-diagram, and standalone-opening changes in C3, C4, and C7, are also applied. For A1, the accepted policy is `max-age=10, must-revalidate`; this is stricter than the report's initial 60-second suggestion and is now used consistently in the price examples.
 
-The visual readability work in C3, the standalone-introduction layout work in C4, and the metadata, social-image, README, and source-of-truth cleanup in D remain pending.
+The metadata, social-image, and README cleanup in D are applied. The source-of-truth cleanup remains pending.
 
 The elemental setting, the Latency Lord, and the recurring storefront give this course a clear identity. Keep them. The biggest opportunity is to make the teaching voice more direct: explain the idea plainly, use the story to make it memorable, and avoid repeating why the course was designed this way. Some passages also need correction because their examples and conclusions disagree.
 
@@ -252,6 +252,12 @@ The running page also displays “Book Five · War” under the brand and “Pre
 | [index.html:109](C:/a/Arena/Learnings/SystemDesigns/HLD/the-last-cachebender/index.html:109) | “One request / 900 ms” in the decorative diagram | “Example uncached request / 900 ms” |
 
 Use “user” when describing system behaviour and “you” when addressing the learner. Choose one spelling convention: the current UI mixes “Recognize” with “Recognise.” Keep the distinction between the homepage's lesson list and the interactive learning map clear in their link labels.
+
+**C7. Give the homepage diagram's centre label enough room.**
+
+Location: [css/home.css:180](C:/a/Arena/Learnings/SystemDesigns/HLD/the-last-cachebender/css/home.css:180).
+
+The three-line “Example uncached request” label was cramped inside an 84px circle and looked off-centre. The circle is now 104px on larger screens and 96px on smaller screens, with padding, centred text, and a consistent line height. Applied 15 September 2026.
 
 **D. Supporting cleanup after wording decisions**
 

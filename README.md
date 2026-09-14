@@ -28,9 +28,11 @@ Then visit `http://localhost:8000`.
 - `book-fire.html` — Book Four and Lesson 7
 - `book-spirit.html` — the Spirit Library and Lessons 8–11
 - `book-war.html` — Book Five, Lessons 12–14, and the appendices
+- `l1.html` through `l14.html` — standalone lesson pages
+- `techniques.html` — reference index for the course concepts
 - `css/` — shared course and landing-page styles
 - `js/` — theme, progress, navigation, and reading behaviour
-- `public/og.png` — social-sharing preview
+- `public/og.webp` — social-sharing preview
 
 Course-planning material is maintained locally under `docs/` and is intentionally excluded from the public repository.
 
