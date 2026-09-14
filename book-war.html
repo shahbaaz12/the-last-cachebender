@@ -379,7 +379,7 @@ Broken down:
 
   <p>That 85% is real, and it is hiding the fact that your most expensive query has essentially no cache at all. The cheap, high-volume things inflated the average until the problem disappeared inside it.</p>
 
-  <div class="keystone">Measure hit ratio per key prefix. A global number can only tell you that everything is fine — which is the one thing you did not need to know.</div>
+  <div class="keystone">Measure hit ratio by key prefix as well as overall. The breakdown shows which data benefits from caching and which misses are still expensive.</div>
 
   <p>Also, from Lesson 2: the last few percent are worth the most. Going 90% → 99% removes 90% of your remaining misses. Going 50% → 59% removes 18%. Effort spent on an already-good ratio pays more than effort spent on a bad one — provided the traffic is expensive.</p>
 
@@ -545,7 +545,7 @@ X-DB-Queries:   3</pre>
 
   <p>Design the complete caching strategy for the storefront, across every realm.</p>
 
-  <p>You are not learning anything new here. Every piece of this was built in an earlier lesson. <strong>This is assembly, not invention</strong> — and if it feels like assembly, the course worked.</p>
+  <p>Bring together the techniques from the earlier lessons to design one complete caching strategy.</p>
 
   <h3 id="l14-rubric">The rubric</h3>
 
@@ -564,7 +564,7 @@ X-DB-Queries:   3</pre>
 
   <h3 id="l14-worked">A worked example</h3>
 
-  <p>Here is requirement-complete coverage of <strong>one</strong> element — the price — as a model for the shape expected. Do the other six yourself.</p>
+  <p>Here is a worked example for the price, covering each requirement. Use the same structure for the other six parts.</p>
 
   <h4>Element: Price</h4>
 

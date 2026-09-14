@@ -221,7 +221,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <span class="gloss">one cache spread across many nodes</span>
   </div>
 
-  <h3 id="l6-problem">The problem, stated properly</h3>
+  <h3 id="l6-problem">When each server keeps its own copy</h3>
 
   <p>You have 10 application servers. Each has its own local cache. This gives you three distinct problems.</p>
 
@@ -271,7 +271,7 @@ Server C ─┘</pre>
 
   </div>
 
-  <p>In practice, for most teams, that shared cache is Redis. So the rest of this lesson is about what Redis actually gives you, where it genuinely shines, and what it costs.</p>
+  <p>In practice, most teams use Redis as the shared cache. This lesson covers what Redis adds beyond a shared cache, when it helps, and what it costs.</p>
 
   <h3 id="l6-gives">What Redis gives you</h3>
 
@@ -288,7 +288,7 @@ Server C ─┘</pre>
     <li><strong>It stores more than strings.</strong> Counters, lists, sets and sorted sets are native, which makes some problems trivial that are awkward anywhere else.</li>
   </ul>
 
-  <h3 id="l6-good">Where Redis is genuinely excellent</h3>
+  <h3 id="l6-good">When Redis helps</h3>
 
   <div class="tablewrap"><table>
     <thead><tr><th>Scenario</th><th>Why Redis specifically</th></tr></thead>
@@ -379,7 +379,7 @@ GET   product:42    →  the value, if it is still there
 
   <p><strong>No</strong> — put it in a local cache. It is faster, simpler, and costs nothing to run.</p>
 
-  <p><strong>Yes</strong> — put it in Redis, and pay the network trip for the privilege.</p>
+  <p><strong>Yes</strong> — use a shared cache such as Redis, and allow for the network round trip.</p>
 
   <p>The category tree can be five seconds out of date on one server and nobody will ever notice. A shopping cart cannot.</p>
 

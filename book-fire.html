@@ -88,8 +88,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <div class="marker">Book Four · Fire</div>
   <h2>The Database Depths</h2>
   <div class="saga">
-    <p>Fire is the most powerful realm, and the one you build in least.</p>
-    <p>It is already burning. You did not light it and you cannot put it out. Your work here is not to build, but to see what is already alight — and to stop adding fuel where none is needed.</p>
+    <p>The fire is already burning: your database caches data on its own. In this realm, you learn to understand and tune those caches before adding another.</p>
   </div>
 </header>
 
@@ -181,13 +180,13 @@ for p in products:
 
       <pre class="figure">products = load_all_products_with_reviews()      1 query, joined</pre>
 
-      <p>Two queries become one. Nothing to invalidate, nothing to expire, nothing to go stale — the work is simply gone. Most ORMs have a single option for this; it is usually called <em>eager loading</em> or <em>include</em>.</p>
+      <p>Fifty-one queries become one joined query. There is no extra cache to invalidate or keep fresh. Your ORM may call this <em>eager loading</em> or <em>include</em>; some implementations use two queries instead of a join.</p>
 
       <div class="keystone">Caching an N+1 hides it. Fixing the query deletes it.</div>
     </div>
   </details>
 
-  <p>An index is not free — it makes writes slightly slower and it uses disk. But it is paid for in a currency you understand, once, rather than in correctness, forever.</p>
+  <p>Indexes use storage and add work to writes, but the database keeps them in sync for you.</p>
 
   <h3 id="l7-before">Before you cache in front of a database</h3>
 
@@ -197,7 +196,7 @@ for p in products:
 
   <p><strong>Then read the following, twice.</strong></p>
 
-  <h4>A cache that was removed because it could not be kept correct</h4>
+  <h4>When keeping a cache up to date costs too much</h4>
 
   <p>MySQL used to have a query cache: same query text, same result handed back without executing anything. It was deprecated, and then removed entirely.</p>
 

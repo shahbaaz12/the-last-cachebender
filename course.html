@@ -176,8 +176,7 @@
           <h1>The Last Cachebender</h1>
           <p>
             A course on caching — what it is, where copies live, and what it
-            costs to keep them. Built around one product page and the seven
-            things on it that each want a different answer.
+            costs to keep them. We follow one product page, with seven parts that need different caching rules.
           </p>
           <div class="status">
             <span class="dot"></span> Prologue · Lessons 1–2
@@ -619,7 +618,7 @@
             <div class="stale-panel">
               <div class="section-kicker">Freshness contract</div>
               <h4>What is allowed to be old?</h4>
-              <p>Each limit protects a different consequence.</p>
+              <p>Each limit reflects what happens if the answer is out of date.</p>
               <div class="tablewrap">
                 <table>
                   <thead>
@@ -803,7 +802,7 @@ average = (0.90 × 1ms) + (0.10 × 100ms)
         = 10.9ms</pre
           >
 
-          <p>Two things worth noticing in that number.</p>
+          <p>Two things stand out:</p>
 
           <p>
             <strong>First:</strong> you went from 100ms to 10.9ms. Nearly ten
@@ -882,8 +881,8 @@ average = (0.99 × 1ms) + (0.01 × 100ms) = 1.99ms</pre
           </div>
 
           <p>
-            Read it again. Nearly every cache bug in this course is a violation
-            of that one sentence.
+            Keep this rule in mind. Missing inputs cause many of the cache bugs
+            we'll meet.
           </p>
 
           <h4>A key that is too coarse</h4>
