@@ -34,6 +34,26 @@ Then visit `http://localhost:8000`.
 - `js/` — theme, progress, navigation, and reading behaviour
 - `public/og.webp` — social-sharing preview
 
+## Maintaining lesson content
+
+The standalone pages, `l1.html` through `l14.html`, are the canonical source
+for each lesson's heading and body. The grouped book pages provide a continuous
+reading route and contain generated copies of those lesson blocks. Keep their
+book introductions, appendices, navigation, and metadata in the grouped pages.
+
+After editing a standalone lesson, first check that the grouped copies match:
+
+```powershell
+python tools/sync_lessons.py
+```
+
+If the command reports drift, update the grouped copies and check again:
+
+```powershell
+python tools/sync_lessons.py --write
+python tools/sync_lessons.py
+```
+
 Course-planning material is maintained locally under `docs/` and is intentionally excluded from the public repository.
 
 ## Planned deployment

@@ -94,133 +94,85 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
 <!-- ============ LESSON 7 ============ -->
 <section class="lesson-head realm-fire" id="l7">
-  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_fire_nation_regalia_and_power._a/screen.png" loading="lazy" decoding="async" alt="">
-  <div class="num">Lesson Seven</div>
-  <h2>The Database Depths</h2>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_fire_nation_regalia_and_power._a/screen.png"/>
+<div class="num">Lesson Seven</div>
+<h2>The Database Depths</h2>
 </section>
 
 <section class="wrap">
-  <div class="technique">
-    <span class="tag">Technique unlocked</span>
-    <span class="name">Emberdraw</span>
-    <span class="gloss">drawing on the database's own heat</span>
-  </div>
-
-  <h3>The realm</h3>
-
-  <p>Air, Water and Earth all hold <strong>copies</strong>. That is what made them fast, and what made them dangerous — any of them can quietly disagree with the truth.</p>
-
-  <p>This realm <em>is</em> the truth. The database is your <strong>source of truth</strong>: the original every copy was made from. When a cached value and the database disagree, the database is right by definition. The other three realms exist to keep work away from this one; this one exists to be correct.</p>
-
-  <p>It also caches internally, and that is the part people underestimate. <strong>A database has several layers of caching built in already</strong>, running whether you think about them or not.</p>
-
-  <p>The <strong>buffer pool</strong> is memory the database sets aside to hold recently used data. Databases do not read individual rows from disk — they read <strong>pages</strong>, fixed-size blocks containing many rows, and those pages stay in memory afterwards. On a well-configured database the buffer pool holds the entire <strong>working set</strong> — the part of your data actually being used — and its hit ratio is above 99%. Underneath it, the operating system keeps its own cache of recently read disk blocks.</p>
-
-  <p>The <strong>query plan cache</strong> stores the <em>strategy</em> for running a query — which index to use, what order to join tables — so the same query shape is not re-planned every time. Note carefully: it caches the plan, <strong>not the results</strong>. The query still runs.</p>
-
-  <p>Between them, most database reads never reach a disk at all. The data is already in memory by the time a query asks for it.</p>
-
-  <h3 id="l7-tune">You tune here, you do not build</h3>
-
-  <p>This realm is unlike the other three. In the browser you set headers. At the edge you configure keys. In your application you write the caching code yourself. Here, the caching already exists and is largely automatic.</p>
-
-  <p><strong>What you actually control:</strong></p>
-
-  <div class="tablewrap"><table>
-    <thead><tr><th>Lever</th><th>What it does</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Indexing</strong></td><td>The big one. A precomputed structure for finding rows without scanning the table</td></tr>
-      <tr><td><strong>Partitioning</strong></td><td>Split one large table into smaller pieces so a query touches less of it</td></tr>
-      <tr><td><strong>Sharding</strong></td><td>Split the data across machines when one is no longer enough</td></tr>
-      <tr><td><strong>Buffer pool sizing</strong></td><td>Give the database enough memory to hold the working set</td></tr>
-    </tbody>
-  </table></div>
-
-  <p>Most of the answer, most of the time, is the first three. A query that is slow because it scans a million rows does not need a cache in front of it. It needs an index, or a partitioning scheme that means it only ever looks at this month's data.</p>
-
-  <h3 id="l7-index">Why an index beats a cache</h3>
-
-  <p>An <strong>index</strong> is a data structure the database maintains so it can find rows without examining every row in the table. Without one, finding all reviews for product 42 means checking every review in the table — a <strong>full table scan</strong>. With one, the database goes straight to them.</p>
-
-  <p>That makes an index a form of precomputation, which sounds cache-adjacent. But it has two properties no cache has:</p>
-
-  <ul>
-    <li><strong>It is never stale.</strong> The database updates it as part of the write. It cannot disagree with the data.</li>
-    <li><strong>There is nothing to invalidate.</strong> No TTL, no purge, no event to publish, no race to lose.</li>
-  </ul>
-
-  <p>So there is a question worth asking before every cache you add:</p>
-
-  <div class="keystone">Is this query slow because it is genuinely expensive, or because it is missing an index?</div>
-
-  <p>If the answer is a missing index, add the index. A cache makes the query <em>look</em> fast while the work behind it stays exactly as expensive; an index makes the work itself cheaper, and the database keeps it current for you as part of every write.</p>
-
-  <p>An index is not free. It takes disk space, and it makes writes slightly slower, because every insert and update has to maintain it too. But those costs are paid in one place and you can measure them. Caching a query that needed an index means accepting everything in Lesson 11 — lifetimes, invalidation, staleness — in order to <strong>hide</strong> a problem you could have <strong>removed</strong>.</p>
-
-  <details class="opt">
-    <summary>The N+1 problem<span class="flag">optional read</span></summary>
-    <div class="body">
-      <p>This is the version of that mistake you are most likely to meet in real code.</p>
-
-      <p>You load fifty products, then loop over them to show each one's reviews:</p>
-
-      <pre class="figure">products = load_all_products()      1 query
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">Emberdraw</span>
+<span class="gloss">drawing on the database's own heat</span>
+</div>
+<h3>The realm</h3>
+<p>Air, Water and Earth all hold <strong>copies</strong>. That is what made them fast, and what made them dangerous — any of them can quietly disagree with the truth.</p>
+<p>This realm <em>is</em> the truth. The database is your <strong>source of truth</strong>: the original every copy was made from. When a cached value and the database disagree, the database is right by definition. The other three realms exist to keep work away from this one; this one exists to be correct.</p>
+<p>It also caches internally, and that is the part people underestimate. <strong>A database has several layers of caching built in already</strong>, running whether you think about them or not.</p>
+<p>The <strong>buffer pool</strong> is memory the database sets aside to hold recently used data. Databases do not read individual rows from disk — they read <strong>pages</strong>, fixed-size blocks containing many rows, and those pages stay in memory afterwards. On a well-configured database the buffer pool holds the entire <strong>working set</strong> — the part of your data actually being used — and its hit ratio is above 99%. Underneath it, the operating system keeps its own cache of recently read disk blocks.</p>
+<p>The <strong>query plan cache</strong> stores the <em>strategy</em> for running a query — which index to use, what order to join tables — so the same query shape is not re-planned every time. Note carefully: it caches the plan, <strong>not the results</strong>. The query still runs.</p>
+<p>Between them, most database reads never reach a disk at all. The data is already in memory by the time a query asks for it.</p>
+<h3 id="l7-tune">You tune here, you do not build</h3>
+<p>This realm is unlike the other three. In the browser you set headers. At the edge you configure keys. In your application you write the caching code yourself. Here, the caching already exists and is largely automatic.</p>
+<p><strong>What you actually control:</strong></p>
+<div class="tablewrap"><table>
+<thead><tr><th>Lever</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><strong>Indexing</strong></td><td>The big one. A precomputed structure for finding rows without scanning the table</td></tr>
+<tr><td><strong>Partitioning</strong></td><td>Split one large table into smaller pieces so a query touches less of it</td></tr>
+<tr><td><strong>Sharding</strong></td><td>Split the data across machines when one is no longer enough</td></tr>
+<tr><td><strong>Buffer pool sizing</strong></td><td>Give the database enough memory to hold the working set</td></tr>
+</tbody>
+</table></div>
+<p>Most of the answer, most of the time, is the first three. A query that is slow because it scans a million rows does not need a cache in front of it. It needs an index, or a partitioning scheme that means it only ever looks at this month's data.</p>
+<h3 id="l7-index">Why an index beats a cache</h3>
+<p>An <strong>index</strong> is a data structure the database maintains so it can find rows without examining every row in the table. Without one, finding all reviews for product 42 means checking every review in the table — a <strong>full table scan</strong>. With one, the database goes straight to them.</p>
+<p>That makes an index a form of precomputation, which sounds cache-adjacent. But it has two properties no cache has:</p>
+<ul>
+<li><strong>It is never stale.</strong> The database updates it as part of the write. It cannot disagree with the data.</li>
+<li><strong>There is nothing to invalidate.</strong> No TTL, no purge, no event to publish, no race to lose.</li>
+</ul>
+<p>So there is a question worth asking before every cache you add:</p>
+<div class="keystone">Is this query slow because it is genuinely expensive, or because it is missing an index?</div>
+<p>If the answer is a missing index, add the index. A cache makes the query <em>look</em> fast while the work behind it stays exactly as expensive; an index makes the work itself cheaper, and the database keeps it current for you as part of every write.</p>
+<p>An index is not free. It takes disk space, and it makes writes slightly slower, because every insert and update has to maintain it too. But those costs are paid in one place and you can measure them. Caching a query that needed an index means accepting everything in Lesson 11 — lifetimes, invalidation, staleness — in order to <strong>hide</strong> a problem you could have <strong>removed</strong>.</p>
+<details class="opt">
+<summary>The N+1 problem<span class="flag">optional read</span></summary>
+<div class="body">
+<p>This is the version of that mistake you are most likely to meet in real code.</p>
+<p>You load fifty products, then loop over them to show each one's reviews:</p>
+<pre class="figure">products = load_all_products()      1 query
 for p in products:
     show(p.reviews)                 1 query each — 50 more</pre>
-
-      <p>Fifty-one queries where two would do. It is called <strong>N+1</strong> because that is the shape: one query for the list, then N more for the things hanging off it.</p>
-
-      <p>It is easy to miss because nothing looks wrong. Each individual query is fast. The page is slow because there are fifty of them, and each one costs a round trip to the database.</p>
-
-      <p>The tempting fix is to cache the fifty lookups. That works — it turns fifty-one database queries into one query and fifty cache hits, and the page does get faster.</p>
-
-      <p>But you have not removed the fifty round trips. You have moved them to a faster machine, and taken on a staleness problem for the privilege.</p>
-
-      <p>The real fix is to ask for the reviews alongside the products, in one query:</p>
-
-      <pre class="figure">products = load_all_products_with_reviews()      1 query, joined</pre>
-
-      <p>Fifty-one queries become one joined query. There is no extra cache to invalidate or keep fresh. Your ORM may call this <em>eager loading</em> or <em>include</em>; some implementations use two queries instead of a join.</p>
-
-      <div class="keystone">Caching an N+1 hides it. Fixing the query deletes it.</div>
-    </div>
-  </details>
-
-  <p>Indexes use storage and add work to writes, but the database keeps them in sync for you.</p>
-
-  <h3 id="l7-before">Before you cache in front of a database</h3>
-
-  <p>Two things to do first.</p>
-
-  <p><strong>Measure.</strong> You may find the product query takes 0.8ms, served entirely from the buffer pool, while your Redis lookup takes 0.5ms. That cache bought you 0.3ms and a staleness problem. This is The Sight from Lesson 1, applied where it is easiest to skip.</p>
-
-  <p><strong>Then read the following, twice.</strong></p>
-
-  <h4>When keeping a cache up to date costs too much</h4>
-
-  <p>MySQL used to have a query cache: same query text, same result handed back without executing anything. It was deprecated, and then removed entirely.</p>
-
-  <p>The reason is the most useful thing in this lesson.</p>
-
-  <p>Any write to a table had to invalidate every cached result that touched that table. On a busy system, tracking which results those were cost more than simply running the queries again. Under concurrent load the cache itself became the bottleneck, with every request queuing on the lock that protected it.</p>
-
-  <p>Now read that again with Lesson 11 in mind.</p>
-
-  <div class="keystone">This was a cache built by database engineers, living inside the database, with perfect knowledge of every write at the instant it happened. They concluded that keeping it correct was not worth what it cost.</div>
-
-  <p>They had every advantage you will not. In Lesson 11 you invalidate from <em>outside</em> the database, guessing when things changed from the code paths you remembered to cover. That is not an argument against caching — it is an argument for knowing what you are taking on, and for reaching first for the index, which has no invalidation problem at all.</p>
-
-  <h3>At the Storefront</h3>
-
-  <p>Before caching the product query anywhere, check two things: whether it is already being served from the buffer pool, and whether it uses an index.</p>
-
-  <p>You may discover the cache you were about to add is a cache in front of a cache.</p>
-
-  <div class="myth">
-    <div class="label">Common misconception</div>
-    <p class="claim">&ldquo;The database is slow, so I need a cache in front of it.&rdquo;</p>
-    <p>The database is already caching aggressively, at several levels, and it is very good at it. Measure before adding a layer — otherwise you are paying in staleness for a problem you did not have.</p>
-  </div>
+<p>Fifty-one queries when one joined query would do. It is called <strong>N+1</strong> because that is the shape: one query for the list, then N more for the things hanging off it.</p>
+<p>It is easy to miss because nothing looks wrong. Each individual query is fast. The page is slow because there are fifty of them, and each one costs a round trip to the database.</p>
+<p>The tempting fix is to cache the fifty lookups. That works — it turns fifty-one database queries into one query and fifty cache hits, and the page does get faster.</p>
+<p>But you have not removed the fifty round trips. You have moved them to a faster machine, and taken on a staleness problem for the privilege.</p>
+<p>The real fix is to ask for the reviews alongside the products, in one query:</p>
+<pre class="figure">products = load_all_products_with_reviews()      1 query, joined</pre>
+<p>Fifty-one queries become one joined query. There is no extra cache to invalidate or keep fresh. Your ORM may call this <em>eager loading</em> or <em>include</em>; some implementations use two queries instead of a join.</p>
+<div class="keystone">Caching an N+1 hides it. Fixing the query deletes it.</div>
+</div>
+</details>
+<h3 id="l7-before">Before you cache in front of a database</h3>
+<p>Two things to do first.</p>
+<p><strong>Measure.</strong> You may find the product query takes 0.8ms, served entirely from the buffer pool, while your Redis lookup takes 0.5ms. That cache bought you 0.3ms and a staleness problem. This is The Sight from Lesson 1, applied where it is easiest to skip.</p>
+<p><strong>Then read the following, twice.</strong></p>
+<h4>When keeping a cache up to date costs too much</h4>
+<p>MySQL used to have a query cache: same query text, same result handed back without executing anything. It was deprecated, and then removed entirely.</p>
+<p>The reason is the most useful thing in this lesson.</p>
+<p>Any write to a table had to invalidate every cached result that touched that table. On a busy system, tracking which results those were cost more than simply running the queries again. Under concurrent load the cache itself became the bottleneck, with every request queuing on the lock that protected it.</p>
+<p>Now read that again with Lesson 11 in mind.</p>
+<div class="keystone">This was a cache built by database engineers, living inside the database, with perfect knowledge of every write at the instant it happened. They concluded that keeping it correct was not worth what it cost.</div>
+<p>They had every advantage you will not. In Lesson 11 you invalidate from <em>outside</em> the database, guessing when things changed from the code paths you remembered to cover. That is not an argument against caching — it is an argument for knowing what you are taking on, and for reaching first for the index, which has no invalidation problem at all.</p>
+<h3>At the Storefront</h3>
+<p>Before caching the product query anywhere, check two things: whether it is already being served from the buffer pool, and whether it uses an index.</p>
+<p>You may discover the cache you were about to add is a cache in front of a cache.</p>
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">“The database is slow, so I need a cache in front of it.”</p>
+<p>The database is already caching aggressively, at several levels, and it is very good at it. Measure before adding a layer — otherwise you are paying in staleness for a problem you did not have.</p>
+</div>
 </section>
 
 <div class="lesson-end">

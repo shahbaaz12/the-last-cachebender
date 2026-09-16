@@ -299,437 +299,351 @@
 
         <!-- ============ LESSON 1 ============ -->
         <section class="lesson-head realm-prologue" id="l1">
-          <img
-            class="lesson-art"
-            src="public/a_hyper_detailed_masterpiece_level_composition_of_air_nomad_artifacts._an/screen.png"
-            loading="lazy"
-            decoding="async"
-            alt=""
-          />
-          <div class="num">Lesson One</div>
-          <h2>The Forgotten Art of Caching</h2>
-        </section>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_composition_of_air_nomad_artifacts._an/screen.png"/>
+<div class="num">Lesson One</div>
+<h2>The Forgotten Art of Caching</h2>
+</section>
 
         <section class="wrap">
-          <div class="technique">
-            <span class="tag">Technique unlocked</span>
-            <span class="name">The Sight</span>
-            <span class="gloss">seeing where time is being wasted</span>
-          </div>
-
-          <h3>The problem</h3>
-
-          <p>
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Sight</span>
+<span class="gloss">seeing where time is being wasted</span>
+</div>
+<h3>The problem</h3>
+<p>
             Open the storefront's product page. It takes
             <strong>900 milliseconds</strong> to appear.
           </p>
-
-          <p>Now open it again. It takes 900 milliseconds again.</p>
-
-          <p>
+<p>Now open it again. It takes 900 milliseconds again.</p>
+<p>
             Nothing changed between those two visits. The product has the same
             name, the same description, the same picture. Your server did the
             exact same work, twice, and got the exact same answer, twice.
           </p>
-
-          <p>That is the waste. Caching is the art of noticing it.</p>
-
-          <h3>What a cache is</h3>
-
-          <p>
-            A <strong>cache</strong> (say it &ldquo;cash&rdquo;) is a copy of an
+<p>That is the waste. Caching is the art of noticing it.</p>
+<h3>What a cache is</h3>
+<p>
+            A <strong>cache</strong> (say it “cash”) is a copy of an
             answer, kept somewhere faster to reach than the place the answer
             came from.
           </p>
-
-          <p class="definition-callout">
-            <strong>That is the whole idea.</strong> Everything else in this
+<p class="definition-callout">
+<strong>That is the whole idea.</strong> Everything else in this
             course is detail about <em>where</em> you keep the copy,
             <em>how long</em> you keep it, and
             <em>what happens when the copy stops being true</em>.
           </p>
-
-          <h3>Why things are slow: two reasons</h3>
-
-          <p>Almost all slowness comes from one of two causes.</p>
-
-          <p>
-            <strong>1. Distance.</strong> The data is far away and has to
+<h3>Why things are slow: two reasons</h3>
+<p>Almost all slowness comes from one of two causes.</p>
+<p>
+<strong>1. Distance.</strong> The data is far away and has to
             travel.
           </p>
-
-          <p>
-            <strong>2. Recomputation.</strong> The work was already done once,
+<p>
+<strong>2. Recomputation.</strong> The work was already done once,
             and you are doing it again.
           </p>
-
-          <p>
+<p>
             A cache fixes both, in the same way: keep the answer nearby, and
             stop redoing the work.
           </p>
-
-          <h3>How far is &ldquo;far&rdquo;?</h3>
-
-          <p>
+<h3>How far is “far”?</h3>
+<p>
             These numbers are approximate, and they vary by hardware. What
             matters is not the exact figures but the <em>gaps between them</em>.
           </p>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Where the data is</th>
-                  <th>Roughly how long it takes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>In your program's own memory</td>
-                  <td>100 nanoseconds</td>
-                </tr>
-                <tr>
-                  <td>On a local SSD</td>
-                  <td>100 microseconds <em>(1,000× slower)</em></td>
-                </tr>
-                <tr>
-                  <td>On another server in the same datacentre</td>
-                  <td>500 microseconds <em>(5,000× slower)</em></td>
-                </tr>
-                <tr>
-                  <td>On a server on another continent</td>
-                  <td>150 milliseconds <em>(1,500,000× slower)</em></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Where the data is</th>
+<th>Roughly how long it takes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>In your program's own memory</td>
+<td>100 nanoseconds</td>
+</tr>
+<tr>
+<td>On a local SSD</td>
+<td>100 microseconds <em>(1,000× slower)</em></td>
+</tr>
+<tr>
+<td>On another server in the same datacentre</td>
+<td>500 microseconds <em>(5,000× slower)</em></td>
+</tr>
+<tr>
+<td>On a server on another continent</td>
+<td>150 milliseconds <em>(1,500,000× slower)</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             Those numbers are too small to feel. So here is the same table
             again, with every figure multiplied by the same amount.
           </p>
-
-          <p>
-            <strong
-              >These are not real durations. Only the ratios are real.</strong
-            >
+<p>
+<strong>These are not real durations. Only the ratios are real.</strong>
             If reading from memory took 1 second, then:
           </p>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Where the data is</th>
-                  <th>If memory took 1 second</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Program memory</td>
-                  <td>1 second</td>
-                </tr>
-                <tr>
-                  <td>Local SSD</td>
-                  <td>17 minutes</td>
-                </tr>
-                <tr>
-                  <td>Same datacentre</td>
-                  <td>1.4 hours</td>
-                </tr>
-                <tr>
-                  <td>Another continent</td>
-                  <td><strong>17 days</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Where the data is</th>
+<th>If memory took 1 second</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Program memory</td>
+<td>1 second</td>
+</tr>
+<tr>
+<td>Local SSD</td>
+<td>17 minutes</td>
+</tr>
+<tr>
+<td>Same datacentre</td>
+<td>1.4 hours</td>
+</tr>
+<tr>
+<td>Another continent</td>
+<td><strong>17 days</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             This is the single most useful intuition in caching. Moving an
-            answer from &ldquo;another continent&rdquo; to &ldquo;program
-            memory&rdquo; is not a small improvement. It is the difference
+            answer from “another continent” to “program
+            memory” is not a small improvement. It is the difference
             between waiting 17 days and waiting 1 second.
           </p>
-
-          <h3>The trade-off</h3>
-
-          <p>
+<h3>The trade-off</h3>
+<p>
             Caching gives you speed, but it charges you in freshness and memory.
           </p>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>You want</th>
-                  <th>What caching does</th>
-                  <th>The cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Speed</strong></td>
-                  <td>Reuses an answer instead of producing it again</td>
-                  <td>—</td>
-                </tr>
-                <tr>
-                  <td><strong>Freshness</strong></td>
-                  <td>May return an older copy</td>
-                  <td>The answer may be out of date</td>
-                </tr>
-                <tr>
-                  <td><strong>Low memory use</strong></td>
-                  <td>Stores additional copies</td>
-                  <td>Every copy takes space</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>You want</th>
+<th>What caching does</th>
+<th>The cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Speed</strong></td>
+<td>Reuses an answer instead of producing it again</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Freshness</strong></td>
+<td>May return an older copy</td>
+<td>The answer may be out of date</td>
+</tr>
+<tr>
+<td><strong>Low memory use</strong></td>
+<td>Stores additional copies</td>
+<td>Every copy takes space</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             A cached copy that no longer matches the latest answer is called
             <mark class="term-highlight">stale</mark>.
           </p>
-
-          <p>
+<p>
             Caching buys speed by accepting some risk of stale data and using
             additional memory. Every technique in this course makes that
             trade-off differently.
           </p>
-
-          <h3>Why caching is a design decision</h3>
-
-          <p>
+<h3>Why caching is a design decision</h3>
+<p>
             Caching is sometimes described as an optimisation added after a
             system becomes slow. That is only partly true.
           </p>
-
-          <p>
+<p>
             Adding a cache creates another copy of your data. That copy may fall
             behind the original.
           </p>
-
-          <p>
+<p>
             For a product description, that may be harmless. For a price or
             stock count, it may cause a customer to see incorrect information.
           </p>
-
-          <p>
+<p>
             You do not need to build every cache from the beginning. But you do
             need to decide which answers are allowed to be old and for how long.
             That is a correctness decision, so it belongs in the system design.
           </p>
-
-          <h3>At the Storefront</h3>
-
-          <p>
+<h3>At the Storefront</h3>
+<p>
             Put the page beside its freshness promises. The same seven fields
             now become seven different correctness decisions.
           </p>
-
-          <div class="storefront-study" id="storefront-study">
-            <article
-              class="product-page course-storefront compact"
-              aria-label="Wayfinder Supply product page annotated with cache freshness rules"
-            >
-              <div class="store-bar cache-piece">
-                <span class="store-mark">Wayfinder Supply</span>
-                <span class="store-nav"
-                  >Atlas&nbsp;&nbsp; Field notes&nbsp;&nbsp; Bag <b>1</b></span
-                >
-              </div>
-
-              <div class="product-shell">
-                <figure class="product-gallery cache-piece">
-                  <span class="part-number">2</span>
-                  <img
-                    src="public/atlas.png"
-                    width="1264"
-                    height="848"
-                    loading="lazy"
-                    decoding="async"
-                    alt="An open illustrated atlas whose pages rise into four elemental realms."
-                  />
-                  <figcaption>
-                    <b>Product images</b
-                    ><small class="cache-policy">May be old for days</small>
-                  </figcaption>
-                </figure>
-
-                <div class="product-buy">
-                  <p class="product-overline">Field edition · Volume I</p>
-                  <div class="product-details cache-piece">
-                    <span class="part-number">3</span
-                    ><small class="cache-policy"
-                      >Details · may be old for hours</small
-                    >
-                    <h3>Four Realms Atlas</h3>
-                    <p>
+<div class="storefront-study" id="storefront-study">
+<article aria-label="Wayfinder Supply product page annotated with cache freshness rules" class="product-page course-storefront compact">
+<div class="store-bar cache-piece">
+<span class="store-mark">Wayfinder Supply</span>
+<span class="store-nav">Atlas   Field notes   Bag <b>1</b></span>
+</div>
+<div class="product-shell">
+<figure class="product-gallery cache-piece">
+<span class="part-number">2</span>
+<img alt="An open illustrated atlas whose pages rise into four elemental realms." decoding="async" height="848" loading="lazy" src="public/atlas.png" width="1264"/>
+<figcaption>
+<b>Product images</b><small class="cache-policy">May be old for days</small>
+</figcaption>
+</figure>
+<div class="product-buy">
+<p class="product-overline">Field edition · Volume I</p>
+<div class="product-details cache-piece">
+<span class="part-number">3</span><small class="cache-policy">Details · may be old for hours</small>
+<h3>Four Realms Atlas</h3>
+<p>
                       A hand-bound guide to the roads, rivers and hidden
                       passages connecting every realm.
                     </p>
-                  </div>
-                  <div class="product-review cache-piece">
-                    <span class="part-number">6</span
-                    ><span class="stars" aria-label="Rated 4.9 out of 5"
-                      >★★★★★</span
-                    ><b>4.9</b><span>248 reviews</span>
-                    <small class="cache-policy"
-                      >Reviews · may be old for minutes</small
-                    >
-                  </div>
-                  <div class="product-facts">
-                    <div class="product-price cache-piece">
-                      <span class="part-number">4</span
-                      ><small class="cache-policy">Price · seconds only</small
-                      ><strong>$84</strong>
-                    </div>
-                    <div class="product-stock cache-piece">
-                      <span class="part-number">5</span
-                      ><small class="cache-policy"
-                        >Stock · barely, if at all</small
-                      ><span><i></i> In stock</span><b>12 left</b>
-                    </div>
-                  </div>
-                  <div class="product-cart cache-piece">
-                    <span class="part-number">7</span>
-                    <div class="cart-button">
-                      <span>Add to cart</span
-                      ><b aria-label="1 item in cart">1</b>
-                    </div>
-                    <small class="cache-policy"
-                      >Cart badge · private, never shared</small
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="asset-bundle cache-piece">
-                <span class="part-number">1</span>
-                <span class="asset-bundle-label">Asset bundle</span>
-                <strong
-                  ><span>CSS</span><span class="asset-plus">+</span
-                  ><span>JS</span></strong
-                >
-                <small class="cache-policy">May stay old indefinitely</small>
-              </div>
-            </article>
-
-            <div class="stale-panel">
-              <div class="section-kicker">Freshness contract</div>
-              <h4>What is allowed to be old?</h4>
-              <p>Each limit reflects what happens if the answer is out of date.</p>
-              <div class="tablewrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Part</th>
-                      <th>May it be stale?</th>
-                      <th>If it is, what happens</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Asset bundle</td>
-                      <td>Indefinitely</td>
-                      <td>Nothing — version the file</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Product images</td>
-                      <td>For days</td>
-                      <td>An old photo remains</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Product details</td>
-                      <td>For hours</td>
-                      <td>A correction appears late</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Price</td>
-                      <td>For seconds</td>
-                      <td>A customer sees an old price</td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Stock count</td>
-                      <td>Barely, if at all</td>
-                      <td>You may oversell</td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Reviews</td>
-                      <td>For minutes</td>
-                      <td>A new review appears late</td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>Cart badge</td>
-                      <td>Not applicable</td>
-                      <td>Another user's answer is wrong</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-          <p>Look at each part and ask two questions.</p>
-
-          <p>
-            <strong>What does it cost to produce?</strong> How long does it
+</div>
+<div class="product-review cache-piece">
+<span class="part-number">6</span><span aria-label="Rated 4.9 out of 5" class="stars">★★★★★</span><b>4.9</b><span>248 reviews</span>
+<small class="cache-policy">Reviews · may be old for minutes</small>
+</div>
+<div class="product-facts">
+<div class="product-price cache-piece">
+<span class="part-number">4</span><small class="cache-policy">Price · seconds only</small><strong>$84</strong>
+</div>
+<div class="product-stock cache-piece">
+<span class="part-number">5</span><small class="cache-policy">Stock · barely, if at all</small><span><i></i> In stock</span><b>12 left</b>
+</div>
+</div>
+<div class="product-cart cache-piece">
+<span class="part-number">7</span>
+<div class="cart-button">
+<span>Add to cart</span><b aria-label="1 item in cart">1</b>
+</div>
+<small class="cache-policy">Cart badge · private, never shared</small>
+</div>
+</div>
+</div>
+<div class="asset-bundle cache-piece">
+<span class="part-number">1</span>
+<span class="asset-bundle-label">Asset bundle</span>
+<strong><span>CSS</span><span class="asset-plus">+</span><span>JS</span></strong>
+<small class="cache-policy">May stay old indefinitely</small>
+</div>
+</article>
+<div class="stale-panel">
+<div class="section-kicker">Freshness contract</div>
+<h4>What is allowed to be old?</h4>
+<p>Each limit reflects what happens if the answer is out of date.</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Part</th>
+<th>May it be stale?</th>
+<th>If it is, what happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Asset bundle</td>
+<td>Indefinitely</td>
+<td>Nothing — version the file</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Product images</td>
+<td>For days</td>
+<td>An old photo remains</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Product details</td>
+<td>For hours</td>
+<td>A correction appears late</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Price</td>
+<td>For seconds</td>
+<td>A customer sees an old price</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Stock count</td>
+<td>Barely, if at all</td>
+<td>You may oversell</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Reviews</td>
+<td>For minutes</td>
+<td>A new review appears late</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Cart badge</td>
+<td>Not applicable</td>
+<td>Another user's answer is wrong</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Look at each part and ask two questions.</p>
+<p>
+<strong>What does it cost to produce?</strong> How long does it
             take, and how many database queries does it need? That tells you
             what is worth caching. This is The Sight — you cannot decide what to
             cache until you know what is expensive.
           </p>
-
-          <p>
-            <strong>How old is it allowed to be?</strong> That tells you what
+<p>
+<strong>How old is it allowed to be?</strong> That tells you what
             you are <em>permitted</em> to cache, which is a different question
             entirely.
           </p>
-
-          <p>
+<p>
             Look at part 1 again — the CSS and JavaScript files. It is drawn
             below the storefront because it is not really part of this page.
           </p>
-
-          <p>It is part of <em>every</em> page.</p>
-
-          <p>
+<p>It is part of <em>every</em> page.</p>
+<p>
             The same bundle is used by the home page, the category listing, the
             search results, the checkout, and the account screen. Cache it once
             and you have not made one page faster — you have made the whole site
             faster, for every visitor, on every page after their first.
           </p>
-
-          <p>
+<p>
             The same goes for anything that repeats: the header, the navigation
             menu, the footer, the category list that fills the menu.
           </p>
-
-          <div class="keystone">
+<div class="keystone">
             The value of a cached copy is not what it saves once — it is what it
             saves multiplied by how often it is reused.
           </div>
-
-          <p>
+<p>
             A product description is reused by everyone who views that product.
             A logo is reused by everyone who views anything.
           </p>
-
-          <p>
+<p>
             And the counter-example is on the same page. The cart badge appears
             on every page too, exactly like the header does. But
-            <em>&ldquo;on every page&rdquo;</em> and
-            <em>&ldquo;the same for everyone&rdquo;</em> are different things —
+            <em>“on every page”</em> and
+            <em>“the same for everyone”</em> are different things —
             and only the second one makes something safe to share.
           </p>
-        </section>
+</section>
 
         <div class="lesson-end">
           <span class="muted">Lesson 1 complete</span>
@@ -738,247 +652,178 @@
 
         <!-- ============ LESSON 2 ============ -->
         <section class="lesson-head realm-prologue" id="l2">
-          <img
-            class="lesson-art"
-            src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png"
-            loading="lazy"
-            decoding="async"
-            alt=""
-          />
-          <div class="num">Lesson Two</div>
-          <h2>The Trial of Hits and Misses</h2>
-        </section>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png"/>
+<div class="num">Lesson Two</div>
+<h2>The Trial of Hits and Misses</h2>
+</section>
 
         <section class="wrap">
-          <div class="technique">
-            <span class="tag">Technique unlocked</span>
-            <span class="name">The Naming</span>
-            <span class="gloss">keys, values, lifetimes, and warming</span>
-          </div>
-
-          <h3>Hits and misses</h3>
-
-          <p>
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Naming</span>
+<span class="gloss">keys, values, lifetimes, and warming</span>
+</div>
+<h3>Hits and misses</h3>
+<p>
             You ask the cache for something. Exactly one of two things happens.
           </p>
-
-          <ul>
-            <li>
-              <strong>Hit</strong> — the cache has it. You get the answer
+<ul>
+<li>
+<strong>Hit</strong> — the cache has it. You get the answer
               immediately. No database, no network trip to origin, no
               recomputation.
             </li>
-            <li>
-              <strong>Miss</strong> — the cache does not have it. You must go
+<li>
+<strong>Miss</strong> — the cache does not have it. You must go
               and get the answer the slow way, and then (usually) put a copy in
               the cache for next time.
             </li>
-          </ul>
-
-          <p>That is the entire vocabulary. Hit: found it. Miss: didn't.</p>
-
-          <h3>Hit ratio</h3>
-
-          <p>
+</ul>
+<p>That is the entire vocabulary. Hit: found it. Miss: didn't.</p>
+<h3>Hit ratio</h3>
+<p>
             The <strong>hit ratio</strong> is the fraction of requests that were
             hits.
           </p>
-
-          <pre class="figure plain">hit ratio = hits ÷ (hits + misses)</pre>
-
-          <p>
+<pre class="figure plain">hit ratio = hits ÷ (hits + misses)</pre>
+<p>
             If 1,000 requests produce 900 hits and 100 misses, the hit ratio is
             900 ÷ 1000 = <strong>0.9</strong>, or 90%.
           </p>
-
-          <p>
+<p>
             Why it matters — work out the average response time. Say a hit takes
             <strong>1ms</strong> and a miss takes <strong>100ms</strong>:
           </p>
-
-          <pre class="figure plain">
+<pre class="figure plain">
 average = (0.90 × 1ms) + (0.10 × 100ms)
         = 0.9ms + 10ms
-        = 10.9ms</pre
-          >
-
-          <p>Two things stand out:</p>
-
-          <p>
-            <strong>First:</strong> you went from 100ms to 10.9ms. Nearly ten
+        = 10.9ms</pre>
+<p>Two things stand out:</p>
+<p>
+<strong>First:</strong> you went from 100ms to 10.9ms. Nearly ten
             times faster.
           </p>
-
-          <p>
-            <strong>Second, and more important:</strong> almost all of the
+<p>
+<strong>Second, and more important:</strong> almost all of the
             remaining time — 10ms of the 10.9ms — is the misses. At a 90% hit
             ratio, the 10% that miss are still doing 92% of the waiting.
           </p>
-
-          <p>Now try 99%:</p>
-
-          <pre class="figure plain">
-average = (0.99 × 1ms) + (0.01 × 100ms) = 1.99ms</pre
-          >
-
-          <p>
+<p>Now try 99%:</p>
+<pre class="figure plain">
+average = (0.99 × 1ms) + (0.01 × 100ms) = 1.99ms</pre>
+<p>
             Going from 90% to 99% is another 5× improvement.
-            <strong
-              >The last few percent of hit ratio are worth far more than the
-              first fifty.</strong
-            >
+            <strong>The last few percent of hit ratio are worth far more than the
+              first fifty.</strong>
             Keep that in mind — it comes back in Lesson 13.
           </p>
-
-          <div class="aside">
-            <p>
+<div class="aside">
+<p>
               We are only <em>defining</em> hit ratio here. How to deliberately
               raise it is Lesson 13.
             </p>
-          </div>
-
-          <h3>Cold and warm</h3>
-
-          <p>
+</div>
+<h3>Cold and warm</h3>
+<p>
             A <strong>cold cache</strong> is empty. It has just been created, or
             restarted, or cleared. Every request misses.
           </p>
-
-          <p>
+<p>
             A <strong>warm cache</strong> has been running long enough to hold
             the things people actually ask for. Most requests hit.
           </p>
-
-          <p>
+<p>
             Every cache starts cold. The period in between — where your app is
             running but the cache has not filled up yet — is genuinely
             dangerous, because your database is taking the full load with no
             protection. This is the <strong>cold start problem</strong>, and
             Lesson 12 will show you what an attacker can do with it.
           </p>
-
-          <h3>Keys: the most important idea in this lesson</h3>
-
-          <p>A cache stores pairs. Each pair is:</p>
-
-          <ul>
-            <li>a <strong>key</strong> — the question</li>
-            <li>a <strong>value</strong> — the answer</li>
-          </ul>
-
-          <p>
+<h3>Keys: the most important idea in this lesson</h3>
+<p>A cache stores pairs. Each pair is:</p>
+<ul>
+<li>a <strong>key</strong> — the question</li>
+<li>a <strong>value</strong> — the answer</li>
+</ul>
+<p>
             To get something out, you ask with the same key you put it in with.
             If the key does not match exactly, it is a miss.
           </p>
-
-          <p>
+<p>
             So the whole behaviour of your cache depends on how you write your
             keys. Here is the rule:
           </p>
-
-          <div class="keystone">
+<div class="keystone">
             The key must contain every input that changes the answer.
           </div>
-
-          <p>
-            Keep this rule in mind. Missing inputs cause many of the cache bugs
-            we'll meet.
-          </p>
-
-          <h4>A key that is too coarse</h4>
-
-          <p>You cache the product price:</p>
-
-          <pre class="figure plain">
+<p>Keep this rule in mind. Missing inputs cause many of the cache bugs we'll meet.</p>
+<h4>A key that is too coarse</h4>
+<p>You cache the product price:</p>
+<pre class="figure plain">
 key:   product:42:price
-value: 25.00</pre
-          >
-
-          <p>
+value: 25.00</pre>
+<p>
             Looks fine. Then someone visits from Japan and sees
             <strong>¥25.00</strong> instead of ¥3,800. Or a wholesale customer
             with a negotiated discount sees the retail price. Or a logged-in
             member sees the non-member price.
           </p>
-
-          <p>
+<p>
             The price depends on currency and customer type. Those inputs
             changed the answer, and they were not in the key. So the cache
             handed out an answer to a question nobody asked.
           </p>
-
-          <p>The fix:</p>
-
-          <pre class="figure plain">
-key: product:42:price:currency=JPY:tier=wholesale</pre
-          >
-
-          <p>
-            <strong>A key that is too coarse gives wrong answers.</strong>
-            <mark class="danger-highlight"
-              >This is the worse failure of the two, because nothing crashes —
-              it just quietly lies.</mark
-            >
-          </p>
-
-          <h4>A key that is too fine</h4>
-
-          <p>Overcorrecting, you add everything you can think of:</p>
-
-          <pre class="figure plain">
-key: product:42:price:currency=JPY:tier=wholesale:request_id=a91f3c:time=1699384726</pre
-          >
-
-          <p>
+<p>The fix:</p>
+<pre class="figure plain">
+key: product:42:price:currency=JPY:tier=wholesale</pre>
+<p>
+<strong>A key that is too coarse gives wrong answers.</strong>
+<mark class="danger-highlight">This is the worse failure of the two, because nothing crashes —
+              it just quietly lies.</mark>
+</p>
+<h4>A key that is too fine</h4>
+<p>Overcorrecting, you add everything you can think of:</p>
+<pre class="figure plain">
+key: product:42:price:currency=JPY:tier=wholesale:request_id=a91f3c:time=1699384726</pre>
+<p>
             Every request has a different request ID and a different timestamp.
             So every key is unique. So every request is a miss. You have built a
             cache with a hit ratio of zero, and it is now slower than having no
             cache at all, because you also pay the cost of storing everything.
           </p>
-
-          <p><strong>A key that is too fine gives no hits.</strong></p>
-
-          <h4>The judgement</h4>
-
-          <p>
+<p><strong>A key that is too fine gives no hits.</strong></p>
+<h4>The judgement</h4>
+<p>
             Good key design sits between those two failures. Include everything
             that changes the answer. Include nothing else.
           </p>
-
-          <p>
+<p>
             When you are unsure, ask:
-            <em
-              >&ldquo;If two requests have different values for this thing,
-              would they get different answers?&rdquo;</em
-            >
+            <em>“If two requests have different values for this thing,
+              would they get different answers?”</em>
             If yes, it goes in the key. If no, it stays out.
           </p>
-
-          <h3>Values: what you actually store</h3>
-
-          <p>
+<h3>Values: what you actually store</h3>
+<p>
             The <strong>value</strong> is what you get back on a hit. Some
             choices:
           </p>
-
-          <p>
-            <strong>How much to store.</strong> You can cache the whole rendered
+<p>
+<strong>How much to store.</strong> You can cache the whole rendered
             product page, or the product record, or just the price. Bigger
             values mean fewer, larger cache entries; smaller values mean more
             entries and more flexibility. A cached whole page is fast but must
             be thrown away when anything on it changes. A cached price survives
             a description edit.
           </p>
-
-          <p>
-            <strong>Whole objects or references.</strong> You can store the full
+<p>
+<strong>Whole objects or references.</strong> You can store the full
             review objects, or just a list of review IDs and look them up
             separately. Storing IDs keeps entries small and avoids duplicating
             the same review in twenty places — at the cost of a second lookup.
           </p>
-
-          <p>
-            <strong>Serialization.</strong> Most caches store bytes, not
+<p>
+<strong>Serialization.</strong> Most caches store bytes, not
             objects. <strong>Serialization</strong> is turning an object in your
             program's memory into a sequence of bytes that can be stored or
             sent, and <strong>deserialization</strong> is turning it back. This
@@ -987,114 +832,96 @@ key: product:42:price:currency=JPY:tier=wholesale:request_id=a91f3c:time=1699384
             keeping a cache inside your own process (Lesson 5) is so fast: no
             serialization at all.
           </p>
-
-          <h3>TTL: how long a copy is allowed to live</h3>
-
-          <p>
-            <strong>TTL</strong> stands for <strong>time to live</strong>. It is
+<h3>TTL: how long a copy is allowed to live</h3>
+<p>
+<strong>TTL</strong> stands for <strong>time to live</strong>. It is
             the number of seconds a cached copy is considered usable. When the
             TTL runs out, the copy has <strong>expired</strong>, and the next
             request for it is treated as a miss.
           </p>
-
-          <pre class="figure plain">
+<pre class="figure plain">
 key:   product:42:price:currency=USD
 value: 25.00
-TTL:   300     ← usable for 5 minutes, then thrown away</pre
-          >
-
-          <p>
+TTL:   300     ← usable for 5 minutes, then thrown away</pre>
+<p>
             TTL is your main tool for controlling staleness. A 300-second TTL is
             you saying:
-            <em
-              >&ldquo;I accept that this price may be up to five minutes out of
-              date.&rdquo;</em
-            >
-          </p>
-
-          <p>
+            <em>“I accept that this price may be up to five minutes out of
+              date.”</em>
+</p>
+<p>
             That is a business decision as much as a technical one. Five minutes
             of a stale product description is fine. Five minutes of a stale
             stock count might mean selling something you do not have.
           </p>
-
-          <div class="aside">
-            <p>
+<div class="aside">
+<p>
               TTL is introduced here because you need it from Lesson 3 onward.
               The <em>policies</em> for what to throw away when memory runs out
               are Lesson 10 — a related but genuinely different topic.
             </p>
-          </div>
-
-          <h3>Warming: filling the cache on purpose</h3>
-
-          <p>
-            <strong>Cache warming</strong> is loading data into a cache before
+</div>
+<h3>Warming: filling the cache on purpose</h3>
+<p>
+<strong>Cache warming</strong> is loading data into a cache before
             anyone asks for it, so the first real user gets a hit instead of a
             miss.
           </p>
-
-          <p>Three common approaches:</p>
-
-          <p>
-            <strong>Warm on deploy.</strong> After releasing new code, run a
+<p>Three common approaches:</p>
+<p>
+<strong>Warm on deploy.</strong> After releasing new code, run a
             script that requests your most important pages so their entries
             exist before traffic arrives.
           </p>
-
-          <p>
-            <strong>Warm from a log.</strong> Take the top few thousand keys
+<p>
+<strong>Warm from a log.</strong> Take the top few thousand keys
             from yesterday's traffic and load those. Simple and effective,
             because yesterday's popular items are usually today's.
           </p>
-
-          <p>
-            <strong>Lazy warming.</strong> Do nothing special — let the cache
+<p>
+<strong>Lazy warming.</strong> Do nothing special — let the cache
             fill as real requests arrive. This is the default. It is fine for
             small caches and dangerous for large ones, because the whole warm-up
             period runs with your database unprotected.
           </p>
-
-          <p>
+<p>
             Warming matters most when your cache is large and your database is
             only just able to cope without it. If your database can handle full
             traffic with a cold cache, warming is a nicety. If it cannot,
             warming is the difference between a deploy and an outage.
           </p>
-
-          <div class="myth">
-            <div class="label">Common misconception</div>
-            <p class="claim">
-              &ldquo;The cache key is just the record's ID.&rdquo;
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">
+              “The cache key is just the record's ID.”
             </p>
-            <p>
+<p>
               The ID is the beginning of the key. The rest is language,
               currency, permissions, device, feature flags — every input that
               changes the answer. The forgotten one is where your bug lives.
             </p>
-          </div>
-
-          <div class="forge">
-            <div class="label">The Forge</div>
-            <p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>
               In a room far from the light, the Latency Lord watches a single
               request pass by. It asks for product 999999999 — a product that
               does not exist and never has.
             </p>
-            <p>
+<p>
               He watches it slip past the browser, which has no copy of it. Past
               the edge, which has no copy of it. Past the application cache,
               which has no copy of it. And he watches it strike the database
               directly, and the database dutifully search its entire index for
               something that was never there.
             </p>
-            <p>
+<p>
               He has found the weakness: nonexistent products are not cached, so
               every new fake ID forces another useless database lookup. He
               begins generating thousands of fake product IDs.
             </p>
-          </div>
-        </section>
+</div>
+</section>
 
         <div class="lesson-end">
           <span class="muted">Prologue complete</span>

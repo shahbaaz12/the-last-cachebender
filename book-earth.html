@@ -96,144 +96,99 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
 <!-- ============ LESSON 5 ============ -->
 <section class="lesson-head realm-earth" id="l5">
-  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_still_life_of_earth_kingdom_symbols._a/screen.png" loading="lazy" decoding="async" alt="">
-  <div class="num">Lesson Five</div>
-  <h2>The Application Sanctum</h2>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_still_life_of_earth_kingdom_symbols._a/screen.png"/>
+<div class="num">Lesson Five</div>
+<h2>The Application Sanctum</h2>
 </section>
 
 <section class="wrap">
-  <div class="technique">
-    <span class="tag">Technique unlocked</span>
-    <span class="name">Stonehold</span>
-    <span class="gloss">holding data in your own memory</span>
-  </div>
-
-  <div class="aside">
-    <p><strong>Scope of this lesson: one process, on one machine.</strong> Caching across many servers is Lesson 6. Caches the database keeps for itself are Lesson 7. Keeping these separate matters, because they fail in completely different ways.</p>
-  </div>
-
-  <h3>The realm</h3>
-
-  <p>An <strong>in-memory cache</strong> — also called a <strong>local cache</strong> or <strong>in-process cache</strong> — is data your application keeps in its own memory, inside the running program.</p>
-
-  <p>A <strong>process</strong> is one running copy of your program. When you start your server, that is a process. It has its own memory that no other program can see.</p>
-
-  <p>This is the fastest cache that exists. There is no network. There is no serialization — the object in the cache is a real object in your program, ready to use. A hit takes roughly 100 nanoseconds.</p>
-
-  <h3 id="l5-hold">What you can hold here</h3>
-
-  <p>You now have somewhere very fast to put things. The question is what to put there.</p>
-
-  <p>Inside your own process, two different kinds of thing are worth keeping — and they carry completely different risks.</p>
-
-  <p><strong>Work you already did.</strong> A calculation, a parsed file, a rendered fragment. The inputs are still sitting right there in your program; you simply do not want to do the arithmetic twice. This can only go stale if the inputs change, and you control the inputs.</p>
-
-  <p><strong>Data that came from somewhere else.</strong> A product row from the database, a response from another service. This copy can become wrong at any moment, because somebody else can change the original without telling you.</p>
-
-  <p>The first is nearly free of risk. The second is where Lesson 11 comes from.</p>
-
-  <p>Start with the safe one.</p>
-
-  <h3 id="l5-memo">Memoization</h3>
-
-  <p><strong>Memoization</strong> is caching the result of a function so that calling it again with the same inputs returns the stored answer instead of recomputing it.</p>
-
-  <pre class="figure plain">calculate_shipping(weight=2.5, zone="EU", express=false)
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">Stonehold</span>
+<span class="gloss">holding data in your own memory</span>
+</div>
+<div class="aside">
+<p><strong>Scope of this lesson: one process, on one machine.</strong> Caching across many servers is Lesson 6. Caches the database keeps for itself are Lesson 7. Keeping these separate matters, because they fail in completely different ways.</p>
+</div>
+<h3>The realm</h3>
+<p>An <strong>in-memory cache</strong> — also called a <strong>local cache</strong> or <strong>in-process cache</strong> — is data your application keeps in its own memory, inside the running program.</p>
+<p>A <strong>process</strong> is one running copy of your program. When you start your server, that is a process. It has its own memory that no other program can see.</p>
+<p>This is the fastest cache that exists. There is no network. There is no serialization — the object in the cache is a real object in your program, ready to use. A hit takes roughly 100 nanoseconds.</p>
+<h3 id="l5-hold">What you can hold here</h3>
+<p>You now have somewhere very fast to put things. The question is what to put there.</p>
+<p>Inside your own process, two different kinds of thing are worth keeping — and they carry completely different risks.</p>
+<p><strong>Work you already did.</strong> A calculation, a parsed file, a rendered fragment. The inputs are still sitting right there in your program; you simply do not want to do the arithmetic twice. This can only go stale if the inputs change, and you control the inputs.</p>
+<p><strong>Data that came from somewhere else.</strong> A product row from the database, a response from another service. This copy can become wrong at any moment, because somebody else can change the original without telling you.</p>
+<p>The first is nearly free of risk. The second is where Lesson 11 comes from.</p>
+<p>Start with the safe one.</p>
+<h3 id="l5-memo">Memoization</h3>
+<p><strong>Memoization</strong> is caching the result of a function so that calling it again with the same inputs returns the stored answer instead of recomputing it.</p>
+<pre class="figure plain">calculate_shipping(weight=2.5, zone="EU", express=false)
    → first call:  runs the calculation      12ms
    → second call: returns the stored answer  0.0001ms</pre>
-
-  <p>The inputs form the key. The return value is the value. It is Lesson 2's key rule applied to a function signature — and it has the same failure mode. If the function secretly depends on something not in its arguments (today's date, a config setting, a database row), then that hidden input is missing from your key, and you will serve the wrong answer.</p>
-
-  <p>Memoization is only safe for functions where <strong>the same inputs always produce the same output.</strong></p>
-
-  <h3 id="l5-costs">The costs</h3>
-
-  <p><strong>Memory is shared with your application.</strong> A local cache lives in the same memory your app needs to run. An unbounded cache will consume it all and crash the process. Always set a maximum size — how the cache decides what to remove when it hits that limit is Lesson 10.</p>
-
-  <p><strong>The cache dies with the process.</strong> Restart, deploy, crash, or scale down, and it is gone. Every deploy gives you a cold cache and the full cold-start problem from Lesson 2.</p>
-
-  <p><strong>It does not scale with your data.</strong> A local cache can hold what fits in one machine's spare memory. That is a hard ceiling.</p>
-
-  <h3 id="l5-redis">Redis, introduced carefully</h3>
-
-  <p><strong>Redis</strong> is a separate program that stores key-value data in memory and is reachable over a network. Many applications can talk to the same Redis instance.</p>
-
-  <p>It is important to be precise about this, because the terms get muddled constantly:</p>
-
-  <div class="tablewrap"><table>
-    <thead><tr><th></th><th>Local cache</th><th>Redis</th></tr></thead>
-    <tbody>
-      <tr><td>Where it lives</td><td>Inside your process</td><td>A separate program, usually another machine</td></tr>
-      <tr><td>Access time</td><td>~100 nanoseconds</td><td>~500 microseconds</td></tr>
-      <tr><td>Serialization</td><td>None — real objects</td><td>Yes, every read and write</td></tr>
-      <tr><td>Survives restart</td><td>No</td><td>Yes</td></tr>
-      <tr><td>Shared between servers</td><td><strong>No</strong></td><td><strong>Yes</strong></td></tr>
-    </tbody>
-  </table></div>
-
-  <p>Redis is roughly <strong>5,000 times slower</strong> than a local cache. It is also roughly 200 times faster than a cross-continent request, and — the reason it exists — it is <em>shared</em>.</p>
-
-  <p>Both belong to the application layer, but they have different costs: a local cache stays inside one process; Redis is shared over the network.</p>
-
-  <h3>What belongs in a local cache</h3>
-
-  <p>Things that are <strong>the same for every user</strong>, cheap to rebuild, and harmless if two servers are a few seconds out of step with each other.</p>
-
-  <ul>
-    <li><strong>Feature flags</strong> — is the new checkout switched on?</li>
-    <li><strong>The country list</strong> behind a dropdown</li>
-    <li><strong>The navigation menu and category tree</strong></li>
-    <li><strong>Currency conversion rates</strong></li>
-    <li><strong>An expensive calculation</strong> you keep repeating with the same inputs</li>
-  </ul>
-
-  <p>If your server restarts and loses all of it, nothing breaks. It rebuilds on the next request and the user never knows.</p>
-
-  <p><strong>What does not belong here:</strong> anything about one particular person. Your process serves thousands of users at once, and a key that forgets to say <em>which</em> of them will hand one customer's data to the next.</p>
-
-  <h3>At the Storefront</h3>
-
-  <p>Memoize the shipping and price calculations. Keep the category tree in a local cache with a 5-minute TTL.</p>
-
-  <p>Leave the product data alone for now. You are about to find out why.</p>
-
-  <div class="myth">
-    <div class="label">Common misconception</div>
-    <p class="claim">&ldquo;In-memory cache means Redis.&rdquo;</p>
-    <p>Local is inside your process — no network, no serialization, gone on restart, invisible to your other servers. Redis is across a network and shared. The gap between them is three orders of magnitude, and the <em>shared</em> part is the entire reason the next lesson exists.</p>
-  </div>
-
-
+<p>The inputs form the key. The return value is the value. It is Lesson 2's key rule applied to a function signature — and it has the same failure mode. If the function secretly depends on something not in its arguments (today's date, a config setting, a database row), then that hidden input is missing from your key, and you will serve the wrong answer.</p>
+<p>Memoization is only safe for functions where <strong>the same inputs always produce the same output.</strong></p>
+<h3 id="l5-costs">The costs</h3>
+<p><strong>Memory is shared with your application.</strong> A local cache lives in the same memory your app needs to run. An unbounded cache will consume it all and crash the process. Always set a maximum size — how the cache decides what to remove when it hits that limit is Lesson 10.</p>
+<p><strong>The cache dies with the process.</strong> Restart, deploy, crash, or scale down, and it is gone. Every deploy gives you a cold cache and the full cold-start problem from Lesson 2.</p>
+<p><strong>It does not scale with your data.</strong> A local cache can hold what fits in one machine's spare memory. That is a hard ceiling.</p>
+<h3 id="l5-redis">Redis, introduced carefully</h3>
+<p><strong>Redis</strong> is a separate program that stores key-value data in memory and is reachable over a network. Many applications can talk to the same Redis instance.</p>
+<p>It is important to be precise about this, because the terms get muddled constantly:</p>
+<div class="tablewrap"><table>
+<thead><tr><th></th><th>Local cache</th><th>Redis</th></tr></thead>
+<tbody>
+<tr><td>Where it lives</td><td>Inside your process</td><td>A separate program, usually another machine</td></tr>
+<tr><td>Access time</td><td>~100 nanoseconds</td><td>~500 microseconds</td></tr>
+<tr><td>Serialization</td><td>None — real objects</td><td>Yes, every read and write</td></tr>
+<tr><td>Survives restart</td><td>No</td><td>Yes</td></tr>
+<tr><td>Shared between servers</td><td><strong>No</strong></td><td><strong>Yes</strong></td></tr>
+</tbody>
+</table></div>
+<p>Redis is roughly <strong>5,000 times slower</strong> than a local cache. It is also roughly 200 times faster than a cross-continent request, and — the reason it exists — it is <em>shared</em>.</p>
+<p>Both belong to the application layer, but they have different costs: a local cache stays inside one process; Redis is shared over the network.</p>
+<h3>What belongs in a local cache</h3>
+<p>Things that are <strong>the same for every user</strong>, cheap to rebuild, and harmless if two servers are a few seconds out of step with each other.</p>
+<ul>
+<li><strong>Feature flags</strong> — is the new checkout switched on?</li>
+<li><strong>The country list</strong> behind a dropdown</li>
+<li><strong>The navigation menu and category tree</strong></li>
+<li><strong>Currency conversion rates</strong></li>
+<li><strong>An expensive calculation</strong> you keep repeating with the same inputs</li>
+</ul>
+<p>If your server restarts and loses all of it, nothing breaks. It rebuilds on the next request and the user never knows.</p>
+<p><strong>What does not belong here:</strong> anything about one particular person. Your process serves thousands of users at once, and a key that forgets to say <em>which</em> of them will hand one customer's data to the next.</p>
+<h3>At the Storefront</h3>
+<p>Memoize the shipping and price calculations. Keep the category tree in a local cache with a 5-minute TTL.</p>
+<p>Leave the product data alone for now. You are about to find out why.</p>
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">“In-memory cache means Redis.”</p>
+<p>Local is inside your process — no network, no serialization, gone on restart, invisible to your other servers. Redis is across a network and shared. The gap between them is three orders of magnitude, and the <em>shared</em> part is the entire reason the next lesson exists.</p>
+</div>
 </section>
 
 
 <!-- ============ LESSON 6 ============ -->
 <section class="lesson-head realm-earth" id="l6">
-  <img class="lesson-art" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png" loading="lazy" decoding="async" alt="">
-  <div class="num">Lesson Six</div>
-  <h2>The Distributed Cache Tribes</h2>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png"/>
+<div class="num">Lesson Six</div>
+<h2>The Distributed Cache Tribes</h2>
 </section>
 
 <section class="wrap">
-  <div class="technique">
-    <span class="tag">Technique unlocked</span>
-    <span class="name">Stonesplit</span>
-    <span class="gloss">one cache shared across many application servers</span>
-  </div>
-
-  <h3 id="l6-problem">When each server keeps its own copy</h3>
-
-  <p>You have 10 application servers. Each has its own local cache. This gives you three distinct problems.</p>
-
-  <div class="callout problem">
-
-  <h4>1. They disagree</h4>
-
-  <p>Imagine ten servers running the same code, each with its own cached copy of the price. What happens when the price changes?</p>
-
-  <p>The code <strong>is</strong> identical on every server. What differs is <em>when</em> each one last looked.</p>
-
-  <pre class="figure">09:00   Server A   reads price £25 from the database, caches it
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">Stonesplit</span>
+<span class="gloss">one cache shared across many application servers</span>
+</div>
+<h3 id="l6-problem">When each server keeps its own copy</h3>
+<p>You have 10 application servers. Each has its own local cache. This gives you three distinct problems.</p>
+<div class="callout problem">
+<h4>1. They disagree</h4>
+<p>Imagine ten servers running the same code, each with its own cached copy of the price. What happens when the price changes?</p>
+<p>The code <strong>is</strong> identical on every server. What differs is <em>when</em> each one last looked.</p>
+<pre class="figure">09:00   Server A   reads price £25 from the database, caches it
 09:00   Server B   reads price £25 from the database, caches it
 
 09:30   Admin      changes the price to £20 in the database
@@ -242,181 +197,121 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
 09:31   Customer   request lands on Server A    → sees £20
 09:31   Customer   refreshes, lands on Server B → sees £25</pre>
-
-  <p>Neither server has a bug. Both are running exactly the code you wrote. They disagree because a cache is a <strong>copy</strong>, and each server made its own copy at its own moment.</p>
-
-  <p>So with ten servers you do not have one cache with a stale entry. You have ten separate caches, each stale in its own way.</p>
-
-  <h4>2. Your hit ratio collapses</h4>
-
-  <p>The same product must be loaded and stored ten separate times — once per server. Each server only sees a tenth of the traffic, so each takes far longer to warm up. You are paying ten times the memory for a fraction of the benefit.</p>
-
-  <h4>3. You cannot invalidate</h4>
-
-  <p>Change something, and you would need to reach into all ten processes to remove the stale copy. There is no mechanism to do that. As you add servers, it gets worse.</p>
-
-  </div>
-
-  <div class="callout solution">
-
-  <span class="callout-label">SOLUTION</span>
-
-  <p>A <strong>distributed cache</strong> solves all three: one shared cache that every server reads from and writes to.</p>
-
-  <pre class="figure">Server A ─┐
+<p>Neither server has a bug. Both are running exactly the code you wrote. They disagree because a cache is a <strong>copy</strong>, and each server made its own copy at its own moment.</p>
+<p>So with ten servers you do not have one cache with a stale entry. You have ten separate caches, each stale in its own way.</p>
+<h4>2. Your hit ratio collapses</h4>
+<p>The same product must be loaded and stored ten separate times — once per server. Each server only sees a tenth of the traffic, so each takes far longer to warm up. You are paying ten times the memory for a fraction of the benefit.</p>
+<h4>3. You cannot invalidate</h4>
+<p>Change something, and you would need to reach into all ten processes to remove the stale copy. There is no mechanism to do that. As you add servers, it gets worse.</p>
+</div>
+<div class="callout solution">
+<span class="callout-label">SOLUTION</span>
+<p>A <strong>distributed cache</strong> solves all three: one shared cache that every server reads from and writes to.</p>
+<pre class="figure">Server A ─┐
 Server B ─┼─→  Shared cache  ─→  Database
 Server C ─┘</pre>
-
-  <p>One value. One place to update. One warm-up. All ten servers benefit from the first one's miss.</p>
-
-  <p>When the cache has more than one node, sharding decides which node owns a key. The same key always goes to the same node; replicas can keep extra copies to make a node failure less disruptive. A popular key can still concentrate load on its owner.</p>
-
-  </div>
-
-  <p>In practice, most teams use Redis as the shared cache. This lesson covers what Redis adds beyond a shared cache, when it helps, and what it costs.</p>
-
-  <h3 id="l6-gives">What Redis gives you</h3>
-
-  <p>You met Redis in Lesson 5 as &ldquo;a separate program that stores key-value data in memory.&rdquo; Here is what that buys you beyond simply being shared:</p>
-
-  <ul>
-    <li><strong>Every server sees the same value.</strong> The reason this lesson exists.</li>
-    <li><strong>It survives your application restarting.</strong> Deploys no longer empty your cache.</li>
-    <li><strong>Sub-millisecond reads.</strong> Slower than local memory, far faster than a database.</li>
-    <li><strong>TTL is built into every key.</strong> You do not implement expiry — you set it and Redis honours it.</li>
-    <li><strong>Eviction is built in.</strong> When memory fills, Redis decides what to drop using a policy you choose <em>(Lesson 10)</em>.</li>
-    <li><strong>Operations are atomic.</strong> Two servers incrementing the same counter cannot overwrite each other, because the increment happens inside Redis rather than in your code.</li>
-    <li><strong>It can pass messages between your servers.</strong> Redis can publish a message that every subscribed server receives, which is useful well beyond caching.</li>
-    <li><strong>It stores more than strings.</strong> Counters, lists, sets and sorted sets are native, which makes some problems trivial that are awkward anywhere else.</li>
-  </ul>
-
-  <h3 id="l6-good">When Redis helps</h3>
-
-  <div class="tablewrap"><table>
-    <thead><tr><th>Scenario</th><th>Why Redis specifically</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Session storage</strong></td><td>Every server needs the same session. The original use case, and still the most common.</td></tr>
-      <tr><td><strong>Rate limiting</strong></td><td>Atomic counters with an expiry — correct under concurrency without you writing locks</td></tr>
-      <tr><td><strong>Counters and leaderboards</strong></td><td>Sorted sets do natively what is genuinely awkward in a relational database</td></tr>
-      <tr><td><strong>Shared cache in front of a database</strong></td><td>The case this course is about</td></tr>
-      <tr><td><strong>Simple queues</strong></td><td>Lists as job handoff between services</td></tr>
-    </tbody>
-  </table></div>
-
-  <p>Those are the scenarios. Here is what they actually look like to write.</p>
-
-  <h4>Reading a Redis command</h4>
-
-  <p>Every command is a <strong>verb</strong>, a <strong>key</strong>, and usually a <strong>value</strong>:</p>
-
-  <pre class="figure">SET  product:42  "{name: Four Realms Atlas, price: 84}"  EX 300
+<p>One value. One place to update. One warm-up. All ten servers benefit from the first one's miss.</p>
+</div>
+<p>When the cache has more than one node, sharding decides which node owns a key. The same key always goes to the same node; replicas can keep extra copies to make a node failure less disruptive. A popular key can still concentrate load on its owner.</p>
+<p>In practice, for most teams, that shared cache is Redis. So the rest of this lesson is about what Redis gives you, when it helps, and what it costs.</p>
+<h3 id="l6-gives">What Redis gives you</h3>
+<p>You met Redis in Lesson 5 as “a separate program that stores key-value data in memory.” Here is what that buys you beyond simply being shared:</p>
+<ul>
+<li><strong>Every server sees the same value.</strong> The reason this lesson exists.</li>
+<li><strong>It survives your application restarting.</strong> Deploys no longer empty your cache.</li>
+<li><strong>Sub-millisecond reads.</strong> Slower than local memory, far faster than a database.</li>
+<li><strong>TTL is built into every key.</strong> You do not implement expiry — you set it and Redis honours it.</li>
+<li><strong>Eviction is built in.</strong> When memory fills, Redis decides what to drop using a policy you choose <em>(Lesson 10)</em>.</li>
+<li><strong>Operations are atomic.</strong> Two servers incrementing the same counter cannot overwrite each other, because the increment happens inside Redis rather than in your code.</li>
+<li><strong>It can pass messages between your servers.</strong> Redis can publish a message that every subscribed server receives, which is useful well beyond caching.</li>
+<li><strong>It stores more than strings.</strong> Counters, lists, sets and sorted sets are native, which makes some problems trivial that are awkward anywhere else.</li>
+</ul>
+<h3 id="l6-good">When Redis helps</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Scenario</th><th>Why Redis specifically</th></tr></thead>
+<tbody>
+<tr><td><strong>Session storage</strong></td><td>Every server needs the same session. The original use case, and still the most common.</td></tr>
+<tr><td><strong>Rate limiting</strong></td><td>Atomic counters with an expiry — correct under concurrency without you writing locks</td></tr>
+<tr><td><strong>Counters and leaderboards</strong></td><td>Sorted sets do natively what is genuinely awkward in a relational database</td></tr>
+<tr><td><strong>Shared cache in front of a database</strong></td><td>The case this course is about</td></tr>
+<tr><td><strong>Simple queues</strong></td><td>Lists as job handoff between services</td></tr>
+</tbody>
+</table></div>
+<p>Those are the scenarios. Here is what they actually look like to write.</p>
+<h4>Reading a Redis command</h4>
+<p>Every command is a <strong>verb</strong>, a <strong>key</strong>, and usually a <strong>value</strong>:</p>
+<pre class="figure">SET  product:42  "{name: Four Realms Atlas, price: 84}"  EX 300
 │    │           │                                │
 verb key         value                            how long to keep it</pre>
-
-  <p>Keys are just text. The colons in <code>product:42</code> mean nothing to Redis — they are a naming habit, the way folders organise files.</p>
-
-  <p>The last part is the one that matters most here. <strong>Expiry is built into the write.</strong> You say how long the value should live at the moment you store it, and Redis deletes it for you when the time is up. There is no cleanup job to write and no cleanup job to forget.</p>
-
-  <h4>Four of them in practice</h4>
-
-  <p><strong>A session — signed in for 30 minutes.</strong></p>
-
-  <pre class="figure">SET session:a91f3c "{user_id: 88}" EX 1800
+<p>Keys are just text. The colons in <code>product:42</code> mean nothing to Redis — they are a naming habit, the way folders organise files.</p>
+<p>The last part is the one that matters most here. <strong>Expiry is built into the write.</strong> You say how long the value should live at the moment you store it, and Redis deletes it for you when the time is up. There is no cleanup job to write and no cleanup job to forget.</p>
+<h4>Four of them in practice</h4>
+<p><strong>A session — signed in for 30 minutes.</strong></p>
+<pre class="figure">SET session:a91f3c "{user_id: 88}" EX 1800
 
     EX 1800  →  delete this in 1800 seconds, which is 30 minutes</pre>
-
-  <p>Half an hour later the key is gone and the user is signed out. Nothing had to notice or tidy up.</p>
-
-  <p><strong>A rate limit — five attempts a minute.</strong></p>
-
-  <pre class="figure">INCR   ratelimit:user:42:0930        →  1     their first try this minute
+<p>Half an hour later the key is gone and the user is signed out. Nothing had to notice or tidy up.</p>
+<p><strong>A rate limit — five attempts a minute.</strong></p>
+<pre class="figure">INCR   ratelimit:user:42:0930        →  1     their first try this minute
 EXPIRE ratelimit:user:42:0930 60              throw the counter away after a minute
 
 INCR   ratelimit:user:42:0930        →  2
 INCR   ratelimit:user:42:0930        →  3     ... refuse them at 6</pre>
-
-  <p><code>INCR</code> adds one and hands back the new total, so you get the count and the increment in a single step. The <code>0930</code> on the end is the current minute — 09:30. Each minute quietly gets its own counter, and yesterday's counters have long since deleted themselves.</p>
-
-  <p><strong>A leaderboard — the top ten, instantly.</strong></p>
-
-  <pre class="figure">ZADD      leaderboard 4820 "player:17"    record a score of 4820
+<p><code>INCR</code> adds one and hands back the new total, so you get the count and the increment in a single step. The <code>0930</code> on the end is the current minute — 09:30. Each minute quietly gets its own counter, and yesterday's counters have long since deleted themselves.</p>
+<p><strong>A leaderboard — the top ten, instantly.</strong></p>
+<pre class="figure">ZADD      leaderboard 4820 "player:17"    record a score of 4820
 
 ZREVRANGE leaderboard 0 9            →  the ten highest scores, in order</pre>
-
-  <p>A <strong>sorted set</strong> keeps its members in score order at all times. So "the top ten" is a read, not a sort — Redis already knows the answer. The same thing in a relational database means ordering the table on every request.</p>
-
-  <p><strong>A cache — hold a product for five minutes.</strong></p>
-
-  <pre class="figure">SETEX product:42 300 "{name: Four Realms Atlas, price: 84}"
+<p>A <strong>sorted set</strong> keeps its members in score order at all times. So "the top ten" is a read, not a sort — Redis already knows the answer. The same thing in a relational database means ordering the table on every request.</p>
+<p><strong>A cache — hold a product for five minutes.</strong></p>
+<pre class="figure">SETEX product:42 300 "{name: Four Realms Atlas, price: 84}"
 
 GET   product:42    →  the value, if it is still there
                     →  nil, if it is not</pre>
-
-  <p><code>SETEX</code> is just <code>SET</code> with the expiry built into the name. And that <code>nil</code> is worth pausing on: <strong>it is your cache miss.</strong> It is the moment your code stops asking Redis and goes to the database instead — the exact fork you met in Lesson 2.</p>
-
-  <p>Look at the rate-limiting example. Two servers can run <code>INCR</code> on the same key at the same moment and the count is still correct, because Redis performs the increment itself. Doing that with a plain read-modify-write in your own code — read 10, add 1, write 11, twice, concurrently — loses one of the increments.</p>
-
-  <div class="keystone">This is the read-modify-write race, and Redis solves it by doing the work for you.</div>
-
-  <h3 id="l6-belongs">What belongs in Redis</h3>
-
-  <p>Things that must be <strong>the same on every server</strong>, or must <strong>survive a restart</strong>, or are <strong>about one particular person</strong>.</p>
-
-  <ul>
-    <li><strong>Login sessions</strong> — the request that signs you in might land on server 3 and the next one on server 7. Both have to know who you are.</li>
-    <li><strong>Shopping carts</strong> — the same reason, and people expect them to still be there tomorrow.</li>
-    <li><strong>One-time codes and password-reset links</strong> — store them with an expiry and Redis deletes them for you when the time is up.</li>
-    <li><strong>Rate limits</strong> — &ldquo;five login attempts a minute&rdquo; only works if every server counts into the same place.</li>
-    <li><strong>Results fetched from the database</strong> — one server's slow query becomes every server's fast answer.</li>
-    <li><strong>Live counters</strong> — view counts, or &ldquo;3 people are looking at this right now.&rdquo;</li>
-  </ul>
-
-  <p>Set that against the local-cache list from Lesson 5 and the split becomes clear: <strong>local for facts about your application, Redis for facts about your users.</strong></p>
-
-  <h3 id="l6-choose">Local cache or Redis?</h3>
-
-  <p>One question settles most cases.</p>
-
-  <div class="keystone">If two of your servers gave different answers for this, would anything actually break?</div>
-
-  <p><strong>No</strong> — use a local cache. It is faster and simpler.</p>
-
-  <p><strong>Yes</strong> — use a shared cache such as Redis, and allow for the network round trip.</p>
-
-  <p>The category tree can be five seconds out of date on one server and nobody will ever notice. A shopping cart cannot.</p>
-
-
-  <h3 id="l6-down">The downsides</h3>
-
-  <p>Redis is not free, and the costs are worth stating plainly:</p>
-
-  <ul>
-    <li><strong>It is a network hop.</strong> Roughly 5,000 times slower than local memory. Do not send it a request you could have answered in-process.</li>
-    <li><strong>It is another thing that can go down.</strong> See the rule above.</li>
-    <li><strong>Memory is expensive.</strong> RAM costs far more per gigabyte than disk. A cache that holds everything is usually a cache that costs more than the problem.</li>
-    <li><strong>Everything is serialized.</strong> Objects go in as bytes and come back as bytes, and that conversion is not free.</li>
-    <li><strong>It is not a database.</strong> Redis can persist to disk, but that is not what it is for. Do not store anything there that you cannot afford to lose.</li>
-    <li><strong>One key lives on one node.</strong> A single very popular key concentrates all of its traffic on one machine, and adding nodes does not help — the key still lives in exactly one place.</li>
-  </ul>
-
-  <p>That last one is not a flaw you can configure away. It is a property of how sharding works, and the Latency Lord is about to notice it.</p>
-
-  <h3>At the Storefront</h3>
-
-  <p>Move product details, price, and reviews to shared Redis. Choose a key scheme that includes every input that changes the answer. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Local and shared caching, used together.</strong></p>
-
-  <div class="myth">
-    <div class="label">Common misconception</div>
-    <p class="claim">&ldquo;A shared cache makes my data consistent.&rdquo;</p>
-    <p>It makes your servers agree with <em>each other</em>. All ten can now confidently serve the same stale price. Agreement is not correctness, and the gap between them is Lesson 11.</p>
-  </div>
-
-  <div class="forge">
-    <div class="label">The Forge</div>
-    <p>The Latency Lord counts the nodes and studies the traffic flowing to each.</p>
-    <p>They are evenly spread — except for one. A single key, asked for more often than every other key combined. The front-page item. The one everybody wants.</p>
-    <p>He does not need to attack every node in the cluster. He needs the one node that holds that key.</p>
-  </div>
+<p><code>SETEX</code> is just <code>SET</code> with the expiry built into the name. And that <code>nil</code> is worth pausing on: <strong>it is your cache miss.</strong> It is the moment your code stops asking Redis and goes to the database instead — the exact fork you met in Lesson 2.</p>
+<p>Look at the rate-limiting example. Two servers can run <code>INCR</code> on the same key at the same moment and the count is still correct, because Redis performs the increment itself. Doing that with a plain read-modify-write in your own code — read 10, add 1, write 11, twice, concurrently — loses one of the increments.</p>
+<div class="keystone">This is the read-modify-write race, and Redis solves it by doing the work for you.</div>
+<h3 id="l6-belongs">What belongs in Redis</h3>
+<p>Things that must be <strong>the same on every server</strong>, or must <strong>survive a restart</strong>, or are <strong>about one particular person</strong>.</p>
+<ul>
+<li><strong>Login sessions</strong> — the request that signs you in might land on server 3 and the next one on server 7. Both have to know who you are.</li>
+<li><strong>Shopping carts</strong> — the same reason, and people expect them to still be there tomorrow.</li>
+<li><strong>One-time codes and password-reset links</strong> — store them with an expiry and Redis deletes them for you when the time is up.</li>
+<li><strong>Rate limits</strong> — “five login attempts a minute” only works if every server counts into the same place.</li>
+<li><strong>Results fetched from the database</strong> — one server's slow query becomes every server's fast answer.</li>
+<li><strong>Live counters</strong> — view counts, or “3 people are looking at this right now.”</li>
+</ul>
+<p>Set that against the local-cache list from Lesson 5 and the split becomes clear: <strong>local for facts about your application, Redis for facts about your users.</strong></p>
+<h3 id="l6-choose">Local cache or Redis?</h3>
+<p>One question settles most cases.</p>
+<div class="keystone">If two of your servers gave different answers for this, would anything actually break?</div>
+<p><strong>No</strong> — use a local cache. It is faster and simpler.</p>
+<p><strong>Yes</strong> — use a shared cache such as Redis, and allow for the network round trip.</p>
+<p>The category tree can be five seconds out of date on one server and nobody will ever notice. A shopping cart cannot.</p>
+<h3 id="l6-down">The downsides</h3>
+<p>Redis is not free, and the costs are worth stating plainly:</p>
+<ul>
+<li><strong>It is a network hop.</strong> Roughly 5,000 times slower than local memory. Do not send it a request you could have answered in-process.</li>
+<li><strong>It is another thing that can go down.</strong> See the rule above.</li>
+<li><strong>Memory is expensive.</strong> RAM costs far more per gigabyte than disk. A cache that holds everything is usually a cache that costs more than the problem.</li>
+<li><strong>Everything is serialized.</strong> Objects go in as bytes and come back as bytes, and that conversion is not free.</li>
+<li><strong>It is not a database.</strong> Redis can persist to disk, but that is not what it is for. Do not store anything there that you cannot afford to lose.</li>
+<li><strong>One key lives on one node.</strong> A single very popular key concentrates all of its traffic on one machine, and adding nodes does not help — the key still lives in exactly one place.</li>
+</ul>
+<p>That last one is not a flaw you can configure away. It is a property of how sharding works, and the Latency Lord is about to notice it.</p>
+<h3>At the Storefront</h3>
+<p>Move product details, price, and reviews to shared Redis. Choose a key scheme that includes every input that changes the answer. Keep the category tree local — it is small, it is read constantly, and slight staleness is harmless. <strong>Local and shared caching, used together.</strong></p>
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">“A shared cache makes my data consistent.”</p>
+<p>It makes your servers agree with <em>each other</em>. All ten can now confidently serve the same stale price. Agreement is not correctness, and the gap between them is Lesson 11.</p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>The Latency Lord counts the nodes and studies the traffic flowing to each.</p>
+<p>They are evenly spread — except for one. A single key, asked for more often than every other key combined. The front-page item. The one everybody wants.</p>
+<p>He does not need to attack every node in the cluster. He needs the one node that holds that key.</p>
+</div>
 </section>
 
 <div class="lesson-end">

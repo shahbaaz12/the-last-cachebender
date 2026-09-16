@@ -180,46 +180,34 @@
 
         <!-- ============ LESSON 8 ============ -->
         <section class="lesson-head realm-spirit" id="l8">
-          <img
-            class="lesson-art"
-            src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png"
-            loading="lazy"
-            decoding="async"
-            alt=""
-          />
-          <div class="num">Lesson Eight</div>
-          <h2>The Three Reading Techniques</h2>
-        </section>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_composition_of_an_ancient_air_nomad_bending/screen.png"/>
+<div class="num">Lesson Eight</div>
+<h2>The Three Reading Techniques</h2>
+</section>
 
         <section class="wrap">
-          <div class="technique">
-            <span class="tag">Technique unlocked</span>
-            <span class="name">The Three Draws</span>
-            <span class="gloss">cache-aside, read-through, refresh-ahead</span>
-          </div>
-
-          <h3>The question</h3>
-
-          <p>
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Three Draws</span>
+<span class="gloss">cache-aside, read-through, refresh-ahead</span>
+</div>
+<h3>The question</h3>
+<p>
             Every read has the same shape: the data might be in the cache, or it
             might not. What happens on a miss?
           </p>
-
-          <p>
+<p>
             There are three answers, and the difference between the first two is
             <em>who is responsible</em>.
           </p>
-
-          <h3 id="l8-aside">Cache-aside</h3>
-
-          <p>
-            <strong>Cache-aside</strong> — also called
+<h3 id="l8-aside">Cache-aside</h3>
+<p>
+<strong>Cache-aside</strong> — also called
             <strong>lazy loading</strong> — means your application manages the
             cache directly. It is the most common pattern in use, and the
             default you should assume unless there is a reason otherwise.
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 value = cache.get(key)
 
 if value is not None:
@@ -227,457 +215,298 @@ if value is not None:
 
 value = database.query(key)      # MISS — application fetches
 cache.set(key, value, ttl=300)   # application stores
-return value</pre
-          >
-
-          <figure class="flow">
-            <svg
-              viewBox="0 0 560 242"
-              role="img"
-              aria-label="Cache-aside as a sequence: the application asks the cache and misses, then queries the database itself, then writes the value back into the cache."
-            >
-              <defs>
-                <marker
-                  id="sa"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d="M0 0.5 L8 4 L0 7.5 z"
-                    fill="var(--realm-color,var(--accent))"
-                  />
-                </marker>
-                <marker
-                  id="ra"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)" />
-                </marker>
-              </defs>
-              <rect
-                class="hd hd-src"
-                x="18"
-                y="8"
-                width="104"
-                height="34"
-                rx="5"
-              />
-              <text class="tx" x="70" y="31">Application</text>
-              <rect class="hd" x="230" y="8" width="100" height="34" rx="5" />
-              <text class="tx" x="280" y="31">Cache</text>
-              <rect class="hd" x="418" y="8" width="124" height="34" rx="5" />
-              <text class="tx" x="480" y="31">Database</text>
-
-              <line class="ll" x1="70" y1="42" x2="70" y2="228" />
-              <line class="ll" x1="280" y1="42" x2="280" y2="228" />
-              <line class="ll" x1="480" y1="42" x2="480" y2="228" />
-
-              <path class="ar" d="M70 78 L272 78" marker-end="url(#sa)" />
-              <text class="n" x="150" y="68">1</text>
-              <text class="nt" x="164" y="68">get</text>
-
-              <path class="ar-ret" d="M280 106 L78 106" marker-end="url(#ra)" />
-              <text class="nt" x="152" y="98">miss</text>
-
-              <path class="ar" d="M70 152 L472 152" marker-end="url(#sa)" />
-              <text class="n" x="248" y="142">2</text>
-              <text class="nt" x="262" y="142">
+return value</pre>
+<figure class="flow">
+<svg aria-label="Cache-aside as a sequence: the application asks the cache and misses, then queries the database itself, then writes the value back into the cache." role="img" viewbox="0 0 560 242">
+<defs>
+<marker id="sa" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="ra" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="hd hd-src" height="34" rx="5" width="104" x="18" y="8"></rect>
+<text class="tx" x="70" y="31">Application</text>
+<rect class="hd" height="34" rx="5" width="100" x="230" y="8"></rect>
+<text class="tx" x="280" y="31">Cache</text>
+<rect class="hd" height="34" rx="5" width="124" x="418" y="8"></rect>
+<text class="tx" x="480" y="31">Database</text>
+<line class="ll" x1="70" x2="70" y1="42" y2="228"></line>
+<line class="ll" x1="280" x2="280" y1="42" y2="228"></line>
+<line class="ll" x1="480" x2="480" y1="42" y2="228"></line>
+<path class="ar" d="M70 78 L272 78" marker-end="url(#sa)"></path>
+<text class="n" x="150" y="68">1</text>
+<text class="nt" x="164" y="68">get</text>
+<path class="ar-ret" d="M280 106 L78 106" marker-end="url(#ra)"></path>
+<text class="nt" x="152" y="98">miss</text>
+<path class="ar" d="M70 152 L472 152" marker-end="url(#sa)"></path>
+<text class="n" x="248" y="142">2</text>
+<text class="nt" x="262" y="142">
                 query — straight past the cache
               </text>
-
-              <path class="ar-ret" d="M480 180 L78 180" marker-end="url(#ra)" />
-              <text class="nt" x="252" y="172">row</text>
-
-              <path class="ar" d="M70 220 L272 220" marker-end="url(#sa)" />
-              <text class="n" x="150" y="210">3</text>
-              <text class="nt" x="164" y="210">set</text>
-            </svg>
-            <figcaption>
+<path class="ar-ret" d="M480 180 L78 180" marker-end="url(#ra)"></path>
+<text class="nt" x="252" y="172">row</text>
+<path class="ar" d="M70 220 L272 220" marker-end="url(#sa)"></path>
+<text class="n" x="150" y="210">3</text>
+<text class="nt" x="164" y="210">set</text>
+</svg>
+<figcaption>
               Three calls, all of them made by the application
             </figcaption>
-          </figure>
-
-          <p>
+</figure>
+<p>
             The application talks to both the cache and the database, and it
             owns every step.
           </p>
-
-          <p><strong>Why people use it:</strong></p>
-
-          <ul>
-            <li>
+<p><strong>Why people use it:</strong></p>
+<ul>
+<li>
               Only requested data is cached. Nothing is stored that nobody
               wants.
             </li>
-            <li>
+<li>
               If the cache is unavailable, the app can fall back to the
               database, as long as the database can handle the extra load.
             </li>
-            <li>
+<li>
               It works with any cache and any database. No special library
               required.
             </li>
-            <li>You can see exactly what is happening.</li>
-          </ul>
-
-          <p><strong>The costs:</strong></p>
-
-          <ul>
-            <li>
+<li>You can see exactly what is happening.</li>
+</ul>
+<p><strong>The costs:</strong></p>
+<ul>
+<li>
               Every miss pays three trips: check cache, query database, write
               cache.
             </li>
-            <li>
+<li>
               The logic is repeated everywhere you cache something, and someone
               will eventually get it wrong.
             </li>
-            <li>
+<li>
               It has a specific race condition, which is the second half of this
               lesson.
             </li>
-          </ul>
-
-          <h3 id="l8-through">Read-through</h3>
-
-          <p>
-            <strong>Read-through</strong> means your application only ever talks
+</ul>
+<h3 id="l8-through">Read-through</h3>
+<p>
+<strong>Read-through</strong> means your application only ever talks
             to the cache. The cache knows how to load missing data by itself.
           </p>
-
-          <figure class="flow">
-            <svg
-              viewBox="0 0 560 208"
-              role="img"
-              aria-label="Read-through as a sequence: the application asks the cache, and the cache loads from the database itself before answering."
-            >
-              <defs>
-                <marker
-                  id="st"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d="M0 0.5 L8 4 L0 7.5 z"
-                    fill="var(--realm-color,var(--accent))"
-                  />
-                </marker>
-                <marker
-                  id="rt"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)" />
-                </marker>
-              </defs>
-              <rect
-                class="hd hd-src"
-                x="18"
-                y="8"
-                width="104"
-                height="34"
-                rx="5"
-              />
-              <text class="tx" x="70" y="31">Application</text>
-              <rect class="hd" x="230" y="8" width="100" height="34" rx="5" />
-              <text class="tx" x="280" y="31">Cache</text>
-              <rect class="hd" x="418" y="8" width="124" height="34" rx="5" />
-              <text class="tx" x="480" y="31">Database</text>
-
-              <line class="ll" x1="70" y1="42" x2="70" y2="194" />
-              <line class="ll" x1="280" y1="42" x2="280" y2="194" />
-              <line class="ll" x1="480" y1="42" x2="480" y2="194" />
-
-              <path class="ar" d="M70 78 L272 78" marker-end="url(#st)" />
-              <text class="n" x="150" y="68">1</text>
-              <text class="nt" x="164" y="68">get</text>
-
-              <path class="ar" d="M280 112 L472 112" marker-end="url(#st)" />
-              <text class="n" x="342" y="102">2</text>
-              <text class="nt" x="356" y="102">load</text>
-
-              <path
-                class="ar-ret"
-                d="M480 144 L288 144"
-                marker-end="url(#rt)"
-              />
-              <text class="nt" x="352" y="136">row</text>
-
-              <path class="ar-ret" d="M280 186 L78 186" marker-end="url(#rt)" />
-              <text class="nt" x="150" y="178">value</text>
-            </svg>
-            <figcaption>
+<figure class="flow">
+<svg aria-label="Read-through as a sequence: the application asks the cache, and the cache loads from the database itself before answering." role="img" viewbox="0 0 560 208">
+<defs>
+<marker id="st" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="rt" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="hd hd-src" height="34" rx="5" width="104" x="18" y="8"></rect>
+<text class="tx" x="70" y="31">Application</text>
+<rect class="hd" height="34" rx="5" width="100" x="230" y="8"></rect>
+<text class="tx" x="280" y="31">Cache</text>
+<rect class="hd" height="34" rx="5" width="124" x="418" y="8"></rect>
+<text class="tx" x="480" y="31">Database</text>
+<line class="ll" x1="70" x2="70" y1="42" y2="194"></line>
+<line class="ll" x1="280" x2="280" y1="42" y2="194"></line>
+<line class="ll" x1="480" x2="480" y1="42" y2="194"></line>
+<path class="ar" d="M70 78 L272 78" marker-end="url(#st)"></path>
+<text class="n" x="150" y="68">1</text>
+<text class="nt" x="164" y="68">get</text>
+<path class="ar" d="M280 112 L472 112" marker-end="url(#st)"></path>
+<text class="n" x="342" y="102">2</text>
+<text class="nt" x="356" y="102">load</text>
+<path class="ar-ret" d="M480 144 L288 144" marker-end="url(#rt)"></path>
+<text class="nt" x="352" y="136">row</text>
+<path class="ar-ret" d="M280 186 L78 186" marker-end="url(#rt)"></path>
+<text class="nt" x="150" y="178">value</text>
+</svg>
+<figcaption>
               The application never reaches past the cache
             </figcaption>
-          </figure>
-
-          <pre class="figure">
+</figure>
+<pre class="figure">
 value = cache.get(key)    # cache handles the miss internally
-return value</pre
-          >
-
-          <p>
+return value</pre>
+<p>
             You configure the cache with a <strong>loader function</strong> —
             the code that fetches from the database — and the cache calls it
             when it needs to.
           </p>
-
-          <p>The distinction is exactly this:</p>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Who handles the miss</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Cache-aside</strong></td>
-                  <td>Your application</td>
-                </tr>
-                <tr>
-                  <td><strong>Read-through</strong></td>
-                  <td>The cache layer</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+<p>The distinction is exactly this:</p>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Who handles the miss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cache-aside</strong></td>
+<td>Your application</td>
+</tr>
+<tr>
+<td><strong>Read-through</strong></td>
+<td>The cache layer</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             That is the whole difference. Not performance, not freshness —
             <strong>responsibility.</strong> And because it decides where the
             logic lives, it decides where the bugs live.
           </p>
-
-          <p>
-            <strong>Why people use it:</strong> the loading logic exists once,
+<p>
+<strong>Why people use it:</strong> the loading logic exists once,
             not scattered everywhere. Application code becomes simple. Many
             caching libraries do the hard parts (like the race below) for you.
           </p>
-
-          <p>
-            <strong>The costs:</strong> you need a library that supports it. The
+<p>
+<strong>The costs:</strong> you need a library that supports it. The
             cache going down is now harder to survive, because your app has no
             other path to the data. And the loading logic is one step further
             from the code that uses it.
           </p>
-
-          <div class="aside">
-            <p>
-              <strong>You have already met one.</strong> In Lesson 4, the CDN
+<div class="aside">
+<p>
+<strong>You have already met one.</strong> In Lesson 4, the CDN
               fetched from origin on a miss without your application knowing.
               <strong>A CDN is a read-through cache.</strong> You did not
               implement it, so it did not feel like a pattern. It was.
             </p>
-          </div>
-
-          <h3 id="l8-ahead">Refresh-ahead</h3>
-
-          <p>
+</div>
+<h3 id="l8-ahead">Refresh-ahead</h3>
+<p>
             Both patterns above are reactive: a user hits a miss, and
             <em>that user waits</em> while the data loads.
           </p>
-
-          <figure class="flow">
-            <svg
-              viewBox="0 0 560 140"
-              role="img"
-              aria-label="Refresh-ahead: the value is refreshed in the background before its lifetime runs out, so no request ever meets a miss."
-            >
-              <defs>
-                <marker
-                  id="ahr"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d="M0 0.5 L8 4 L0 7.5 z"
-                    fill="var(--realm-color,var(--accent))"
-                  />
-                </marker>
-              </defs>
-              <line
-                x1="40"
-                y1="66"
-                x2="520"
-                y2="66"
-                stroke="var(--rule-firm)"
-                stroke-width="1.4"
-              />
-
-              <circle
-                cx="60"
-                cy="66"
-                r="4.5"
-                fill="var(--realm-color,var(--accent))"
-              />
-              <text class="nt" x="60" y="88" text-anchor="middle">t = 0</text>
-              <text class="nt" x="60" y="102" text-anchor="middle">cached</text>
-
-              <circle
-                cx="380"
-                cy="66"
-                r="4.5"
-                fill="var(--realm-color,var(--accent))"
-              />
-              <text class="nt" x="380" y="88" text-anchor="middle">
+<figure class="flow">
+<svg aria-label="Refresh-ahead: the value is refreshed in the background before its lifetime runs out, so no request ever meets a miss." role="img" viewbox="0 0 560 140">
+<defs>
+<marker id="ahr" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+</defs>
+<line stroke="var(--rule-firm)" stroke-width="1.4" x1="40" x2="520" y1="66" y2="66"></line>
+<circle cx="60" cy="66" fill="var(--realm-color,var(--accent))" r="4.5"></circle>
+<text class="nt" text-anchor="middle" x="60" y="88">t = 0</text>
+<text class="nt" text-anchor="middle" x="60" y="102">cached</text>
+<circle cx="380" cy="66" fill="var(--realm-color,var(--accent))" r="4.5"></circle>
+<text class="nt" text-anchor="middle" x="380" y="88">
                 t = 240
               </text>
-              <text class="nt" x="380" y="102" text-anchor="middle">
+<text class="nt" text-anchor="middle" x="380" y="102">
                 refreshed
               </text>
-
-              <circle
-                cx="470"
-                cy="66"
-                r="4.5"
-                fill="none"
-                stroke="var(--rule-firm)"
-                stroke-width="1.4"
-              />
-              <text class="nt" x="470" y="88" text-anchor="middle">
+<circle cx="470" cy="66" fill="none" r="4.5" stroke="var(--rule-firm)" stroke-width="1.4"></circle>
+<text class="nt" text-anchor="middle" x="470" y="88">
                 t = 300
               </text>
-              <text class="nt" x="470" y="102" text-anchor="middle">
+<text class="nt" text-anchor="middle" x="470" y="102">
                 would expire
               </text>
-
-              <path
-                class="ar ar-late"
-                d="M380 46 L380 22 L300 22"
-                marker-end="url(#ahr)"
-              />
-              <text class="nt" x="292" y="26" text-anchor="end">
+<path class="ar ar-late" d="M380 46 L380 22 L300 22" marker-end="url(#ahr)"></path>
+<text class="nt" text-anchor="end" x="292" y="26">
                 background refresh — nobody is waiting
               </text>
-            </svg>
-            <figcaption>
+</svg>
+<figcaption>
               The value is replaced before anyone meets a miss
             </figcaption>
-          </figure>
-
-          <p>
-            <strong>Refresh-ahead</strong> is proactive. For values you know are
+</figure>
+<p>
+<strong>Refresh-ahead</strong> is proactive. For values you know are
             hot, refresh them <strong>before</strong> they expire, so no user
             ever encounters the miss.
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 TTL = 300 seconds, refresh at 240
 
 t=0    value cached
 t=240  ─→ background job refreshes it   (no user is waiting)
 t=245  value replaced, timer resets
-       ...no user ever sees a miss on this key</pre
-          >
-
-          <p>
-            <strong>Why people use it:</strong> for hot keys, misses effectively
+       ...no user ever sees a miss on this key</pre>
+<p>
+<strong>Why people use it:</strong> for hot keys, misses effectively
             disappear. Your p99 latency — the slow tail you will meet in Lesson
             13 — improves dramatically, because the tail <em>was</em> the
             misses.
           </p>
-
-          <p>
-            <strong>The costs:</strong> you refresh values that may never be
+<p>
+<strong>The costs:</strong> you refresh values that may never be
             requested again, so you do work for nothing. You need to identify
             which keys deserve it. Applying it to everything is a way to
             generate constant pointless load.
           </p>
-
-          <div class="aside">
-            <p>
-              <strong>You have seen a related idea in Lesson 3.</strong>
-              <code>stale-while-revalidate</code> serves a stale copy while fetching a
+<div class="aside">
+<p>
+<strong>You have seen a related idea in Lesson 3.</strong>
+<code>stale-while-revalidate</code> serves a stale copy while fetching a
               fresh one. Refresh-ahead starts before the copy expires.
             </p>
-          </div>
-
-          <h3 id="l8-realms">Which realm uses which</h3>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Realm</th>
-                  <th>Natural pattern</th>
-                  <th>Why</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Browser</td>
-                  <td>Cache-first with revalidation</td>
-                  <td>Controlled by headers, not code</td>
-                </tr>
-                <tr>
-                  <td>CDN</td>
-                  <td><strong>Read-through</strong></td>
-                  <td>Fetches from origin on a miss automatically</td>
-                </tr>
-                <tr>
-                  <td>Local cache</td>
-                  <td><strong>Cache-aside</strong> or memoization</td>
-                  <td>You wrote it, you own it</td>
-                </tr>
-                <tr>
-                  <td>Redis</td>
-                  <td><strong>Cache-aside</strong></td>
-                  <td>The usual default</td>
-                </tr>
-                <tr>
-                  <td>Database buffer pool</td>
-                  <td><strong>Read-through</strong></td>
-                  <td>The database handles its own misses</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+</div>
+<h3 id="l8-realms">Which realm uses which</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Realm</th>
+<th>Natural pattern</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td>Cache-first with revalidation</td>
+<td>Controlled by headers, not code</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td><strong>Read-through</strong></td>
+<td>Fetches from origin on a miss automatically</td>
+</tr>
+<tr>
+<td>Local cache</td>
+<td><strong>Cache-aside</strong> or memoization</td>
+<td>You wrote it, you own it</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td><strong>Cache-aside</strong></td>
+<td>The usual default</td>
+</tr>
+<tr>
+<td>Database buffer pool</td>
+<td><strong>Read-through</strong></td>
+<td>The database handles its own misses</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             Notice the pattern:
-            <strong
-              >when you own the code, you get cache-aside. When someone else
-              built the cache, you get read-through.</strong
-            >
+            <strong>when you own the code, you get cache-aside. When someone else
+              built the cache, you get read-through.</strong>
             The techniques are the same everywhere; only the ownership moves.
           </p>
-
-          <h3 id="l8-race">The race: many readers, one missing key</h3>
-
-          <p>
+<h3 id="l8-race">The race: many readers, one missing key</h3>
+<p>
             Here is the flaw in cache-aside, and it is not a rare edge case — it
             is a guaranteed event on any popular key.
           </p>
-
-          <p>
+<p>
             The front-page product is requested 1,000 times per second. Its
             cached value expires.
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 t=0.000   TTL expires
 t=0.001   Request 1    → miss → queries database
 t=0.001   Request 2    → miss → queries database
@@ -685,48 +514,37 @@ t=0.001   Request 3    → miss → queries database
    ...
 t=0.001   Request 1000 → miss → queries database
 t=0.050   first query returns, cache is written
-          — 49 milliseconds too late for the other 999</pre
-          >
-
-          <div class="keystone">
+          — 49 milliseconds too late for the other 999</pre>
+<div class="keystone">
             One thousand identical database queries, for one value.
           </div>
-
-          <p>
+<p>
             The cache did not fail. Every one of those requests followed
-            cache-aside correctly. The pattern has a gap between &ldquo;the
-            value expired&rdquo; and &ldquo;the value has been reloaded,&rdquo;
+            cache-aside correctly. The pattern has a gap between “the
+            value expired” and “the value has been reloaded,”
             and every request arriving in that gap goes to the database.
           </p>
-
-          <p>
+<p>
             Worse, this is self-amplifying. A thousand simultaneous queries slow
             the database, which makes the reload take longer, which widens the
             gap, which lets more requests through.
           </p>
-
-          <h3 id="l8-single">Single-flight</h3>
-
-          <p>
-            <strong>Request coalescing</strong> — usually called
+<h3 id="l8-single">Single-flight</h3>
+<p>
+<strong>Request coalescing</strong> — usually called
             <strong>single-flight</strong> — fixes it: when many requests need
             the same missing key, <strong>one</strong> of them fetches it, and
             the rest wait for that one result.
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 t=0.001   Request 1    → miss → acquires the loader slot → queries database
 t=0.001   Request 2    → miss → someone is loading → waits
 t=0.001   Request 3    → miss → someone is loading → waits
    ...
-t=0.050   Request 1 gets the value, stores it, and hands it to all 999 waiters</pre
-          >
-
-          <p><strong>One database query. All 1,000 requests served.</strong></p>
-
-          <p>The shape:</p>
-
-          <pre class="figure">
+t=0.050   Request 1 gets the value, stores it, and hands it to all 999 waiters</pre>
+<p><strong>One database query. All 1,000 requests served.</strong></p>
+<p>The shape:</p>
+<pre class="figure">
 def get(key):
     value = cache.get(key)
     if value is not None:
@@ -740,85 +558,72 @@ def get(key):
             return value
         value = database.query(key)
         cache.set(key, value, ttl=300)
-        return value</pre
-          >
-
-          <p>Two details that matter:</p>
-
-          <ul>
-            <li>
-              <strong
-                >The second <code>cache.get</code> is not redundant.</strong
-              >
+        return value</pre>
+<p>Two details that matter:</p>
+<ul>
+<li>
+<strong>The second <code>cache.get</code> is not redundant.</strong>
               By the time a waiter is released, the value usually exists.
               Checking again avoids a pointless second query. This is the
               <em>double-checked</em> pattern.
             </li>
-            <li>
-              <strong>The lock is per key</strong>, not global. A global lock
+<li>
+<strong>The lock is per key</strong>, not global. A global lock
               would make every miss on every key wait behind every other, which
               would be far worse than the problem.
             </li>
-          </ul>
-
-          <p>
+</ul>
+<p>
             Most mature caching libraries provide this. It is worth knowing it
             exists before you need it — and you are about to need it.
           </p>
-
-          <div class="aside">
-            <p>
-              <strong>Remember this.</strong> This is your first weapon against
+<div class="aside">
+<p>
+<strong>Remember this.</strong> This is your first weapon against
               the Latency Lord, and it is deliberately being handed to you four
               lessons before the fight.
             </p>
-          </div>
-
-          <h3>At the Storefront</h3>
-
-          <p>
+</div>
+<h3>At the Storefront</h3>
+<p>
             Cache-aside for product details, with single-flight — it is the
             front page item and it will stampede.
           </p>
-
-          <p>
+<p>
             Refresh-ahead for the category tree — small, hot, expensive, on
             every page.
           </p>
-
-          <p>Nothing for the cart badge, in any pattern.</p>
-
-          <div class="myth">
-            <div class="label">Common misconception</div>
-            <p class="claim">
-              &ldquo;Cache-aside and read-through are the same thing.&rdquo;
+<p>Nothing for the cart badge, in any pattern.</p>
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">
+              “Cache-aside and read-through are the same thing.”
             </p>
-            <p>
+<p>
               They differ in who owns the miss, and that decides who owns the
               race condition above. With cache-aside, it is yours to solve. With
               read-through, your library probably solved it — which is a genuine
               reason to prefer one.
             </p>
-          </div>
-
-          <div class="forge">
-            <div class="label">The Forge</div>
-            <p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>
               The Latency Lord has been watching the reading techniques, and he
               has found the gap.
             </p>
-            <p>
+<p>
               Not a flaw in the cache. A gap in time — the space between the
               moment a value expires and the moment it is restored. It is small.
               Fifty milliseconds, perhaps.
             </p>
-            <p>A thousand requests can arrive in fifty milliseconds.</p>
-            <p>
+<p>A thousand requests can arrive in fifty milliseconds.</p>
+<p>
               He does not need to take the cache away. He only needs to choose
               the moment it empties.
             </p>
-          </div>
-        </section>
+</div>
+</section>
 
         <div class="lesson-end">
           <span class="muted">Lesson 8 complete</span>
@@ -829,536 +634,372 @@ def get(key):
 
         <!-- ============ LESSON 9 ============ -->
         <section class="lesson-head realm-spirit" id="l9">
-          <img
-            class="lesson-art"
-            src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_water_tribe_bending/screen.png"
-            loading="lazy"
-            decoding="async"
-            alt=""
-          />
-          <div class="num">Lesson Nine</div>
-          <h2>The Three Writing Techniques</h2>
-        </section>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_water_tribe_bending/screen.png"/>
+<div class="num">Lesson Nine</div>
+<h2>The Three Writing Techniques</h2>
+</section>
 
         <section class="wrap">
-          <div class="technique">
-            <span class="tag">Technique unlocked</span>
-            <span class="name">The Three Seals</span>
-            <span class="gloss">write-through, write-behind, write-around</span>
-          </div>
-
-          <h3>The problem</h3>
-
-          <p>Reading was straightforward: the value is there or it is not.</p>
-
-          <p>
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Three Seals</span>
+<span class="gloss">write-through, write-behind, write-around</span>
+</div>
+<h3>The problem</h3>
+<p>Reading was straightforward: the value is there or it is not.</p>
+<p>
             Writing is harder, because now
             <strong>two places hold the same fact</strong> — the cache and the
             database — and a write must deal with both. Between the moment you
             update one and the moment you update the other, they disagree.
           </p>
-
-          <p>
+<p>
             There are three strategies. They differ in <em>when</em> the
             database is written and
             <em>whether the cache is written at all</em>.
           </p>
-
-          <h3 id="l9-through">Write-through</h3>
-
-          <p>
-            <strong>Write-through</strong> means the cache owns the write. Your
+<h3 id="l9-through">Write-through</h3>
+<p>
+<strong>Write-through</strong> means the cache owns the write. Your
             application writes to the cache, the cache writes to the database,
             and the call does not return until the database write has completed.
           </p>
-
-          <p>
+<p>
             Both writes happen — but one after the other, not at the same time.
             The caller waits for the whole chain.
           </p>
-
-          <figure class="flow">
-            <svg
-              viewBox="0 0 560 150"
-              role="img"
-              aria-label="Write-through: the application writes to the cache and the database together, and only then reports success."
-            >
-              <defs>
-                <marker
-                  id="ahw"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d="M0 0.5 L8 4 L0 7.5 z"
-                    fill="var(--realm-color,var(--accent))"
-                  />
-                </marker>
-                <marker
-                  id="agw"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)" />
-                </marker>
-              </defs>
-              <rect
-                class="bx bx-src"
-                x="8"
-                y="46"
-                width="130"
-                height="46"
-                rx="5"
-              />
-              <text class="tx" x="73" y="75">Application</text>
-              <rect class="bx" x="215" y="46" width="130" height="46" rx="5" />
-              <text class="tx" x="280" y="75">Cache</text>
-              <rect class="bx" x="422" y="46" width="130" height="46" rx="5" />
-              <text class="tx" x="487" y="75">Database</text>
-
-              <path class="ar" d="M138 62 L209 62" marker-end="url(#ahw)" />
-              <text class="nt" x="173" y="52" text-anchor="middle">write</text>
-              <path class="ar" d="M345 62 L416 62" marker-end="url(#ahw)" />
-              <text class="nt" x="380" y="52" text-anchor="middle">write</text>
-
-              <path class="ar" d="M416 82 L140 82" marker-end="url(#ahw)" />
-              <text class="nt" x="280" y="104" text-anchor="middle">
+<figure class="flow">
+<svg aria-label="Write-through: the application writes to the cache and the database together, and only then reports success." role="img" viewbox="0 0 560 150">
+<defs>
+<marker id="ahw" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="agw" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="bx bx-src" height="46" rx="5" width="130" x="8" y="46"></rect>
+<text class="tx" x="73" y="75">Application</text>
+<rect class="bx" height="46" rx="5" width="130" x="215" y="46"></rect>
+<text class="tx" x="280" y="75">Cache</text>
+<rect class="bx" height="46" rx="5" width="130" x="422" y="46"></rect>
+<text class="tx" x="487" y="75">Database</text>
+<path class="ar" d="M138 62 L209 62" marker-end="url(#ahw)"></path>
+<text class="nt" text-anchor="middle" x="173" y="52">write</text>
+<path class="ar" d="M345 62 L416 62" marker-end="url(#ahw)"></path>
+<text class="nt" text-anchor="middle" x="380" y="52">write</text>
+<path class="ar" d="M416 82 L140 82" marker-end="url(#ahw)"></path>
+<text class="nt" text-anchor="middle" x="280" y="104">
                 success — only after both have been written
               </text>
-            </svg>
-            <figcaption>Nothing succeeds until both are written</figcaption>
-          </figure>
-
-          <pre class="figure">
+</svg>
+<figcaption>Nothing succeeds until both are written</figcaption>
+</figure>
+<pre class="figure">
 Application → cache.put(key, value)
                     ↓
               cache writes to the database
                     ↓
               database confirms
                     ↓
-Application ← success</pre
-          >
-
-          <p>
+Application ← success</pre>
+<p>
             Note who is doing the work:
-            <strong
-              >the cache talks to the database, not your application.</strong
-            >
+            <strong>the cache talks to the database, not your application.</strong>
             That is what makes it <em>through</em> — and it is the same
             distinction that separates read-through from cache-aside.
           </p>
-
-          <p>
+<p>
             Implementations differ on the order. Some write the cache first,
             then the database. Oracle's Coherence writes the database first and
             updates the cache only once that has succeeded, so that a failed
             database write can never leave a value sitting in the cache that the
             database has never seen.
           </p>
-
-          <p>
-            <strong>Why people use it:</strong> the cache is never behind the
+<p>
+<strong>Why people use it:</strong> the cache is never behind the
             database, because success is not reported until the database has the
             write. A subsequent read is correct. Reasoning about the system is
             simple.
           </p>
-
-          <p><strong>The costs:</strong></p>
-
-          <ul>
-            <li>
-              <strong>Writes are slower.</strong> You pay for both systems on
+<p><strong>The costs:</strong></p>
+<ul>
+<li>
+<strong>Writes are slower.</strong> You pay for both systems on
               every write.
             </li>
-            <li>
-              <strong>You cache things nobody reads.</strong> Every write
+<li>
+<strong>You cache things nobody reads.</strong> Every write
               populates the cache, whether or not that item will ever be
               requested. On write-heavy data with few reads, you fill your cache
               with dead weight and evict things people actually want.
             </li>
-            <li>
-              <strong>It is not actually atomic.</strong> Writing to two systems
+<li>
+<strong>It is not actually atomic.</strong> Writing to two systems
               without a transaction spanning both means one can succeed and the
               other fail. If the cache write succeeds and the database write
               fails, your cache now holds a value that does not exist in the
               source of truth — which is worse than being stale.
             </li>
-          </ul>
-
-          <p class="wild">
-            <span class="wild-tag">Where you would use it</span>
-          </p>
-
-          <ul>
-            <li>
-              <strong>Account and profile settings.</strong> Someone changes
+</ul>
+<p class="wild">
+<span class="wild-tag">Where you would use it</span>
+</p>
+<ul>
+<li>
+<strong>Account and profile settings.</strong> Someone changes
               their display name and lands straight back on a page showing it.
               The cache is already correct when that page renders.
             </li>
-            <li>
-              <strong>Feature flags and configuration.</strong> Written rarely,
+<li>
+<strong>Feature flags and configuration.</strong> Written rarely,
               read on nearly every request, and every server needs the new value
               at once.
             </li>
-            <li>
-              <strong>Stock counts on a low-volume catalogue.</strong> Being
+<li>
+<strong>Stock counts on a low-volume catalogue.</strong> Being
               wrong means overselling, and the write rate is low enough that the
               extra latency does not matter.
             </li>
-            <li>
-              <strong>Shopping cart contents.</strong> Written, then immediately
+<li>
+<strong>Shopping cart contents.</strong> Written, then immediately
               read on the next page, every time.
             </li>
-          </ul>
-
-          <div class="aside">
-            <p>
+</ul>
+<div class="aside">
+<p>
               The pattern:
-              <strong
-                >read-after-write is common, and being wrong is worse than being
-                slow.</strong
-              >
-            </p>
-          </div>
-
-          <h3 id="l9-behind">Write-behind</h3>
-
-          <p>
-            <strong>Write-behind</strong> — also called
+              <strong>read-after-write is common, and being wrong is worse than being
+                slow.</strong>
+</p>
+</div>
+<h3 id="l9-behind">Write-behind</h3>
+<p>
+<strong>Write-behind</strong> — also called
             <strong>write-back</strong> — writes to the cache, returns success
             immediately, and writes to the database later in the background.
           </p>
-
-          <figure class="flow">
-            <svg
-              viewBox="0 0 560 168"
-              role="img"
-              aria-label="Write-behind: the application writes to the cache and is told it succeeded immediately, and the database is written afterwards."
-            >
-              <defs>
-                <marker
-                  id="ahb"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d="M0 0.5 L8 4 L0 7.5 z"
-                    fill="var(--realm-color,var(--accent))"
-                  />
-                </marker>
-                <marker
-                  id="agb"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)" />
-                </marker>
-              </defs>
-              <rect
-                class="bx bx-src"
-                x="8"
-                y="46"
-                width="130"
-                height="46"
-                rx="5"
-              />
-              <text class="tx" x="73" y="75">Application</text>
-              <rect class="bx" x="215" y="46" width="130" height="46" rx="5" />
-              <text class="tx" x="280" y="75">Cache</text>
-              <rect class="bx" x="422" y="46" width="130" height="46" rx="5" />
-              <text class="tx" x="487" y="75">Database</text>
-
-              <path class="ar" d="M138 62 L209 62" marker-end="url(#ahb)" />
-              <text class="nt" x="173" y="52" text-anchor="middle">write</text>
-              <path class="ar" d="M209 82 L140 82" marker-end="url(#ahb)" />
-              <text class="nt" x="173" y="104" text-anchor="middle">
+<figure class="flow">
+<svg aria-label="Write-behind: the application writes to the cache and is told it succeeded immediately, and the database is written afterwards." role="img" viewbox="0 0 560 168">
+<defs>
+<marker id="ahb" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="agb" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="bx bx-src" height="46" rx="5" width="130" x="8" y="46"></rect>
+<text class="tx" x="73" y="75">Application</text>
+<rect class="bx" height="46" rx="5" width="130" x="215" y="46"></rect>
+<text class="tx" x="280" y="75">Cache</text>
+<rect class="bx" height="46" rx="5" width="130" x="422" y="46"></rect>
+<text class="tx" x="487" y="75">Database</text>
+<path class="ar" d="M138 62 L209 62" marker-end="url(#ahb)"></path>
+<text class="nt" text-anchor="middle" x="173" y="52">write</text>
+<path class="ar" d="M209 82 L140 82" marker-end="url(#ahb)"></path>
+<text class="nt" text-anchor="middle" x="173" y="104">
                 success, now
               </text>
-
-              <path
-                class="ar ar-late"
-                d="M345 68 L416 68"
-                marker-end="url(#ahb)"
-              />
-              <text class="nt" x="380" y="104" text-anchor="middle">later</text>
-              <text class="nt" x="380" y="140" text-anchor="middle">
+<path class="ar ar-late" d="M345 68 L416 68" marker-end="url(#ahb)"></path>
+<text class="nt" text-anchor="middle" x="380" y="104">later</text>
+<text class="nt" text-anchor="middle" x="380" y="140">
                 lost if the cache dies first
               </text>
-            </svg>
-            <figcaption>
+</svg>
+<figcaption>
               Success is reported before the database is written
             </figcaption>
-          </figure>
-
-          <pre class="figure">
+</figure>
+<pre class="figure">
 Application → write to cache → return success   ← user is done here
                              ↓
-                    (later) write to database</pre
-          >
-
-          <p><strong>Why people use it:</strong></p>
-
-          <ul>
-            <li>
-              <strong>Writes are very fast.</strong> The user waits for a memory
+                    (later) write to database</pre>
+<p><strong>Why people use it:</strong></p>
+<ul>
+<li>
+<strong>Writes are very fast.</strong> The user waits for a memory
               write, not a disk write.
             </li>
-            <li>
-              <strong>Writes can be batched.</strong> A counter updated 1,000
+<li>
+<strong>Writes can be batched.</strong> A counter updated 1,000
               times in a second becomes one database write of the final value.
               For write-heavy workloads this is a genuine order-of-magnitude
               reduction in database load.
             </li>
-            <li>
+<li>
               Sudden write spikes get absorbed instead of overwhelming the
               database.
             </li>
-          </ul>
-
-          <p><strong>The cost, stated plainly: you can lose data.</strong></p>
-
-          <p>
+</ul>
+<p><strong>The cost, stated plainly: you can lose data.</strong></p>
+<p>
             If the cache dies between the acknowledgement and the database
             write, that write is gone. You told the user it succeeded. It did
             not.
           </p>
-
-          <p>
+<p>
             This is not a rare edge case to design around — it is the
             fundamental trade. Write-behind is correct for data where losing
             some is acceptable. It is wrong for orders, payments, and inventory.
           </p>
-
-          <p class="wild">
-            <span class="wild-tag">Where you would use it</span>
-          </p>
-
-          <ul>
-            <li>
-              <strong>View counts.</strong> A page viewed a million times an
+<p class="wild">
+<span class="wild-tag">Where you would use it</span>
+</p>
+<ul>
+<li>
+<strong>View counts.</strong> A page viewed a million times an
               hour becomes a handful of database writes instead of a million.
             </li>
-            <li>
-              <strong
-                >&ldquo;Last seen&rdquo; and &ldquo;last active&rdquo;
-                timestamps.</strong
-              >
+<li>
+<strong>“Last seen” and “last active”
+                timestamps.</strong>
               Updated on every single request, and nobody notices if one is a
               minute stale or lost entirely.
             </li>
-            <li>
-              <strong>Likes, reactions, and vote tallies.</strong> High volume,
+<li>
+<strong>Likes, reactions, and vote tallies.</strong> High volume,
               and an occasional lost increment is invisible.
             </li>
-            <li>
-              <strong>Analytics and telemetry events.</strong> Losing a fraction
+<li>
+<strong>Analytics and telemetry events.</strong> Losing a fraction
               of a percent does not change any dashboard anyone looks at.
             </li>
-          </ul>
-
-          <div class="aside">
-            <p>
+</ul>
+<div class="aside">
+<p>
               The pattern:
-              <strong
-                >enormous write volume, and nobody files a support ticket if a
-                few writes vanish.</strong
-              >
-            </p>
-            <p>
+              <strong>enormous write volume, and nobody files a support ticket if a
+                few writes vanish.</strong>
+</p>
+<p>
               The test to apply:
-              <em
-                >if thirty seconds of these writes disappeared in a crash, would
-                anyone notice?</em
-              >
+              <em>if thirty seconds of these writes disappeared in a crash, would
+                anyone notice?</em>
               If the answer is yes, this is not your strategy.
             </p>
-          </div>
-
-          <div class="keystone">
+</div>
+<div class="keystone">
             Write-behind is not a faster write-through. It is a different
             guarantee. Write-through promises durability. Write-behind promises
             speed, and explicitly does not promise durability.
           </div>
-
-          <h3 id="l9-around">Write-around</h3>
-
-          <p>
-            <strong>Write-around</strong> writes only to the database and does
+<h3 id="l9-around">Write-around</h3>
+<p>
+<strong>Write-around</strong> writes only to the database and does
             not populate the cache at all. Usually it also removes any existing
             cached copy, so a stale one cannot survive.
           </p>
-
-          <figure class="flow">
-            <svg
-              viewBox="0 0 560 168"
-              role="img"
-              aria-label="Write-around: the application writes straight to the database and removes the cached copy, so the next read reloads it."
-            >
-              <defs>
-                <marker
-                  id="ahn"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path
-                    d="M0 0.5 L8 4 L0 7.5 z"
-                    fill="var(--realm-color,var(--accent))"
-                  />
-                </marker>
-                <marker
-                  id="agn"
-                  viewBox="0 0 8 8"
-                  refX="7"
-                  refY="4"
-                  markerWidth="7"
-                  markerHeight="7"
-                  orient="auto"
-                >
-                  <path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)" />
-                </marker>
-              </defs>
-              <rect
-                class="bx bx-src"
-                x="8"
-                y="90"
-                width="130"
-                height="46"
-                rx="5"
-              />
-              <text class="tx" x="73" y="119">Application</text>
-              <rect class="bx" x="215" y="10" width="130" height="46" rx="5" />
-              <text class="tx" x="280" y="39">Cache</text>
-              <rect class="bx" x="422" y="90" width="130" height="46" rx="5" />
-              <text class="tx" x="487" y="119">Database</text>
-
-              <path class="ar" d="M138 113 L416 113" marker-end="url(#ahn)" />
-              <text class="nt" x="277" y="103" text-anchor="middle">write</text>
-
-              <path class="ar-dim" d="M120 90 L245 62" marker-end="url(#agn)" />
-              <text class="nt" x="150" y="60">delete the copy</text>
-
-              <text class="nt" x="280" y="158" text-anchor="middle">
+<figure class="flow">
+<svg aria-label="Write-around: the application writes straight to the database and removes the cached copy, so the next read reloads it." role="img" viewbox="0 0 560 168">
+<defs>
+<marker id="ahn" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--realm-color,var(--accent))"></path>
+</marker>
+<marker id="agn" markerheight="7" markerwidth="7" orient="auto" refx="7" refy="4" viewbox="0 0 8 8">
+<path d="M0 0.5 L8 4 L0 7.5 z" fill="var(--rule-firm)"></path>
+</marker>
+</defs>
+<rect class="bx bx-src" height="46" rx="5" width="130" x="8" y="90"></rect>
+<text class="tx" x="73" y="119">Application</text>
+<rect class="bx" height="46" rx="5" width="130" x="215" y="10"></rect>
+<text class="tx" x="280" y="39">Cache</text>
+<rect class="bx" height="46" rx="5" width="130" x="422" y="90"></rect>
+<text class="tx" x="487" y="119">Database</text>
+<path class="ar" d="M138 113 L416 113" marker-end="url(#ahn)"></path>
+<text class="nt" text-anchor="middle" x="277" y="103">write</text>
+<path class="ar-dim" d="M120 90 L245 62" marker-end="url(#agn)"></path>
+<text class="nt" x="150" y="60">delete the copy</text>
+<text class="nt" text-anchor="middle" x="280" y="158">
                 the next read misses, and reloads it
               </text>
-            </svg>
-            <figcaption>Write to the database, then remove any cached copy.</figcaption>
-          </figure>
-
-          <pre class="figure">
+</svg>
+<figcaption>Write to the database, then remove any cached copy.</figcaption>
+</figure>
+<pre class="figure">
 Application → write to database → return success
               (cache entry deleted if present)
-              next read misses and loads fresh</pre
-          >
-
-          <p>
-            <strong>Why people use it:</strong> write-heavy data that is rarely
+              next read misses and loads fresh</pre>
+<p>
+<strong>Why people use it:</strong> write-heavy data that is rarely
             read soon after writing does not pollute the cache. Your cache stays
             full of things people are actually reading.
           </p>
-
-          <p>
-            <strong>The cost:</strong> the next read of that item is a miss. If
-            your write pattern is &ldquo;write then immediately read&rdquo; —
+<p>
+<strong>The cost:</strong> the next read of that item is a miss. If
+            your write pattern is “write then immediately read” —
             which is extremely common, since users usually look at what they
             just did — write-around gives you a guaranteed miss on every one.
           </p>
-
-          <p class="wild">
-            <span class="wild-tag">Where you would use it</span>
-          </p>
-
-          <ul>
-            <li>
-              <strong>Bulk imports and migrations.</strong> Loading a million
+<p class="wild">
+<span class="wild-tag">Where you would use it</span>
+</p>
+<ul>
+<li>
+<strong>Bulk imports and migrations.</strong> Loading a million
               rows overnight. Filling the cache with all of them would evict
               everything real users actually want — the exact scan problem you
               will meet in Lesson 10.
             </li>
-            <li>
-              <strong>Audit logs and event records.</strong> Written constantly,
+<li>
+<strong>Audit logs and event records.</strong> Written constantly,
               read almost never, and usually only during an investigation.
             </li>
-            <li>
-              <strong>Historical and archival data.</strong> An order from three
+<li>
+<strong>Historical and archival data.</strong> An order from three
               years ago is written once and may never be read again.
             </li>
-            <li>
-              <strong>Draft autosave.</strong> A user saves every few seconds;
+<li>
+<strong>Draft autosave.</strong> A user saves every few seconds;
               only the final version is ever read by anybody else.
             </li>
-            <li>
-              <strong>Sensor and IoT readings.</strong> High write volume,
+<li>
+<strong>Sensor and IoT readings.</strong> High write volume,
               queried later in aggregate rather than individually.
             </li>
-          </ul>
-
-          <div class="aside">
-            <p>
+</ul>
+<div class="aside">
+<p>
               The pattern:
-              <strong
-                >written far more often than read, or not read again for a long
-                time.</strong
-              >
-            </p>
-          </div>
-
-          <h3 id="l9-choose">Choosing</h3>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Situation</th>
-                  <th>Strategy</th>
-                  <th>Because</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Read soon after write, must be correct</td>
-                  <td><strong>Write-through</strong></td>
-                  <td>Cache is right immediately</td>
-                </tr>
-                <tr>
-                  <td>Very high write rate, some loss acceptable</td>
-                  <td><strong>Write-behind</strong></td>
-                  <td>Speed and batching</td>
-                </tr>
-                <tr>
-                  <td>Written often, read rarely</td>
-                  <td><strong>Write-around</strong></td>
-                  <td>Keeps the cache useful</td>
-                </tr>
-                <tr>
-                  <td>Read-heavy, occasionally written</td>
-                  <td><strong>Write-around + cache-aside</strong></td>
-                  <td>Simple, safe, and the common default</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+              <strong>written far more often than read, or not read again for a long
+                time.</strong>
+</p>
+</div>
+<h3 id="l9-choose">Choosing</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Strategy</th>
+<th>Because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read soon after write, must be correct</td>
+<td><strong>Write-through</strong></td>
+<td>Cache is right immediately</td>
+</tr>
+<tr>
+<td>Very high write rate, some loss acceptable</td>
+<td><strong>Write-behind</strong></td>
+<td>Speed and batching</td>
+</tr>
+<tr>
+<td>Written often, read rarely</td>
+<td><strong>Write-around</strong></td>
+<td>Keeps the cache useful</td>
+</tr>
+<tr>
+<td>Read-heavy, occasionally written</td>
+<td><strong>Write-around + cache-aside</strong></td>
+<td>Simple, safe, and the common default</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             That last row deserves attention.
             <strong>Write-around paired with cache-aside</strong> — write to the
             database, delete the cached copy, let the next read reload it — is
@@ -1366,11 +1007,9 @@ Application → write to database → return success
             and it fails safely. It is also, under a different name, the subject
             of Lesson 11.
           </p>
-
-          <h3>At the Storefront</h3>
-
-          <p>
-            <strong>Stock count</strong> — decrements constantly, and being
+<h3>At the Storefront</h3>
+<p>
+<strong>Stock count</strong> — decrements constantly, and being
             wrong means selling something you do not have. Write-through keeps
             the cache from showing more stock than exists, but note that a write
             strategy alone does not make a decrement safe: two servers can both
@@ -1379,32 +1018,28 @@ Application → write to database → return success
             decrement rather than a write pattern. Not caching the stock count
             at all is a legitimate answer here.
           </p>
-
-          <p>
-            <strong>Review submission</strong> — written rarely, read
+<p>
+<strong>Review submission</strong> — written rarely, read
             constantly. Write-around: store it, drop the cached review list, let
             the next reader rebuild it.
           </p>
-
-          <p>
-            <strong>Product view counter</strong> — written on every page view,
+<p>
+<strong>Product view counter</strong> — written on every page view,
             read almost never, and losing a few is fine. Write-behind, batched.
           </p>
-
-          <p>Three write paths, three different strategies, on one page.</p>
-
-          <div class="myth">
-            <div class="label">Common misconception</div>
-            <p class="claim">
-              &ldquo;Write-behind is just a faster write-through.&rdquo;
+<p>Three write paths, three different strategies, on one page.</p>
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">
+              “Write-behind is just a faster write-through.”
             </p>
-            <p>
+<p>
               It trades durability for speed. If the cache dies before the
               flush, the write is gone — after you told the user it succeeded.
               Choose it deliberately, for data you can afford to lose.
             </p>
-          </div>
-        </section>
+</div>
+</section>
 
         <div class="lesson-end">
           <span class="muted">Lesson 9 complete</span>
@@ -1413,185 +1048,153 @@ Application → write to database → return success
 
         <!-- ============ LESSON 10 ============ -->
         <section class="lesson-head realm-spirit" id="l10">
-          <img
-            class="lesson-art"
-            src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png"
-            loading="lazy"
-            decoding="async"
-            alt=""
-          />
-          <div class="num">Lesson Ten</div>
-          <h2>The Temple of Eviction</h2>
-        </section>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_earth_kingdom_bending/screen.png"/>
+<div class="num">Lesson Ten</div>
+<h2>The Temple of Eviction</h2>
+</section>
 
         <section class="wrap">
-          <div class="technique">
-            <span class="tag">Technique unlocked</span>
-            <span class="name">The Letting Go</span>
-            <span class="gloss">expiry and eviction</span>
-          </div>
-
-          <h3 id="l10-two">Two different reasons data leaves</h3>
-
-          <p>
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Letting Go</span>
+<span class="gloss">expiry and eviction</span>
+</div>
+<h3 id="l10-two">Two different reasons data leaves</h3>
+<p>
             Things disappear from a cache for two reasons, and the two have
             nothing to do with each other.
           </p>
-
-          <ol>
-            <li>
-              <strong>Expiration</strong> — the copy got old, so you stopped
+<ol>
+<li>
+<strong>Expiration</strong> — the copy got old, so you stopped
               trusting it.
             </li>
-            <li>
-              <strong>Eviction</strong> — you ran out of room, so something had
+<li>
+<strong>Eviction</strong> — you ran out of room, so something had
               to go.
             </li>
-          </ol>
-
-          <p>
+</ol>
+<p>
             That is the whole distinction. It is worth stating that plainly,
             because the two are confused constantly — including in
             documentation.
           </p>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Trigger</th>
-                  <th>Reason</th>
-                  <th>Controlled by</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Expiration</strong></td>
-                  <td>Time</td>
-                  <td>The copy is <strong>too old to trust</strong></td>
-                  <td>TTL</td>
-                </tr>
-                <tr>
-                  <td><strong>Eviction</strong></td>
-                  <td>Memory pressure</td>
-                  <td>You <strong>ran out of room</strong></td>
-                  <td>Eviction policy</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
-            <strong>Expiration is time-driven.</strong> It is about correctness.
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Trigger</th>
+<th>Reason</th>
+<th>Controlled by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Expiration</strong></td>
+<td>Time</td>
+<td>The copy is <strong>too old to trust</strong></td>
+<td>TTL</td>
+</tr>
+<tr>
+<td><strong>Eviction</strong></td>
+<td>Memory pressure</td>
+<td>You <strong>ran out of room</strong></td>
+<td>Eviction policy</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+<strong>Expiration is time-driven.</strong> It is about correctness.
             The value may still be perfectly useful and there may be plenty of
             memory — you remove it because you no longer believe it.
           </p>
-
-          <p>
-            <strong>Eviction is memory-driven.</strong> It is about capacity.
+<p>
+<strong>Eviction is memory-driven.</strong> It is about capacity.
             The value might be perfectly current and useful — you remove it
             because something else needs the space.
           </p>
-
-          <p>
+<p>
             A cache with infinite memory still needs expiration. A cache holding
             data that never changes still needs eviction. They are independent,
             and confusing them leads to setting TTLs to manage memory (which
             makes your data needlessly stale) or sizing memory to manage
             freshness (which does not work at all).
           </p>
-
-          <h3 id="l10-ttl">TTL, used deliberately</h3>
-
-          <p>You met TTL in Lesson 2. Now use it for two distinct jobs.</p>
-
-          <p>
-            <strong>TTL as a correctness tool.</strong> The TTL is your
+<h3 id="l10-ttl">TTL, used deliberately</h3>
+<p>You met TTL in Lesson 2. Now use it for two distinct jobs.</p>
+<p>
+<strong>TTL as a correctness tool.</strong> The TTL is your
             statement about how wrong you are willing to be.
             <code>TTL = 300</code> says:
             <em>I accept this may be up to five minutes out of date.</em> Pick
             it from the business requirement, not from habit.
           </p>
-
-          <p>
-            <strong>TTL as a safety net.</strong> This one is subtle and
+<p>
+<strong>TTL as a safety net.</strong> This one is subtle and
             important. Even with perfect invalidation (Lesson 11), things go
             wrong — a message is dropped, a service is down, a code path is
             missed. TTL bounds the damage. Without it, a failed invalidation
             means a value is wrong <strong>forever</strong>. With it, the worst
             case is bounded by the TTL.
           </p>
-
-          <div class="aside">
-            <p>
-              <strong
-                >Put a TTL on everything, even data you invalidate
-                explicitly.</strong
-              >
+<div class="aside">
+<p>
+<strong>Put a TTL on everything, even data you invalidate
+                explicitly.</strong>
               It is the backstop for the day your invalidation silently fails.
               It will.
             </p>
-          </div>
-
-          <h3 id="l10-jitter">TTL jitter</h3>
-
-          <p>
+</div>
+<h3 id="l10-jitter">TTL jitter</h3>
+<p>
             Set 10,000 keys during a deployment, all with
             <code>TTL = 3600</code>.
           </p>
-
-          <p>One hour later, all 10,000 expire in the same second.</p>
-
-          <p>
-            <strong>Jitter</strong> is adding a small random amount to each TTL
+<p>One hour later, all 10,000 expire in the same second.</p>
+<p>
+<strong>Jitter</strong> is adding a small random amount to each TTL
             so they spread out:
           </p>
-
-          <pre class="figure plain">
-ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre
-          >
-
-          <p>
+<pre class="figure plain">
+ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre>
+<p>
             Now those 10,000 keys expire spread across ten minutes rather than
             in a single instant. This single line prevents a specific attack in
             Lesson 12, and it costs you nothing.
           </p>
-
-          <h3 id="l10-policies">Eviction policies</h3>
-
-          <p>
+<h3 id="l10-policies">Eviction policies</h3>
+<p>
             When the cache is full and something new arrives, something old must
             go. The <strong>eviction policy</strong> decides what.
           </p>
-
-          <div class="opt-intro">Reference — expand as needed</div>
-
-          <details class="opt">
-            <summary>
+<div class="opt-intro">Reference — expand as needed</div>
+<details class="opt">
+<summary>
               LRU — Least Recently Used<span class="flag">optional read</span>
-            </summary>
-            <div class="body">
-              <p>Remove whatever has not been touched for the longest time.</p>
-              <p>
-                <strong>The logic:</strong> recently used items are often used
+</summary>
+<div class="body">
+<p>Remove whatever has not been touched for the longest time.</p>
+<p>
+<strong>The idea is simple:</strong> recently used items are often used
                 again soon. That makes LRU a useful starting point.
               </p>
-              <p>
-                <strong>The weakness — and it is severe.</strong> LRU is
+<p>
+<strong>The weakness — and it is severe.</strong> LRU is
                 destroyed by a <strong>scan</strong>: one large pass over data
                 that will not be requested again. A nightly report reading a
-                million products marks all of them &ldquo;recently used,&rdquo;
+                million products marks all of them “recently used,”
                 pushing out the small hot set that your actual users depend on.
                 The report finishes; your cache is full of things nobody wants;
                 your hit ratio collapses; your database absorbs the difference.
               </p>
-              <p>
+<p>
                 A single batch job can wipe out a perfectly healthy cache. Watch
                 for this.
               </p>
-              <p class="wild">
-                <span class="wild-tag">Where you would use it</span> Almost
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> Almost
                 everywhere, as the default. It is what Redis
                 <code>allkeys-lru</code> gives you, what most application cache
                 libraries do without being asked, and what your CPU does with
@@ -1600,51 +1203,50 @@ ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre
                 Reach for something else only if you have batch jobs sweeping
                 the cache, or a hot set stable enough for LFU to protect.
               </p>
-            </div>
-          </details>
-
-          <details class="opt">
-            <summary>
+</div>
+</details>
+<details class="opt">
+<summary>
               LFU — Least Frequently Used<span class="flag">optional read</span>
-            </summary>
-            <div class="body">
-              <p>
+</summary>
+<div class="body">
+<p>
                 Remove whatever has been requested <strong>least often</strong>,
                 regardless of when.
               </p>
-              <p>
-                <strong>The logic:</strong> popularity is more meaningful than
+<p>
+<strong>The logic:</strong> popularity is more meaningful than
                 recency. A page requested 10,000 times matters more than one
                 requested once, even if the once was more recent.
               </p>
-              <p>
-                <strong>Why it can beat LRU:</strong> it survives scans. The
+<p>
+<strong>Why it can beat LRU:</strong> it survives scans. The
                 report's million products each get one access; the front-page
                 item has thousands. LFU keeps the front page and discards the
                 report data — exactly right.
               </p>
-              <p><strong>The weaknesses:</strong></p>
-              <ul>
-                <li>
-                  <strong>New items look unpopular.</strong> Something added a
+<p><strong>The weaknesses:</strong></p>
+<ul>
+<li>
+<strong>New items look unpopular.</strong> Something added a
                   second ago has a count of 1 and is a prime eviction target,
                   even if it is about to become the most popular item on the
                   site. New content struggles to establish itself.
                 </li>
-                <li>
-                  <strong>Old items overstay.</strong> Something enormously
+<li>
+<strong>Old items overstay.</strong> Something enormously
                   popular last month keeps a high count long after people
                   stopped wanting it.
                 </li>
-              </ul>
-              <p>
+</ul>
+<p>
                 Practical implementations use <strong>windowed</strong> or
                 <strong>decaying</strong> LFU, counting recent accesses more
                 heavily, which fixes both. If you choose LFU, choose one of
                 these.
               </p>
-              <p class="wild">
-                <span class="wild-tag">Where you would use it</span> When a
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> When a
                 small, stable set of items takes most of the traffic — the top
                 1% of products that account for most views, a CDN holding assets
                 that stay popular for months, reference data that barely
@@ -1653,23 +1255,22 @@ ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre
                 where content turns over quickly: news, social feeds, anything
                 where today's popular item was created this morning.
               </p>
-            </div>
-          </details>
-
-          <details class="opt">
-            <summary>
+</div>
+</details>
+<details class="opt">
+<summary>
               FIFO — First In, First Out<span class="flag">optional read</span>
-            </summary>
-            <div class="body">
-              <p>Remove whatever was added earliest, regardless of use.</p>
-              <p>
+</summary>
+<div class="body">
+<p>Remove whatever was added earliest, regardless of use.</p>
+<p>
                 Simple and cheap — no bookkeeping. It also ignores usage
                 entirely, so it will happily evict your most popular item
                 because it happened to be cached first. Rarely the right choice
                 for a cache; fine for a queue.
               </p>
-              <p class="wild">
-                <span class="wild-tag">Where you would use it</span> Honestly,
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> Honestly,
                 rarely, and almost never for a general cache. Where it does fit
                 is anywhere insertion order is the point rather than an accident
                 — a fixed-size buffer of recent events, a replay window, a
@@ -1677,26 +1278,25 @@ ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre
                 value and you want zero bookkeeping, FIFO is defensible. If some
                 entries are more valuable than others, it is the wrong tool.
               </p>
-            </div>
-          </details>
-
-          <details class="opt">
-            <summary>Random<span class="flag">optional read</span></summary>
-            <div class="body">
-              <p>Remove a randomly chosen item.</p>
-              <p>
+</div>
+</details>
+<details class="opt">
+<summary>Random<span class="flag">optional read</span></summary>
+<div class="body">
+<p>Remove a randomly chosen item.</p>
+<p>
                 This sounds like giving up, and it is not. It requires no
                 bookkeeping at all, which makes it very fast and
                 memory-efficient — LRU must maintain ordering on every single
                 access, and that costs something on every read.
               </p>
-              <p>
+<p>
                 For workloads without a strong recency pattern, random performs
                 surprisingly close to LRU at a fraction of the overhead. Redis
                 offers it deliberately. Do not dismiss it.
               </p>
-              <p class="wild">
-                <span class="wild-tag">Where you would use it</span> Very
+<p class="wild">
+<span class="wild-tag">Where you would use it</span> Very
                 high-throughput caches where LRU's per-read bookkeeping is a
                 measurable cost, and memory-constrained systems where the
                 ordering structure itself is too expensive to keep. It also does
@@ -1704,168 +1304,153 @@ ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre
                 protect. Redis exposes it as <code>allkeys-random</code> for
                 exactly these cases.
               </p>
-            </div>
-          </details>
-
-          <h4>Choosing</h4>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Policy</th>
-                  <th>Best when</th>
-                  <th>Fails when</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>LRU</strong></td>
-                  <td>Access is bursty and recency-driven</td>
-                  <td>A scan sweeps through it</td>
-                </tr>
-                <tr>
-                  <td><strong>LFU</strong></td>
-                  <td>There is a stable hot set</td>
-                  <td>Content turns over quickly</td>
-                </tr>
-                <tr>
-                  <td><strong>FIFO</strong></td>
-                  <td>Almost never for caches</td>
-                  <td>Any time popularity matters</td>
-                </tr>
-                <tr>
-                  <td><strong>Random</strong></td>
-                  <td>Low overhead matters; access is uniform</td>
-                  <td>A clear hot set deserves protecting</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+</div>
+</details>
+<h4>Choosing</h4>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Best when</th>
+<th>Fails when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LRU</strong></td>
+<td>Access is bursty and recency-driven</td>
+<td>A scan sweeps through it</td>
+</tr>
+<tr>
+<td><strong>LFU</strong></td>
+<td>There is a stable hot set</td>
+<td>Content turns over quickly</td>
+</tr>
+<tr>
+<td><strong>FIFO</strong></td>
+<td>Almost never for caches</td>
+<td>Any time popularity matters</td>
+</tr>
+<tr>
+<td><strong>Random</strong></td>
+<td>Low overhead matters; access is uniform</td>
+<td>A clear hot set deserves protecting</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             Real caches offer combinations — Redis has <code>allkeys-lru</code>,
             <code>volatile-lru</code> (only keys with a TTL set),
             <code>allkeys-lfu</code>, <code>volatile-ttl</code> (shortest
             remaining life first), and <code>noeviction</code> (reject writes
             when full).
           </p>
-
-          <p>
-            <code>volatile-*</code> variants matter more than they look: they
+<p>
+<code>volatile-*</code> variants matter more than they look: they
             let you mark some entries as never-evictable by giving them no TTL,
             protecting data you cannot afford to lose.
           </p>
-
-          <h3 id="l10-rate">Reading the eviction rate</h3>
-
-          <p>
+<h3 id="l10-rate">Reading the eviction rate</h3>
+<p>
             The <strong>eviction rate</strong> — how many items are being
             removed per second for lack of space — is one of the most useful
             signals a cache gives you.
           </p>
-
-          <ul class="signal-list">
-            <li class="signal-good">
-              <strong>Near zero:</strong> your cache is big enough. Good.
+<ul class="signal-list">
+<li class="signal-good">
+<strong>Near zero:</strong> your cache is big enough. Good.
             </li>
-            <li class="signal-warn">
-              <strong>High and rising:</strong> your cache is too small. Items
+<li class="signal-warn">
+<strong>High and rising:</strong> your cache is too small. Items
               are being thrown out before they can be reused, and your hit ratio
               is being destroyed by capacity, not by TTL.
             </li>
-            <li class="signal-alarm">
-              <strong>Sudden spike:</strong> something just flooded the cache. A
+<li class="signal-alarm">
+<strong>Sudden spike:</strong> something just flooded the cache. A
               batch job, a scan, a bug writing far too much.
             </li>
-          </ul>
-
-          <p>
+</ul>
+<p>
             A high eviction rate paired with a falling hit ratio is a specific,
             actionable diagnosis:
-            <strong
-              >the cache needs more memory, or you are caching too much.</strong
-            >
+            <strong>the cache needs more memory, or you are caching too much.</strong>
             Lesson 13 will show you where to watch this.
           </p>
-
-          <h3>At the Storefront</h3>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Part</th>
-                  <th>TTL</th>
-                  <th>Reasoning</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Product details</td>
-                  <td>1 hour + jitter</td>
-                  <td>Changes rarely; an hour stale is harmless</td>
-                </tr>
-                <tr>
-                  <td>Price</td>
-                  <td>60 seconds</td>
-                  <td>Must be close to correct</td>
-                </tr>
-                <tr>
-                  <td>Stock count</td>
-                  <td>10 seconds, or uncached</td>
-                  <td>Being wrong here sells things you do not have</td>
-                </tr>
-                <tr>
-                  <td>Reviews</td>
-                  <td>10 minutes + jitter</td>
-                  <td>Slow-changing, heavily read</td>
-                </tr>
-                <tr>
-                  <td>Category tree</td>
-                  <td>5 minutes</td>
-                  <td>Small, hot, rarely edited</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
+<h3>At the Storefront</h3>
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>TTL</th>
+<th>Reasoning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Product details</td>
+<td>1 hour + jitter</td>
+<td>Changes rarely; an hour stale is harmless</td>
+</tr>
+<tr>
+<td>Price</td>
+<td>60 seconds</td>
+<td>Must be close to correct</td>
+</tr>
+<tr>
+<td>Stock count</td>
+<td>10 seconds, or uncached</td>
+<td>Being wrong here sells things you do not have</td>
+</tr>
+<tr>
+<td>Reviews</td>
+<td>10 minutes + jitter</td>
+<td>Slow-changing, heavily read</td>
+</tr>
+<tr>
+<td>Category tree</td>
+<td>5 minutes</td>
+<td>Small, hot, rarely edited</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
             Policy for the Redis instance:
             <strong><code>allkeys-lru</code></strong> as the default — and check
             for batch jobs that scan products, because those will wreck it. If
             you have one, either route it around the cache or move to windowed
             LFU.
           </p>
-
-          <div class="myth">
-            <div class="label">Common misconception</div>
-            <p class="claim">&ldquo;LRU is always the right choice.&rdquo;</p>
-            <p>
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">“LRU is always the right choice.”</p>
+<p>
               LRU is a good default that a single batch job can destroy. LFU
               survives scans but starves new content. Random is cheaper than
               both and often nearly as good. Choose from your access pattern,
               not from habit.
             </p>
-          </div>
-
-          <div class="forge">
-            <div class="label">The Forge</div>
-            <p>
+</div>
+<div class="forge">
+<div class="label">The Forge</div>
+<p>
               The Latency Lord walks the realm at a quiet hour and does
               something very simple.
             </p>
-            <p>
+<p>
               He does not delete anything. He does not break anything. He simply
               finds every expiry timer in the kingdom and sets them all to the
               same hour.
             </p>
-            <p>
+<p>
               Nothing is stolen. Nothing is broken. Everything simply ends at
               once.
             </p>
-          </div>
-        </section>
+</div>
+</section>
 
         <div class="lesson-end">
           <span class="muted">Lesson 10 complete</span>
@@ -1874,226 +1459,172 @@ ttl = 3600 + random(0, 600)     # between 60 and 70 minutes</pre
 
         <!-- ============ LESSON 11 ============ -->
         <section class="lesson-head realm-spirit" id="l11">
-          <img
-            class="lesson-art"
-            src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_fire_nation_bending/screen.png"
-            loading="lazy"
-            decoding="async"
-            alt=""
-          />
-          <div class="num">Lesson Eleven</div>
-          <h2>The Invalidation Paradox</h2>
-        </section>
+<img alt="" class="lesson-art" decoding="async" loading="lazy" src="public/a_hyper_detailed_masterpiece_level_close_up_of_an_ancient_fire_nation_bending/screen.png"/>
+<div class="num">Lesson Eleven</div>
+<h2>The Invalidation Paradox</h2>
+</section>
 
         <section class="wrap">
-          <div class="technique">
-            <span class="tag">Technique unlocked</span>
-            <span class="name">The Truthbinding</span>
-            <span class="gloss">keeping the copy true to the source</span>
-          </div>
-
-          <h3 id="l11-hard">The hardest problem in the course</h3>
-
-          <p>
+<div class="technique">
+<span class="tag">Technique unlocked</span>
+<span class="name">The Truthbinding</span>
+<span class="gloss">keeping the copy true to the source</span>
+</div>
+<h3 id="l11-hard">The hardest problem in the course</h3>
+<p>
             The moment you cache something, the same fact exists in two places:
           </p>
-
-          <ul>
-            <li>
-              <strong>The original</strong>, in your database. This is the
+<ul>
+<li>
+<strong>The original</strong>, in your database. This is the
               truth.
             </li>
-            <li>
-              <strong>The copy</strong>, in your cache. This is what your users
+<li>
+<strong>The copy</strong>, in your cache. This is what your users
               actually see.
             </li>
-          </ul>
-
-          <p>
+</ul>
+<p>
             Two places holding one fact can disagree — and when they do, the
             cache has no idea. Nothing tells it the database moved on without
             it.
           </p>
-
-          <p>
-            <strong class="term">Staleness</strong> is a cached copy no longer matching the
+<p>
+<strong class="term">Staleness</strong> is a cached copy no longer matching the
             truth it was copied from. It is not an error state — a stale cache
             does not crash, log a warning, or fail a health check. It quietly
             serves a wrong answer with complete confidence.
           </p>
-
-          <h3 id="l11-three">Three questions</h3>
-
-          <p>
+<h3 id="l11-three">Three questions</h3>
+<p>
             Before choosing a technique, answer these for the data in question:
           </p>
-
-          <p>
-            <strong>1. How wrong can it be?</strong> A view count off by three
+<p>
+<strong>1. How wrong can it be?</strong> A view count off by three
             is fine. A price off by £5 is a legal problem.
           </p>
-
-          <p><strong>2. For how long?</strong> Seconds, minutes, hours?</p>
-
-          <p>
-            <strong>3. What does being wrong cost?</strong> A stale description
+<p><strong>2. For how long?</strong> Seconds, minutes, hours?</p>
+<p>
+<strong>3. What does being wrong cost?</strong> A stale description
             is an annoyance. A stale stock count is an oversold order, a refund,
             and an angry customer.
           </p>
-
-          <p>
+<p>
             These answers give you your TTL and tell you how much effort
             invalidation deserves. Data that can be five minutes stale needs a
             TTL and nothing else. Data that must be correct within a second
             needs real machinery.
           </p>
-
-          <h3 id="l11-onwrite">Invalidate-on-write</h3>
-
-          <p>
+<h3 id="l11-onwrite">Invalidate-on-write</h3>
+<p>
             The standard approach, and the natural partner to cache-aside from
             Lesson 8:
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 On write:
     database.update(key, new_value)
     cache.delete(key)
 
 On the next read:
-    cache miss → load from database → cache the fresh value</pre
-          >
-
-          <p>Update the truth, remove the copy, let it rebuild on demand.</p>
-
-          <p>
-            <strong>Delete — do not update in place.</strong> Writing the new
+    cache miss → load from database → cache the fresh value</pre>
+<p>Update the truth, remove the copy, let it rebuild on demand.</p>
+<p>
+<strong>Delete — do not update in place.</strong> Writing the new
             value into the cache looks better, because it saves the next reader
             a miss. It is not. Two administrators change a price at nearly the
             same time:
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 t=0   Writer A: database ← 10
 t=1   Writer B: database ← 12
       Database is now 12.  ✓ correct
 
 t=2   Writer B: cache ← 12
 t=3   Writer A: cache ← 10        ← arrived late
-      Cache is now 10.  ✗ WRONG</pre
-          >
-
-          <p>
+      Cache is now 10.  ✗ WRONG</pre>
+<p>
             Both writes reached the database in order. The two cache writes did
             not — network timing, thread scheduling, a garbage-collection pause.
             The cache now serves 10 until its TTL runs out.
           </p>
-
-          <p>
+<p>
             A delete cannot go wrong that way, because it carries no value.
             Whatever order two deletes land in, the result is the same: no
             cached copy, and the next read takes the truth from the source.
           </p>
-
-          <div class="keystone">
+<div class="keystone">
             When your application owns both writes, delete on write — do not
             update on write. It costs one extra miss and removes an entire
             category of bug that is nearly impossible to reproduce.
           </div>
-
-          <p>
+<p>
             This is <strong>write-around</strong> from Lesson 9, seen from the
             invalidation side. Write-through is exempt: there the cache owns the
             write path, so it decides the order both systems see.
           </p>
-
-          <h3 id="l11-version">Versioned keys</h3>
-
-          <p>
+<h3 id="l11-version">Versioned keys</h3>
+<p>
             A different approach:
             <strong>never delete anything. Change the name instead.</strong>
-          </p>
-
-          <p>
+</p>
+<p>
             When a price changes you leave the cached copy exactly where it is —
             and start reading from a different key. The version lives in a small
             key of its own:
           </p>
-
-          <pre class="figure plain">
-product:42:version  =  7</pre
-          >
-
-          <p>Reading a price becomes two steps:</p>
-
-          <pre class="figure plain">
+<pre class="figure plain">
+product:42:version  =  7</pre>
+<p>Reading a price becomes two steps:</p>
+<pre class="figure plain">
 1. read  product:42:version     →  7
-2. read  product:42:price:v7    →  £25.00</pre
-          >
-
-          <p>
+2. read  product:42:price:v7    →  £25.00</pre>
+<p>
             When the price changes, the writer updates the database and
             increments the version:
           </p>
-
-          <pre class="figure plain">
-product:42:version  =  8</pre
-          >
-
-          <p>The next reader takes the same two steps and lands somewhere else:</p>
-
-          <pre class="figure plain">
+<pre class="figure plain">
+product:42:version  =  8</pre>
+<p>The next reader takes the same two steps and lands somewhere else:</p>
+<pre class="figure plain">
 1. read  product:42:version     →  8
-2. read  product:42:price:v8    →  miss → loads £20.00 from the database</pre
-          >
-
-          <p>
+2. read  product:42:price:v8    →  miss → loads £20.00 from the database</pre>
+<p>
             Nothing was deleted. <code>product:42:price:v7</code> is still
             sitting in the cache holding £25.00 — but nobody will ever ask for
             it again, and it expires on its own.
           </p>
-
-          <p>
-            <strong>&ldquo;Haven't you just added a lookup?&rdquo;</strong> Yes —
+<p>
+<strong>“Haven't you just added a lookup?”</strong> Yes —
             one, on a tiny key that is read constantly and is therefore always
             hot. In exchange you never issue a delete, and one version can
             retire any number of keys at once.
           </p>
-
-          <p>
+<p>
             Often you do not need a counter at all. Anything that already
             changes when the data changes will do:
           </p>
-
-          <pre class="figure plain">
+<pre class="figure plain">
 product:42:price:v&lt;updated_at&gt;
-product:42:price:v&lt;row_version&gt;</pre
-          >
-
-          <p>
+product:42:price:v&lt;row_version&gt;</pre>
+<p>
             Now the version is a fact the row already carries, and there is
             nothing extra to maintain. This is the common case for caching
             anything <em>derived</em> from a row you have already loaded — a
             rendered HTML fragment, a computed shipping estimate, a formatted
             price.
           </p>
-
-          <details class="opt">
-            <summary>
-              How the version reaches the cache in a real application<span
-                class="flag"
-                >optional read</span
-              >
-            </summary>
-            <div class="body">
-              <p>
+<details class="opt">
+<summary>
+              How the version reaches the cache in a real application<span class="flag">optional read</span>
+</summary>
+<div class="body">
+<p>
                 The reassuring part: <strong>the version never leaves the cache
                 layer.</strong> The browser does not know about it, the
                 controller does not know about it, and the database does not
                 know about it.
               </p>
-
-              <pre class="figure plain">
+<pre class="figure plain">
 Browser        GET /product/42                    ← no version anywhere
                     ↓
 Controller     ProductController.Get(42)          ← no version here either
@@ -2104,48 +1635,43 @@ Service        GetPriceAsync(42)
                     │  2. build product:42:price:v7
                     │  3. read that key                 → £25.00  (hit)
                     ↓
-Response       £25.00</pre
-              >
-
-              <p>
+Response       £25.00</pre>
+<p>
                 The URL is <code>/product/42</code> before and after a price
                 change. Nothing in the request changes. Steps 1–3 happen
                 entirely inside your service.
               </p>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>Layer</th>
-                    <th>Knows about the version?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Browser</td>
-                    <td><strong>No.</strong> Always requests <code>/product/42</code></td>
-                  </tr>
-                  <tr>
-                    <td>Controller</td>
-                    <td><strong>No.</strong> Calls <code>GetPriceAsync(42)</code></td>
-                  </tr>
-                  <tr>
-                    <td>Service / cache layer</td>
-                    <td><strong>Yes</strong> — the only place it exists</td>
-                  </tr>
-                  <tr>
-                    <td>Database</td>
-                    <td><strong>No.</strong> Queried normally on a miss</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Knows about the version?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser</td>
+<td><strong>No.</strong> Always requests <code>/product/42</code></td>
+</tr>
+<tr>
+<td>Controller</td>
+<td><strong>No.</strong> Calls <code>GetPriceAsync(42)</code></td>
+</tr>
+<tr>
+<td>Service / cache layer</td>
+<td><strong>Yes</strong> — the only place it exists</td>
+</tr>
+<tr>
+<td>Database</td>
+<td><strong>No.</strong> Queried normally on a miss</td>
+</tr>
+</tbody>
+</table>
+<p>
                 Because it is a private detail of one layer, nothing above or
                 below it has to change to adopt it.
               </p>
-
-              <pre class="figure">
+<pre class="figure">
 public async Task&lt;decimal&gt; GetPriceAsync(int id)
 {
     // 1. the version pointer — a tiny key, read constantly, always hot
@@ -2161,247 +1687,211 @@ public async Task&lt;decimal&gt; GetPriceAsync(int id)
     var price = await _repo.GetPriceAsync(id);
     await _cache.StringSetAsync(key, price, TimeSpan.FromMinutes(30));
     return price;
-}</pre
-              >
-
-              <p>And the write:</p>
-
-              <pre class="figure">
+}</pre>
+<p>And the write:</p>
+<pre class="figure">
 public async Task UpdatePriceAsync(int id, decimal price)
 {
     await _repo.UpdatePriceAsync(id, price);                    // database first
     await _cache.StringIncrementAsync($"product:{id}:version"); // 7 → 8
-}</pre
-              >
-
-              <p>
+}</pre>
+<p>
                 That <code>INCR</code> is the whole invalidation. No delete is
                 issued, no message is broadcast, and no other server needs
                 telling — they all read the same pointer on their next request
                 and start building <code>v8</code> keys by themselves.
               </p>
-
-              <p class="wild">
-                <span class="wild-tag">Why this matters with many servers</span>
+<p class="wild">
+<span class="wild-tag">Why this matters with many servers</span>
                 Delete-on-write has to reach ten local caches on ten machines. A
                 version bump reaches them for free, because they look the
                 version up rather than being told about it. If the pointer key
                 is ever lost — a cache restart, say — every key simply looks new,
                 which is a cold cache rather than a wrong answer. It fails safe.
               </p>
-            </div>
-          </details>
-
-          <p><strong>Retiring many keys at once</strong></p>
-
-          <p>
+</div>
+</details>
+<p><strong>Retiring many keys at once</strong></p>
+<p>
             Put the version in a <em>prefix</em> rather than a suffix and it
             covers everything beneath it:
           </p>
-
-          <pre class="figure plain">
+<pre class="figure plain">
 catalog:v3:product:42
 catalog:v3:product:99
-catalog:v3:category:8</pre
-          >
-
-          <p>
+catalog:v3:category:8</pre>
+<p>
             Increment that single version to <code>v4</code> and every catalog
             key becomes unreachable in one operation. No message has to reach
             every cache node, and no key has to be found and deleted.
           </p>
-
-          <p><strong>Why this is powerful:</strong></p>
-
-          <ul>
-            <li>
-              <strong>No invalidation race.</strong> Nothing is being deleted,
+<p><strong>Why this is powerful:</strong></p>
+<ul>
+<li>
+<strong>No invalidation race.</strong> Nothing is being deleted,
               so nothing can be deleted at the wrong moment.
             </li>
-            <li>
-              <strong>No purge cost.</strong> No message needs to reach every
+<li>
+<strong>No purge cost.</strong> No message needs to reach every
               cache node.
             </li>
-            <li>
-              <strong>It works in realms you cannot reach.</strong> You cannot
+<li>
+<strong>It works in realms you cannot reach.</strong> You cannot
               delete anything from a user's browser cache — but you can serve a
               page referencing a new name, and the old entry becomes irrelevant.
               This is the <em>only</em> mechanism that works for the browser
               realm.
             </li>
-          </ul>
-
-          <p>
-            <strong>The costs:</strong> you must track the current version and
+</ul>
+<p>
+<strong>The costs:</strong> you must track the current version and
             get it to everyone who builds keys. Old entries occupy memory until
             they expire, so you are paying for garbage for a while.
           </p>
-
-          <p>
+<p>
             You have now seen this three times: fingerprinted filenames in
             Lesson 3, versioned URLs in Lesson 4, versioned keys here.
-            <strong
-              >It is the same technique, and it is the strongest tool in this
-              lesson.</strong
-            >
-          </p>
-
-          <p>
+            <strong>It is the same technique, and it is the strongest tool in this
+              lesson.</strong>
+</p>
+<p>
             Same idea, but do not conflate them — they act at different layers
             and reach different people.
           </p>
-
-          <table>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Fingerprinting (Lesson 3)</th>
-                <th>Versioned keys (here)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>What changes</td>
-                <td>The <strong>URL</strong></td>
-                <td>An internal <strong>cache key</strong></td>
-              </tr>
-              <tr>
-                <td>Who sees it</td>
-                <td>The browser, the CDN, everyone</td>
-                <td>Only your server</td>
-              </tr>
-              <tr>
-                <td>How the new name arrives</td>
-                <td>The HTML references it</td>
-                <td>The reader looks up the pointer</td>
-              </tr>
-              <tr>
-                <td>Reaches a user already holding a copy</td>
-                <td><strong>Yes</strong> — the old URL is never requested again</td>
-                <td><strong>No</strong> — their browser copy is untouched</td>
-              </tr>
-              <tr>
-                <td>Retires</td>
-                <td>One file</td>
-                <td>One key, or a whole namespace</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fingerprinting (Lesson 3)</th>
+<th>Versioned keys (here)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What changes</td>
+<td>The <strong>URL</strong></td>
+<td>An internal <strong>cache key</strong></td>
+</tr>
+<tr>
+<td>Who sees it</td>
+<td>The browser, the CDN, everyone</td>
+<td>Only your server</td>
+</tr>
+<tr>
+<td>How the new name arrives</td>
+<td>The HTML references it</td>
+<td>The reader looks up the pointer</td>
+</tr>
+<tr>
+<td>Reaches a user already holding a copy</td>
+<td><strong>Yes</strong> — the old URL is never requested again</td>
+<td><strong>No</strong> — their browser copy is untouched</td>
+</tr>
+<tr>
+<td>Retires</td>
+<td>One file</td>
+<td>One key, or a whole namespace</td>
+</tr>
+</tbody>
+</table>
+<p>
             The practical consequence: bumping an internal version fixes every
             copy <em>on your servers</em> instantly, and does nothing whatsoever
             for the copy already sitting on a reader's disk. If a corrected price
             has to reach a browser sooner, that is a lifetime decision — the
             <code>max-age</code> you chose in Lesson 3 — not a versioning one.
           </p>
-
-          <p class="keystone">
+<p class="keystone">
             Fingerprinting changes what the reader asks for. Versioned keys
             change what you look under. Only the first one can reach a copy you
             have already given away.
           </p>
-
-          <h3 id="l11-realms">Invalidating across all four realms</h3>
-
-          <p>
+<h3 id="l11-realms">Invalidating across all four realms</h3>
+<p>
             Here is where the whole course converges. A price changes. Where
             does the old value live?
           </p>
-
-          <div class="tablewrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Realm</th>
-                  <th>How you invalidate</th>
-                  <th>How fast</th>
-                  <th>Can you force it?</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Browser</strong></td>
-                  <td>Not possible — TTL expiry or a versioned URL</td>
-                  <td>Up to the full TTL</td>
-                  <td><strong>No</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>CDN</strong></td>
-                  <td>Purge, or a versioned URL</td>
-                  <td>Seconds to minutes</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td><strong>Local caches</strong></td>
-                  <td>Not reachable from another process — TTL expiry only</td>
-                  <td>Up to the local TTL</td>
-                  <td><strong>No</strong></td>
-                </tr>
-                <tr>
-                  <td><strong>Redis</strong></td>
-                  <td>Delete the key</td>
-                  <td>Immediate</td>
-                  <td>Yes</td>
-                </tr>
-                <tr>
-                  <td><strong>Database</strong></td>
-                  <td>Automatic</td>
-                  <td>—</td>
-                  <td>Not your concern</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>Read the first row again, because it governs your whole design:</p>
-
-          <div class="keystone">
+<div class="tablewrap">
+<table>
+<thead>
+<tr>
+<th>Realm</th>
+<th>How you invalidate</th>
+<th>How fast</th>
+<th>Can you force it?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Browser</strong></td>
+<td>Not possible — TTL expiry or a versioned URL</td>
+<td>Up to the full TTL</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td><strong>CDN</strong></td>
+<td>Purge, or a versioned URL</td>
+<td>Seconds to minutes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Local caches</strong></td>
+<td>Not reachable from another process — TTL expiry only</td>
+<td>Up to the local TTL</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td><strong>Redis</strong></td>
+<td>Delete the key</td>
+<td>Immediate</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>Automatic</td>
+<td>—</td>
+<td>Not your concern</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Read the first row again, because it governs your whole design:</p>
+<div class="keystone">
             You cannot reach the browser cache. Once you have told a browser to
             keep something for an hour, it is gone for an hour. There is no
             recall.
           </div>
-
-          <p>
+<p>
             This is the reason the storefront's price header in Lesson 3 was
             <code>max-age=60</code> and not <code>max-age=3600</code>. Your
             browser TTL is not a performance setting —
-            <strong
-              >it is a hard limit on how fast a correction can possibly reach
-              your users.</strong
-            >
+            <strong>it is a hard limit on how fast a correction can possibly reach
+              your users.</strong>
             Set it to the longest wrong-answer window you can defend.
           </p>
-
-          <p>
+<p>
             And it is the reason versioned URLs matter so much: they are the
             only way to make a change reach a browser instantly, because they do
             not require reaching the browser at all.
           </p>
-
-          <h3 id="l11-repop">The repopulation race</h3>
-
-          <p>
+<h3 id="l11-repop">The repopulation race</h3>
+<p>
             One more trap, and it defeats people who have done everything else
             correctly.
           </p>
-
-          <pre class="figure">
+<pre class="figure">
 t=0   Reader:  cache miss → begins reading database → gets 10
 t=1   Writer:  database ← 12
 t=2   Writer:  cache.delete("price")        ← correctly invalidated
 t=3   Reader:  cache.set("price", 10)       ← writes the stale value it
-                                              fetched at t=0</pre
-          >
-
-          <p>
+                                              fetched at t=0</pre>
+<p>
             The cache now holds 10, was correctly invalidated, and will serve
             the wrong value until its TTL expires. Every step followed the
             rules. The reader was simply holding a stale value in flight when
             the delete happened.
           </p>
-
-          <p>
+<p>
             The reader's two steps — read the database, then write the cache —
             have to be <strong>atomic with respect to writers</strong>. Each
             step is already atomic on its own; the gap between them is the
@@ -2409,41 +1899,32 @@ t=3   Reader:  cache.set("price", 10)       ← writes the stale value it
             cache write conditional so it fails if the key changed underneath
             it.
           </p>
-
-          <p>
-            <strong>Versioned keys sidestep it entirely.</strong> The in-flight
+<p>
+<strong>Versioned keys sidestep it entirely.</strong> The in-flight
             reader writes to <code>v7</code> while everyone has moved on to
             <code>v8</code>, so its stale value lands where nobody is looking.
             And where neither is in place, a TTL still bounds how long the
             damage lasts.
           </p>
-
-          <h3 id="l11-net">TTL as the safety net</h3>
-
-          <p>
+<h3 id="l11-net">TTL as the safety net</h3>
+<p>
             Every technique in this lesson can fail. Messages get dropped.
             Services restart mid-broadcast. Somebody adds a write path and
             forgets the invalidation. The repopulation race happens.
           </p>
-
-          <p>
-            <strong>TTL is what stops any of those becoming permanent.</strong>
-          </p>
-
-          <div class="aside">
-            <p>
+<p>
+<strong>TTL is what stops any of those becoming permanent.</strong>
+</p>
+<div class="aside">
+<p>
               Put a TTL on everything. Invalidate explicitly for speed. Let TTL
               be the guarantee that a failure is temporary rather than forever.
             </p>
-          </div>
-
-          <p>That sentence is the practical summary of this lesson.</p>
-
-          <h3>At the Storefront</h3>
-
-          <p>Trace a price change from £25 to £20:</p>
-
-          <pre class="figure">
+</div>
+<p>That sentence is the practical summary of this lesson.</p>
+<h3>At the Storefront</h3>
+<p>Trace a price change from £25 to £20:</p>
+<pre class="figure">
 Admin saves £20
     ↓
 Database updated                              ← truth, immediately
@@ -2452,33 +1933,29 @@ Redis: DELETE price:42:GBP:retail             ← immediate
     ↓
 CDN: purge /product/42                        ← seconds
     ↓
-Browsers: no direct mechanism                  ← up to 10s, by your own TTL</pre
-          >
-
-          <p>
+Browsers: no direct mechanism                  ← up to 10s, by your own TTL</pre>
+<p>
             The browser may reuse a price response for up to <strong>10 seconds</strong>.
             Monitor CDN purges and invalidation delivery too, because their timing
             determines when the other copies change.
           </p>
-
-          <p>
+<p>
             That single trace is what Lesson 14 asks you to produce for every
             mutable element.
           </p>
-
-          <div class="myth">
-            <div class="label">Common misconception</div>
-            <p class="claim">
-              &ldquo;I'll just update the cache when I write.&rdquo;
+<div class="myth">
+<div class="label">Common misconception</div>
+<p class="claim">
+              “I'll just update the cache when I write.”
             </p>
-            <p>
+<p>
               Two concurrent writes can reach the cache in a different order
               from the database, leaving the wrong value until it expires.
               Deleting the cached value avoids this ordering problem, though the
               next read will miss.
             </p>
-          </div>
-        </section>
+</div>
+</section>
 
         <div class="lesson-end">
           <span class="muted">The Library is closed</span>
