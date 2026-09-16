@@ -1740,3 +1740,15 @@ tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-2) 28%,trans
 
 /* Narrow screens use the linked lesson itself instead of hover previews. */
 @media (max-width:620px){.xref::after{display:none}}
+
+
+/* One navigation row follows the takeaways on standalone lessons. */
+.lesson-page .course-footer{margin-top:36px;padding-top:0;border-top:0}
+.lesson-page .course-footer-meta{margin-top:0}
+.lesson-step.previous{grid-column:1;grid-row:1}
+.lesson-step.map{grid-column:2;grid-row:1}
+.lesson-step.next{grid-column:3;grid-row:1}
+@media (max-width:700px){
+  .lesson-step.next{grid-column:2}
+  .lesson-step.map{grid-column:1/-1;grid-row:2}
+}

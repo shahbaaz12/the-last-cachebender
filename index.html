@@ -28,8 +28,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap">
 
-<link rel="stylesheet" href="css/styles.css?v=27">
-<link rel="stylesheet" href="css/home.css?v=11">
+<link rel="stylesheet" href="css/styles.css?v=28">
+<link rel="stylesheet" href="css/home.css?v=14">
 
 <script>
 /* Apply the stored theme before first paint so the page never flashes
@@ -83,13 +83,15 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     </div>
   </div>
 
-  <div class="realm-compass" role="img" aria-label="A map of the four cache realms: Air for the browser, Water for the CDN edge, Earth for the application, and Fire for the database.">
+  <div class="realm-compass" role="group" aria-label="A map of the four cache realms: Air for the browser, Water for the CDN edge, Earth for the application, and Fire for the database.">
     <div class="compass-head" aria-hidden="true">
       <span>Where copies wait</span>
       <strong>Balance unstable</strong>
     </div>
 
     <div class="element-wheel" aria-hidden="true">
+      <canvas class="element-canvas"></canvas>
+      <div class="element-caption"><strong class="element-name">Water</strong><span class="element-domain">The CDN edge</span></div>
       <div class="wheel-ring ring-outer"></div>
       <div class="wheel-ring ring-inner"></div>
 
@@ -107,12 +109,23 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       </div>
 
       <div class="wheel-core"><span>Example uncached request</span><strong>900 ms</strong></div>
+
     </div>
 
     <div class="compass-foot" aria-hidden="true">
       <span>Latency pressure</span>
       <strong>The Surge approaches</strong>
     </div>
+    <div class="element-controls" hidden>
+      <div class="element-choices" role="group" aria-label="Choose an element">
+        <button type="button" data-element="water" aria-pressed="true">Water</button>
+        <button type="button" data-element="earth" aria-pressed="false">Earth</button>
+        <button type="button" data-element="fire" aria-pressed="false">Fire</button>
+        <button type="button" data-element="air" aria-pressed="false">Air</button>
+      </div>
+      <button type="button" class="element-motion">Pause motion</button>
+    </div>
+
   </div>
 </section>
 
@@ -410,6 +423,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 </main>
 
 <script src="js/main.js?v=26"></script>
+<script src="js/realm-intro.js?v=3"></script>
 <script src="js/journey-map.js?v=26"></script>
 </body>
 </html>

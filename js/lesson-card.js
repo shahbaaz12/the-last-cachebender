@@ -174,16 +174,7 @@
     end.appendChild(nav);
   }
 
-  function rebuildFooter(current){
-    if(!current) return; var n=numberOf(current);
-    document.querySelectorAll('.course-footer-nav').forEach(function(nav){ nav.textContent='';
-      var prev=el('a','course-step previous',n>1?'← Lesson '+(n-1):'← Home'); prev.href=n>1?href('l'+(n-1)):'index.html'; nav.appendChild(prev);
-      var map=el('a','course-map-link','All fourteen lessons'); map.href='index.html#lessons'; nav.appendChild(map);
-      var next=el('a','course-step next',n<14?'Lesson '+(n+1)+' →':'Technique Index →'); next.href=n<14?href('l'+(n+1)):'techniques.html'; nav.appendChild(next);
-    });
-  }
-
-  var current=currentLessonId(); rebuildNavigation(current); rebuildFooter(current);
+  var current=currentLessonId(); rebuildNavigation(current);
   autolinkReferences();
 
   var heads=Array.prototype.slice.call(document.querySelectorAll('.lesson-head[id]'));

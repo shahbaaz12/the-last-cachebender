@@ -61,3 +61,16 @@ Course-planning material is maintained locally under `docs/` and is intentionall
 The project is intended to be published with GitHub Pages at:
 
 `https://shahbaaz12.github.io/the-last-cachebender/`
+
+
+## Home banner animation
+
+The banner renders water, earth, fire, and air directly with Canvas 2D in
+`js/realm-intro.js`. No video, external library, or additional asset is needed.
+The scenes overlap during transitions rather than clearing between elements.
+
+Visitors can select an element or pause the motion. Reduced-motion preferences
+show a still scene with manual element selection. Rendering is capped at 30 fps,
+device resolution at 2×, and pauses when the canvas is offscreen or the tab is
+hidden. The original cache diagram remains available if JavaScript or Canvas
+is unavailable.
