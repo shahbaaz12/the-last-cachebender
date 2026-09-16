@@ -80,22 +80,22 @@
 .hero::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(239,241,242,.96) 0%,rgba(239,241,242,.94) 40%,rgba(239,241,242,.86) 53%,rgba(239,241,242,.26) 72%,rgba(239,241,242,.04) 100%),
-    linear-gradient(0deg,rgba(239,241,242,.5),transparent 46%);
+    linear-gradient(90deg,rgba(242,237,227,.96) 0%,rgba(242,237,227,.94) 40%,rgba(242,237,227,.86) 53%,rgba(242,237,227,.26) 72%,rgba(242,237,227,.04) 100%),
+    linear-gradient(0deg,rgba(242,237,227,.5),transparent 46%);
 }
 :root[data-theme="dark"] .hero{background:var(--ground)}
 :root[data-theme="dark"] .hero::before{background-image:url("../public/realm-besieged.webp");background-position:center}
 :root[data-theme="dark"] .hero::after{
   background:
-    linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.92) 42%,rgba(15,20,24,.84) 54%,rgba(15,20,24,.34) 74%,rgba(15,20,24,.62) 100%),
-    linear-gradient(0deg,rgba(15,20,24,.86),transparent 58%);
+    linear-gradient(90deg,rgba(12,25,34,.96) 0%,rgba(12,25,34,.92) 42%,rgba(12,25,34,.84) 54%,rgba(12,25,34,.34) 74%,rgba(12,25,34,.62) 100%),
+    linear-gradient(0deg,rgba(12,25,34,.86),transparent 58%);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .hero{background:var(--ground)}
   :root:not([data-theme="light"]) .hero::after{
     background:
-      linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.92) 42%,rgba(15,20,24,.84) 54%,rgba(15,20,24,.34) 74%,rgba(15,20,24,.62) 100%),
-      linear-gradient(0deg,rgba(15,20,24,.86),transparent 58%);
+      linear-gradient(90deg,rgba(12,25,34,.96) 0%,rgba(12,25,34,.92) 42%,rgba(12,25,34,.84) 54%,rgba(12,25,34,.34) 74%,rgba(12,25,34,.62) 100%),
+      linear-gradient(0deg,rgba(12,25,34,.86),transparent 58%);
   }
 }
 .hero-copy{min-width:0;position:relative;z-index:2}
@@ -873,4 +873,119 @@
   .book-band{flex-wrap:wrap;gap:6px}
   .book-band > b{border-radius:8px;border-right:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 44%,var(--rule))}
   .book-band > span{border-radius:8px;border-left:1px solid color-mix(in srgb,var(--realm-color,var(--accent)) 26%,var(--rule))}
+}
+
+
+/* Landing page: a spacious atlas cover with a brass-and-ink palette. */
+.home-page{--measure:1120px}
+.home-page main{padding-left:24px;padding-right:24px}
+.top{border-bottom-color:color-mix(in srgb,var(--gold) 35%,var(--rule))}
+.top-in{max-width:1208px}
+.wordmark b{font-size:1.06rem}
+.wordmark span{color:var(--gold);font-size:.62rem;letter-spacing:.2em}
+.hero{margin-top:32px;gap:40px;grid-template-columns:minmax(0,1.15fr) minmax(330px,.85fr);border-color:color-mix(in srgb,var(--gold) 46%,var(--rule));border-radius:18px}
+.hero h1{font-family:Spectral,Georgia,serif;font-weight:600;font-size:clamp(2.7rem,4.7vw,3.8rem);line-height:1.06;letter-spacing:-.04em;max-width:17ch}
+.hero .eyebrow{color:var(--gold);font-size:.68rem;letter-spacing:.16em;line-height:1.6}
+.hero .deck{font-size:1.12rem;color:var(--ink-soft);max-width:43ch}
+.hero::after,:root[data-theme="dark"] .hero::after{
+  background:linear-gradient(90deg,var(--ground),color-mix(in srgb,var(--ground) 94%,transparent) 40%,color-mix(in srgb,var(--ground) 55%,transparent) 70%,color-mix(in srgb,var(--ground) 28%,transparent)),linear-gradient(0deg,var(--ground),transparent 65%);
+}
+.hero-copy::after{height:2px;width:180px;margin-top:28px}
+.btn{padding:13px 21px;border-radius:7px;font-size:.9rem}
+.btn-primary{background:var(--gold);border-color:var(--gold);color:var(--ground);box-shadow:0 5px 18px color-mix(in srgb,var(--gold) 17%,transparent)}
+.btn-primary:hover{background:var(--ink);border-color:var(--ink);color:var(--ground)}
+.btn-ghost{background:color-mix(in srgb,var(--surface) 40%,transparent)}
+.resume-course{position:relative;flex-basis:100%;max-width:370px;border:0;border-left:2px solid var(--gold);border-radius:0;background:transparent;padding:8px 30px 8px 14px;margin-top:6px;font-size:1rem}
+.resume-course small{color:var(--gold)}
+.realm-compass{border-color:color-mix(in srgb,var(--gold) 38%,var(--rule));border-radius:160px 160px 16px 16px;padding-top:36px;background:linear-gradient(160deg,color-mix(in srgb,var(--water) 12%,var(--surface)),color-mix(in srgb,var(--ground) 90%,transparent));box-shadow:0 22px 55px color-mix(in srgb,var(--shadow) 55%,transparent)}
+.realm-compass::before{opacity:.24;background-size:40px 40px}
+.compass-head{justify-content:center;flex-direction:column;gap:5px;border:0;font-size:.61rem;padding-bottom:8px}
+.compass-head strong{color:var(--gold);font-size:.57rem}
+.compass-foot{font-size:.58rem;letter-spacing:.07em;gap:8px}
+.realm-seal{border-radius:10px;background:var(--surface)}
+.realm-seal i{background:color-mix(in srgb,currentColor 9%,transparent)}
+.wheel-core{border-color:var(--gold);box-shadow:0 0 0 7px color-mix(in srgb,var(--gold) 8%,transparent)}
+.wheel-core span{font-size:.56rem;letter-spacing:.07em;line-height:1.4}
+.wheel-core strong{font-size:1.05rem;margin-top:5px}
+.ring-outer{border-color:color-mix(in srgb,var(--gold) 36%,var(--rule))}
+.ring-inner{border-color:color-mix(in srgb,var(--water) 40%,var(--rule))}
+.countbar{padding:0 0 8px}
+.counts{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:24px 0;border-bottom:1px solid var(--rule)}
+.count{padding:0 24px;border-right:1px solid var(--rule)}
+.count:last-child{border-right:0}
+.count::before{display:none}
+.count b{font-family:Spectral,Georgia,serif;font-size:2.1rem;font-weight:600}
+.count span{font-size:.62rem}
+.home-prologue{margin-top:64px}
+.system-map,.book-group{border-radius:16px}
+.system-map-intro h2,.grid-wrap h2,.closing blockquote{font-family:Spectral,Georgia,serif;font-weight:600;font-size:clamp(1.8rem,3.5vw,2.6rem)}
+.book-group{padding:0 22px 24px;margin-top:26px}
+.book-group .book-band{margin:0 -22px 20px;padding:22px 24px;border-bottom:1px solid color-mix(in srgb,var(--realm-color) 32%,var(--rule));background:color-mix(in srgb,var(--ground) 87%,transparent)}
+.book-band > b,.book-band > span{background:transparent!important;border:0;border-radius:0;padding:0;color:var(--ink)!important}
+.book-band > b{font-size:1.22rem;color:var(--realm-color)!important;margin-right:20px}
+.book-band > span{color:var(--ink-soft)!important;font-size:.64rem}
+.card,:root[data-theme="dark"] .card{padding:24px;border-radius:10px;background:color-mix(in srgb,var(--surface) 94%,transparent);border-top-width:3px}
+.card:hover,:root[data-theme="dark"] .card:hover{background:var(--surface);box-shadow:0 12px 26px var(--shadow);transform:translateY(-3px)}
+.card h3{font-size:1.23rem;line-height:1.25}
+.card p{font-size:.95rem}
+.card-no{min-width:30px;height:26px}
+.chip{border-radius:4px;font-size:.6rem;letter-spacing:.06em}
+.closing{border:1px solid var(--rule);background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 8%,var(--surface)),var(--surface))}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .hero::after{background:linear-gradient(90deg,var(--ground),color-mix(in srgb,var(--ground) 94%,transparent) 40%,color-mix(in srgb,var(--ground) 55%,transparent) 70%,color-mix(in srgb,var(--ground) 28%,transparent)),linear-gradient(0deg,var(--ground),transparent 65%)}
+  :root:not([data-theme="light"]) .card{background:color-mix(in srgb,var(--surface) 94%,transparent)}
+}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:32px;padding:42px 30px}
+  .hero h1{max-width:20ch;font-size:clamp(2.6rem,6.5vw,3.6rem)}
+  .hero .deck{max-width:52ch}
+  .realm-compass{max-width:420px;min-height:0}
+}
+@media (max-width:620px){
+  .home-page main{padding-left:14px;padding-right:14px}
+  .hero{padding:32px 20px 22px;margin-top:18px}
+  .hero h1{font-size:2.6rem}
+  .hero .eyebrow{font-size:.59rem}
+  .counts{grid-template-columns:repeat(2,1fr);row-gap:24px}
+  .count:nth-child(2){border-right:0}
+  .count{padding:0 18px}
+  .book-group{padding:0 14px 16px;margin-left:-22px;margin-right:-22px}
+  .book-group .book-band{margin:0 -14px 16px;padding:20px 18px;gap:8px}
+  .book-band > span{flex-basis:100%}
+  .card{padding:20px}
+  .realm-compass{padding:30px 12px 16px;border-radius:140px 140px 14px 14px}
+  .realm-seal{width:76px;min-height:0;padding:9px 4px}
+  .realm-seal small{font-size:.54rem;letter-spacing:0}
+  .realm-seal b{font-size:.73rem}
+  .realm-seal i{width:26px;height:26px}
+  .seal-earth{left:0}.seal-water{right:0}
+  .element-wheel{height:342px}
+  .wheel-core{width:86px;height:86px;padding:0 5px}
+  .wheel-core span{font-size:.51rem}
+  .wheel-core strong{font-size:.92rem}
+  .ring-outer{width:234px;height:234px}
+  .ring-inner{width:178px;height:178px}
+  .compass-foot{font-size:.51rem;letter-spacing:.03em}
+}
+@media (prefers-reduced-motion:reduce){.card:hover{transform:none}}
+
+.btn.lesson-complete::after{color:currentColor}
+.resume-course.lesson-complete::after{position:absolute;right:6px;top:50%;transform:translateY(-50%)}
+@media (max-width:620px){
+  .top-in{padding-left:14px;padding-right:14px;gap:9px}
+  .top-end .journey-map-trigger{display:none}
+  .top-end{gap:0}
+  .wordmark b{font-size:.85rem}
+  .top .theme-toggle{padding:7px 8px;font-size:.6rem}
+  .hero::after,:root[data-theme="dark"] .hero::after{background:linear-gradient(110deg,color-mix(in srgb,var(--ground) 96%,transparent),color-mix(in srgb,var(--ground) 76%,transparent))}
+}
+@media (max-width:380px){
+  .realm-seal{width:66px}
+  .realm-seal small{font-size:.49rem}
+  .wheel-core{width:80px;height:80px}
+  .ring-outer{width:210px;height:210px}
+  .compass-foot{flex-direction:column;gap:5px}
+}
+@media (prefers-color-scheme:dark) and (max-width:620px){
+  :root:not([data-theme="light"]) .hero::after{background:linear-gradient(110deg,color-mix(in srgb,var(--ground) 96%,transparent),color-mix(in srgb,var(--ground) 76%,transparent))}
 }

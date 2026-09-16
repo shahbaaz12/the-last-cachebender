@@ -1,78 +1,77 @@
 :root{
-  /* Neutral ground with no realm allegiance, so the artwork and the four
-     nations carry the colour. Realm hues follow Avatar canon: Air is
-     saffron, not a second blue. War red is held apart from Fire red. */
-  --ground:#EFF1F2;
-  --surface:#FAFBFB;
-  --surface-2:#E3E7E9;
-  --ink:#141A1D;
-  --ink-soft:#4E5B61;
-  --ink-faint:#5A6C75;
-  --rule:#D6DCDF;
-  --rule-firm:#AEBAC0;
-  --accent:#175E8C;
-  --accent-lift:#0F4A72;
-  --accent-wash:#DCE8F0;
+  /* Parchment and midnight ink, with brass and distinct elemental hues.
+     Both themes use the same semantic colors and readable surfaces. */
+  --ground:#F2EDE3;
+  --surface:#FFFCF5;
+  --surface-2:#E8E0D1;
+  --ink:#202F35;
+  --ink-soft:#526168;
+  --ink-faint:#626960;
+  --rule:#DCD3C2;
+  --rule-firm:#BCB29C;
+  --accent:#176577;
+  --accent-lift:#124D5A;
+  --accent-wash:#DBE9E7;
   --ember:#9C1F3C;
   --ember-wash:#F4DDE3;
   --air:#8C5A10;
-  --water:#175E8C;
+  --water:#176577;
   --earth:#4C7130;
   --fire:#A83A1C;
-  --gold:#8A6A12;
+  --gold:#89621F;
   --spirit:#6B4A8C;
   --shadow:rgba(20,26,29,.12);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --ground:#0F1418;
-    --surface:#161D22;
-    --surface-2:#1F282E;
-    --ink:#E8EDF0;
-    --ink-soft:#A7B5BC;
-    --ink-faint:#7B8B93;
-    --rule:#28333A;
-    --rule-firm:#3E4C54;
-    --accent:#54A9DA;
-    --accent-lift:#79C0E8;
-    --accent-wash:#132833;
-    --ember:#F0526F;
+    --ground:#0C1922;
+    --surface:#132630;
+    --surface-2:#203642;
+    --ink:#F2EBDD;
+    --ink-soft:#B6C5C9;
+    --ink-faint:#98ACB4;
+    --rule:#2A414C;
+    --rule-firm:#48616A;
+    --accent:#78C6D2;
+    --accent-lift:#A6E1E6;
+    --accent-wash:#163641;
+    --ember:#F18E9B;
     --ember-wash:#2E141C;
-    --air:#E3A94A;
-    --water:#54A9DA;
-    --earth:#8DBE5C;
-    --fire:#EE6A3C;
-    --gold:#E3C173;
-    --spirit:#B995DC;
+    --air:#E9BA68;
+    --water:#78C6D2;
+    --earth:#A7C986;
+    --fire:#F19B74;
+    --gold:#DDB878;
+    --spirit:#C5ADE5;
     --shadow:rgba(0,0,0,.46);
   }
 }
 :root[data-theme="dark"]{
-  --ground:#0F1418;
-  --surface:#161D22;
-  --surface-2:#1F282E;
-  --ink:#E8EDF0;
-  --ink-soft:#A7B5BC;
-  --ink-faint:#7B8B93;
-  --rule:#28333A;
-  --rule-firm:#3E4C54;
-  --accent:#54A9DA;
-  --accent-lift:#79C0E8;
-  --accent-wash:#132833;
-  --ember:#F0526F;
+  --ground:#0C1922;
+  --surface:#132630;
+  --surface-2:#203642;
+  --ink:#F2EBDD;
+  --ink-soft:#B6C5C9;
+  --ink-faint:#98ACB4;
+  --rule:#2A414C;
+  --rule-firm:#48616A;
+  --accent:#78C6D2;
+  --accent-lift:#A6E1E6;
+  --accent-wash:#163641;
+  --ember:#F18E9B;
   --ember-wash:#2E141C;
-  --air:#E3A94A;
-  --water:#54A9DA;
-  --earth:#8DBE5C;
-  --fire:#EE6A3C;
-  --gold:#E3C173;
-  --spirit:#B995DC;
+  --air:#E9BA68;
+  --water:#78C6D2;
+  --earth:#A7C986;
+  --fire:#F19B74;
+  --gold:#DDB878;
+  --spirit:#C5ADE5;
   --shadow:rgba(0,0,0,.46);
 }
 
 *{box-sizing:border-box}
 
-.realm-prologue{--realm-color:var(--accent)}
+.realm-prologue{--realm-color:var(--gold)}
 .realm-air{--realm-color:var(--air)}
 .realm-water{--realm-color:var(--water)}
 .realm-earth{--realm-color:var(--earth)}
@@ -210,8 +209,8 @@ main{padding:0 0 140px;min-width:0}
 .masthead::before{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(239,241,242,.97) 0%,rgba(239,241,242,.9) 44%,rgba(239,241,242,.32) 72%,rgba(15,20,24,.22) 100%),
-    linear-gradient(0deg,rgba(239,241,242,.9),transparent 62%);
+    linear-gradient(90deg,rgba(242,237,227,.97) 0%,rgba(242,237,227,.9) 44%,rgba(242,237,227,.32) 72%,rgba(12,25,34,.22) 100%),
+    linear-gradient(0deg,rgba(242,237,227,.9),transparent 62%);
 }
 .masthead::after{
   content:"";position:absolute;z-index:2;left:0;right:0;bottom:0;height:4px;
@@ -244,15 +243,15 @@ main{padding:0 0 140px;min-width:0}
 :root[data-theme="dark"] .masthead{background:var(--ground)}
 :root[data-theme="dark"] .masthead::before{
   background:
-    linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.62) 100%),
-    linear-gradient(0deg,rgba(15,20,24,.88),transparent 58%);
+    linear-gradient(90deg,rgba(12,25,34,.96) 0%,rgba(12,25,34,.86) 43%,rgba(12,25,34,.3) 72%,rgba(12,25,34,.62) 100%),
+    linear-gradient(0deg,rgba(12,25,34,.88),transparent 58%);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .masthead{background:var(--ground)}
   :root:not([data-theme="light"]) .masthead::before{
     background:
-      linear-gradient(90deg,rgba(15,20,24,.96) 0%,rgba(15,20,24,.86) 43%,rgba(15,20,24,.3) 72%,rgba(15,20,24,.62) 100%),
-      linear-gradient(0deg,rgba(15,20,24,.88),transparent 58%);
+      linear-gradient(90deg,rgba(12,25,34,.96) 0%,rgba(12,25,34,.86) 43%,rgba(12,25,34,.3) 72%,rgba(12,25,34,.62) 100%),
+      linear-gradient(0deg,rgba(12,25,34,.88),transparent 58%);
   }
 }
 
@@ -1623,3 +1622,121 @@ strong.term{
   .signal-list li{padding:11px 13px 11px 15px}
   .signal-list li > strong:first-child{display:block;margin:0 0 6px;width:fit-content}
 }
+
+
+/* ============================================================
+   Illustrated field guide: editorial titles, brass details,
+   and deliberate surface contrast shared by all course pages.
+   ============================================================ */
+body{
+  background:
+    radial-gradient(ellipse at 0 0,color-mix(in srgb,var(--gold) 12%,transparent),transparent 42rem),
+    radial-gradient(ellipse at 100% 15rem,color-mix(in srgb,var(--water) 13%,transparent),transparent 48rem),
+    var(--ground);
+}
+::selection{background:var(--gold);color:var(--ground)}
+.course-top{
+  border-top:0;border-image:none;
+  border-bottom:1px solid color-mix(in srgb,var(--gold) 35%,var(--rule));
+  box-shadow:0 4px 24px color-mix(in srgb,var(--shadow) 22%,transparent);
+}
+.course-brand b{font-size:1.04rem}
+.course-brand small{color:var(--gold);letter-spacing:.18em}
+.course-crest{width:42px;height:42px;background:var(--ground)}
+.theme-toggle,.course-lesson-menu > summary{border-radius:7px}
+.course-books > a,.course-books > .journey-map-trigger{color:var(--ink-soft)}
+.lesson-book-intro{margin-top:26px}
+.lesson-book-intro .marker{letter-spacing:.18em;color:var(--realm-color)}
+.lesson-head{
+  min-height:300px;padding-top:70px;padding-bottom:38px;
+  border:1px solid color-mix(in srgb,var(--realm-color) 44%,var(--rule));
+  border-radius:16px;
+  box-shadow:0 18px 40px color-mix(in srgb,var(--shadow) 28%,transparent);
+}
+.lesson-head::before{
+  top:28px;width:54px;height:3px;
+  background:var(--realm-color);box-shadow:62px 0 0 color-mix(in srgb,var(--realm-color) 24%,transparent);
+}
+.lesson-head::after{
+  background:
+    linear-gradient(0deg,color-mix(in srgb,var(--ground) 94%,transparent),transparent 85%),
+    linear-gradient(90deg,var(--ground),color-mix(in srgb,var(--ground) 83%,transparent) 42%,color-mix(in srgb,var(--ground) 8%,transparent));
+}
+.lesson-head h2{
+  font-family:Spectral,Georgia,serif;font-weight:600;
+  font-size:clamp(2.25rem,4.6vw,3.35rem);line-height:1.12;letter-spacing:-.035em;max-width:24ch;
+}
+.lesson-head .num{
+  align-self:flex-start;padding:5px 10px;margin-bottom:16px;
+  border:1px solid color-mix(in srgb,var(--realm-color) 46%,var(--rule));border-radius:4px;
+  background:color-mix(in srgb,var(--ground) 88%,transparent);letter-spacing:.15em;
+}
+.book:not(.lesson-book-intro){border-radius:14px 14px 0 0}
+.book h2,.masthead h1{font-family:Spectral,Georgia,serif;font-weight:600}
+.technique{border-radius:12px;margin-top:22px;margin-bottom:22px;box-shadow:none}
+.technique .name{font-family:Spectral,Georgia,serif;font-size:1.5rem;font-weight:600}
+.lesson-card{
+  padding:28px;border-radius:14px;
+  background:linear-gradient(130deg,color-mix(in srgb,var(--card-color) 6%,var(--surface)),var(--surface) 65%);
+  box-shadow:0 14px 32px color-mix(in srgb,var(--shadow) 20%,transparent);
+}
+.lc-top{padding-bottom:15px;margin-bottom:18px;border-bottom:1px solid var(--rule)}
+.lc-eyebrow{font-size:.7rem;letter-spacing:.12em}
+.lc-contents{column-gap:24px}
+.lc-contents li{padding:5px 0;margin-bottom:4px}
+.lc-contents li::before{color:var(--card-color);font-size:.7rem}
+.lc-contents a{color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:.88rem;line-height:1.45}
+.lc-bridge{border-radius:0 8px 8px 0;background:color-mix(in srgb,var(--card-color) 6%,var(--ground))}
+.lc-feeds{padding-top:16px;border-top:1px solid var(--rule)}
+.lesson-compact-toc{border-radius:8px;box-shadow:0 5px 14px color-mix(in srgb,var(--shadow) 20%,transparent)}
+.wrap > h3{margin-top:60px;padding-bottom:16px;font-size:1.72rem}
+.wrap > h3::after{width:100%;height:1px;background:linear-gradient(90deg,var(--realm-color,var(--gold)) 0 54px,var(--rule) 54px 100%)}
+.figure,.tablewrap{border-radius:10px;box-shadow:0 6px 20px color-mix(in srgb,var(--shadow) 15%,transparent)}
+.figure{padding:24px;border-top:2px solid color-mix(in srgb,var(--realm-color,var(--accent)) 65%,var(--rule))}
+th{color:var(--ink-soft);background:color-mix(in srgb,var(--realm-color,var(--gold)) 7%,var(--surface-2))}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-2) 28%,transparent)}
+.callout,.good-news,.keystone,.definition-callout,.bloom-panel{border-radius:10px}
+.lesson-carry{
+  padding:30px;border-radius:14px;border-left-width:1px;border-top:3px solid var(--realm-color,var(--gold));
+  background:linear-gradient(120deg,color-mix(in srgb,var(--realm-color,var(--gold)) 10%,var(--surface)),var(--surface));
+}
+.lesson-carry h3{font-family:Spectral,Georgia,serif;font-size:1.85rem}
+.lesson-step{background:var(--surface);border-radius:8px}
+.lesson-step.next{background:var(--realm-color,var(--accent));color:var(--ground)!important;border-color:transparent}
+.lesson-step.next:hover{color:var(--ground)!important;filter:brightness(1.08)}
+.technique-index-card{border-radius:12px;padding:24px;background:linear-gradient(120deg,color-mix(in srgb,var(--realm-color) 8%,var(--surface)),var(--surface))}
+.technique-number{padding:10px;border:1px solid var(--rule);border-radius:50%}
+.journey-map-modal{border-radius:16px}
+.journey-node,.journey-map-group{border-radius:8px}
+.journey-map-fab{border-color:var(--gold);background:var(--surface)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+@media (min-width:760px){
+  .technique{grid-template-columns:auto 1fr;grid-template-areas:"tag gloss" "name gloss";column-gap:28px}
+  .technique .gloss{align-self:center;justify-self:end;border-left:1px solid var(--rule);padding-left:24px;max-width:38ch}
+  .lesson-card{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}
+  .lesson-card > .lc-top,.lesson-card > .lc-feeds{grid-column:1/-1}
+  .lesson-card > .lc-contents{grid-column:1;grid-row:2/4;columns:1;border-right:1px solid var(--rule);padding-right:24px}
+  .lesson-card > .lc-bridge{grid-column:2;margin-top:0;padding:14px 18px}
+  .lesson-card > .lc-objectives{grid-column:2;margin-top:16px;padding-top:16px}
+}
+@media (max-width:940px){
+  .lesson-head{margin-left:20px;margin-right:20px;min-height:270px}
+  .lesson-head::before{left:24px}
+}
+@media (max-width:620px){
+  .lesson-head{margin-left:12px;margin-right:12px;padding:60px 20px 26px;min-height:260px;border-radius:12px}
+  .lesson-head h2{font-size:2.15rem;max-width:19ch}
+  .lesson-head::before{left:20px}
+  .lesson-head::after{background:linear-gradient(90deg,color-mix(in srgb,var(--ground) 94%,transparent),color-mix(in srgb,var(--ground) 55%,transparent)),linear-gradient(0deg,var(--ground),transparent)}
+  .lesson-card{padding:20px}
+  .technique .name{font-size:1.35rem}
+  .wrap > h3{font-size:1.48rem}
+  .lesson-carry{padding:24px 20px}
+}
+@media print{
+  body{background:white;color:black}
+  .lesson-head,.lesson-card,.technique,.lesson-carry{box-shadow:none}
+}
+
+/* Narrow screens use the linked lesson itself instead of hover previews. */
+@media (max-width:620px){.xref::after{display:none}}
