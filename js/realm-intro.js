@@ -7,7 +7,7 @@
   var ctx = canvas && canvas.getContext('2d');
   if (!ctx) return;
   var names = ['Water', 'Earth', 'Fire', 'Air'];
-  var domains = ['The CDN edge', 'The application cache', 'The database depths', 'The browser realm'];
+  var domains = ['CDN cache', 'Application cache', 'Database cache', 'Browser cache'];
   var colors = ['#77c7db', '#b4b887', '#f4a065', '#ded9be'];
   var buttons = Array.from(panel.querySelectorAll('[data-element]'));
   var pause = panel.querySelector('.element-motion');

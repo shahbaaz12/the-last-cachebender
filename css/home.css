@@ -1011,12 +1011,12 @@
 .elemental-ready::after{display:none}
 .elemental-ready .compass-head{color:#a8b7b8}
 .elemental-ready .compass-head strong{color:#d5b77f}
-.elemental-ready .element-wheel{height:405px}
+.elemental-ready .element-wheel{height:430px}
 .elemental-ready .element-wheel > :not(.element-canvas):not(.element-caption){display:none}
 .elemental-ready .element-canvas{display:block;position:absolute;top:-12px;left:-22px;width:calc(100% + 44px);height:350px}
-.elemental-ready .element-caption{display:flex;position:absolute;bottom:10px;left:0;right:0;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
-.element-name{font:600 2.4rem/1.1 Spectral,Georgia,serif;color:var(--scene-color);letter-spacing:-.025em}
-.element-domain{font:400 .6rem/1.4 "JetBrains Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#bac6c5}
+.elemental-ready .element-caption{display:flex;position:absolute;bottom:16px;left:0;right:0;flex-direction:column;align-items:center;gap:10px;pointer-events:none;padding:18px 0 0;border-top:1px solid #536468}
+.element-name{font:500 .9rem/1.3 "JetBrains Mono",monospace;color:var(--scene-color);letter-spacing:.12em;text-transform:uppercase}
+.element-domain{font:600 clamp(1.5rem,2.5vw,1.85rem)/1.15 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em;color:#f1ebdf;text-align:center;max-width:100%;padding:0 6px}
 .elemental-ready .compass-foot{display:none}
 .element-controls:not([hidden]){display:flex;align-items:center;flex-direction:column;gap:14px;border-top:1px solid #33494d;padding-top:14px}
 .element-choices{display:flex;width:100%;justify-content:space-between;gap:4px}
@@ -1026,9 +1026,9 @@
 .element-motion{appearance:none;min-height:36px;padding:6px 14px;border:1px solid #526365;border-radius:4px;background:transparent;color:#c6cec8;font:400 .58rem/1.2 "JetBrains Mono",monospace;cursor:pointer}
 .element-motion:hover{border-color:#d5b77f;color:#eee0c4}
 @media (max-width:620px){
-  .elemental-ready .element-wheel{height:360px}
+  .elemental-ready .element-wheel{height:390px}
   .elemental-ready .element-canvas{left:-12px;width:calc(100% + 24px);height:305px}
-  .element-name{font-size:2.1rem}
+  .element-name{font-size:.8rem}
   .elemental-ready .element-caption{bottom:8px}
   .element-controls:not([hidden]){gap:10px}
 }
