@@ -1,0 +1,68 @@
+/* Home course guide: illustrated chapter covers beside a readable lesson list. */
+.lesson-atlas{padding-top:84px}
+.atlas-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:30px}
+.atlas-intro .eyebrow{color:var(--gold);margin-bottom:12px;font:400 .64rem/1.5 "JetBrains Mono",monospace;letter-spacing:.16em;text-transform:uppercase}
+.atlas-intro h2{font:600 clamp(2rem,4vw,3rem)/1.12 Spectral,Georgia,serif;letter-spacing:-.035em;margin:0 0 14px}
+.atlas-intro p{max-width:58ch;margin:0;font-size:1.05rem;line-height:1.65;color:var(--ink-soft)}
+.atlas-edition{flex:none;padding-bottom:5px;font:400 .65rem/1.6 "JetBrains Mono",monospace;color:var(--ink-faint);white-space:nowrap}
+.atlas-edition > span{padding:0 8px;color:var(--gold)}
+.atlas-index{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-block:1px solid var(--rule);margin-bottom:36px;padding:8px 0;gap:4px}
+.atlas-index a{display:flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:8px 4px;color:var(--ink-soft);text-decoration:none;font:500 .7rem/1.4 "JetBrains Mono",monospace;border-radius:5px;transition:background .15s,color .15s}
+.atlas-index a > span{color:var(--realm-color);font:400 1.45rem/1 Georgia,serif}
+.atlas-index a:hover{background:color-mix(in srgb,var(--realm-color) 10%,var(--surface));color:var(--ink)}
+.atlas-chapters{display:grid;gap:24px;position:relative}
+.atlas-chapter{display:grid;grid-template-columns:260px minmax(0,1fr);border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--surface);scroll-margin-top:90px}
+.atlas-cover{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-between;min-height:265px;padding:25px;color:#f8edda;background:#12232c;border-right:1px solid var(--rule)}
+.atlas-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;filter:saturate(.7)}
+.atlas-cover::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(7,20,28,.75),rgba(7,20,28,.12) 30%,rgba(7,20,28,.83) 75%,#0d202a)}
+.atlas-cover-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font:500 .63rem/1.5 "JetBrains Mono",monospace;letter-spacing:.06em;text-transform:uppercase}
+.atlas-sigil{display:grid;place-items:center;flex:none;width:36px;height:36px;border:1px solid #e6d4ab80;border-radius:50%;color:#ead8b0;font:400 1.65rem/1 Georgia,serif}
+.atlas-cover-copy{padding-top:45px}
+.atlas-range{font:400 .58rem/1.5 "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:#dfc596}
+.atlas-cover h3{font:600 1.8rem/1.08 Spectral,Georgia,serif;letter-spacing:-.02em;color:#fff3df;margin:10px 0}
+.atlas-cover p{font:400 .86rem/1.5 Spectral,Georgia,serif;color:#d2d9d8;margin:0;max-width:27ch}
+.atlas-lessons{list-style:none;margin:0;padding:0;align-self:center;min-width:0}
+.atlas-lessons li{margin:0;padding:0}
+.atlas-lessons li + li{border-top:1px solid var(--rule)}
+.atlas-lesson{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr) 24px;align-items:start;gap:18px;padding:27px 28px;color:var(--ink);text-decoration:none;transition:background .18s;min-height:150px}
+.atlas-lesson:hover{color:var(--ink);background:color-mix(in srgb,var(--realm-color) 6%,var(--surface))}
+.atlas-number{font:400 .8rem/1.5 "JetBrains Mono",monospace;color:var(--realm-color);padding-top:3px;font-variant-numeric:tabular-nums}
+.atlas-lesson h4{font:600 1.18rem/1.3 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.018em;color:var(--ink);margin:0 0 9px}
+.atlas-lesson p{font-size:.95rem;line-height:1.55;margin:0;color:var(--ink-soft);max-width:65ch}
+.atlas-topics{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:13px;color:var(--ink-faint);font:400 .58rem/1.6 "JetBrains Mono",monospace;letter-spacing:.03em}
+.atlas-topics span + span::before{content:"·";margin-right:14px;color:var(--realm-color)}
+.atlas-arrow{display:grid;place-items:center;width:26px;height:26px;color:var(--realm-color);font:400 1.2rem/1 system-ui,sans-serif;transition:transform .18s}
+.atlas-lesson:hover .atlas-arrow{transform:translate(2px,-2px)}
+.atlas-lesson.lesson-complete::after{content:none}
+.atlas-lesson.lesson-complete .atlas-number::after{content:"✓";display:block;color:var(--earth);font-size:.72rem;margin-top:7px}
+.atlas-lesson:focus-visible,.atlas-index a:focus-visible{outline:2px solid var(--realm-color);outline-offset:-4px;background:color-mix(in srgb,var(--realm-color) 8%,var(--surface))}
+.atlas-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media (max-width:900px){
+  .atlas-chapter{grid-template-columns:220px minmax(0,1fr)}
+  .atlas-cover{padding:22px}
+  .atlas-lesson{padding:24px 20px;gap:12px;grid-template-columns:28px minmax(0,1fr) 22px}
+  .atlas-intro{display:block}.atlas-edition{display:block;margin-top:18px}
+}
+@media (max-width:650px){
+  .lesson-atlas{padding-top:56px}
+  .atlas-intro{padding:0 6px;margin-bottom:22px}
+  .atlas-intro h2{font-size:2.2rem;max-width:16ch}
+  .atlas-index{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:2px 6px;margin-bottom:24px}
+  .atlas-index a{padding:8px 10px;font-size:.65rem;gap:7px}
+  .atlas-chapter{grid-template-columns:1fr}
+  .atlas-cover{min-height:215px;border-right:0;border-bottom:2px solid var(--realm-color);padding:22px}
+  .atlas-cover img{object-position:center 42%}
+  .atlas-cover-copy{padding-top:25px}
+  .atlas-cover h3{font-size:1.8rem;max-width:20ch}
+  .atlas-cover p{max-width:none}
+  .atlas-lesson{padding:23px 18px;gap:10px;grid-template-columns:25px minmax(0,1fr) 20px}
+  .atlas-lesson h4{font-size:1.12rem}
+  .atlas-lesson p{font-size:.91rem}
+  .atlas-topics{column-gap:10px}
+  .atlas-topics span + span::before{margin-right:10px}
+  .atlas-arrow{width:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .atlas-lesson,.atlas-arrow,.atlas-index a{transition:none}
+  .atlas-lesson:hover .atlas-arrow{transform:none}
+}

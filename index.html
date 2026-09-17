@@ -30,6 +30,7 @@
 
 <link rel="stylesheet" href="css/styles.css?v=28">
 <link rel="stylesheet" href="css/home.css?v=14">
+<link rel="stylesheet" href="css/lesson-atlas.css?v=1">
 
 <script>
 /* Apply the stored theme before first paint so the page never flashes
@@ -271,135 +272,157 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   </div>
 </section>
 
-<section class="home grid-wrap" id="lessons">
-  <div class="eyebrow">The path</div>
-  <h2>Each lesson adds one layer, or one decision about it.</h2>
-  <p class="lede">Read them in order. The four realms come first, then the techniques that work in all of them, then the war.</p>
-
-  <div class="book-group realm-prologue">
-    <div class="book-band realm-prologue"><b>Prologue</b><span>The Forgotten Art</span></div>
-    <div class="cards">
-    <a class="card" href="l1.html#l1">
-      <div class="card-top"><span class="card-no">01</span><span class="card-kind">Foundations</span></div>
-      <h3>The Forgotten Art of Caching</h3>
-      <p>What a cache is, why distance costs so much, and why this is a design decision rather than a late fix.</p>
-      <div class="chips"><span class="chip">Latency</span><span class="chip">Trade-offs</span></div>
-    </a>
-    <a class="card" href="l2.html#l2">
-      <div class="card-top"><span class="card-no">02</span><span class="card-kind">Keys and lifetimes</span></div>
-      <h3>The Trial of Hits and Misses</h3>
-      <p>Keys, values, lifetimes and warming. Three of the five defenses in Lesson 12 trace back to here.</p>
-      <div class="chips"><span class="chip">Keys</span><span class="chip">TTL</span><span class="chip">Hit ratio</span></div>
-    </a>
+<section class="home lesson-atlas" id="lessons" aria-labelledby="atlas-title">
+  <header class="atlas-intro">
+    <div><div class="eyebrow">The learning path</div>
+      <h2 id="atlas-title">Four realms. One journey.</h2>
+      <p>Fourteen lessons, from your first cached copy to a system ready for the Surge. Start at the beginning, or return to a realm.</p>
     </div>
-  </div>
-
-  <div class="book-group realm-air">
-    <div class="book-band realm-air"><b>Book One: Air</b><span>The Browser Realm</span></div>
-    <div class="cards cards-single">
-    <a class="card" href="l3.html#l3">
-      <div class="card-top"><span class="card-no">03</span><span class="card-kind">Closest to the reader</span></div>
-      <h3>The Browser Realm</h3>
-      <p>Headers, validation and fingerprinted filenames. The one realm whose storage is free and whose copies you cannot recall.</p>
-      <div class="chips"><span class="chip">Cache-Control</span><span class="chip">ETag</span><span class="chip">Fingerprints</span></div>
-    </a>
-    </div>
-  </div>
-
-  <div class="book-group realm-water">
-    <div class="book-band realm-water"><b>Book Two: Water</b><span>The Edge Kingdom</span></div>
-    <div class="cards cards-single">
-    <a class="card" href="l4.html#l4">
-      <div class="card-top"><span class="card-no">04</span><span class="card-kind">Copies worldwide</span></div>
-      <h3>The Edge Kingdom</h3>
-      <p>A CDN serves shared content closer to users. Learn how its cache key decides which requests can reuse a response.</p>
-      <div class="chips"><span class="chip">Edge keys</span><span class="chip">Vary</span><span class="chip">Purge</span></div>
-    </a>
-    </div>
-  </div>
-
-  <div class="book-group realm-earth">
-    <div class="book-band realm-earth"><b>Book Three: Earth</b><span>The Application Sanctum</span></div>
-    <div class="cards">
-    <a class="card" href="l5.html#l5">
-      <div class="card-top"><span class="card-no">05</span><span class="card-kind">Your own memory</span></div>
-      <h3>The Application Sanctum</h3>
-      <p>Reuse data inside your application process, and see why two servers can hold different prices.</p>
-      <div class="chips"><span class="chip">In-process</span><span class="chip">Memoization</span></div>
-    </a>
-    <a class="card" href="l6.html#l6">
-      <div class="card-top"><span class="card-no">06</span><span class="card-kind">One cache, many nodes</span></div>
-      <h3>The Distributed Cache Tribes</h3>
-      <p>What Redis adds beyond a shared cache, when it helps, and what it costs.</p>
-      <div class="chips"><span class="chip">Redis</span><span class="chip">Replicas</span><span class="chip">Failover</span></div>
-    </a>
-    </div>
-  </div>
-
-  <div class="book-group realm-fire">
-    <div class="book-band realm-fire"><b>Book Four: Fire</b><span>The Database Depths</span></div>
-    <div class="cards cards-single">
-    <a class="card" href="l7.html#l7">
-      <div class="card-top"><span class="card-no">07</span><span class="card-kind">Already burning</span></div>
-      <h3>The Database Depths</h3>
-      <p>The database is already a caching system. Here you tune rather than build, and an index usually beats a cache.</p>
-      <div class="chips"><span class="chip">Buffer pool</span><span class="chip">Indexes</span></div>
-    </a>
-    </div>
-  </div>
-
-  <div class="book-group realm-spirit">
-    <div class="book-band realm-spirit"><b>Interlude</b><span>The Spirit Library</span></div>
-    <div class="cards">
-    <a class="card" href="l8.html#l8">
-      <div class="card-top"><span class="card-no">08</span><span class="card-kind">Reading</span></div>
-      <h3>The Three Reading Techniques</h3>
-      <p>Cache-aside, read-through and refresh-ahead. Then the race that hits your database a thousand times for one value.</p>
-      <div class="chips"><span class="chip">Cache-aside</span><span class="chip">Single-flight</span></div>
-    </a>
-    <a class="card" href="l9.html#l9">
-      <div class="card-top"><span class="card-no">09</span><span class="card-kind">Writing</span></div>
-      <h3>The Three Writing Techniques</h3>
-      <p>Write-through, write-behind and write-around, and the honest question of what you can afford to lose.</p>
-      <div class="chips"><span class="chip">Durability</span><span class="chip">Batching</span></div>
-    </a>
-    <a class="card" href="l10.html#l10">
-      <div class="card-top"><span class="card-no">10</span><span class="card-kind">Letting go</span></div>
-      <h3>The Temple of Eviction</h3>
-      <p>Expiration removes old entries. Eviction makes room for new ones. Learn when to use each.</p>
-      <div class="chips"><span class="chip">LRU</span><span class="chip">LFU</span><span class="chip">Jitter</span></div>
-    </a>
-    <a class="card" href="l11.html#l11">
-      <div class="card-top"><span class="card-no">11</span><span class="card-kind">The hardest problem</span></div>
-      <h3>The Invalidation Paradox</h3>
-      <p>Learn when to delete a cached entry, when to change its key, and how to handle browser copies you cannot purge.</p>
-      <div class="chips"><span class="chip">Invalidation</span><span class="chip">Versioned keys</span></div>
-    </a>
-    </div>
-  </div>
-
-  <div class="book-group realm-war">
-    <div class="book-band realm-war"><b>Book Five</b><span>The Great War</span></div>
-    <div class="cards cards-war">
-    <a class="card trial" href="l12.html#l12">
-      <div class="card-top"><span class="card-no">12</span><span class="card-kind">Attack defenses</span></div>
-      <h3>The Latency Lord's Attacks</h3>
-      <p>Explore five cache failure modes, from stampedes to poisoning. Add Bloom filters to the defenses against requests for nonexistent products.</p>
-      <div class="chips"><span class="chip">The trial</span><span class="chip">Five defenses</span></div>
-    </a>
-    <a class="card" href="l13.html#l13">
-      <div class="card-top"><span class="card-no">13</span><span class="card-kind">Seeing clearly</span></div>
-      <h3>Restoring Balance</h3>
-      <p>Per-key hit ratios, the p99 tail, and the discipline of deleting a cache that no longer earns its place.</p>
-      <div class="chips"><span class="chip">p99</span><span class="chip">What not to cache</span></div>
-    </a>
-    <a class="card" href="l14.html#l14">
-      <div class="card-top"><span class="card-no">14</span><span class="card-kind">Everything at once</span></div>
-      <h3>The Final Battle</h3>
-      <p>Bring the four realms together in one design, and explain each caching decision.</p>
-      <div class="chips"><span class="chip">Rubric</span><span class="chip">Worked example</span></div>
-    </a>
-    </div>
+    <span class="atlas-edition">7 chapters <span aria-hidden="true">/</span> 14 lessons</span>
+  </header>
+  <nav class="atlas-index" aria-label="Course chapters">
+    <a class="realm-prologue" href="#chapter-prologue"><span aria-hidden="true">◈</span>Prologue</a>
+    <a class="realm-air" href="#chapter-air"><span aria-hidden="true">◌</span>Air</a>
+    <a class="realm-water" href="#chapter-water"><span aria-hidden="true">≈</span>Water</a>
+    <a class="realm-earth" href="#chapter-earth"><span aria-hidden="true">◇</span>Earth</a>
+    <a class="realm-fire" href="#chapter-fire"><span aria-hidden="true">△</span>Fire</a>
+    <a class="realm-spirit" href="#chapter-spirit"><span aria-hidden="true">✦</span>Library</a>
+    <a class="realm-war" href="#chapter-war"><span aria-hidden="true">×</span>The War</a>
+  </nav>
+  <div class="atlas-chapters">
+    <section class="atlas-chapter realm-prologue" id="chapter-prologue" aria-labelledby="title-prologue">
+      <header class="atlas-cover">
+        <img src="public/realm-restored.webp" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Prologue</span><span class="atlas-sigil" aria-hidden="true">◈</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lessons 01–02</span><h3 id="title-prologue">The Forgotten Art</h3><p>Begin with a single copy.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="1">
+        <li><a class="atlas-lesson" href="l1.html#l1">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>01</span>
+          <div class="atlas-lesson-copy"><h4>The Forgotten Art of Caching</h4><p>What a cache is, why distance costs so much, and why this is a design decision rather than a late fix.</p><div class="atlas-topics"><span >Latency</span><span >Trade-offs</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l2.html#l2">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>02</span>
+          <div class="atlas-lesson-copy"><h4>The Trial of Hits and Misses</h4><p>Keys, values, lifetimes and warming. Three of the five defenses in Lesson 12 trace back to here.</p><div class="atlas-topics"><span >Keys</span><span >TTL</span><span >Hit ratio</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
+    <section class="atlas-chapter realm-air" id="chapter-air" aria-labelledby="title-air">
+      <header class="atlas-cover">
+        <img src="public/card-air.webp" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Book One · Air</span><span class="atlas-sigil" aria-hidden="true">◌</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lesson 03</span><h3 id="title-air">The Browser Realm</h3><p>Start closest to the reader.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="3">
+        <li><a class="atlas-lesson" href="l3.html#l3">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>03</span>
+          <div class="atlas-lesson-copy"><h4>The Browser Realm</h4><p>Headers, validation and fingerprinted filenames. The one realm whose storage is free and whose copies you cannot recall.</p><div class="atlas-topics"><span >Cache-Control</span><span >ETag</span><span >Fingerprints</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
+    <section class="atlas-chapter realm-water" id="chapter-water" aria-labelledby="title-water">
+      <header class="atlas-cover">
+        <img src="public/card-water.webp" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Book Two · Water</span><span class="atlas-sigil" aria-hidden="true">≈</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lesson 04</span><h3 id="title-water">The Edge Kingdom</h3><p>Carry shared copies closer.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="4">
+        <li><a class="atlas-lesson" href="l4.html#l4">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>04</span>
+          <div class="atlas-lesson-copy"><h4>The Edge Kingdom</h4><p>A CDN serves shared content closer to users. Learn how its cache key decides which requests can reuse a response.</p><div class="atlas-topics"><span >Edge keys</span><span >Vary</span><span >Purge</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
+    <section class="atlas-chapter realm-earth" id="chapter-earth" aria-labelledby="title-earth">
+      <header class="atlas-cover">
+        <img src="public/card-earth.webp" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Book Three · Earth</span><span class="atlas-sigil" aria-hidden="true">◇</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lessons 05–06</span><h3 id="title-earth">The Application Sanctum</h3><p>Build on shared memory.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="5">
+        <li><a class="atlas-lesson" href="l5.html#l5">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>05</span>
+          <div class="atlas-lesson-copy"><h4>The Application Sanctum</h4><p>Reuse data inside your application process, and see why two servers can hold different prices.</p><div class="atlas-topics"><span >In-process</span><span >Memoization</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l6.html#l6">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>06</span>
+          <div class="atlas-lesson-copy"><h4>The Distributed Cache Tribes</h4><p>What Redis adds beyond a shared cache, when it helps, and what it costs.</p><div class="atlas-topics"><span >Redis</span><span >Replicas</span><span >Failover</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
+    <section class="atlas-chapter realm-fire" id="chapter-fire" aria-labelledby="title-fire">
+      <header class="atlas-cover">
+        <img src="public/card-fire.webp" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Book Four · Fire</span><span class="atlas-sigil" aria-hidden="true">△</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lesson 07</span><h3 id="title-fire">The Database Depths</h3><p>Reach the source of truth.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="7">
+        <li><a class="atlas-lesson" href="l7.html#l7">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>07</span>
+          <div class="atlas-lesson-copy"><h4>The Database Depths</h4><p>The database is already a caching system. Here you tune rather than build, and an index usually beats a cache.</p><div class="atlas-topics"><span >Buffer pool</span><span >Indexes</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
+    <section class="atlas-chapter realm-spirit" id="chapter-spirit" aria-labelledby="title-spirit">
+      <header class="atlas-cover">
+        <img src="public/atlas.png" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Interlude</span><span class="atlas-sigil" aria-hidden="true">✦</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lessons 08–11</span><h3 id="title-spirit">The Spirit Library</h3><p>Learn the techniques that connect them.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="8">
+        <li><a class="atlas-lesson" href="l8.html#l8">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>08</span>
+          <div class="atlas-lesson-copy"><h4>The Three Reading Techniques</h4><p>Cache-aside, read-through and refresh-ahead. Then the race that hits your database a thousand times for one value.</p><div class="atlas-topics"><span >Cache-aside</span><span >Single-flight</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l9.html#l9">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>09</span>
+          <div class="atlas-lesson-copy"><h4>The Three Writing Techniques</h4><p>Write-through, write-behind and write-around, and the honest question of what you can afford to lose.</p><div class="atlas-topics"><span >Durability</span><span >Batching</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l10.html#l10">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>10</span>
+          <div class="atlas-lesson-copy"><h4>The Temple of Eviction</h4><p>Expiration removes old entries. Eviction makes room for new ones. Learn when to use each.</p><div class="atlas-topics"><span >LRU</span><span >LFU</span><span >Jitter</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l11.html#l11">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>11</span>
+          <div class="atlas-lesson-copy"><h4>The Invalidation Paradox</h4><p>Learn when to delete a cached entry, when to change its key, and how to handle browser copies you cannot purge.</p><div class="atlas-topics"><span >Invalidation</span><span >Versioned keys</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
+    <section class="atlas-chapter realm-war" id="chapter-war" aria-labelledby="title-war">
+      <header class="atlas-cover">
+        <img src="public/realm-besieged.webp" alt="" loading="lazy" decoding="async">
+        <div class="atlas-cover-top"><span>Book Five</span><span class="atlas-sigil" aria-hidden="true">×</span></div>
+        <div class="atlas-cover-copy"><span class="atlas-range">Lessons 12–14</span><h3 id="title-war">The Great War</h3><p>Put every choice to the test.</p></div>
+      </header>
+      <ol class="atlas-lessons" start="12">
+        <li><a class="atlas-lesson" href="l12.html#l12">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>12</span>
+          <div class="atlas-lesson-copy"><h4>The Latency Lord's Attacks</h4><p>Explore five cache failure modes, from stampedes to poisoning. Add Bloom filters to the defenses against requests for nonexistent products.</p><div class="atlas-topics"><span >The trial</span><span >Five defenses</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l13.html#l13">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>13</span>
+          <div class="atlas-lesson-copy"><h4>Restoring Balance</h4><p>Per-key hit ratios, the p99 tail, and the discipline of deleting a cache that no longer earns its place.</p><div class="atlas-topics"><span >p99</span><span >What not to cache</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+        <li><a class="atlas-lesson" href="l14.html#l14">
+          <span class="atlas-number"><span class="atlas-sr-only">Lesson </span>14</span>
+          <div class="atlas-lesson-copy"><h4>The Final Battle</h4><p>Bring the four realms together in one design, and explain each caching decision.</p><div class="atlas-topics"><span >Rubric</span><span >Worked example</span></div></div>
+          <span class="atlas-arrow" aria-hidden="true">↗</span>
+        </a></li>
+      </ol>
+    </section>
   </div>
 </section>
 
